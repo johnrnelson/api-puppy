@@ -1,0 +1,156 @@
+/* 
+
+    This is your chance to color up the debug UI!!! 
+
+    Don't blame John for the ugly CSS. He's slow and color blind. :-) 
+
+*/
+body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+TopNav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+
+MainTabDisplay {
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+
+
+
+/* The debugger section */
+
+.ace-editor {
+    border:solid 2px silver;
+    /* display:none; */
+    position: absolute;
+    top: 0;
+    bottom: 300px;
+    left: 150px;
+    right: 0;
+}
+
+.APIDebugResults {
+    border:solid 2px silver;
+    position: absolute;
+    /* top: 0; */
+    height: 300px;
+    bottom: 0;
+    left: 150px;
+    right: 0;
+    /* overflow: auto;    */
+    /* background-color: transparent; */
+    /* border:solid 1px silver; */
+    /* color:white;  */
+}
+
+#TabDebugger #debugger-sidbar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    background-color: rgb(54, 54, 54);
+    color: white;
+    padding: 5px;
+}
+
+#debugger-sidbar select {
+    background-color: transparent;
+    width: 100%;
+    color: gold;
+    /* right: 150px; */
+}
+
+#debugger-sidbar .ActionButton {
+    font-size: 16px;
+    border-radius: 6px;
+
+    color: rgb(82, 82, 82);
+    /* width: 90%; */
+    left: 0;
+    right: 0;
+
+    text-align: center;
+    text-decoration: none;
+
+    background-color: rgb(212, 212, 212);
+
+    cursor: pointer;
+    margin-top: 10px;
+
+}
+
+/* Main help text classes...  */
+
+.HelpText {
+    color: gray;
+    font-size: 14px;
+}
+
+pre {
+    margin: 5px;
+    padding: 25px;
+    background-color: rgb(238, 238, 238);
+}
+
+pre code {
+    white-space: nowrap !important;
+}
+
+.buttonclick {
+    cursor: pointer;
+    color: green;
+}
+
+.todo-item {
+    color: green;
+    font-size: 12px;
+}
+
+/* 
+FOOTER STYLES!!!!!! 
+*/
+
+.footer-row {
+    padding-top: 50px;
+    margin-bottom: 100px;
+}
+
+.FooterHeading {
+    color: green;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.FooterSysInfo {
+    color: gray;
+    cursor: default;
+}
+
+.FooterSysInfo:hover {
+    color: silver !important;
+    cursor: hand;
+}
+
+.TableHeader {
+    color: purple;
+    font-size: 18px;
+    font-weight: bold;
+}

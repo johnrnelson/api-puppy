@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<!-- 
+    This is the DEBUG UI. Use a browser to get more information and 
+    the abilty to debug.
+-->
+
+
+
+<html>
+
+<head>
+
+
+    <title>Documentation and Debug Utility</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js> </script> <!-- SERVER SIDE -->
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js> </script> <!-- SERVER SIDE -->
+
+
+    <script>
+//SERVER-SIDE-REPLACE!!!
+    </script>
+    <style>
+        /* SERVER REPLACES STYLES */
+    </style>
+</head>
+
+<body>
+
+
+
+
+
+    <div id="mastermodal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Set via code....</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">Set via code....</div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <TopNav>
+        <nav class="navbar navbar-expand navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabMain')">Main Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabDebugger')">Debug Tool</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GitHub</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a target="_blank" class="dropdown-item"
+                                href="https://github.com/EugTech/innovate-eugene-api">API</a>
+                            <a target="_blank" class="dropdown-item"
+                                href="https://github.com/EugTech/innovate-eugene-web">Web</a>
+                            <div class="dropdown-divider"></div>
+                            <a target="_blank" class="dropdown-item"
+                                href="https://github.com/EugTech/asset-inventory-plan">Plan</a>
+                        </div>
+                    </li>
+
+
+                </ul>
+
+            </div>
+        </nav>
+    </TopNav>
+
+
+    <!-- Because of the editor, you need to declare this first! -->
+    <MainTabDisplay id="TabDebugger">
+        <div id="debugger-sidbar">
+            <center>
+
+
+                <div>Select Service</div>
+                <select id="DebugVerbList"></select>
+                <br>
+                <select id="ExampleCodeList"></select>
+                <br>
+
+                <div title="Test the API" onclick="DebugUI.RunDebug()" class="ActionButton">Run Debug</div>
+
+
+                <div style="padding-top:15px;">
+                    Export Options
+
+                </div>
+
+                <div title="CURL" onclick="DebugUI.ExportCode('curl')" class="ActionButton">CURL</div>
+
+                <div title="JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')" class="ActionButton">
+                    JavaScript</div>
+
+                <div title="JavaScript HTTP Client" onclick="DebugUI.ExportCode('javascript-http-request')"
+                    class="ActionButton">NodeJS</div>
+
+                <div title="pythod 3" onclick="DebugUI.ExportCode('python 3')" class="ActionButton">Python3</div>
+
+                <hr width="90%" size="1" />
+
+                <div title="Toggle Result Panel" onclick="DebugUI.ToggleResult()" class="ActionButton">Toggle Result
+                </div>
+
+
+            </center>
+        </div>
+        <div id="PayloadEditor" class="ace-editor"></div>
+        <div id="APIDebugResults" class="APIDebugResults"></div>
+
+    </MainTabDisplay>
+
+
+    <MainTabDisplay id="TabMain" style="overflow:auto;">
+
+
+
+ 
+
+
+        <div class="container"> 
+
+
+
+            <div class="page-header">
+                <h1>Debug Utility</h1>
+            </div>
+            <div class="alert alert-info" role="alert">
+                Use this tool to both get help and test the API.
+                <b>Open your browser window console to really take advantage of the output!</b>
+            </div>
+
+            <p class="HelpText">
+                <div class="alert alert-primary" role="alert">
+                    This is actually the API. Seriously!
+                </div>
+
+            </p>
+
+
+
+
+
+
+
+            <!-- footer -->
+            <div class="row footer-row">
+                <div id="SystemInfo" class="col-md-8">
+                    <div class="FooterHeading">System Information</div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="FooterHeading">Open Source Components</div>
+
+                    <a title="Used to make the simple UI" target="_blank" href="https://getbootstrap.com/">Bootstrap</a>
+                    <br>
+                    <a title="Code editor for the API Explorer" target="_blank" href="https://ace.c9.io/">Ace Editor</a>
+                    <br>
+                    <a title="Wiki info about Node.js" target="_blank"
+                        href="https://en.wikipedia.org/wiki/Node.js">Node.js
+                        Wiki</a>
+                    <br>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </MainTabDisplay>
+
+
+
+
+</body>
+
+</html>

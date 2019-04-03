@@ -1,0 +1,21 @@
+{
+	"service": "data",
+	"view": "AllAssets",
+	"query": [
+		{
+			"Field": "AName",
+			"operator": "=",
+			"value": "My Test Record"
+		},
+		{
+			"Field": "AName",
+			"operator": "=",
+			"value": "Something else Record"
+		},	
+		{
+			"Field": "City",
+			"operator": "=",
+			"value": "Eugene"
+		}				
+	]
+}

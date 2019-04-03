@@ -1,0 +1,7 @@
+{
+	"service": "data",
+	"action": "delete",
+	"record": {
+		"id": "abc123"
+	}
+}

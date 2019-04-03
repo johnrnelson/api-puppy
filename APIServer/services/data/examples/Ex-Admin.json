@@ -1,0 +1,10 @@
+{
+	"service": "data",
+	"view": "TableTotals",
+	"query": {
+		"Database": {
+			"table": "Assests"
+		}
+	},
+	"ignore": ["filestats","procstats"]
+}

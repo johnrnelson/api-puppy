@@ -1,0 +1,10 @@
+{
+	"service": "data",
+	"action": "add",
+	"target": "airtable",
+	"record": {
+		"AName": "My New Name",
+		"City": "Eugene",
+		"State": "Oregon"
+	}
+}

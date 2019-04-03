@@ -1,0 +1,11 @@
+{
+    "data": {
+        "notes": "Get data from the MySQL server..."
+    },
+    "help": {        
+        "notes": "Help on help to help you....  lol"
+    },
+    "default": {        
+        "notes": "Example to use as a template for your next service."
+    }
+}

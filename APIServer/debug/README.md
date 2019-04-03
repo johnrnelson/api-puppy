@@ -1,0 +1,3 @@
+# Debug UI
+All the files that are sent to the web client when it's time to debug
+or get more information about an API...
