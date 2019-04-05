@@ -37,24 +37,7 @@ run any scripts.
 
 ** READ THE [README's](Notes)!  :-)
 
-
-
-
-# MySQL 
-Make sure you have a file called `mysql.json` in the `DATA/SECRET` folder!
-Example:
-
-    {
-        "host": "127.0.0.1",
-        "port": 3306,
-        "user": "mydbuser",
-        "password": "mypassword",
-        "database": "asset-inventory"    
-    }
-
-Get and ID and PASSWORD from a system admin. Open an issue on github if need be. 
-
-
+ 
 
 ## TODO
 This is quick running to do list of items that should be moved to the github issues list. 

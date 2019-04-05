@@ -4,8 +4,7 @@ Use the markdown to help document the project.
 ## Index
 - [Installing](installing.md) 
 - [NPM](NPM/) 
-- [Visual Studio Code](VSCode/) 
-- [API_KEYS](API_KEYS.md) 
+- [Visual Studio Code](VSCode/)  
 - [Helpful Links](links.md) 
 
 
