@@ -17,10 +17,7 @@ global.SERVER = {
     Started: new Date(),
     RootFolder: __dirname
 }
-
-//Load up our mysql server code....
-SERVER.SqlData = require('../LIB/MySQLData');
-
+ 
 
 /*
     We will need access to the disk, so load up the libraries 
@@ -378,38 +375,5 @@ window.debugdata = {
 };
 
 
-
-// Async step by step becaues it's easier to debug... They say.. :-)
-(async () => {
-
-    try {
-        const DATA_FOLDER = require("../LIB/DATA_FOLDER");
-
-        /*
-            Open our Mysql server...
-        */
-        const ConfigFileText = fs.readFileSync(DATA_FOLDER.CONFIG_INFO.SecretFolder + "mysql.json", "utf8");
-        const ConfigFileData = JSON.parse(ConfigFileText);
-        const PoolReq = await SERVER.SqlData.OpenPoolSync(ConfigFileData);
-
-        if (PoolReq.err) {
-            console.log(PoolReq.err);
-            console.log('\r\n\t ****** Check your connection to the server!');
-
-
-        } else {
-            //
-
-        }
-
-        //Lets get this party started. :-)
-        IPC.Start();
-
-
-    } catch (errorNoSQLServer) {
-        console.log('Critical Error!');
-        console.log(errorNoSQLServer);
-        process.exit(2);
-    }
-
-})();
+//Lets get this party started. :-)
+IPC.Start();
