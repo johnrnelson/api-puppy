@@ -19,7 +19,7 @@ const FarmOptions = {
 
     UseThreading: true,
 
-    MaxThreads: 2,
+    MaxThreads: 3,
 
     //Finally do this...
     OnFinished() {
@@ -39,24 +39,33 @@ const TESTSQL = [
 ThreadFarm.BuildFarm(FarmOptions, function (ThreadMap) {
 
     //Get the next worker...
-    var myWorker = ThreadFarm.NextAvailable();
+    ThreadFarm.NextAvailable(function (myWorker) {
+ 
+        myWorker.OnFinished = function (DataResult) {
+            console.info('Workiner', DataResult);
+            debugger;
+        };
 
-    if (!myWorker) {
-        console.log('No worker!');
-        process.exit(1);
-    }
+        myWorker.postMessage({
+            type: "RunSQL",
+            sql: "select 1"
+        });
 
 
-    myWorker.postMessage({
-        type: "RunSQL",
-        sql: "select 1"
+
+
     });
 
     //Get the next worker...
-    myWorker = ThreadFarm.NextAvailable();
+    ThreadFarm.NextAvailable(function (myWorker) {
+        myWorker.OnFinished = function (DataResult) {
+            console.info('xxxx-----', DataResult.wd.msg);
+            debugger;
+        };
 
-    myWorker.postMessage({
-        type: "RunSQL",
-        sql: "select * from ddd"
+        myWorker.postMessage({
+            type: "RunSQL",
+            sql: "select * from ddd"
+        });
     });
 });

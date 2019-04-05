@@ -35,7 +35,7 @@ const ObjectActions = {
                     msg: MsgData
                 }
             });
-        }, 5000);
+        }, 3000);
 
     }
 };

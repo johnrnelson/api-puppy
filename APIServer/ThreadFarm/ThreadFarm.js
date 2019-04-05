@@ -8,24 +8,29 @@
 
 const CONFIG = {
     UseThreading: false,
-
 };
 
 //Keep a map of our running threads...
 const WorkerThreads = [];
 var TotalWorkerThreads = 0;
 
-//Get next available thread...
-exports.NextAvailable = function () {
-
+function NextAvailable(OnReady) {
     for (let index = 0; index < WorkerThreads.length; index++) {
         const element = WorkerThreads[index];
-        if (!element.isBusy) {
-            return element;
+        if (element.isBusy == false) {
+            delete element["OnFinished"];
+            OnReady(element);
+            return;
         }
     }
-    return false;
+    setTimeout(function () {
+        NextAvailable(OnReady);
+    }, 100);
 }
+
+//Get next available thread...
+exports.NextAvailable = NextAvailable;
+
 /*
     When debugging we don't use threads so we can 
     step through the process and see whats up...
@@ -55,8 +60,14 @@ function SetupWorkers(FarmOptions) {
             } else {
                 if (msg.type == "RunSQL") {
                     w.isBusy = false;
-                    console.log('SQL Has finished...', msg);
                     // debugger;
+
+
+
+                    w.OnFinished(msg);
+
+
+                    // console.log('SQL Has finished...', msg);
                     // FarmOptions.OnFinished();
                 }
             }
@@ -97,7 +108,7 @@ function SetupWorkers(FarmOptions) {
 
         //Spin up all the threads...
         for (let counter = 0; counter < TotalWorkerThreads; counter++) {
-            
+
             const myWorker = startWorker({
                 path: FarmOptions.WorkerFilePath,
                 config: {
@@ -109,17 +120,17 @@ function SetupWorkers(FarmOptions) {
                 if (err) return console.error(err);
                 console.log(" **  MSG FROM THREAD ** ");
                 console.log(result);
-                if(result.type=="log"){
+                if (result.type == "log") {
                     console.log(result.wd);
-                }else{
+                } else {
                     console.log(' ----  WARNING  ---- ');
                     debugger;
                 }
             });
         }
     } else {
-        debugger;
-        CONFIG.UseThreading = false;
+        
+        CONFIG.UseThreading = true;
 
         myWorker = {};
 
