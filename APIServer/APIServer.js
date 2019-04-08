@@ -5,7 +5,7 @@
 
 
 /*
-    Main entry point for the "/api" proxy app.
+    Main entry point for the "API" service provider.
 
     Keep it as simple as possible. Think before
     you "npm install" anything! Please! lol  :-)  
@@ -284,19 +284,19 @@ window.debugdata = {
                             response.SendError(response, {
                                 err: badJSON
                             });
-
+                            return;
                         }
 
 
-                        //Is this an object or an array of object?
-                        if (request.RequestData.length) {
-                            function FinishedAllRequests() {
+                        //Is this a multi-request????
+                        if (request.RequestData.service == "*") {
 
-                            }
-                            var totalFinished = 0;
+                            const tasks = request.RequestData.tasks;                        
                             const resultObj = {};
-                            for (let index = 0; index < request.RequestData.length; index++) {
-                                const aSingleRequest = request.RequestData[index];
+                            var totalFinished = 0;
+
+                            for (let index = 0; index < tasks.length; index++) {
+                                const aSingleRequest = tasks[index];
 
                                 //By the time you get here.. you want a true web api request...
                                 IPC.ServiceRequest(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
@@ -306,27 +306,22 @@ window.debugdata = {
                                     resultObj[aSingleRequest.reqID] = ResponseJSON;
 
                                     if (ServiceError) {
-                                        resultObj[aSingleRequest.reqID] = ServiceError
-                                        // reqJSONArray.push(ServiceError);
-                                        // response.SendError(response, ServiceError);
+                                        resultObj[aSingleRequest.reqID] = ServiceError; 
 
                                     } else {
                                         resultObj[aSingleRequest.reqID] = ResponseJSON
                                         // reqJSONArray.push(ResponseJSON);
 
                                     }
-                                    if (totalFinished == request.RequestData.length) {
-                                        resultObj["Total"] = totalFinished;
+                                    if (totalFinished == tasks.length) {
+                                        resultObj["TotalTasks"] = totalFinished;
                                         response.end(JSON.stringify(resultObj));
                                     }
 
                                 });
 
                             }
-                            // response.end(JSON.stringify({
-                            //     err: 'Multi Service Ready!'
-                            // }));
-                            // return;
+                   
                         } else {
 
                             //By the time you get here.. you want a true web api request...

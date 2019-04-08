@@ -7,7 +7,7 @@
 const DebugUI = {
     //Quick and easy way to get data from our api...
     Fetch(data = {}) {
-        const url = document.URL + 'api/';
+        const url = document.URL + '';
 
         return fetch(url, {
             method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -112,8 +112,9 @@ const DebugUI = {
         }
 
 
-        AddInfoElement('Host:Port', 'The hostname and port the server is using for the API',
-            '' + window.location.hostname + ':' + debugdata.port);
+        AddInfoElement('Access Point', 'The protocal, port, hostname, path, and query string for the current request using for the API',
+            '<b>' + window.location.protocol + '</b>//' + window.location.hostname + ':' + debugdata.port +
+            '<b>' + debugdata.UserInfo.URL + '</b>');
 
         AddInfoElement('NodeVersion', 'The version of node on this server',
             debugdata.NodeVersion);
@@ -279,12 +280,12 @@ const DebugUI = {
                         }); 
                     }
                     */
- 
- 
+
+
                     UIHelper.AceDisplayRsults.setValue(JSON.stringify(data, null, "\t"));
 
                     //Set the cursor so the user can start over again...
-                    UIHelper.AceDisplayRsults.moveCursorTo(0); 
+                    UIHelper.AceDisplayRsults.moveCursorTo(0);
 
 
 
@@ -500,7 +501,7 @@ window.onload = function () {
     // debugger;
 
     var langTools = ace.require("ace/ext/language_tools");
- 
+
     var rhymeCompleter = {
         getCompletions: (editor, session, caretPosition2d, prefix, callback) => {
 
@@ -567,8 +568,8 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    // UIHelper.ShowTab('TabMain');
-    UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabDebugger');
 
- 
+
 };

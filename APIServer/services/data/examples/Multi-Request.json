@@ -1,0 +1,24 @@
+{
+    "service": "*",
+    "async": false,
+    
+    "tasks": [
+        {
+            "reqID": "TestA",
+            "request": {
+                "service": "help",
+                "data": {
+                    "topic": "sample-code-list",
+                    "sampleid": "data"
+                }
+            }
+        },
+        {
+            "reqID": "TestB",
+            "request": {
+                "service": "data",
+                "view": "AllAssets"
+            }
+        }
+    ]
+}
