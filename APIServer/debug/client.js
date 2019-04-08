@@ -304,6 +304,8 @@ const DebugUI = {
     */
     ToggleResult(ShowFlag) {
 
+        debugger;
+
         const APIDebugResultsElement = document.getElementById("APIDebugResults");
         const AceEditorElement = document.getElementById("PayloadEditor");
 
@@ -316,12 +318,13 @@ const DebugUI = {
             }
         }
 
+        debugger;
         if (ShowFlag) {
             APIDebugResultsElement.style.display = "";
-            AceEditorElement.style.bottom = "200px";
+            // AceEditorElement.style.bottom = "200px";
         } else {
             APIDebugResultsElement.style.display = "none";
-            AceEditorElement.style.bottom = "0";
+            // AceEditorElement.style.bottom = "0";
         }
 
         //Make sure the Ace editor knows it's been resized...
@@ -568,7 +571,4 @@ window.onload = function () {
     UIHelper.ShowTab('TabDebugger');
 
  
-
-
-
 };

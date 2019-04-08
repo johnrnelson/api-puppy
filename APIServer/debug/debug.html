@@ -130,16 +130,27 @@
 
                 <div title="pythod 3" onclick="DebugUI.ExportCode('python 3')" class="ActionButton">Python3</div>
 
-                <hr width="90%" size="1" />
+                <hr width="90%" size="1" color="gold" />
 
-                <div title="Toggle Result Panel" onclick="DebugUI.ToggleResult()" class="ActionButton">Toggle Result
-                </div>
-
+ 
 
             </center>
         </div>
-        <div id="PayloadEditor" class="ace-editor"></div>
-        <div id="APIDebugResults" class="APIDebugResults"></div>
+
+        <div class="split-container">
+            <div class="split horizontal">
+
+                <div style="width:50%">
+                    <div id="PayloadEditor" class="ace-editor"></div>
+                </div>
+                <div>
+
+                    <div id="APIDebugResults" class="APIDebugResults"></div>
+
+                </div>
+            </div>
+        </div>
+
 
     </MainTabDisplay>
 
@@ -148,10 +159,15 @@
 
 
 
- 
 
 
-        <div class="container"> 
+
+
+
+
+
+
+        <div class="container">
 
 
 

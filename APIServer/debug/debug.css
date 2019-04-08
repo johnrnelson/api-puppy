@@ -33,32 +33,32 @@ MainTabDisplay {
 }
 
 
+/* 
+
+    Other stuff.....
+
+*/
+
+
+
 
 /* The debugger section */
 
+ 
 .ace-editor {
-    border:solid 2px silver;
-    /* display:none; */
-    position: absolute;
-    top: 0;
-    bottom: 300px;
-    left: 150px;
-    right: 0;
+    border: solid 1px silver; 
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
-
 .APIDebugResults {
-    border:solid 2px silver;
-    position: absolute;
-    /* top: 0; */
-    height: 300px;
-    bottom: 0;
-    left: 150px;
-    right: 0;
-    /* overflow: auto;    */
-    /* background-color: transparent; */
-    /* border:solid 1px silver; */
-    /* color:white;  */
-}
+    border: solid 1px silver;
+    position: relative;
+    height: 100%;
+    width: 100%;
+} 
+
+/* sidebar */
 
 #TabDebugger #debugger-sidbar {
     position: absolute;
@@ -154,3 +154,66 @@ FOOTER STYLES!!!!!!
     font-size: 18px;
     font-weight: bold;
 }
+
+
+
+/* 
+split info from https://gist.github.com/jpnelson/52d6f38820c6d028bdf8
+
+slightly modified.... 
+*/
+ 
+
+.split-container {
+    position: absolute;
+    left:150px;
+    right:0;
+    top:0;
+    bottom:0; 
+    border: 0;
+    background-color: transparent;
+
+    
+}
+
+.split {
+    display: flex;
+    height: 100%;
+    /* border: 1px solid black; */
+}
+
+.split> :nth-child(1) {
+    overflow: scroll;
+}
+
+.split> :nth-child(2) {
+    flex-grow: 1;
+}
+
+/* Vertical */
+
+.split.vertical {
+    flex-direction: column;
+}
+
+.split.vertical> :nth-child(1) {
+    resize: vertical;
+}
+
+/* Horizontal */
+
+.split.horizontal {
+    flex-direction: row;
+}
+
+.split.horizontal> :nth-child(1) {
+    resize: horizontal;
+}
+
+
+
+
+/* 
+ Bad results here!
+.split div {} 
+*/
