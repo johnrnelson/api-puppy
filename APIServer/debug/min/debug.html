@@ -503,11 +503,14 @@ print(response_data)
 
         }//End if right type of code...
     },
+    /*
+        Show our TargetURI for the client to call.
+    */
     SetTargetURI(TargetURI) {
         const apiURIAddress = document.getElementById('api-uri-address');
         const apiURILink = document.getElementById('api-uri-link');
 
-        console.info('set text box URL!', TargetURI);
+        // console.info('set text box URL!', TargetURI);
 
         apiURIAddress.value = TargetURI;
         apiURILink.href = TargetURI;
@@ -567,7 +570,7 @@ const UIHelper = {
                                 }
                             }
                             if (basicOptions.length) {
-                                DebugUI.SetTargetURI('/' + jsonData.service + '?' + basicOptions.join(','));
+                                DebugUI.SetTargetURI('/' + jsonData.service + '?' + basicOptions.join('&'));
                             } else {
                                 DebugUI.SetTargetURI('/' + jsonData.service + '/');
                             }

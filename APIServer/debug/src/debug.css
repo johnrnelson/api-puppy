@@ -62,7 +62,7 @@ MainTabDisplay {
 
 #TabDebugger .api-uri-display {
     position: absolute;
-    
+
     top: 0;
     height: 30px;
     left: 0;
@@ -72,14 +72,15 @@ MainTabDisplay {
     /* padding-right:1px; */
     /* margin:4px; */
 }
+
 #TabDebugger .api-uri-display #api-uri-address {
     position: relative;
-    width:100%;
-    height:100%;
-    border:0;
+    width: 100%;
+    height: 100%;
+    border: 0;
     padding: 3px;
-    
- 
+
+
 
     background-color: transparent;
     color: black;
@@ -91,7 +92,7 @@ MainTabDisplay {
 
 #TabDebugger .api-uri-browse {
     position: absolute;
-    
+
     top: 0;
     height: 30px;
     /* left: 0; */
@@ -99,7 +100,7 @@ MainTabDisplay {
     width: 30px;
     background-color: transparent;
     color: white;
-    padding:1px;
+    padding: 1px;
     /* margin:4px; */
     font-size: 20px;
     text-align: center
@@ -148,7 +149,7 @@ sidebar
     border-radius: 6px;
 
     color: rgb(82, 82, 82);
-    /* width: 90%; */
+
     left: 0;
     right: 0;
 
