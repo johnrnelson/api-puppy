@@ -196,16 +196,16 @@ const DebugUI = {
                     console.warn(data.err);
                 } else {
 
-                    UIHelper.AceEditor.setValue(JSON.stringify(data.code, null, "\t"));
+                    UIHelper.Ace.AceEditor.setValue(JSON.stringify(data.code, null, "\t"));
 
                     //Set the cursor so the user can start over again...
-                    UIHelper.AceEditor.moveCursorTo(0);
+                    UIHelper.Ace.AceEditor.moveCursorTo(0);
 
 
-                    UIHelper.AceDisplayRsults.setValue("{}");
+                    UIHelper.Ace.AceDisplayRsults.setValue("{}");
 
                     //Set the cursor so the user can start over again...
-                    UIHelper.AceDisplayRsults.moveCursorTo(0);
+                    UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
                 }
 
 
@@ -282,10 +282,10 @@ const DebugUI = {
                     */
 
 
-                    UIHelper.AceDisplayRsults.setValue(JSON.stringify(data, null, "\t"));
+                    UIHelper.Ace.AceDisplayRsults.setValue(JSON.stringify(data, null, "\t"));
 
                     //Set the cursor so the user can start over again...
-                    UIHelper.AceDisplayRsults.moveCursorTo(0);
+                    UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
 
 
 
@@ -329,14 +329,14 @@ const DebugUI = {
         }
 
         //Make sure the Ace editor knows it's been resized...
-        UIHelper.AceEditor.resize();
+        UIHelper.Ace.AceEditor.resize();
     },
 
 
     GetEditorJSON() {
 
         try {
-            return JSONPayload = JSON.parse(UIHelper.AceEditor.getValue());
+            return JSONPayload = JSON.parse(UIHelper.Ace.AceEditor.getValue());
 
 
         } catch (errorJSON) {
@@ -382,7 +382,7 @@ const DebugUI = {
                 return {
                     title: 'Browser javascript',
                     code: `
-                const url = '${document.URL}api/'; 
+                const url = '${document.URL}'; 
             
                 fetch(url, {
                     method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -416,11 +416,21 @@ const DebugUI = {
             'python 3': function () {
                 return {
                     title: 'Python 3 Example',
-                    code: `No Python experts helping us out with this?
-<br>
-Any Help at all?
+                    code: `
+
+import json
+import requests
+
+api_token = 'your_api_token'
+api_url_base = '${document.URL}'
+headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(api_token)}
+api_url = '{0}account'.format(api_url_base)
+response = requests.get(api_url, headers=headers)
+response_data = response.json() 
+print(response_data)  
+
                 `,
-                    help: 'Check out the man page for curl for more information.',
+                    help: 'No Python experts helping us out with this?',
                 }
             }
         };
@@ -448,12 +458,99 @@ Any Help at all?
 
 
         }//End if right type of code...
+    },
+    SetTargetURI() {
+        console.info('set text box URL!');
+
     }
 };
 
 
 const UIHelper = {
-    AceEditor: null, //Set this in code when you are ready...
+    Ace: {
+        AceEditor: null, //Set this in code when you are ready...
+        AceDisplayRsults: null, //Set this in code when you are ready...        
+        BuildAll() {
+
+            function SetupAceEditor(ParentHTMLTagID) {
+
+                //Ace Editor is awesome! 
+                var aceEditor = ace.edit(ParentHTMLTagID);
+
+                // Go here for more options... https://github.com/ajaxorg/ace/wiki/Configuring-Ace
+                aceEditor.setOption("mode", "ace/mode/json");
+                aceEditor.setOption("autoScrollEditorIntoView", true);
+                aceEditor.setOption("showPrintMargin", false);
+                aceEditor.setOption("fontSize", 15);
+                aceEditor.$blockScrolling = Infinity;
+
+                return aceEditor;
+            }
+
+            function HookEvents(Editor2Hook) {
+                console.info('Hooking Events for the editor...');
+                
+                Editor2Hook.getSession().on('change', function (delta) {
+                    console.info(delta);
+                    // debugger;
+
+                    const editorJSON = Editor2Hook.getValue();
+
+                    console.info('Edit Len:',editorJSON.length);
+                });
+            }
+
+            UIHelper.Ace.AceEditor = SetupAceEditor('PayloadEditor');
+            UIHelper.Ace.AceDisplayRsults = SetupAceEditor('APIDebugResults');
+
+            
+
+            HookEvents(UIHelper.Ace.AceEditor);
+
+            var langTools = ace.require("ace/ext/language_tools");
+
+            var rhymeCompleter = {
+                getCompletions: (editor, session, caretPosition2d, prefix, callback) => {
+
+                    var currline = editor.getSelectionRange().start.row;
+                    var content = editor.session.getLine(currline);
+
+
+                    const WordList = [];
+                    WordList.push({
+                        caption: 'service',
+                        meta: '',
+                        score: 10,
+                    });
+
+                    WordList.push({
+                        caption: 'view',
+                        meta: '',
+                        score: 10,
+                    });
+
+
+                    callback(null, WordList.map((s) => {
+                        return {
+                            // name: s.caption,
+                            value: s.caption,
+                            score: 100,
+                            meta: s.meta,
+                        }
+                    }))
+                },
+            }
+            langTools.addCompleter(rhymeCompleter);
+
+            UIHelper.Ace.AceEditor.setOptions({
+                enableBasicAutocompletion: rhymeCompleter,
+                enableLiveAutocompletion: true,
+                enableSnippets: true,
+            });
+
+
+        }
+    },
     ShowTab(Tab2Show) {
 
         // debugger;
@@ -468,7 +565,8 @@ const UIHelper = {
             UIHelper.ActiveTab = Tab2Show;
         }
         UIHelper.ActiveTab.style.display = "block";
-    }
+    },
+
 };
 
 
@@ -480,70 +578,6 @@ const UIHelper = {
 window.onload = function () {
 
 
-    function SetupAceEditor(ParentHTMLTagID) {
-
-        //Ace Editor is awesome! 
-        var aceEditor = ace.edit(ParentHTMLTagID);
-
-        // Go here for more options... https://github.com/ajaxorg/ace/wiki/Configuring-Ace
-        aceEditor.setOption("mode", "ace/mode/json");
-        aceEditor.setOption("autoScrollEditorIntoView", true);
-        aceEditor.setOption("showPrintMargin", false);
-        aceEditor.setOption("fontSize", 15);
-        aceEditor.$blockScrolling = Infinity;
-
-        return aceEditor;
-    }
-
-    UIHelper.AceEditor = SetupAceEditor('PayloadEditor');
-    UIHelper.AceDisplayRsults = SetupAceEditor('APIDebugResults');
-
-    // debugger;
-
-    var langTools = ace.require("ace/ext/language_tools");
-
-    var rhymeCompleter = {
-        getCompletions: (editor, session, caretPosition2d, prefix, callback) => {
-
-            var currline = editor.getSelectionRange().start.row;
-            var content = editor.session.getLine(currline);
-
-
-            const WordList = [];
-            WordList.push({
-                caption: 'service',
-                meta: '',
-                score: 10,
-            });
-
-            WordList.push({
-                caption: 'view',
-                meta: '',
-                score: 10,
-            });
-
-
-            callback(null, WordList.map((s) => {
-                return {
-                    // name: s.caption,
-                    value: s.caption,
-                    score: 100,
-                    meta: s.meta,
-                }
-            }))
-        },
-    }
-    langTools.addCompleter(rhymeCompleter);
-
-    UIHelper.AceEditor.setOptions({
-        enableBasicAutocompletion: rhymeCompleter,
-        enableLiveAutocompletion: true,
-        enableSnippets: true,
-    });
-
-
-
-
 
 
 
@@ -551,6 +585,10 @@ window.onload = function () {
     DebugUI.SetSysInfo();
     DebugUI.FillSideBar();
     // DebugUI.SetHelpTable();
+
+
+    //Setup all of our ace editors...
+    UIHelper.Ace.BuildAll();
 
 
     console.info('The API Client has loaded.Feel free to explore this object in the console.');
@@ -568,8 +606,8 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
-    // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('TabMain');
+    UIHelper.ShowTab('TabDebugger');
 
 
 };

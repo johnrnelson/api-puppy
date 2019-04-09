@@ -44,25 +44,89 @@ MainTabDisplay {
 
 /* The debugger section */
 
- 
+
 .ace-editor {
-    border: solid 1px silver; 
+    border: solid 1px silver;
     position: relative;
     height: 100%;
     width: 100%;
 }
+
 .APIDebugResults {
     border: solid 1px silver;
     position: relative;
     height: 100%;
     width: 100%;
-} 
+}
 
-/* sidebar */
 
+
+#TabDebugger .api-uri-display {
+    position: absolute;
+    
+    top: 0;
+    height: 30px;
+    left: 0;
+    right: 30px;
+    background-color: transparent;
+    color: white;
+    /* padding-right:1px; */
+    /* margin:4px; */
+}
+#TabDebugger .api-uri-display #api-uri-address {
+    position: relative;
+    width:100%;
+    height:100%;
+    border:0;
+ 
+
+    background-color: silver;
+    color: black;
+    text-overflow: ellipsis;
+
+}
+
+
+
+#TabDebugger .api-uri-browse {
+    position: absolute;
+    
+    top: 0;
+    height: 30px;
+    /* left: 0; */
+    right: 0;
+    width: 30px;
+    background-color: transparent;
+    color: white;
+    padding:1px;
+    /* margin:4px; */
+    font-size: 25px;
+    text-align: center
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+
+
+sidebar 
+
+
+
+
+*/
 #TabDebugger #debugger-sidbar {
     position: absolute;
-    top: 0;
+    top: 35px;
     bottom: 0;
     left: 0;
     width: 150px;
@@ -108,6 +172,8 @@ pre {
     margin: 5px;
     padding: 25px;
     background-color: rgb(238, 238, 238);
+    height: 80%;
+    overflow: auto;
 }
 
 pre code {
@@ -157,23 +223,38 @@ FOOTER STYLES!!!!!!
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* 
 split info from https://gist.github.com/jpnelson/52d6f38820c6d028bdf8
 
 slightly modified.... 
 */
- 
+
 
 .split-container {
     position: absolute;
-    left:150px;
-    right:0;
-    top:0;
-    bottom:0; 
+    left: 150px;
+    right: 0;
+    top: 35px;
+    bottom: 0;
     border: 0;
     background-color: transparent;
 
-    
+
 }
 
 .split {

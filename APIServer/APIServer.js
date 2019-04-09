@@ -17,7 +17,7 @@ global.SERVER = {
     Started: new Date(),
     RootFolder: __dirname
 }
- 
+
 
 /*
     We will need access to the disk, so load up the libraries 
@@ -168,8 +168,7 @@ window.debugdata = {
 
         // We need at least a service name to work with...
         if (!RequestData.service) {
-            OnComplete('No service defined!', null)
-
+            OnComplete('No service defined! ', null);
         } else {
 
             var finalServicePath = "";
@@ -209,6 +208,9 @@ window.debugdata = {
             response.end();
             return;
         }
+
+
+
 
 
         const querystring = require('querystring');
@@ -252,6 +254,9 @@ window.debugdata = {
         // console.log('Serving User:',request.User);
 
 
+
+
+
         try {
 
             var body = '';
@@ -263,97 +268,113 @@ window.debugdata = {
 
 
             request.on('end', function () {
+
+
+
+                //We alwasy use JSON for everything.. 
+                response.writeHead(200, {
+                    'Content-Type': 'application/json'
+                });
+
                 if (body == '') {
-                    IPC.ServeDebugAPP(request, response);
+                    request.RequestData = {};
                 }
                 else {
-                    request.RequestData = {};
-
-                    //We alwasy use JSON for everything.. 
-                    response.writeHead(200, {
-                        'Content-Type': 'application/json'
-                    });
-
                     try {
 
+                        request.RequestData = JSON.parse(body);
+
+                    } catch (badJSON) {
                         //Special error if the JSON is not formed well...
-                        try {
-                            request.RequestData = JSON.parse(body);
-
-                        } catch (badJSON) {
-                            response.SendError(response, {
-                                err: badJSON
-                            });
-                            return;
-                        }
-
-
-                        //Is this a multi-request????
-                        if (request.RequestData.service == "*") {
-
-                            const tasks = request.RequestData.tasks;                        
-                            const resultObj = {};
-                            var totalFinished = 0;
-
-                            for (let index = 0; index < tasks.length; index++) {
-                                const aSingleRequest = tasks[index];
-
-                                //By the time you get here.. you want a true web api request...
-                                IPC.ServiceRequest(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
-                                    totalFinished++;
-
-
-                                    resultObj[aSingleRequest.reqID] = ResponseJSON;
-
-                                    if (ServiceError) {
-                                        resultObj[aSingleRequest.reqID] = ServiceError; 
-
-                                    } else {
-                                        resultObj[aSingleRequest.reqID] = ResponseJSON
-                                        // reqJSONArray.push(ResponseJSON);
-
-                                    }
-                                    if (totalFinished == tasks.length) {
-                                        resultObj["TotalTasks"] = totalFinished;
-                                        response.end(JSON.stringify(resultObj));
-                                    }
-
-                                });
-
-                            }
-                   
-                        } else {
-
-                            //By the time you get here.. you want a true web api request...
-                            IPC.ServiceRequest(request, request.RequestData, function (ServiceError, ResponseJSON) {
-                                if (ServiceError) {
-                                    response.SendError(response, ServiceError);
-                                } else {
-                                    const doh = ResponseJSON;
-                                    response.end(JSON.stringify(ResponseJSON));
-                                }
-                            });
-                        }
-
-
-
-                    }
-                    catch (errEndReq) {
-                        // console.log("REQUEST ERROR!");
-                        // console.log("URL", request.url);
-                        // console.log(errEndReq.message);
-                        // console.log(body);
-                        // debugger;
-
-                        //Give the client some idea of what went wrong...
-                        var resp = {
-                            msg: 'Error in request!',
-                            err: errEndReq.message
-                        };
-
-                        response.end(JSON.stringify(resp));
+                        response.SendError(response, {
+                            err: badJSON
+                        });
+                        return;
                     }
                 }
+
+
+                //only send debug on emtpy request...
+                if ((request.url == "/") && (!request.RequestData.service)) {
+                    IPC.ServeDebugAPP(request, response);
+                    return;
+                }
+
+
+                try {
+
+
+
+
+
+                    //Is this a multi-request????
+                    if (request.RequestData.service == "*") {
+
+                        const tasks = request.RequestData.tasks;
+                        const resultObj = {};
+                        var totalFinished = 0;
+
+                        for (let index = 0; index < tasks.length; index++) {
+                            const aSingleRequest = tasks[index];
+
+                            //By the time you get here.. you want a true web api request...
+                            IPC.ServiceRequest(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
+                                totalFinished++;
+
+
+                                resultObj[aSingleRequest.reqID] = ResponseJSON;
+
+                                if (ServiceError) {
+                                    resultObj[aSingleRequest.reqID] = ServiceError;
+
+                                } else {
+                                    resultObj[aSingleRequest.reqID] = ResponseJSON
+                                    // reqJSONArray.push(ResponseJSON);
+
+                                }
+                                if (totalFinished == tasks.length) {
+                                    resultObj["TotalTasks"] = totalFinished;
+                                    response.end(JSON.stringify(resultObj));
+                                }
+
+                            });
+
+                        }
+
+                    } else {
+
+                        //By the time you get here.. you want a true web api request...
+                        IPC.ServiceRequest(request, request.RequestData, function (ServiceError, ResponseJSON) {
+                            if (ServiceError) {
+                                response.SendError(response, ServiceError);
+                            } else {
+                                const doh = ResponseJSON;
+                                response.end(JSON.stringify(ResponseJSON));
+                            }
+                        });
+                    }
+
+
+
+                }
+                catch (errEndReq) {
+                    // console.log("REQUEST ERROR!");
+                    // console.log("URL", request.url);
+                    // console.log(errEndReq.message);
+                    // console.log(body);
+                    // debugger;
+
+                    //Give the client some idea of what went wrong...
+                    var resp = {
+                        msg: 'Error in request!',
+                        err: errEndReq.message
+                    };
+
+                    response.end(JSON.stringify(resp));
+                }
+
+
+
             });
         }
         catch (errPUT) {
