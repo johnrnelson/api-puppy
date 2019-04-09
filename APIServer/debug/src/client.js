@@ -460,11 +460,14 @@ print(response_data)
         }//End if right type of code...
     },
     SetTargetURI(TargetURI) {
-        const apiURI = document.getElementById('api-uri-address');
-        
-        console.info('set text box URL!',TargetURI);
-        
-        apiURI.value = TargetURI;
+        const apiURIAddress = document.getElementById('api-uri-address');
+        const apiURILink = document.getElementById('api-uri-link');
+
+        console.info('set text box URL!', TargetURI);
+
+        apiURIAddress.value = TargetURI;
+        apiURILink.href = TargetURI;
+
         // debugger;
 
     }
@@ -494,25 +497,44 @@ const UIHelper = {
 
             function HookEvents(Editor2Hook) {
                 console.info('Hooking Events for the editor...');
-                 
+
                 Editor2Hook.getSession().on('change', function (delta) {
-                    
+
                     // debugger;
 
                     const editorJSON = Editor2Hook.getValue();
-                    try{
+                    try {
                         const jsonData = JSON.parse(editorJSON);
 
-                        if(jsonData.service){
-                            DebugUI.SetTargetURI('/'+jsonData.service+'/');                                                    
-                        }else{
-                            DebugUI.SetTargetURI(editorJSON);                        
+                        if (jsonData.service) {
+
+
+                            const basicOptions = [];
+
+                            for (var o in jsonData) {
+                                if (o !== "service") {
+                                    if (typeof (jsonData[o]) == "object") {
+                                        basicOptions.push('' + o + "=" + JSON.stringify(jsonData[o]));
+                                    } else {
+                                        basicOptions.push('' + o + "=" + jsonData[o]);
+
+                                    }
+
+                                }
+                            }
+                            if (basicOptions.length) {
+                                DebugUI.SetTargetURI('/' + jsonData.service + '?' + basicOptions.join(','));
+                            } else {
+                                DebugUI.SetTargetURI('/' + jsonData.service + '/');
+                            }
+                        } else {
+                            DebugUI.SetTargetURI(editorJSON);
 
                         }
 
                         // console.info('Edit Len:',editorJSON.length,delta);
 
-                    }catch(errBadJSON){
+                    } catch (errBadJSON) {
                         DebugUI.SetTargetURI("** bad json **");
                     }
 
@@ -522,7 +544,7 @@ const UIHelper = {
             UIHelper.Ace.AceEditor = SetupAceEditor('PayloadEditor');
             UIHelper.Ace.AceDisplayRsults = SetupAceEditor('APIDebugResults');
 
-            
+
             //Only hook the actual editor!!!!!
             HookEvents(UIHelper.Ace.AceEditor);
 
