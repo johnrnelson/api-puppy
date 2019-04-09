@@ -489,14 +489,14 @@ const UIHelper = {
 
             function HookEvents(Editor2Hook) {
                 console.info('Hooking Events for the editor...');
-                
+                 
                 Editor2Hook.getSession().on('change', function (delta) {
-                    console.info(delta);
+                    
                     // debugger;
 
                     const editorJSON = Editor2Hook.getValue();
 
-                    console.info('Edit Len:',editorJSON.length);
+                    console.info('Edit Len:',editorJSON.length,delta);
                 });
             }
 
