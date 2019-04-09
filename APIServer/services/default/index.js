@@ -2,10 +2,12 @@
     default service and temptate you can use.
     
 */
-//Change this!!!
-function ServiceRequest(request, OnComplete) {
+ 
+function ServiceRequest(RequestObj,RequestData,  OnComplete) {
 
-    OnComplete(null,'Hello there!');
+    OnComplete(null,{
+        msg:'Hi there!'
+    });
 
 }
 exports.ServiceRequest = ServiceRequest;

@@ -221,16 +221,16 @@ const DebugUI = {
 
         for (var n in debugdata.apidata) {
             //We don't add the default here!
-            if (n != "default") {
-                const namespaceData = debugdata.apidata[n];
+            // if (n != "default") {
+            // }
+            const namespaceData = debugdata.apidata[n];
 
-                const optEl = document.createElement('option');
-                optEl.RecordData = namespaceData;
-                optEl.value = n;
-                optEl.innerHTML = n;
-                DebugVerbList.appendChild(optEl);
+            const optEl = document.createElement('option');
+            optEl.RecordData = namespaceData;
+            optEl.value = n;
+            optEl.innerHTML = n;
+            DebugVerbList.appendChild(optEl);
 
-            }
         }
 
         //Use the default and set the edtor....

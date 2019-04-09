@@ -1,5 +1,6 @@
 # API Server
-The [current live server](https://api.innovateeugene.com/) is up and running,
-but if you debug locally, you need to use http://0.0.0.0:9118/
+This provides the API and it's HTML UI for debug helper.
+
+Use `APIServer/debug/API_HELP.json` file to edit the list of services for the debug client.
 
  

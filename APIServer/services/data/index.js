@@ -3,8 +3,7 @@
     
 */
 
-
-//Change this!!!
+ 
 function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
     /*
