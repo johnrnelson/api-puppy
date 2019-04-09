@@ -72,41 +72,37 @@ const IPC = {
         response.writeHead(200, {
             'Content-Type': 'text/html'
         });
+ 
+
+
+
+
+
+
+
+
+
 
         /*
             Sure we are nesting calls.. maybe it looks ugly but its not blocking
             the main thread which we need to service the api requests other users
             make on the server...
         */
-        fs.readFile(__dirname + "/debug/debug.html", "utf8", function (err, debugHTML) {
+        fs.readFile(__dirname + "/debug/min/debug.html", "utf8", function (err, debugHTML) {
             if (err) {
                 SendError('debug.html');
 
             } else {
 
-                fs.readFile(__dirname + "/debug/client.js", "utf8", function (err, clientjs) {
+                fs.readFile(__dirname + "/debug/API_HELP.json", "utf8", function (err, API_HELP) {
                     if (err) {
-                        SendError('client.js');
+                        SendError('API_HELP.json');
 
                     } else {
 
-                        fs.readFile(__dirname + "/debug/API_HELP.json", "utf8", function (err, API_HELP) {
-                            if (err) {
-                                SendError('API_HELP.json');
 
-                            } else {
-                                fs.readFile(__dirname + "/debug/debug.css", "utf8", function (err, debugCSS) {
-                                    if (err) {
-                                        SendError('debug.css');
-
-                                    } else {
-                                        //
-
-
-
-
-                                        //  *** SEND THE END RESPONSE!!!!
-                                        const debugdata = `
+                        //  *** SEND THE END RESPONSE!!!!
+                        const debugdata = `
 window.debugdata = {
     UserInfo:${JSON.stringify(request.User)},
     NodeVersion:"${process.version}",
@@ -116,30 +112,45 @@ window.debugdata = {
     QueryData:${JSON.stringify(request.QueryData)}
 
 };
-`+ clientjs;
+`;
 
-                                        //Our debug HTML is a great way to make sure our stuff works. :-)
-                                        debugHTML = debugHTML.replace('//SERVER-SIDE-REPLACE!!!', debugdata);
-                                        debugHTML = debugHTML.replace('/* SERVER REPLACES STYLES */', debugCSS);
-
-                                        response.end(debugHTML);
-                                        //  *** SEND THE END RESPONSE!!!!
+                        //Our debug HTML is a great way to make sure our stuff works. :-)
+                        debugHTML = debugHTML.replace('//SERVER-SIDE-REPLACE!!!', debugdata);
 
 
-
-                                    }
-                                });
+                        response.end(debugHTML);
+                        //  *** SEND THE END RESPONSE!!!!
 
 
 
-
-                            }
-                        });//End API_HELP data...
                     }
+                });//End API_HELP data...
 
-                });//End Clientside javascript...
             }
         });//end debug html....
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     },
 
@@ -391,5 +402,94 @@ window.debugdata = {
 };
 
 
-//Lets get this party started. :-)
-IPC.Start();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    Save time by just compiling the debug files.. You can always make this a 
+    task or use grunt or whatever ya like... :-)
+*/
+function CompileDebugFiles(OnComplete) {
+
+    const path2debug = __dirname + "/debug/";
+
+    /*
+        Sure we are nesting calls.. maybe it looks ugly but its not blocking
+        the main thread which we need to service the api requests other users
+        make on the server...
+    */
+    fs.readFile(path2debug + "src/debug.html", "utf8", function (err, debugHTML) {
+        if (err) {
+            console.log('debug.html', err);
+
+        } else {
+
+            fs.readFile(path2debug + "src/client.js", "utf8", function (err, clientjs) {
+                if (err) {
+                    console.log('client.js', err);
+
+                } else {
+                    fs.readFile(path2debug + "src/debug.css", "utf8", function (err, debugCSS) {
+                        if (err) {
+                            console.log('debug.css', err);
+
+                        } else {
+                            //
+
+
+                            debugHTML = debugHTML.replace('/* SERVER REPLACES STYLES */', debugCSS);
+                            debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
+
+
+
+                            fs.writeFileSync(path2debug + 'min/debug.html', debugHTML, { flag: 'w' });
+
+                            OnComplete(null, 'Client HTML ready for requests...');
+
+                            // response.end(debugHTML);
+                            //  *** SEND THE END RESPONSE!!!!
+
+
+
+                        }
+                    });
+
+                }
+
+            });//End Clientside javascript...
+        }
+    });//end debug html....
+
+
+}
+
+
+/*
+    Compile the debug files to make life simple by staticly serving what you 
+    can and dynamicly adujusting what ya need. :-)   lol
+*/
+CompileDebugFiles(function (err, DebugFileStatus) {
+    if (err) {
+        console.log(err);
+
+    } else {
+        console.log(DebugFileStatus);
+
+        //Lets get this party started. :-)
+        IPC.Start();
+    }
+});

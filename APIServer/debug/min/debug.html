@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<!-- 
+    This is the DEBUG UI. Use a browser to get more information and 
+    the abilty to debug.
+-->
+
+
+
+<html>
+
+<head>
+
+
+    <title>Documentation and Debug Utility</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js> </script> <!-- SERVER SIDE -->
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js> </script> <!-- SERVER SIDE -->
+
+
+
+    <script>
+//SERVER-SIDE-REPLACE!!!
+    </script>
+
+
+<script>
+/*
+    Simple wrapper to test the API using the browser.
+
+    Adding in whatever you can to help the user actually use the API!
+*/
+
+const DebugUI = {
+    //Quick and easy way to get data from our api...
+    Fetch(data = {}) {
+        const url = document.URL + '';
+
+        return fetch(url, {
+            method: "PUT", // *GET, POST, PUT, DELETE, etc.
+            mode: "cors", // no-cors, cors, *same-origin
+            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+            credentials: "same-origin", // include, *same-origin, omit
+
+            headers: {
+                "Content-Type": "application/json",
+            },
+            redirect: "follow", // manual, *follow, error
+            referrer: "no-referrer", // no-referrer, *client
+            body: JSON.stringify(data), // body data type must match "Content-Type" header
+        }).then(response => response.json()); // parses JSON response into native Javascript objects 
+
+    },
+
+
+    /*
+        The rest is just setting up the UI for the user...
+    */
+
+    //Build an HTML table with all the api help.. 
+    SetHelpTable(DisplayHTMLELement) {
+        DebugUI.DisplayTestingActions = document.getElementById(DisplayHTMLELement);
+
+
+        //Clear any old stuff...
+        DebugUI.DisplayTestingActions.innerHTML = "";
+
+        // debugger;
+
+        for (var n in debugdata.apidata) {
+            const namespace = debugdata.apidata[n];
+            AddTestingRow(n, namespace);
+        }
+
+
+        function AddTestingRow(NameSpace, RowData) {
+
+
+
+            //for each test record we have....
+            for (var t in RowData.test) {
+                const test = RowData.test[t];
+
+                // console.log(test);
+
+                const TestActionRow = document.createElement('tr');
+                TestActionRow.title = "NameSpace:" + NameSpace;
+
+                const TestActionColA = document.createElement('td');
+                const TestActionColB = document.createElement('td');
+
+                TestActionColA.innerHTML = test.text;
+                TestActionColB.innerHTML = test.title;
+
+                // TestActionColA.className = "buttonclick";
+
+                //Let children reference the test record....
+                TestActionRow.DataRecord = test;
+
+                //Set DOM links for easy scripting access....
+                TestActionColA.RowElement = TestActionRow;
+                TestActionColB.RowElement = TestActionRow;
+
+
+                TestActionRow.appendChild(TestActionColA);
+                TestActionRow.appendChild(TestActionColB);
+                DebugUI.DisplayTestingActions.appendChild(TestActionRow);
+
+
+            }
+
+
+        }
+
+
+    },
+    //Show the server info via HTML in a componet fashion....
+    SetSysInfo() {
+        //You will find this on the `debug.html` page...
+        const SystemInfo = document.getElementById("SystemInfo");
+
+        //Setup a simple function to add html to our DOM... super simple!!!!!!!!!
+        function AddInfoElement(InfoText, InfoTip, ElementData) {
+            const NewEL = document.createElement('div');
+            NewEL.innerHTML = '<b>' + InfoText + '</b> : ' + ElementData;
+            NewEL.title = InfoTip;
+            NewEL.className = "FooterSysInfo";
+            SystemInfo.appendChild(NewEL);
+        }
+
+
+        //The user info for the client to use...
+        // console.log(debugdata.UserInfo);
+
+        if (debugdata.UserInfo.isAuthenticated) {
+            AddInfoElement('Security Level', 'Level of permissions on the server', debugdata.UserInfo.SecurityLevel);
+        } else {
+            AddInfoElement('Security Status', 'Your current user status from the servers perspective.', 'Not Authenticated');
+        }
+
+
+        AddInfoElement('Access Point', 'The protocal, port, hostname, path, and query string for the current request using for the API',
+            '<b>' + window.location.protocol + '</b>//' + window.location.hostname + ':' + debugdata.port +
+            '<b>' + debugdata.UserInfo.URL + '</b>');
+
+        AddInfoElement('NodeVersion', 'The version of node on this server',
+            debugdata.NodeVersion);
+
+        AddInfoElement('Start Date', 'The date the server started', debugdata.ST.toLocaleDateString() + " " + debugdata.ST.toLocaleTimeString());
+
+
+    },
+    /*
+        Fill the side bar with options we can use in our debugger...
+    */
+    FillSideBar() {
+
+        const dbSidebar = document.getElementById('debugger-sidbar');
+        const DebugVerbList = dbSidebar.querySelector("#DebugVerbList");
+        const ExampleCodeList = dbSidebar.querySelector("#ExampleCodeList");
+
+        //When the user selects something different...
+        DebugVerbList.onchange = function () {
+
+            const SelOpt = this.selectedOptions[0];
+
+            //Quick clear the old stuff...
+            ExampleCodeList.innerHTML = "";
+            // debugger;
+
+
+
+            DebugUI.Fetch({
+                service: 'help',
+                data: {
+                    topic: 'sample-code-list',
+                    sampleid: SelOpt.value
+
+                }
+            }).then(data => {
+                // console.log('Set default examples---...', data);
+
+                for (let index = 0; index < data.samples.length; index++) {
+                    const sample = data.samples[index];
+                    const opt = document.createElement('option');
+                    opt.value = sample;
+                    opt.innerHTML = sample;
+                    ExampleCodeList.appendChild(opt);
+                }
+
+                ExampleCodeList.onchange();
+
+            }) // JSON-string from `response.json()` call
+                .catch(error => {
+                    console.warn('Error!');
+                    console.warn(data);
+                    console.error(error);
+                    // debugger;
+                });
+
+
+        };
+
+
+        //When the user selects something different...
+        ExampleCodeList.onchange = function () {
+
+            const SelVerb = DebugVerbList.selectedOptions[0];
+
+            const SelOpt = this.selectedOptions[0];
+
+            DebugUI.Fetch({
+                service: 'help',
+                data: {
+                    topic: 'sample-code-fetch',
+                    sampleid: SelOpt.innerHTML,
+                    'target-service': SelVerb.innerHTML
+                }
+            }).then(data => {
+
+                if (data.err) {
+                    debugger;
+                    console.warn(data.err);
+                } else {
+
+                    UIHelper.Ace.AceEditor.setValue(JSON.stringify(data.code, null, "\t"));
+
+                    //Set the cursor so the user can start over again...
+                    UIHelper.Ace.AceEditor.moveCursorTo(0);
+
+
+                    UIHelper.Ace.AceDisplayRsults.setValue("{}");
+
+                    //Set the cursor so the user can start over again...
+                    UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+                }
+
+
+            }) // JSON-string from `response.json()` call
+                .catch(error => {
+                    console.error(error);
+                    debugger;
+                });
+
+
+        };
+
+
+        for (var n in debugdata.apidata) {
+            //We don't add the default here!
+            // if (n != "default") {
+            // }
+            const namespaceData = debugdata.apidata[n];
+
+            const optEl = document.createElement('option');
+            optEl.RecordData = namespaceData;
+            optEl.value = n;
+            optEl.innerHTML = n;
+            DebugVerbList.appendChild(optEl);
+
+        }
+
+        //Use the default and set the edtor....
+        DebugVerbList.onchange();
+
+    },
+    OpenDialog(DialogInfo) {
+        // debugger;
+
+
+
+        const modalWindow = document.querySelector('#mastermodal');
+        const modalWindowTitle = modalWindow.querySelector('.modal-title');
+        const modalWindowBody = modalWindow.querySelector('.modal-body');
+
+        modalWindowTitle.innerHTML = DialogInfo.title;
+        modalWindowBody.innerHTML = DialogInfo.body;
+
+        $('#mastermodal').modal({
+            show: true
+        });
+
+    },
+    RunDebug() {
+        console.clear();
+        console.info('\r\nRun the debug code!');
+
+
+        // debugger;
+        //Get our contents from the editor...
+        const JSONPayload = DebugUI.GetEditorJSON();
+
+        if (JSONPayload) {
+            DebugUI.Fetch(JSONPayload)
+                .then(data => {
+
+
+
+                    /*
+                    if (data.err) {
+                        DebugUI.OpenDialog({
+                            title: "Error runing the service",
+                            body: `
+                            <div>Please report this to support!</div>
+                            <b>Error Message</b> : ${data.err}
+                            `
+                        }); 
+                    }
+                    */
+
+
+                    UIHelper.Ace.AceDisplayRsults.setValue(JSON.stringify(data, null, "\t"));
+
+                    //Set the cursor so the user can start over again...
+                    UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+
+
+
+                }) // JSON-string from `response.json()` call
+                .catch(error => {
+                    console.warn('Error in running the debug!');
+                    console.error(error);
+                    // debugger;
+                });
+        }
+
+
+    },
+    /*
+        Toggle the result panel if we are too lazy to check out the 
+        window console. lol  :-)
+    */
+    ToggleResult(ShowFlag) {
+
+        debugger;
+
+        const APIDebugResultsElement = document.getElementById("APIDebugResults");
+        const AceEditorElement = document.getElementById("PayloadEditor");
+
+        //Toggle if no falg defined!
+        if (!ShowFlag) {
+            if (APIDebugResultsElement.style.display == "none") {
+                ShowFlag = true;
+            } else {
+                ShowFlag = false;
+            }
+        }
+
+        debugger;
+        if (ShowFlag) {
+            APIDebugResultsElement.style.display = "";
+            // AceEditorElement.style.bottom = "200px";
+        } else {
+            APIDebugResultsElement.style.display = "none";
+            // AceEditorElement.style.bottom = "0";
+        }
+
+        //Make sure the Ace editor knows it's been resized...
+        UIHelper.Ace.AceEditor.resize();
+    },
+
+
+    GetEditorJSON() {
+
+        try {
+            return JSONPayload = JSON.parse(UIHelper.Ace.AceEditor.getValue());
+
+
+        } catch (errorJSON) {
+
+            const modalWindow = document.querySelector('#mastermodal');
+            const modalWindowTitle = modalWindow.querySelector('.modal-title');
+            const modalWindowBody = modalWindow.querySelector('.modal-body');
+
+            modalWindowTitle.innerHTML = "Error in JSON!";
+
+            modalWindowBody.innerHTML = `
+            <div>Fix the JSON errors before attempting to call the API!</div> 
+            <br> 
+            `;
+
+            $('#mastermodal').modal({
+                show: true
+            });
+            return null;
+        }
+
+    },
+    //Pop a window to show the code!
+    ExportCode(TypeOfCode) {
+
+
+        //Get our contents from the editor...
+        const JSONPayload = DebugUI.GetEditorJSON();
+
+        /*
+            Define the languages supported and how to help...
+        */
+        const languages_supported = {
+            'curl': function () {
+
+                return {
+                    title: 'Command line "curl"',
+                    code: `curl --request GET --data '${JSON.stringify(JSONPayload)}' ${window.location.href}`,
+                    help: 'Check out the man page for curl for more information.',
+                }
+            },
+            'javascript-fetch': function () {
+                return {
+                    title: 'Browser javascript',
+                    code: `
+                const url = '${document.URL}'; 
+            
+                fetch(url, {
+                    method: "PUT", // *GET, POST, PUT, DELETE, etc.
+                    mode: "cors", // no-cors, cors, *same-origin
+                    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+                    credentials: "same-origin", // include, *same-origin, omit
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    redirect: "follow", // manual, *follow, error
+                    referrer: "no-referrer", // no-referrer, *client
+                    body: JSON.stringify(${JSON.stringify(JSONPayload)}), // body data type must match "Content-Type" header
+                }).then(response => response.json()).then(JSON => {
+                    console.info('This is the result of the request!');
+                    console.log(JSON);
+                    debugger;
+                }); // parses JSON response into native Javascript objects 
+                 
+                
+                `,
+                    help: 'You can use xhr but I guess fetch is the new thing.',
+                }
+            },
+            'javascript-http-request': function () {
+                return {
+                    title: 'NodeJS HTTP Request',
+                    code: `** SAMPLE CODE for npm "request" **`,
+                    help: 'There are many ways to use request objects in Node.',
+                }
+            },
+            'python 3': function () {
+                return {
+                    title: 'Python 3 Example',
+                    code: `
+
+import json
+import requests
+
+api_token = 'your_api_token'
+api_url_base = '${document.URL}'
+headers = {'Content-Type': 'application/json','Authorization': 'Bearer {0}'.format(api_token)}
+api_url = '{0}account'.format(api_url_base)
+response = requests.get(api_url, headers=headers)
+response_data = response.json() 
+print(response_data)  
+
+                `,
+                    help: 'No Python experts helping us out with this?',
+                }
+            }
+        };
+
+
+
+        const active_lang = languages_supported[TypeOfCode]({
+            jSON: 'data'
+        });
+
+        //User wants to use something we don't know about???
+        if (!active_lang) {
+            console.warn('somebody update something? Did you check git for the latest code? TypeOfCode"' + TypeOfCode + '" not found!');
+        } else {
+
+            DebugUI.OpenDialog({
+                title: active_lang.title,
+                body: `
+                <div>Please help us improve this!</div>
+                <pre><code>${active_lang.code.replace(/\n/g, '<br>')}</code></pre>
+                <br>
+                <b><i>${active_lang.help}</i></b>
+                `
+            });
+
+
+        }//End if right type of code...
+    },
+    SetTargetURI(TargetURI) {
+        const apiURI = document.getElementById('api-uri-address');
+        
+        console.info('set text box URL!',TargetURI);
+        
+        apiURI.value = TargetURI;
+        // debugger;
+
+    }
+};
+
+
+const UIHelper = {
+    Ace: {
+        AceEditor: null, //Set this in code when you are ready...
+        AceDisplayRsults: null, //Set this in code when you are ready...        
+        BuildAll() {
+
+            function SetupAceEditor(ParentHTMLTagID) {
+
+                //Ace Editor is awesome! 
+                var aceEditor = ace.edit(ParentHTMLTagID);
+
+                // Go here for more options... https://github.com/ajaxorg/ace/wiki/Configuring-Ace
+                aceEditor.setOption("mode", "ace/mode/json");
+                aceEditor.setOption("autoScrollEditorIntoView", true);
+                aceEditor.setOption("showPrintMargin", false);
+                aceEditor.setOption("fontSize", 15);
+                aceEditor.$blockScrolling = Infinity;
+
+                return aceEditor;
+            }
+
+            function HookEvents(Editor2Hook) {
+                console.info('Hooking Events for the editor...');
+                 
+                Editor2Hook.getSession().on('change', function (delta) {
+                    
+                    // debugger;
+
+                    const editorJSON = Editor2Hook.getValue();
+                    try{
+                        const jsonData = JSON.parse(editorJSON);
+
+                        if(jsonData.service){
+                            DebugUI.SetTargetURI('/'+jsonData.service+'/');                                                    
+                        }else{
+                            DebugUI.SetTargetURI(editorJSON);                        
+
+                        }
+
+                        // console.info('Edit Len:',editorJSON.length,delta);
+
+                    }catch(errBadJSON){
+                        DebugUI.SetTargetURI("** bad json **");
+                    }
+
+                });
+            }
+
+            UIHelper.Ace.AceEditor = SetupAceEditor('PayloadEditor');
+            UIHelper.Ace.AceDisplayRsults = SetupAceEditor('APIDebugResults');
+
+            
+            //Only hook the actual editor!!!!!
+            HookEvents(UIHelper.Ace.AceEditor);
+
+            var langTools = ace.require("ace/ext/language_tools");
+
+            var rhymeCompleter = {
+                getCompletions: (editor, session, caretPosition2d, prefix, callback) => {
+
+                    var currline = editor.getSelectionRange().start.row;
+                    var content = editor.session.getLine(currline);
+
+
+                    const WordList = [];
+                    WordList.push({
+                        caption: 'service',
+                        meta: '',
+                        score: 10,
+                    });
+
+                    WordList.push({
+                        caption: 'view',
+                        meta: '',
+                        score: 10,
+                    });
+
+
+                    callback(null, WordList.map((s) => {
+                        return {
+                            // name: s.caption,
+                            value: s.caption,
+                            score: 100,
+                            meta: s.meta,
+                        }
+                    }))
+                },
+            }
+            langTools.addCompleter(rhymeCompleter);
+
+            UIHelper.Ace.AceEditor.setOptions({
+                enableBasicAutocompletion: rhymeCompleter,
+                enableLiveAutocompletion: true,
+                enableSnippets: true,
+            });
+
+
+        }
+    },
+    ShowTab(Tab2Show) {
+
+        // debugger;
+        if (typeof (Tab2Show) == "string") {
+            Tab2Show = document.getElementById(Tab2Show);
+        }
+
+        if (!UIHelper.ActiveTab) {
+            UIHelper.ActiveTab = Tab2Show;
+        } else {
+            UIHelper.ActiveTab.style.display = "none";
+            UIHelper.ActiveTab = Tab2Show;
+        }
+        UIHelper.ActiveTab.style.display = "block";
+    },
+
+};
+
+
+
+/*
+    After page has loaded, you can be sure that everything you need
+    is already loaded and ready to go...
+*/
+window.onload = function () {
+
+
+
+
+
+    //Setup our UI parts...
+    DebugUI.SetSysInfo();
+    DebugUI.FillSideBar();
+    // DebugUI.SetHelpTable();
+
+
+    //Setup all of our ace editors...
+    UIHelper.Ace.BuildAll();
+
+
+    console.info('The API Client has loaded.Feel free to explore this object in the console.');
+
+    /*
+        This is only available to the debug client. We 
+        don't put this in normal requests from users... 
+    */
+    console.info(`
+    
+        Use : "ServerAPI" for easy code to help with testing.
+        Use : "debugdata" in the console for the api data help.
+    
+    `);
+
+
+    //Which screen do you want to show first? Are you debugging the debugger? lol
+    // UIHelper.ShowTab('TabMain');
+    UIHelper.ShowTab('TabDebugger');
+
+
+};
+
+</script>
+
+    <style>
+        /* 
+
+    This is your chance to color up the debug UI!!! 
+
+    Don't blame John for the ugly CSS. He's slow and color blind. :-) 
+
+*/
+body {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
+
+TopNav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+
+MainTabDisplay {
+    display: none;
+    overflow: hidden;
+    position: absolute;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+
+
+/* 
+
+    Other stuff.....
+
+*/
+
+
+
+
+/* The debugger section */
+
+
+.ace-editor {
+    border: solid 1px silver;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.APIDebugResults {
+    border: solid 1px silver;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+
+#TabDebugger .api-uri-display {
+    position: absolute;
+    
+    top: 0;
+    height: 30px;
+    left: 0;
+    right: 30px;
+    background-color: rgb(236, 236, 236);
+    color: white;
+    /* padding-right:1px; */
+    /* margin:4px; */
+}
+#TabDebugger .api-uri-display #api-uri-address {
+    position: relative;
+    width:100%;
+    height:100%;
+    border:0;
+    padding: 3px;
+    
+ 
+
+    background-color: transparent;
+    color: black;
+    text-overflow: ellipsis;
+
+}
+
+
+
+#TabDebugger .api-uri-browse {
+    position: absolute;
+    
+    top: 0;
+    height: 30px;
+    /* left: 0; */
+    right: 0;
+    width: 30px;
+    background-color: transparent;
+    color: white;
+    padding:1px;
+    /* margin:4px; */
+    font-size: 20px;
+    text-align: center
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+
+
+sidebar 
+
+
+
+
+*/
+#TabDebugger #debugger-sidbar {
+    position: absolute;
+    top: 35px;
+    bottom: 0;
+    left: 0;
+    width: 150px;
+    background-color: rgb(54, 54, 54);
+    color: white;
+    padding: 5px;
+}
+
+#debugger-sidbar select {
+    background-color: transparent;
+    width: 100%;
+    color: gold;
+    /* right: 150px; */
+}
+
+#debugger-sidbar .ActionButton {
+    font-size: 16px;
+    border-radius: 6px;
+
+    color: rgb(82, 82, 82);
+    /* width: 90%; */
+    left: 0;
+    right: 0;
+
+    text-align: center;
+    text-decoration: none;
+
+    background-color: rgb(212, 212, 212);
+
+    cursor: pointer;
+    margin-top: 10px;
+
+}
+
+/* Main help text classes...  */
+
+.HelpText {
+    color: gray;
+    font-size: 14px;
+}
+
+pre {
+    margin: 5px;
+    padding: 25px;
+    background-color: rgb(238, 238, 238);
+    height: 80%;
+    overflow: auto;
+}
+
+pre code {
+    white-space: nowrap !important;
+}
+
+.buttonclick {
+    cursor: pointer;
+    color: green;
+}
+
+.todo-item {
+    color: green;
+    font-size: 12px;
+}
+
+/* 
+FOOTER STYLES!!!!!! 
+*/
+
+.footer-row {
+    padding-top: 50px;
+    margin-bottom: 100px;
+}
+
+.FooterHeading {
+    color: green;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.FooterSysInfo {
+    color: gray;
+    cursor: default;
+}
+
+.FooterSysInfo:hover {
+    color: silver !important;
+    cursor: hand;
+}
+
+.TableHeader {
+    color: purple;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 
+split info from https://gist.github.com/jpnelson/52d6f38820c6d028bdf8
+
+slightly modified.... 
+*/
+
+
+.split-container {
+    position: absolute;
+    left: 150px;
+    right: 0;
+    top: 35px;
+    bottom: 0;
+    border: 0;
+    background-color: transparent;
+
+
+}
+
+.split {
+    display: flex;
+    height: 100%;
+    /* border: 1px solid black; */
+}
+
+.split> :nth-child(1) {
+    overflow: scroll;
+}
+
+.split> :nth-child(2) {
+    flex-grow: 1;
+}
+
+/* Vertical */
+
+.split.vertical {
+    flex-direction: column;
+}
+
+.split.vertical> :nth-child(1) {
+    resize: vertical;
+}
+
+/* Horizontal */
+
+.split.horizontal {
+    flex-direction: row;
+}
+
+.split.horizontal> :nth-child(1) {
+    resize: horizontal;
+}
+
+
+
+
+/* 
+ Bad results here!
+.split div {} 
+*/
+    </style>
+</head>
+
+<body>
+
+
+
+
+
+    <div id="mastermodal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Set via code....</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">Set via code....</div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <TopNav>
+        <nav class="navbar navbar-expand navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabMain')">Main Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabDebugger')">Debug Tool</a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GitHub</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a target="_blank" class="dropdown-item"
+                                href="https://github.com/johnrnelson/api-puppy">Project</a>
+                            <a target="_blank" class="dropdown-item"
+                                href="https://github.com/johnrnelson/api-puppy/issues">Issues</a>
+                            <div class="dropdown-divider"></div>
+                            <a target="_blank" class="dropdown-item"
+                                href="https://github.com/johnrnelson/api-puppy/tree/master/Notes">Notes</a>
+                        </div>
+                    </li>
+
+
+                </ul>
+
+            </div>
+        </nav>
+    </TopNav>
+
+
+    <!-- Because of the editor, you need to declare this first! -->
+    <MainTabDisplay id="TabDebugger">
+        <span class="api-uri-display">
+            <input id="api-uri-address"
+                value="/time/is/on-your-side/if-your-smart/about/it?testValA=abc&testlongvalformetotestwithis=ofmythis_isreallylongwoohooooooo" />
+        </span>
+        <span class="api-uri-browse">
+            <a href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
+        </span>
+
+        <div id="debugger-sidbar">
+            <center>
+
+
+                <div>Select Service</div>
+                <select id="DebugVerbList"></select>
+                <br>
+                <select id="ExampleCodeList"></select>
+                <br>
+
+                <div title="Test the API" onclick="DebugUI.RunDebug()" class="ActionButton">Execute Request</div>
+
+
+                <div style="padding-top:15px;">
+                    Export Options
+
+                </div>
+
+                <div title="CURL" onclick="DebugUI.ExportCode('curl')" class="ActionButton">CURL</div>
+
+                <div title="JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')" class="ActionButton">
+                    JavaScript</div>
+
+                <div title="JavaScript HTTP Client" onclick="DebugUI.ExportCode('javascript-http-request')"
+                    class="ActionButton">NodeJS</div>
+
+                <div title="pythod 3" onclick="DebugUI.ExportCode('python 3')" class="ActionButton">Python3</div>
+
+                <hr width="90%" size="1" color="gold" />
+
+
+
+            </center>
+        </div>
+
+        <div class="split-container">
+            <div class="split horizontal">
+
+                <div style="width:50%">
+                    <div id="PayloadEditor" class="ace-editor"></div>
+                </div>
+                <div>
+
+                    <div id="APIDebugResults" class="APIDebugResults"></div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </MainTabDisplay>
+
+
+    <MainTabDisplay id="TabMain" style="overflow:auto;">
+
+
+        <div class="container">
+
+            <div class="page-header">
+                <h1>Debug Utility</h1>
+            </div>
+            <div class="alert alert-info" role="alert">
+
+                Use this tool to both get help and test the API.
+                <b>Open your browser window console to really take advantage of the output!</b>
+            </div>
+
+            <p class="HelpText">
+                <div class="alert alert-primary" role="alert">
+                    This is actually the API. Seriously!
+                </div>
+
+            </p>
+
+
+
+
+
+
+
+            <!-- footer -->
+            <div class="row footer-row">
+                <div id="SystemInfo" class="col-md-8">
+                    <div class="FooterHeading">System Information</div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="FooterHeading">Open Source Components</div>
+
+                    <a title="Used to make the simple UI" target="_blank" href="https://getbootstrap.com/">Bootstrap</a>
+                    <br>
+                    <a title="Code editor for the API Explorer" target="_blank" href="https://ace.c9.io/">Ace Editor</a>
+                    <br>
+                    <a title="Wiki info about Node.js" target="_blank"
+                        href="https://en.wikipedia.org/wiki/Node.js">Node.js
+                        Wiki</a>
+                    <br>
+                </div>
+            </div>
+
+
+
+
+        </div>
+    </MainTabDisplay>
+
+
+
+
+</body>
+
+</html>

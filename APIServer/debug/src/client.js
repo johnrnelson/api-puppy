@@ -460,8 +460,12 @@ print(response_data)
         }//End if right type of code...
     },
     SetTargetURI(TargetURI) {
+        const apiURI = document.getElementById('api-uri-address');
+        
         console.info('set text box URL!',TargetURI);
-        debugger;
+        
+        apiURI.value = TargetURI;
+        // debugger;
 
     }
 };
@@ -496,9 +500,22 @@ const UIHelper = {
                     // debugger;
 
                     const editorJSON = Editor2Hook.getValue();
+                    try{
+                        const jsonData = JSON.parse(editorJSON);
 
-                    console.info('Edit Len:',editorJSON.length,delta);
-                    DebugUI.SetTargetURI(JSON.stringify(editorJSON));
+                        if(jsonData.service){
+                            DebugUI.SetTargetURI('/'+jsonData.service+'/');                                                    
+                        }else{
+                            DebugUI.SetTargetURI(editorJSON);                        
+
+                        }
+
+                        // console.info('Edit Len:',editorJSON.length,delta);
+
+                    }catch(errBadJSON){
+                        DebugUI.SetTargetURI("** bad json **");
+                    }
+
                 });
             }
 
