@@ -35,5 +35,6 @@ todo list. :-)
 - [x] Support multiple tasks per request  
 - [ ] Live documentation and tools
 - [ ] Support paths and query string for routing
+- [ ] Content Security Policy (CSP) fixes!
  
 
