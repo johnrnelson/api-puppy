@@ -67,7 +67,7 @@ MainTabDisplay {
     height: 30px;
     left: 0;
     right: 30px;
-    background-color: transparent;
+    background-color: rgb(236, 236, 236);
     color: white;
     /* padding-right:1px; */
     /* margin:4px; */
@@ -77,9 +77,11 @@ MainTabDisplay {
     width:100%;
     height:100%;
     border:0;
+    padding: 3px;
+    
  
 
-    background-color: silver;
+    background-color: transparent;
     color: black;
     text-overflow: ellipsis;
 
@@ -99,7 +101,7 @@ MainTabDisplay {
     color: white;
     padding:1px;
     /* margin:4px; */
-    font-size: 25px;
+    font-size: 20px;
     text-align: center
 }
 

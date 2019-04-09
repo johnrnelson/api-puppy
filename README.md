@@ -25,18 +25,6 @@ Make sure you setup your SSH correctly!
     git clone git@github.com:johnrnelson/api-puppy
 
 
-
-# Important
-Make sure you create a `DATA` and `SECRET` folder before you try to 
-run any scripts. 
-
-    mkdir DATA
-    cd DATA
-    mkdir SECRET
-
-
-** READ THE [README's](Notes)!  :-)
-
  
 
 ## TODO
@@ -44,8 +32,8 @@ This is quick running to do list of items that should be moved to the github iss
 However it would seem as only the people actually using the code are the ones doing the 
 todo list. :-)
 
-- [x] Repurpose the code
 - [x] Support multiple tasks per request  
 - [ ] Live documentation and tools
-- [ ] Threading? Maybe?
+- [ ] Support paths and query string for routing
+ 
 

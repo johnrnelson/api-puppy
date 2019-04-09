@@ -459,8 +459,9 @@ print(response_data)
 
         }//End if right type of code...
     },
-    SetTargetURI() {
-        console.info('set text box URL!');
+    SetTargetURI(TargetURI) {
+        console.info('set text box URL!',TargetURI);
+        debugger;
 
     }
 };
@@ -497,6 +498,7 @@ const UIHelper = {
                     const editorJSON = Editor2Hook.getValue();
 
                     console.info('Edit Len:',editorJSON.length,delta);
+                    DebugUI.SetTargetURI(JSON.stringify(editorJSON));
                 });
             }
 
@@ -504,7 +506,7 @@ const UIHelper = {
             UIHelper.Ace.AceDisplayRsults = SetupAceEditor('APIDebugResults');
 
             
-
+            //Only hook the actual editor!!!!!
             HookEvents(UIHelper.Ace.AceEditor);
 
             var langTools = ace.require("ace/ext/language_tools");
