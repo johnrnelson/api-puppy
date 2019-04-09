@@ -70,9 +70,15 @@ const IPC = {
             query string values.  :-)
         */
         response.writeHead(200, {
-            'Content-Type': 'text/html'
+            "Content-Type": "text/html",
+             //CSP Policy
+             "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
+
+
+
         });
- 
+
+
 
 
 
@@ -284,7 +290,14 @@ window.debugdata = {
 
                 //We alwasy use JSON for everything.. 
                 response.writeHead(200, {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    //CSP Policy
+                    "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
+
+                    //CORB...
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "POST",
+                    "Access-Control-Allow-Headers": "Content-Type, Authorization"
                 });
 
                 if (body == '') {
