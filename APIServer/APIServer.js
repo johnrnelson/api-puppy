@@ -53,7 +53,7 @@ const IPC = {
         const http = require('http');
         const https = require("https");
 
-        
+
 
         var httpServer = http.createServer(function (requset, response) {
             IPC.ServiceWeb(requset, response);
@@ -69,7 +69,7 @@ const IPC = {
 
 
 
-  
+
         /*
             Support SSL/HTTPS otherwise your not popular on the internet.             
         */
@@ -86,20 +86,20 @@ const IPC = {
             const httpsServer = https.createServer(credentials, function (requset, response) {
                 IPC.ServiceWeb(requset, response);
             });
-    
-    
+
+
             //Lets start our server..
             httpsServer.listen(IPC.PORT_HTTPS, IPC.IPADDRESS, function () {
                 console.log("SSL Web Server Ready : https://" + IPC.IPADDRESS + ":" + IPC.PORT_HTTPS);
                 IPC.StartDate = new Date();
             });
-    
+
 
         } catch (errCerts) {
             console.log('Error reading cert files.\r\n');
             console.log(errCerts.message);
         }
- 
+
     },
 
 
@@ -220,6 +220,9 @@ window.debugdata = {
 
                 //Insert dagger here!!!!
                 route2Take.ServiceRequest(RequestObj, RequestData, function (ServiceError, ResponseJSON) {
+                    if(ServiceError){
+                        debugger;
+                    }
                     OnComplete(ServiceError, ResponseJSON);
 
                 });
@@ -375,6 +378,11 @@ window.debugdata = {
 
                     }
 
+                    const ServiceErrorInformation = {
+                        msg: "Service Error!",
+                        service: request.RequestData.service                        
+                    };
+
 
 
                     //Is this a multi-request????
@@ -395,7 +403,7 @@ window.debugdata = {
                                 resultObj[aSingleRequest.reqID] = ResponseJSON;
 
                                 if (ServiceError) {
-                                    resultObj[aSingleRequest.reqID] = ServiceError;
+                                    resultObj[aSingleRequest.reqID] = ServiceErrorInformation;
 
                                 } else {
                                     resultObj[aSingleRequest.reqID] = ResponseJSON
@@ -418,7 +426,7 @@ window.debugdata = {
                             if (ServiceError) {
                                 //Don't leak this!! lol
                                 // response.SendError(response, ServiceError);
-                                response.SendError(response, "Service not found!");
+                                response.SendError(response, ServiceErrorInformation);
                             } else {
                                 const doh = ResponseJSON;
                                 response.end(JSON.stringify(ResponseJSON));
@@ -434,7 +442,7 @@ window.debugdata = {
                     // console.log("URL", request.url);
                     // console.log(errEndReq.message);
                     // console.log(body);
-                    // debugger;
+                    debugger;
 
                     //Give the client some idea of what went wrong...
                     var resp = {

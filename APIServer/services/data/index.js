@@ -24,7 +24,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
     // console.log(request.RequestData);/
 
 
-    OnComplete(result, null);
+    OnComplete(null,result);
 
 
 
