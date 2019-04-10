@@ -115,7 +115,7 @@ const DebugUI = {
 
 
         AddInfoElement('Access Point', 'The protocal, port, hostname, path, and query string for the current request using for the API',
-            '<b>' + window.location.protocol + '</b>//' + window.location.hostname + ':' + debugdata.port +
+            '<b>' + window.location.protocol + '</b>//' + window.location.hostname +
             '<b>' + debugdata.UserInfo.URL + '</b>');
 
         AddInfoElement('NodeVersion', 'The version of node on this server',
@@ -404,7 +404,7 @@ const DebugUI = {
 
 
 
-                
+
                 return {
                     title: 'Browser javascript',
                     code: `
@@ -547,7 +547,7 @@ const UIHelper = {
                                     if (typeof (jsonData[o]) == "object") {
                                         basicOptions.push('' + o + "=" + JSON.stringify(jsonData[o]));
                                     } else {
-                                        if(jsonData[o] != ""){
+                                        if (jsonData[o] != "") {
                                             basicOptions.push('' + o + "=" + jsonData[o]);
                                         }
 
