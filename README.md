@@ -25,12 +25,29 @@ Make sure you setup your SSH correctly!
     git clone git@github.com:johnrnelson/api-puppy
 
 
-Setup iptables
+# Setup iptables
 Use this to redirect lower ports to our higher port. This lets us run the service 
 as a normal user instead of root.
 
     sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 9118
     sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 9118
+
+now to make the changes persist.
+
+    sudo iptables-save > /etc/iptables.conf
+
+
+If you change the tables make sure to save them again on the server. 
+
+    sbin/iptables-save > /etc/iptables/rules.v4
+
+    
+
+
+
+# PM2
+
+    pm2 start APIServer.js --name api-puppy
 
 
 ## TODO
