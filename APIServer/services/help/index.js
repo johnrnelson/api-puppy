@@ -2,19 +2,18 @@ const topics = {
     //Get a list of sample files to work with....
     'sample-code-list': function (RequestData, OnComplete) {
 
-        // const RequestData = RequestData.data;
-     
-
-        const sampleid = RequestData.sampleid.replace(/\./g, '');
-
         // console.log(sampleid);
 
         const fs = require('fs');
         const path = require('path');
 
+ 
+       
+        //Make sure there is not funky monkey going on with their request!!! 
+        const sampleid = path.normalize(RequestData.sampleid.replace(/\./g, ''));
 
-        // const examplesFolder = path.resolve(path.join(SERVER.RootFolder, "services",
-        //     path.normalize(path.join('data', 'examples'))));
+
+
 
         const examplesFolder = path.resolve(path.join(SERVER.RootFolder, "services", sampleid, 'examples'));
 
@@ -47,16 +46,18 @@ const topics = {
     },
     //get the actual sample file...
     'sample-code-fetch': function (RequestData, OnComplete) {
-        // const RequestData = RequestData.data;
-       
-        const sampleid = RequestData.sampleid.replace(/\./g, '');
+ 
+        const fs = require('fs');
+        const path = require('path');
+        
+        //Make sure there is not funky monkey going on with their request!!! 
+        const sampleid = path.normalize(RequestData.sampleid.replace(/\./g, ''));
+
 
         const targetService = RequestData["target-service"].replace(/\./g, '');
 
         // console.log(sampleid, targetService);
 
-        const fs = require('fs');
-        const path = require('path');
 
         const examplesFilePath = path.join(SERVER.RootFolder, "services", targetService, "examples", sampleid + ".json");
 
