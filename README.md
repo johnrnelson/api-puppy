@@ -29,8 +29,8 @@ Make sure you setup your SSH correctly!
 Use this to redirect lower ports to our higher port. This lets us run the service 
 as a normal user instead of root.
 
-    sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 9080
-    sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 9443
+    sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 9080
+    sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 9443
 
 now to make the changes persist.
 
@@ -63,6 +63,9 @@ todo list. :-)
 
 Currently working on..
 
-https://demo.tektology.com/
+[SSL/HTTPS demo.tektology.com](https://demo.tektology.com/)
+or
+[HTTP demo.tektology.com](http://demo.tektology.com/)
 
-http://demo.tektology.com/
+If debugging, use [Local Host](http://0.0.0.0:9080) 
+

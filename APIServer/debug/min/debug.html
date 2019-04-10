@@ -159,7 +159,7 @@ const DebugUI = {
 
 
         AddInfoElement('Access Point', 'The protocal, port, hostname, path, and query string for the current request using for the API',
-            '<b>' + window.location.protocol + '</b>//' + window.location.hostname + ':' + debugdata.port +
+            '<b>' + window.location.protocol + '</b>//' + window.location.hostname +
             '<b>' + debugdata.UserInfo.URL + '</b>');
 
         AddInfoElement('NodeVersion', 'The version of node on this server',
@@ -448,7 +448,7 @@ const DebugUI = {
 
 
 
-                
+
                 return {
                     title: 'Browser javascript',
                     code: `
@@ -591,7 +591,7 @@ const UIHelper = {
                                     if (typeof (jsonData[o]) == "object") {
                                         basicOptions.push('' + o + "=" + JSON.stringify(jsonData[o]));
                                     } else {
-                                        if(jsonData[o] != ""){
+                                        if (jsonData[o] != "") {
                                             basicOptions.push('' + o + "=" + jsonData[o]);
                                         }
 
@@ -709,7 +709,7 @@ window.onload = function () {
     UIHelper.Ace.BuildAll();
 
 
-    console.info('The API Client has loaded.Feel free to explore this object in the console.');
+    console.info('The API Client has loaded. Feel free to explore this object in the console.');
 
     /*
         This is only available to the debug client. We 
@@ -724,8 +724,8 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    // UIHelper.ShowTab('TabMain');
-    UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabDebugger');
 
 
 };
@@ -1172,8 +1172,7 @@ slightly modified....
             </div>
             <div class="alert alert-info" role="alert">
 
-                Use this tool to both get help and test the API.
-                <b>Open your browser window console to really take advantage of the output!</b>
+                Use this tool to both get help and test the API. 
             </div>
 
             <p class="HelpText">

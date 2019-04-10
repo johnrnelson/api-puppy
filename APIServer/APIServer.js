@@ -76,7 +76,7 @@ const IPC = {
 
         try {
             var certsFolder = __dirname + "/../CERTS/" + SERVER.CERTS.path;
-            
+
             // setup our credentials...
             const credentials = {
                 key: fs.readFileSync(certsFolder + '/privkey.pem', 'utf8'),
@@ -416,7 +416,9 @@ window.debugdata = {
                         //By the time you get here.. you want a true web api request...
                         IPC.ServiceRequest(request, request.RequestData, function (ServiceError, ResponseJSON) {
                             if (ServiceError) {
-                                response.SendError(response, ServiceError);
+                                //Don't leak this!! lol
+                                // response.SendError(response, ServiceError);
+                                response.SendError(response, "Service not found!");
                             } else {
                                 const doh = ResponseJSON;
                                 response.end(JSON.stringify(ResponseJSON));

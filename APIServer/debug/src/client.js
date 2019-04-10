@@ -665,7 +665,7 @@ window.onload = function () {
     UIHelper.Ace.BuildAll();
 
 
-    console.info('The API Client has loaded.Feel free to explore this object in the console.');
+    console.info('The API Client has loaded. Feel free to explore this object in the console.');
 
     /*
         This is only available to the debug client. We 
@@ -680,8 +680,8 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    // UIHelper.ShowTab('TabMain');
-    UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabDebugger');
 
 
 };

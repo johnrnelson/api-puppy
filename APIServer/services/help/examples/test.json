@@ -1,4 +1,6 @@
 {
 	"service": "help",
-	"topic": "test"
+	"data":{
+		"topic": "test"
+	}
 }
