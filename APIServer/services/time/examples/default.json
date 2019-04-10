@@ -1,6 +1,5 @@
 {
 	"service": "time",
-	"opts": {
-		"fmt":"non"
-	}
+	"format":"",
+	"tz": ""
 }

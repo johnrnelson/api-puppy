@@ -72,7 +72,7 @@ const IPC = {
         response.writeHead(200, {
             "Content-Type": "text/html",
              //CSP Policy
-             "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
+            //  "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
 
 
 
@@ -241,7 +241,6 @@ window.debugdata = {
         request.QueryPath = RequestURLData.pathname;
 
 
-
         //Give the response and easy way out for errors...
         response.SendError = IPC.SendError;
 
@@ -292,12 +291,12 @@ window.debugdata = {
                 response.writeHead(200, {
                     'Content-Type': 'application/json',
                     //CSP Policy
-                    "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
+                    // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
 
                     //CORB...
-                    "Access-Control-Allow-Origin": "*",
-                    "Access-Control-Allow-Methods": "POST",
-                    "Access-Control-Allow-Headers": "Content-Type, Authorization"
+                    // "Access-Control-Allow-Origin": "*",
+                    // "Access-Control-Allow-Methods": "POST",
+                    // "Access-Control-Allow-Headers": "Content-Type, Authorization"
                 });
 
                 if (body == '') {
@@ -327,8 +326,15 @@ window.debugdata = {
 
                 try {
 
-
-
+                    /*
+                        Use the path to figure out what the user wants if they didn't
+                        use the body to post JSON to...
+                    */
+                    const PathParts = request.QueryPath.split('/').filter(Boolean);
+                    if(PathParts.length){
+                        request.RequestData.service = PathParts[0];
+                    }
+            
 
 
                     //Is this a multi-request????

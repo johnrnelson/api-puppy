@@ -519,7 +519,9 @@ const UIHelper = {
                                     if (typeof (jsonData[o]) == "object") {
                                         basicOptions.push('' + o + "=" + JSON.stringify(jsonData[o]));
                                     } else {
-                                        basicOptions.push('' + o + "=" + jsonData[o]);
+                                        if(jsonData[o] != ""){
+                                            basicOptions.push('' + o + "=" + jsonData[o]);
+                                        }
 
                                     }
 
