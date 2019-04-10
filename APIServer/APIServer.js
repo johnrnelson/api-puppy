@@ -71,7 +71,7 @@ const IPC = {
         */
         response.writeHead(200, {
             "Content-Type": "text/html",
-             //CSP Policy
+            //CSP Policy
             //  "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
 
 
@@ -236,9 +236,35 @@ window.debugdata = {
 
         const RequestURLData = url.parse(request.url);
 
+
+
+
+
         //Any Querystring they submit gets attached to the request object as an object not a string..
         request.QueryData = querystring.parse(RequestURLData.query);
         request.QueryPath = RequestURLData.pathname;
+
+
+        console.log(request.QueryPath, ' --- ', request.method.toUpperCase());
+
+        if (request.method.toUpperCase() == "OPTIONS") {
+            console.log(request.headers);
+            // return;
+        }
+
+        //We alwasy use JSON for everything.. 
+        response.writeHead(200, {
+            'Content-Type': 'application/json',
+            //CSP Policy
+            // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
+
+            //CORB...
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "*"
+            // "Access-Control-Allow-Headers": "Content-Type, Authorization"
+        });
+
 
 
         //Give the response and easy way out for errors...
@@ -279,7 +305,8 @@ window.debugdata = {
             request.on('data', function (data) {
                 body += data;
                 // Too much POST data, kill the connection!
-                if (body.length > 1e6) response.connection.destroy();
+                // if (body.length > 1e6) response.connection.destroy();
+                if (body.length > 8500) response.connection.destroy();
             });
 
 
@@ -287,17 +314,6 @@ window.debugdata = {
 
 
 
-                //We alwasy use JSON for everything.. 
-                response.writeHead(200, {
-                    'Content-Type': 'application/json',
-                    //CSP Policy
-                    // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
-
-                    //CORB...
-                    // "Access-Control-Allow-Origin": "*",
-                    // "Access-Control-Allow-Methods": "POST",
-                    // "Access-Control-Allow-Headers": "Content-Type, Authorization"
-                });
 
                 if (body == '') {
                     request.RequestData = {};
@@ -330,11 +346,13 @@ window.debugdata = {
                         Use the path to figure out what the user wants if they didn't
                         use the body to post JSON to...
                     */
-                    const PathParts = request.QueryPath.split('/').filter(Boolean);
-                    if(PathParts.length){
-                        request.RequestData.service = PathParts[0];
+                    request.PathParts = request.QueryPath.split('/').filter(Boolean);
+                    if (request.PathParts.length) {
+                        //Set this for the basic routing of the module...
+                        request.RequestData.service = request.PathParts[0];
+
                     }
-            
+
 
 
                     //Is this a multi-request????

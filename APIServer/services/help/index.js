@@ -100,6 +100,11 @@ function ServiceRequest(RequestObj,RequestData,  OnComplete) {
  
     try {
 
+        if(!RequestData){
+            RequestData = RequestObj.PathParts;
+        }
+
+        
         
 
 

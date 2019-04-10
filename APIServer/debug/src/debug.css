@@ -83,7 +83,8 @@ MainTabDisplay {
 
 
     background-color: transparent;
-    color: black;
+    color: purple;
+    font-weight: bold;
     text-overflow: ellipsis;
 
 }
