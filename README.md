@@ -56,16 +56,13 @@ However it would seem as only the people actually using the code are the ones do
 todo list. :-)
 
 - [x] Support multiple tasks per request  
+- [x] Content Security Policy (CSP) fixes!
+- [x] Support paths and query string for routing
 - [ ] Live documentation and tools
-- [ ] Support paths and query string for routing
-- [ ] Content Security Policy (CSP) fixes!
  
 
-CORB
-Guess there is work to be done to fix this...
+Currently working on..
 
+https://demo.tektology.com/
 
-    CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. If an opaque response serves your needs, set the request's mode to 'no-cors' to fetch the resource with CORS disabled.
-
-Another day...
-For now remove it since it causes errors..
+http://demo.tektology.com/

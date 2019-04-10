@@ -45,7 +45,7 @@ const IPC = {
     IPADDRESS: '0.0.0.0',       // This binds us to any NIC on the server. Becareful with this!!!
 
     /*
-        Create a basic HTTP server and service it's requests. Nothing fancy needed here. 
+        Create a basic HTTP/HTTPS server and service it's requests. Nothing fancy needed here. 
 
         The easier you make this code the less headaches your gonna have debugging. :-)
     */
@@ -53,8 +53,7 @@ const IPC = {
         const http = require('http');
         const https = require("https");
 
-        var certsFolder = __dirname + "/../CERTS/" + SERVER.CERTS.path;
-
+        
 
         var httpServer = http.createServer(function (requset, response) {
             IPC.ServiceWeb(requset, response);
@@ -76,6 +75,8 @@ const IPC = {
         */
 
         try {
+            var certsFolder = __dirname + "/../CERTS/" + SERVER.CERTS.path;
+            
             // setup our credentials...
             const credentials = {
                 key: fs.readFileSync(certsFolder + '/privkey.pem', 'utf8'),
