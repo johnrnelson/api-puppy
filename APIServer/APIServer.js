@@ -14,6 +14,10 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
+    CERTS: {
+        //Change this for your own domain!
+        path: 'demo.tektology.com'
+    },
     Started: new Date(),
     RootFolder: __dirname
 }
@@ -27,16 +31,6 @@ const fs = require('fs');
 const path = require('path');
 
 
-/*
-    Start the process for supporting https!!!!
-*/
-// const doh = fs.readFileSync(__dirname + file, "utf8");
-
-
-
-
-
-
 
 
 
@@ -44,7 +38,9 @@ const path = require('path');
     Basic TCP/IP server that will route requests for us...
 */
 const IPC = {
-    PORT: 9118,                 // Selected port because 80 and 443 are normally used for webby stuff. 
+    // Selected port because 80 and 443 are normally used for webby stuff. 
+    PORT_HTTP: 9080,
+    PORT_HTTPS: 9443,
     // IPADDRESS: '127.0.0.1',  // Localhost is a safe play!    
     IPADDRESS: '0.0.0.0',       // This binds us to any NIC on the server. Becareful with this!!!
 
@@ -54,15 +50,55 @@ const IPC = {
         The easier you make this code the less headaches your gonna have debugging. :-)
     */
     Start: function () {
-        var http = require('http');
-        var server = http.createServer(function (requset, response) {
+        const http = require('http');
+        const https = require("https");
+
+        var certsFolder = __dirname + "/../CERTS/" + SERVER.CERTS.path;
+
+
+        var httpServer = http.createServer(function (requset, response) {
             IPC.ServiceWeb(requset, response);
         });
         //Lets start our server..
-        server.listen(IPC.PORT, IPC.IPADDRESS, function () {
-            console.log("Web Server Ready : http://" + IPC.IPADDRESS + ":" + IPC.PORT);
+        httpServer.listen(IPC.PORT_HTTP, IPC.IPADDRESS, function () {
+            console.log("Web Server Ready : http://" + IPC.IPADDRESS + ":" + IPC.PORT_HTTP);
             IPC.StartDate = new Date();
         });
+
+
+
+
+
+
+  
+        /*
+            Support SSL/HTTPS otherwise your not popular on the internet.             
+        */
+
+        try {
+            // setup our credentials...
+            const credentials = {
+                key: fs.readFileSync(certsFolder + '/privkey.pem', 'utf8'),
+                cert: fs.readFileSync(certsFolder + '/cert.pem', 'utf8'),
+                ca: fs.readFileSync(certsFolder + '/chain.pem', 'utf8')
+            };
+            const httpsServer = https.createServer(credentials, function (requset, response) {
+                IPC.ServiceWeb(requset, response);
+            });
+    
+    
+            //Lets start our server..
+            httpsServer.listen(IPC.PORT_HTTPS, IPC.IPADDRESS, function () {
+                console.log("SSL Web Server Ready : https://" + IPC.IPADDRESS + ":" + IPC.PORT_HTTPS);
+                IPC.StartDate = new Date();
+            });
+    
+
+        } catch (errCerts) {
+            console.log('Error reading cert files.\r\n');
+            console.log(errCerts.message);
+        }
+ 
     },
 
 
@@ -90,15 +126,6 @@ const IPC = {
 
 
         });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -147,27 +174,6 @@ window.debugdata = {
 
             }
         });//end debug html....
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -452,23 +458,6 @@ window.debugdata = {
 
     }//End Service Web Request...
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*

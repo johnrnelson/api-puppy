@@ -11,10 +11,6 @@ Use letsencrypt to get the certs for the web service to support `SSL/HTTPS`.
 
     sudo certbot certonly  
 
- 
-
-
-
 
 Restore the iptables ruels!
 
@@ -40,4 +36,10 @@ This is the current one.
     COMMIT
     # Completed on Wed Apr 10 19:10:15 2019
  
- 
+ # Copy Certs!
+Copy the certs to the project so the webserver can see them. 
+
+    sudo cp /etc/letsencrypt/live/YOURDOMAIN/* /home/me/certs/YOURDOMAIN
+    sudo chown me:me *
+
+Of course change the user `me` to your own user. :-)
