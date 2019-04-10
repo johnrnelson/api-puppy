@@ -43,3 +43,5 @@ or
 
 If debugging, use [Local Host](http://0.0.0.0:9080) 
 
+Example of cross domain can be found at [John's Site](https://www.johnrnelson.com/test/api-tek.html)
+
