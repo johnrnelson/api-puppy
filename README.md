@@ -1,5 +1,14 @@
 # api-puppy
-Can we do better?
+Is this yet another framework or library? *NO*
+
+## Project Goals
+Why does this project exist? 
+
+- [x] Proof of concepts  
+- [x] Learn about technology fundamentals
+- [x] Have a lot of fun!
+- [ ] Refactor the code to please the puritist?
+
 
 Break our your favorite editor to write some code in your favorite language on your 
 favorite platform.
@@ -9,6 +18,7 @@ favorite platform.
 - [Installing](Notes/installing.md) 
 - [Notes](Notes)
 - [Tools](Tools) 
+- [ToDo](#todo) 
 - [Helpful Links](Notes/links.md)
 
 
@@ -24,31 +34,9 @@ Make sure you setup your SSH correctly!
 
     git clone git@github.com:johnrnelson/api-puppy
 
-
-# Setup iptables
-Use this to redirect lower ports to our higher port. This lets us run the service 
-as a normal user instead of root.
-
-    sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 9080
-    sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 9443
-
-now to make the changes persist.
-
-    sudo iptables-save > /etc/iptables.conf
-
-
-If you change the tables make sure to save them again on the server. 
-
-    sbin/iptables-save > /etc/iptables/rules.v4
-
-    
-
-
-
-# PM2
-
-    pm2 start APIServer.js --name api-puppy
-
+ 
+ 
+ 
 
 ## TODO
 This is quick running to do list of items that should be moved to the github issues list. 
