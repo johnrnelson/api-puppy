@@ -3,42 +3,12 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "test",
-            "program": "${workspaceFolder}/test.js"
-        },        
+    "configurations": [       
         {
             "type": "node",
             "request": "launch",
             "name": "APIServer",
             "program": "${workspaceFolder}/APIServer/APIServer.js"
-        },        
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "SyncMySQL",
-            "program": "${workspaceFolder}/Tools/SyncMySQL.js"
-        },        
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "BuildObjectMap",
-            "program": "${workspaceFolder}/Tools/BuildObjectMap.js"
-        },          
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "SaveAllData",
-            "program": "${workspaceFolder}/Tools/SaveAllData.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "WriteExcelFile",
-            "program": "${workspaceFolder}/Tools/WriteExcelFile.js"
-        }        
+        }    
     ]
 }

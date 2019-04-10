@@ -22,12 +22,7 @@ favorite platform.
 - [Helpful Links](Notes/links.md)
 
 
-# Clone The Project
-Make sure you setup your SSH correctly!
 
-    git clone git@github.com:johnrnelson/api-puppy
- 
- 
 
 ## TODO
 This is quick running to do list of items that should be moved to the github issues list. 
