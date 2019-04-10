@@ -25,7 +25,13 @@ Make sure you setup your SSH correctly!
     git clone git@github.com:johnrnelson/api-puppy
 
 
- 
+Setup iptables
+Use this to redirect lower ports to our higher port. This lets us run the service 
+as a normal user instead of root.
+
+    sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 443 -j REDIRECT --to-port 9118
+    sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 9118
+
 
 ## TODO
 This is quick running to do list of items that should be moved to the github issues list. 

@@ -247,10 +247,6 @@ window.debugdata = {
 
         console.log(request.QueryPath, ' --- ', request.method.toUpperCase());
 
-        if (request.method.toUpperCase() == "OPTIONS") {
-            console.log(request.headers);
-            // return;
-        }
 
         //We alwasy use JSON for everything.. 
         response.writeHead(200, {
@@ -260,11 +256,17 @@ window.debugdata = {
 
             //CORB...
             "Access-Control-Allow-Origin": "*",
+            // GET,PUT,POST,DELETE
             "Access-Control-Allow-Methods": "*",
             "Access-Control-Allow-Headers": "*"
             // "Access-Control-Allow-Headers": "Content-Type, Authorization"
         });
 
+        if (request.method.toUpperCase() == "OPTIONS") {
+            console.log(request.headers);
+            response.end("");
+            return;
+        }
 
 
         //Give the response and easy way out for errors...
