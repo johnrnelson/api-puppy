@@ -10,7 +10,7 @@ Why does this project exist?
 - [ ] Refactor the code to please the puritist?
 
 
-Break our your favorite editor to write some code in your favorite language on your 
+Break out your favorite editor to write some code in your favorite language on your 
 favorite platform.
 
  
@@ -22,19 +22,10 @@ favorite platform.
 - [Helpful Links](Notes/links.md)
 
 
- 
-An important note is the short list of vendor modules and libraries. It's easy 
-to slap on another NPM but before you do, please consider it. Lets keep 
-this project as clean and close to the metal as possible. 
-
-
-
 # Clone The Project
 Make sure you setup your SSH correctly!
 
     git clone git@github.com:johnrnelson/api-puppy
-
- 
  
  
 
