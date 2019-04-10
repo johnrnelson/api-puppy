@@ -14,6 +14,7 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
+    Version: '1.0b',
     CERTS: {
         //Change this for your own domain!
         path: 'demo.tektology.com'
@@ -53,6 +54,7 @@ const IPC = {
         const http = require('http');
         const https = require("https");
 
+        console.log('Start Web Servers using version:'+global.SERVER.Version);
 
 
         var httpServer = http.createServer(function (requset, response) {
@@ -220,7 +222,7 @@ window.debugdata = {
 
                 //Insert dagger here!!!!
                 route2Take.ServiceRequest(RequestObj, RequestData, function (ServiceError, ResponseJSON) {
-                    if(ServiceError){
+                    if (ServiceError) {
                         debugger;
                     }
                     OnComplete(ServiceError, ResponseJSON);
@@ -380,7 +382,7 @@ window.debugdata = {
 
                     const ServiceErrorInformation = {
                         msg: "Service Error!",
-                        service: request.RequestData.service                        
+                        service: request.RequestData.service
                     };
 
 
