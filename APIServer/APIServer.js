@@ -28,6 +28,19 @@ const path = require('path');
 
 
 /*
+    Start the process for supporting https!!!!
+*/
+// const doh = fs.readFileSync(__dirname + file, "utf8");
+
+
+
+
+
+
+
+
+
+/*
     Basic TCP/IP server that will route requests for us...
 */
 const IPC = {

@@ -1,6 +1,9 @@
 # Don't leak our secret stuff in the repo!
 SECRET/*
 
+# Don't leak our certs!
+CERTS/*
+
 # VS Code files
 *.code-workspace
 .vscode
