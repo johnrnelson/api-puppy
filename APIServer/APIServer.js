@@ -20,7 +20,8 @@ global.SERVER = {
         path: 'demo.tektology.com'
     },
     Started: new Date(),
-    RootFolder: __dirname
+    RootFolder: __dirname,
+    Defender: require("./defender/shield")
 };
 
 /*
@@ -33,6 +34,8 @@ global.SERVER = {
 SERVER.LogFileName = __dirname + '/../SECRET/IPLog-' +
     SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
 
+SERVER.ErrorFileName = __dirname + '/../SECRET/ErrorLog-' +
+    SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
 
 
 
@@ -341,165 +344,189 @@ window.debugdata = {
 
 
 
-        try {
-
-            var body = '';
-            request.on('data', function (data) {
-                body += data;
-                // Too much POST data, kill the connection!
-                // if (body.length > 1e6) response.connection.destroy();
-                if (body.length > 8500) response.connection.destroy();
-            });
-
-
-            request.on('end', function () {
-
-                /*
-                      Quick log to see the history of our traffic...
-                */
-                const ipLogItem = "@" + SERVER.Started.toISOString() + " " +
-                    request.connection.remoteAddress +
-                    "[" + request.method + "]" +
-                    "" + request.url + " ** " + body + "\r\n";
 
 
 
-                fs.appendFile(SERVER.LogFileName, ipLogItem, function (err) {
-                    if (err) throw err;
+        /*
+            Use our little defender module to check the request
+            and make sure we can do the work they want us to do.
+        */
+        SERVER.Defender.CheckRequest(request, function (CheckRequestError) {
+
+            if (CheckRequestError) {
+                response.SendError(response, {
+                    err: CheckRequestError
+                });
+                // debugger;
+                return;
+            }
+
+
+
+
+            try {
+
+                var body = '';
+                request.on('data', function (data) {
+                    body += data;
+                    // Too much POST data, kill the connection!
+                    // if (body.length > 1e6) response.connection.destroy();
+                    if (body.length > 8500) response.connection.destroy();
                 });
 
 
-  
-
-
-
-
-                /*
-                    Now work with the body of the request. 
-                */
-                if (body == '') {
-                    request.RequestData = {};
-                }
-                else {
-                    try {
-
-                        request.RequestData = JSON.parse(body);
-
-                    } catch (badJSON) {
-                        //Special error if the JSON is not formed well...
-                        response.SendError(response, {
-                            err: badJSON
-                        });
-                        return;
-                    }
-                }
-
-
-                //only send debug on emtpy request...
-                if ((request.url == "/") && (!request.RequestData.service)) {
-                    IPC.ServeDebugAPP(request, response);
-                    return;
-                }
-
-
-                try {
+                request.on('end', function () {
 
                     /*
-                        Use the path to figure out what the user wants if they didn't
-                        use the body to post JSON to...
+                          Quick log to see the history of our traffic...
                     */
-                    request.PathParts = request.QueryPath.split('/').filter(Boolean);
-                    if (request.PathParts.length) {
-                        //Set this for the basic routing of the module...
-                        request.RequestData.service = request.PathParts[0];
+                    const ipLogItem = "@" + new Date().toISOString() + " " +
+                        request.connection.remoteAddress +
+                        "[" + request.method + "]" +
+                        "" + request.url + " ** " + body + "\r\n";
 
+                        //Add to our logger file whats up...
+                    fs.appendFile(SERVER.LogFileName, ipLogItem, function (err) {
+                        if (err) throw err;
+                    });
+
+
+
+
+
+
+
+                    /*
+                        Now work with the body of the request. 
+                    */
+                    if (body == '') {
+                        request.RequestData = {};
+                    }
+                    else {
+                        try {
+
+                            request.RequestData = JSON.parse(body);
+
+                        } catch (badJSON) {
+                            //Special error if the JSON is not formed well...
+                            response.SendError(response, {
+                                err: badJSON
+                            });
+                            return;
+                        }
                     }
 
-                    const ServiceErrorInformation = {
-                        msg: "Service Error!",
-                        service: request.RequestData.service
-                    };
+
+                    //only send debug on emtpy request...
+                    if ((request.url == "/") && (!request.RequestData.service)) {
+                        IPC.ServeDebugAPP(request, response);
+                        return;
+                    }
 
 
+                    try {
 
-                    //Is this a multi-request????
-                    if (request.RequestData.service == "*") {
-
-                        const tasks = request.RequestData.tasks;
-                        const resultObj = {};
-                        var totalFinished = 0;
-
-                        for (let index = 0; index < tasks.length; index++) {
-                            const aSingleRequest = tasks[index];
-
-                            //By the time you get here.. you want a true web api request...
-                            IPC.ServiceRequest(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
-                                totalFinished++;
-
-
-                                resultObj[aSingleRequest.reqID] = ResponseJSON;
-
-                                if (ServiceError) {
-                                    resultObj[aSingleRequest.reqID] = ServiceErrorInformation;
-
-                                } else {
-                                    resultObj[aSingleRequest.reqID] = ResponseJSON
-                                    // reqJSONArray.push(ResponseJSON);
-
-                                }
-                                if (totalFinished == tasks.length) {
-                                    resultObj["TotalTasks"] = totalFinished;
-                                    response.end(JSON.stringify(resultObj));
-                                }
-
-                            });
+                        /*
+                            Use the path to figure out what the user wants if they didn't
+                            use the body to post JSON to...
+                        */
+                        request.PathParts = request.QueryPath.split('/').filter(Boolean);
+                        if (request.PathParts.length) {
+                            //Set this for the basic routing of the module...
+                            request.RequestData.service = request.PathParts[0];
 
                         }
 
-                    } else {
+                        const ServiceErrorInformation = {
+                            msg: "Service Error!",
+                            service: request.RequestData.service
+                        };
 
-                        //By the time you get here.. you want a true web api request...
-                        IPC.ServiceRequest(request, request.RequestData, function (ServiceError, ResponseJSON) {
-                            if (ServiceError) {
-                                //Don't leak this!! lol
-                                // response.SendError(response, ServiceError);
-                                response.SendError(response, ServiceErrorInformation);
-                            } else {
-                                const doh = ResponseJSON;
-                                response.end(JSON.stringify(ResponseJSON));
+
+
+                        //Is this a multi-request????
+                        if (request.RequestData.service == "*") {
+
+                            const tasks = request.RequestData.tasks;
+                            const resultObj = {};
+                            var totalFinished = 0;
+
+                            for (let index = 0; index < tasks.length; index++) {
+                                const aSingleRequest = tasks[index];
+
+                                //By the time you get here.. you want a true web api request...
+                                IPC.ServiceRequest(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
+                                    totalFinished++;
+
+
+                                    resultObj[aSingleRequest.reqID] = ResponseJSON;
+
+                                    if (ServiceError) {
+                                        resultObj[aSingleRequest.reqID] = ServiceErrorInformation;
+
+                                    } else {
+                                        resultObj[aSingleRequest.reqID] = ResponseJSON
+                                        // reqJSONArray.push(ResponseJSON);
+
+                                    }
+                                    if (totalFinished == tasks.length) {
+                                        resultObj["TotalTasks"] = totalFinished;
+                                        response.end(JSON.stringify(resultObj));
+                                    }
+
+                                });
+
                             }
-                        });
+
+                        } else {
+
+                            //By the time you get here.. you want a true web api request...
+                            IPC.ServiceRequest(request, request.RequestData, function (ServiceError, ResponseJSON) {
+                                if (ServiceError) {
+                                    //Don't leak this!! lol
+                                    // response.SendError(response, ServiceError);
+                                    response.SendError(response, ServiceErrorInformation);
+                                } else {
+                                    const doh = ResponseJSON;
+                                    response.end(JSON.stringify(ResponseJSON));
+                                }
+                            });
+                        }
+
+
+
+                    }
+                    catch (errEndReq) {
+                        // console.log("REQUEST ERROR!");
+                        // console.log("URL", request.url);
+                        // console.log(errEndReq.message);
+                        // console.log(body);
+                        debugger;
+
+                        //Give the client some idea of what went wrong...
+                        var resp = {
+                            msg: 'Error in request!',
+                            err: errEndReq.message
+                        };
+
+                        response.end(JSON.stringify(resp));
                     }
 
 
 
-                }
-                catch (errEndReq) {
-                    // console.log("REQUEST ERROR!");
-                    // console.log("URL", request.url);
-                    // console.log(errEndReq.message);
-                    // console.log(body);
-                    debugger;
-
-                    //Give the client some idea of what went wrong...
-                    var resp = {
-                        msg: 'Error in request!',
-                        err: errEndReq.message
-                    };
-
-                    response.end(JSON.stringify(resp));
-                }
+                });
+            }
+            catch (errPUT) {
+                //Some bad juju happend so we just pass it off to our generic error handler...
+                response.SendError(response, {
+                    err: errPUT.message
+                });
+            }//End Reading Request... 
 
 
 
-            });
-        }
-        catch (errPUT) {
-            //Some bad juju happend so we just pass it off to our generic error handler...
-            response.SendError(response, {
-                err: errPUT.message
-            });
-        }//End Reading Request... 
+
+        });//end check request...
 
 
 
