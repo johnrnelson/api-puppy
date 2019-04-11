@@ -473,13 +473,10 @@ print(response_data)
     SetTargetURI(TargetURI) {
         const apiURIAddress = document.getElementById('api-uri-address');
         const apiURILink = document.getElementById('api-uri-link');
-
-        // console.info('set text box URL!', TargetURI);
-
+ 
         apiURIAddress.value = TargetURI;
         apiURILink.href = TargetURI;
-
-        // debugger;
+ 
 
     }
 };
