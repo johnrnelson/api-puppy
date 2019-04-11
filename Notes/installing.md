@@ -8,7 +8,8 @@ The list of NPMs grows so check the `package.json` file for what
 is actually used.
 
 Setup [iptables](Server/iptables.md) to make sure the lower ports will
-work with the higher ports set in the scripts.
+work with the higher ports set in the scripts. Otherwise you have to put 
+the ports you want to use in the URI.  
  
 ## Running the HTTP/S API Server
 Read about the [APIServer](../APIServer/README.md) or check out
