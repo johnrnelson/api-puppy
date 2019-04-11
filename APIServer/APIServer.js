@@ -54,8 +54,8 @@ const IPC = {
         const http = require('http');
         const https = require("https");
 
-        
-        console.log('\r\nStart Web Servers using version:'+global.SERVER.Version + ' on ' + SERVER.Started.toLocaleString());
+
+        console.log('\r\nStart Web Servers using version:' + global.SERVER.Version + ' on ' + SERVER.Started.toLocaleString());
 
 
         var httpServer = http.createServer(function (requset, response) {
@@ -327,6 +327,7 @@ window.debugdata = {
 
 
 
+
         try {
 
             var body = '';
@@ -340,6 +341,17 @@ window.debugdata = {
 
             request.on('end', function () {
 
+                /*
+                      Quick log to see the history of our traffic...
+                  */
+                //    SERVER.Started 
+                const ipLogItem = "[" + SERVER.Started.toISOString() + "] " + request.connection.remoteAddress +
+                    " ***  " + request.url + " *** " + body + "\r\n";
+
+                fs.appendFile(__dirname + '/../SECRET/IP Log - ' + SERVER.Started.toLocaleTimeString() + '.log', ipLogItem, function (err) {
+                    if (err) throw err;
+
+                });
 
 
 
