@@ -5,6 +5,7 @@
     Don't blame John for the ugly CSS. He's slow and color blind. :-) 
 
 */
+
 body {
     position: absolute;
     top: 0;
@@ -32,7 +33,15 @@ MainTabDisplay {
     right: 0
 }
 
-
+MainTabDisplay .container {
+    margin: 10px;
+    padding: 10px;
+/*     
+    margin-left: 10px;
+    padding-left: 10px;
+    margin-right: 0;
+    padding-right: 0; */
+}
 /* 
 
     Other stuff.....
