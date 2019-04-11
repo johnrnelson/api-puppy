@@ -7,22 +7,23 @@ This is most likely **NOT** what you think it is. :grin:
 - [Installing](Notes/installing.md) 
 - [Notes](Notes)
 - [Tools](Tools) 
+- [Frequently Asked Questions](#faq) 
 - [ToDo](#todo) 
 - [Helpful Links](Notes/links.md)
 
 
 #### Project Goals
-Why does this project exist? 
+Why does this project exist? Why are you looking at it?
 
 - [x] Proof of concepts  
 - [x] Learn about technology fundamentals
 - [x] Have a lot of fun!
 - [ ] Refactor the code to please the puritist?
 
-## Q&A
+## FAQ
 **Is this yet another framework or library?**
 
-NO!
+NO! Absolutly not no please no not another framework or library!
 
 **Why not just use express and other 3rd party middleware?**
 
@@ -42,7 +43,6 @@ trick to ensure that the name will most likely be at least liked if not loved an
 who does not love a puppy?
 
 
-
 ## TODO
 This is quick running to do list of items that should be moved to the github issues list. 
 However it would seem as only the people actually using the code are the ones doing the 
@@ -54,13 +54,12 @@ todo list. :-)
 - [ ] Live documentation and tools
  
 
-Currently working on..
+# Working Links
+- [x] [SSL/HTTPS demo.tektology.com](https://demo.tektology.com/)  
+- [x] [HTTP demo.tektology.com](http://demo.tektology.com/)
+- [x] [Local Host](http://0.0.0.0:9080)
+- [x] [Cross Domain Example](https://www.johnrnelson.com/test/api-tek.html)
 
-[SSL/HTTPS demo.tektology.com](https://demo.tektology.com/)
-or
-[HTTP demo.tektology.com](http://demo.tektology.com/)
-
-If debugging, use [Local Host](http://0.0.0.0:9080) 
-
-Example of cross domain can be found at [John's Site](https://www.johnrnelson.com/test/api-tek.html)
+ 
+Send us hello if you find this usefull. 
 
