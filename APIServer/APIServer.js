@@ -14,7 +14,7 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
-    Version: '1.01b',
+    Version: '1.02b',
     CERTS: {
         //Change this for your own domain!
         path: 'demo.tektology.com'
@@ -23,6 +23,7 @@ global.SERVER = {
     RootFolder: __dirname,
     Defender: require("./defender/shield")
 };
+
 
 /*
     Setup logfile logcation.    
@@ -172,6 +173,7 @@ const IPC = {
 window.debugdata = {
     UserInfo:${JSON.stringify(request.User)},
     NodeVersion:"${process.version}",
+    ServerVersion:"${SERVER.Version}",
     port:${IPC.PORT},
     apidata:${API_HELP},
     ST: new Date('${IPC.StartDate.toLocaleString()}'),
@@ -369,9 +371,14 @@ window.debugdata = {
                 var body = '';
                 request.on('data', function (data) {
                     body += data;
-                    // Too much POST data, kill the connection!
-                    // if (body.length > 1e6) response.connection.destroy();
+                    /* 
+                        Too much POST data, kill the connection! 
+                        Don't even bother letting them know anything.
+                    */
                     if (body.length > 8500) response.connection.destroy();
+
+                    // Use this if you are more generous..  :-)
+                    // if (body.length > 1e6) response.connection.destroy();
                 });
 
 
@@ -385,13 +392,11 @@ window.debugdata = {
                         "[" + request.method + "]" +
                         "" + request.url + " ** " + body + "\r\n";
 
-                        //Add to our logger file whats up...
+
+                    //Add to our logger file whats up...
                     fs.appendFile(SERVER.LogFileName, ipLogItem, function (err) {
                         if (err) throw err;
                     });
-
-
-
 
 
 
@@ -404,7 +409,6 @@ window.debugdata = {
                     }
                     else {
                         try {
-
                             request.RequestData = JSON.parse(body);
 
                         } catch (badJSON) {
@@ -417,7 +421,7 @@ window.debugdata = {
                     }
 
 
-                    //only send debug on emtpy request...
+                    //only send debug UI on emtpy request...
                     if ((request.url == "/") && (!request.RequestData.service)) {
                         IPC.ServeDebugAPP(request, response);
                         return;
@@ -451,6 +455,9 @@ window.debugdata = {
                             const resultObj = {};
                             var totalFinished = 0;
 
+                            /*
+                                Go through all the tasks and execute them....
+                            */
                             for (let index = 0; index < tasks.length; index++) {
                                 const aSingleRequest = tasks[index];
 
@@ -465,9 +472,7 @@ window.debugdata = {
                                         resultObj[aSingleRequest.reqID] = ServiceErrorInformation;
 
                                     } else {
-                                        resultObj[aSingleRequest.reqID] = ResponseJSON
-                                        // reqJSONArray.push(ResponseJSON);
-
+                                        resultObj[aSingleRequest.reqID] = ResponseJSON;
                                     }
                                     if (totalFinished == tasks.length) {
                                         resultObj["TotalTasks"] = totalFinished;
@@ -485,9 +490,10 @@ window.debugdata = {
                                 if (ServiceError) {
                                     //Don't leak this!! lol
                                     // response.SendError(response, ServiceError);
+
+                                    //Send the ServiceErrorInformation instead of the bubbled up error!!!
                                     response.SendError(response, ServiceErrorInformation);
                                 } else {
-                                    const doh = ResponseJSON;
                                     response.end(JSON.stringify(ResponseJSON));
                                 }
                             });
@@ -497,10 +503,16 @@ window.debugdata = {
 
                     }
                     catch (errEndReq) {
-                        // console.log("REQUEST ERROR!");
-                        // console.log("URL", request.url);
-                        // console.log(errEndReq.message);
-                        // console.log(body);
+                        /* 
+                            Use this if you are debugging from the server. It's helpful 
+                            to put things in context...
+                        */
+                        const DebugInformation = {
+                            URL: request.url,
+                            err: errEndReq,
+                            body: body
+                        };
+                        console.log(DebugInformation);
                         debugger;
 
                         //Give the client some idea of what went wrong...
@@ -510,7 +522,7 @@ window.debugdata = {
                         };
 
                         response.end(JSON.stringify(resp));
-                    }
+                    }//End catching an error...
 
 
 
@@ -526,10 +538,7 @@ window.debugdata = {
 
 
 
-        });//end check request...
-
-
-
+        });//end check request... 
 
     }//End Service Web Request...
 };
@@ -603,6 +612,7 @@ CompileDebugFiles(function (err, DebugFileStatus) {
         console.log(err);
 
     } else {
+        // show if ya want more infomation about whats going on...
         // console.log(DebugFileStatus);
 
         //Lets get this party started. :-)

@@ -118,8 +118,11 @@ const DebugUI = {
             '<b>' + window.location.protocol + '</b>//' + window.location.hostname +
             '<b>' + debugdata.UserInfo.URL + '</b>');
 
-        AddInfoElement('NodeVersion', 'The version of node on this server',
+        AddInfoElement('Node Version', 'The version of node on this server',
             debugdata.NodeVersion);
+
+        AddInfoElement('Server Version', 'The version of the APIServer.js file.',
+            debugdata.ServerVersion);
 
         AddInfoElement('Start Date', 'The date the server started', debugdata.ST.toLocaleDateString() + " " + debugdata.ST.toLocaleTimeString());
 
@@ -380,7 +383,7 @@ const DebugUI = {
                     help: 'Check out the man page for curl for more information.',
                 }
             },
-            'javascript-fetch': function () {   
+            'javascript-fetch': function () {
 
                 return {
                     title: 'Browser javascript',
@@ -486,84 +489,12 @@ const UIHelper = {
     Ace: {
         AceEditor: null, //Set this in code when you are ready...
         AceDisplayRsults: null, //Set this in code when you are ready...        
-        BuildAll() {
+        SetCompleters(Editor2Complete) {
 
-            function SetupAceEditorDefaults(ParentHTMLTagID) {
-
-                //Ace Editor is awesome! 
-                var aceEditor = ace.edit(ParentHTMLTagID);
-
-                // Go here for more options... https://github.com/ajaxorg/ace/wiki/Configuring-Ace
-                aceEditor.setOption("mode", "ace/mode/json");
-                aceEditor.setOption("autoScrollEditorIntoView", true);
-                aceEditor.setOption("showPrintMargin", false);
-                aceEditor.setOption("fontSize", 15);
-                aceEditor.$blockScrolling = Infinity;
-
-                return aceEditor;
-            }
-
-            function HookEvents(Editor2Hook) {
-                console.info('Hooking Events for the editor...');
-
-                Editor2Hook.getSession().on('change', function (delta) {
-
-                    // debugger;
-
-                    const editorJSON = Editor2Hook.getValue();
-                    try {
-                        const jsonData = JSON.parse(editorJSON);
-
-                        if (jsonData.service) {
-
-
-                            const basicOptions = [];
-
-                            for (var o in jsonData) {
-                                if (o !== "service") {
-                                    if (typeof (jsonData[o]) == "object") {
-                                        basicOptions.push('' + o + "=" + JSON.stringify(jsonData[o]));
-                                    } else {
-                                        if (jsonData[o] != "") {
-                                            basicOptions.push('' + o + "=" + jsonData[o]);
-                                        }
-
-                                    }
-
-                                }
-                            }
-                            if (basicOptions.length) {
-                                DebugUI.SetTargetURI('/' + jsonData.service + '?' + basicOptions.join('&'));
-                            } else {
-                                DebugUI.SetTargetURI('/' + jsonData.service + '/');
-                            }
-                        } else {
-                            DebugUI.SetTargetURI(editorJSON);
-
-                        }
-
-                        // console.info('Edit Len:',editorJSON.length,delta);
-
-                    } catch (errBadJSON) {
-                        DebugUI.SetTargetURI("** bad json **");
-                    }
-
-                });
-            }
-
-            UIHelper.Ace.AceEditor = SetupAceEditorDefaults('PayloadEditor');
-            UIHelper.Ace.AceDisplayRsults = SetupAceEditorDefaults('APIDebugResults');
-            
-            //Make sure display is read only!
-            UIHelper.Ace.AceDisplayRsults.setReadOnly(true);
-
-
-            //Only hook the actual editor!!!!!
-            HookEvents(UIHelper.Ace.AceEditor);
 
             var langTools = ace.require("ace/ext/language_tools");
 
-            var rhymeCompleter = {
+            Editor2Complete.Completer = {
                 getCompletions: (editor, session, caretPosition2d, prefix, callback) => {
 
                     var currline = editor.getSelectionRange().start.row;
@@ -578,9 +509,14 @@ const UIHelper = {
                     });
 
                     WordList.push({
-                        caption: 'view',
+                        caption: 'FunStuff',
                         meta: '',
                         score: 10,
+                    });
+                    WordList.push({
+                        caption: 'demo',
+                        meta: '',
+                        score: 30,
                     });
 
 
@@ -594,10 +530,91 @@ const UIHelper = {
                     }))
                 },
             }
-            langTools.addCompleter(rhymeCompleter);
+            langTools.addCompleter(Editor2Complete.Completer);
+        },
+        HookEvents(Editor2Hook) {
+            console.info('Hooking Events for the editor...');
+
+            Editor2Hook.getSession().on('change', function (delta) {
+
+                // debugger;
+
+                const editorJSON = Editor2Hook.getValue();
+                try {
+                    const jsonData = JSON.parse(editorJSON);
+
+                    if (jsonData.service) {
+
+
+                        const basicOptions = [];
+
+                        for (var o in jsonData) {
+                            if (o !== "service") {
+                                if (typeof (jsonData[o]) == "object") {
+                                    basicOptions.push('' + o + "=" + JSON.stringify(jsonData[o]));
+                                } else {
+                                    if (jsonData[o] != "") {
+                                        basicOptions.push('' + o + "=" + jsonData[o]);
+                                    }
+
+                                }
+
+                            }
+                        }
+                        if (basicOptions.length) {
+                            DebugUI.SetTargetURI('/' + jsonData.service + '?' + basicOptions.join('&'));
+                        } else {
+                            DebugUI.SetTargetURI('/' + jsonData.service + '/');
+                        }
+                    } else {
+                        DebugUI.SetTargetURI(editorJSON);
+
+                    }
+
+                    // console.info('Edit Len:',editorJSON.length,delta);
+
+                } catch (errBadJSON) {
+                    DebugUI.SetTargetURI("** bad json **");
+                }
+
+            });
+        },
+        SetupAceEditorDefaults(ParentHTMLTagID) {
+
+            //Ace Editor is awesome! 
+            var aceEditor = ace.edit(ParentHTMLTagID);
+
+            // Go here for more options... https://github.com/ajaxorg/ace/wiki/Configuring-Ace
+            aceEditor.setOption("mode", "ace/mode/json");
+            aceEditor.setOption("autoScrollEditorIntoView", true);
+            aceEditor.setOption("showPrintMargin", false);
+            aceEditor.setOption("fontSize", 15);
+            aceEditor.$blockScrolling = Infinity;
+
+            return aceEditor;
+        },
+
+        BuildAceControls() {
+
+   
+            UIHelper.Ace.AceEditor = UIHelper.Ace.SetupAceEditorDefaults('PayloadEditor');
+            UIHelper.Ace.AceDisplayRsults = UIHelper.Ace.SetupAceEditorDefaults('APIDebugResults');
+
+            //Make sure display is read only!
+            UIHelper.Ace.AceDisplayRsults.setReadOnly(true);
+
+
+            //Only hook the actual editor!!!!!
+            UIHelper.Ace.HookEvents(UIHelper.Ace.AceEditor);
+ 
+
+
+            //Add your own stuff to the drop downs...
+            UIHelper.Ace.SetCompleters(UIHelper.Ace.AceEditor);
+ 
 
             UIHelper.Ace.AceEditor.setOptions({
-                enableBasicAutocompletion: rhymeCompleter,
+                enableBasicAutocompletion: UIHelper.Ace.AceEditor.Completer,
                 enableLiveAutocompletion: true,
                 enableSnippets: true,
             });
@@ -642,7 +659,7 @@ window.onload = function () {
 
 
     //Setup all of our ace editors...
-    UIHelper.Ace.BuildAll();
+    UIHelper.Ace.BuildAceControls();
 
 
     console.info('The API Client has loaded. Feel free to explore this object in the console.');

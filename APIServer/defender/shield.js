@@ -14,17 +14,15 @@ function CheckPHP(URL) {
     }
 }
 
+/*
+    Main entry point for this module.
 
-
-
-
-
-
-//Main entry point for this module...
+    It should be the only method exposed and provide 
+    the user lookups if need be??? 
+    
+    Lets see how this goes. lol :-)
+*/
 function CheckRequest(RequsetObject, OnChecked) {
-
-     
-
 
     /*
         Make sure it's not PHP!
@@ -61,10 +59,6 @@ function CheckRequest(RequsetObject, OnChecked) {
         OnChecked(null);
  
     }
-
-
-
-
 }
 
 exports.CheckRequest = CheckRequest;
