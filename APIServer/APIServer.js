@@ -345,8 +345,10 @@ window.debugdata = {
                       Quick log to see the history of our traffic...
                   */
                 //    SERVER.Started 
-                const ipLogItem = "[" + SERVER.Started.toISOString() + "] " + request.connection.remoteAddress +
-                    " ***  " + request.url + " *** " + body + "\r\n";
+                const ipLogItem = "@" + SERVER.Started.toISOString() + " " +
+                    request.connection.remoteAddress +
+                    "[" + request.method + "]" +
+                    "" + request.url + " ** " + body + "\r\n";
 
                 fs.appendFile(__dirname + '/../SECRET/IPLog-' + SERVER.Started.toLocaleTimeString().replace(/\s/g, '') + '.log', ipLogItem, function (err) {
                     if (err) throw err;
