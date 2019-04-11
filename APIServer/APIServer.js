@@ -348,7 +348,7 @@ window.debugdata = {
                 const ipLogItem = "[" + SERVER.Started.toISOString() + "] " + request.connection.remoteAddress +
                     " ***  " + request.url + " *** " + body + "\r\n";
 
-                fs.appendFile(__dirname + '/../SECRET/IP Log - ' + SERVER.Started.toLocaleTimeString() + '.log', ipLogItem, function (err) {
+                fs.appendFile(__dirname + '/../SECRET/IPLog-' + SERVER.Started.toLocaleTimeString().replace(/\s/g, '') + '.log', ipLogItem, function (err) {
                     if (err) throw err;
 
                 });
