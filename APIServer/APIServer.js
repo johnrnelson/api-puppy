@@ -237,7 +237,7 @@ window.debugdata = {
                 //Insert dagger here!!!!
                 route2Take.ServiceRequest(RequestObj, RequestData, function (ServiceError, ResponseJSON) {
                     if (ServiceError) {
-                        debugger;
+                        // debugger;
                     }
                     OnComplete(ServiceError, ResponseJSON);
 

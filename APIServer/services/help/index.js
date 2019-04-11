@@ -22,7 +22,10 @@ const topics = {
 
         fs.readdir(examplesFolder, function (err, items) {
             if (err) {
-                debugger;
+                // debugger;
+                 
+                OnComplete(sampleid + " was not found!",null); 
+
             } else {
 
 

@@ -488,7 +488,7 @@ const UIHelper = {
         AceDisplayRsults: null, //Set this in code when you are ready...        
         BuildAll() {
 
-            function SetupAceEditor(ParentHTMLTagID) {
+            function SetupAceEditorDefaults(ParentHTMLTagID) {
 
                 //Ace Editor is awesome! 
                 var aceEditor = ace.edit(ParentHTMLTagID);
@@ -551,8 +551,11 @@ const UIHelper = {
                 });
             }
 
-            UIHelper.Ace.AceEditor = SetupAceEditor('PayloadEditor');
-            UIHelper.Ace.AceDisplayRsults = SetupAceEditor('APIDebugResults');
+            UIHelper.Ace.AceEditor = SetupAceEditorDefaults('PayloadEditor');
+            UIHelper.Ace.AceDisplayRsults = SetupAceEditorDefaults('APIDebugResults');
+            
+            //Make sure display is read only!
+            UIHelper.Ace.AceDisplayRsults.setReadOnly(true);
 
 
             //Only hook the actual editor!!!!!
