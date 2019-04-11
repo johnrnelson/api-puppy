@@ -1,4 +1,6 @@
 # Debuging
+Break out your favorite editor to write some code in your favorite language on your 
+favorite platform.
 
 The debug UI should help the user expore the UI, get documentation for it, and 
 actually use it for debugging purposes. 

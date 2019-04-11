@@ -79,22 +79,22 @@
         <nav class="navbar navbar-expand navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <li class="nav-item" title="Basic help about the user interface">
                         <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabMain')">Main Help</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item"  title="Interactive debugger to test with">
                         <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabDebugger')">Debug Tool</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GitHub</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a target="_blank" class="dropdown-item"
+                            <a target="_blank" class="dropdown-item" title="The actual source code for the project"
                                 href="https://github.com/johnrnelson/api-puppy">Project</a>
-                            <a target="_blank" class="dropdown-item"
+                            <a target="_blank" class="dropdown-item" title="Issues? We all have them. :-)""
                                 href="https://github.com/johnrnelson/api-puppy/issues">Issues</a>
                             <div class="dropdown-divider"></div>
-                            <a target="_blank" class="dropdown-item"
+                            <a target="_blank" class="dropdown-item" title="Hope this is helpful"
                                 href="https://github.com/johnrnelson/api-puppy/tree/master/Notes">Notes</a>
                         </div>
                     </li>
@@ -106,7 +106,7 @@
 
     <!-- Because of the editor, you need to declare this first! -->
     <MainTabDisplay id="TabDebugger">
-        <span class="api-uri-display">
+        <span class="api-uri-display" title="URI Endpoint address">
             <input id="api-uri-address"
                 value="/time/is/on-your-side/if-your-smart/about/it?testValA=abc&testlongvalformetotestwithis=ofmythis_isreallylongwoohooooooo" />
         </span>
@@ -119,9 +119,9 @@
 
 
                 <div>Select Service</div>
-                <select id="DebugVerbList"></select>
+                <select id="DebugVerbList" title="List of basic services provided by this server"></select>
                 <br>
-                <select id="ExampleCodeList"></select>
+                <select id="ExampleCodeList" title="Sample code to test with."></select>
                 <br>
 
                 <div title="Test the API" onclick="DebugUI.RunDebug()" class="ActionButton">Execute Request</div>
@@ -132,15 +132,15 @@
 
                 </div>
 
-                <div title="CURL" onclick="DebugUI.ExportCode('curl')" class="ActionButton">CURL</div>
+                <div title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')" class="ActionButton">CURL</div>
 
-                <div title="JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')" class="ActionButton">
+                <div title="Export sample code for JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')" class="ActionButton">
                     JavaScript</div>
 
-                <div title="JavaScript HTTP Client" onclick="DebugUI.ExportCode('javascript-http-request')"
+                <div title="Export sample code for JavaScript HTTP Client" onclick="DebugUI.ExportCode('javascript-http-request')"
                     class="ActionButton">NodeJS</div>
 
-                <div title="pythod 3" onclick="DebugUI.ExportCode('python 3')" class="ActionButton">Python3</div>
+                <div title="Export sample code for pythod 3" onclick="DebugUI.ExportCode('python 3')" class="ActionButton">Python3</div>
 
                 <hr width="90%" size="1" color="gold" />
 

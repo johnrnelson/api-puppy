@@ -7,8 +7,8 @@ const topics = {
         const fs = require('fs');
         const path = require('path');
 
- 
-       
+
+
         //Make sure there is not funky monkey going on with their request!!! 
         const sampleid = path.normalize(RequestData.sampleid.replace(/\./g, ''));
 
@@ -23,8 +23,8 @@ const topics = {
         fs.readdir(examplesFolder, function (err, items) {
             if (err) {
                 // debugger;
-                 
-                OnComplete(sampleid + " was not found!",null); 
+
+                OnComplete(sampleid + " was not found!", null);
 
             } else {
 
@@ -32,15 +32,15 @@ const topics = {
                 const sampleFiles = [];
 
                 for (var i = 0; i < items.length; i++) {
-                   
+
                     var stripFileName = items[i].replace('.json', '');
- 
+
                     sampleFiles.push(stripFileName);
                 }
 
-                OnComplete(null,{
+                OnComplete(null, {
                     samples: sampleFiles
-                }); 
+                });
             }
 
 
@@ -49,19 +49,16 @@ const topics = {
     },
     //get the actual sample file...
     'sample-code-fetch': function (RequestData, OnComplete) {
- 
+
         const fs = require('fs');
         const path = require('path');
-        
+
         //Make sure there is not funky monkey going on with their request!!! 
         const sampleid = path.normalize(RequestData.sampleid.replace(/\./g, ''));
 
 
         const targetService = RequestData["target-service"].replace(/\./g, '');
-
-        // console.log(sampleid, targetService);
-
-
+ 
         const examplesFilePath = path.join(SERVER.RootFolder, "services", targetService, "examples", sampleid + ".json");
 
 
@@ -77,48 +74,31 @@ const topics = {
                     err: err.message,
                 }));
             } else {
-                OnComplete(null,{
+                OnComplete(null, {
                     msg: "Have fun with this code!",
                     code: JSON.parse(data),
                 });
-                // response.end(JSON.stringify({
-                //     msg: "Have fun with this code!",
-                //     code: JSON.parse(data),
-                // }));
             }
-
-
-        });
-
-
-
+        });//End reading file...
     }
 };
 
 
 //Change this!!!
-function ServiceRequest(RequestObj,RequestData,  OnComplete) {
+function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
 
     var RequestData = RequestData.data;
- 
+
     try {
 
-        if(!RequestData){
+        if (!RequestData) {
             RequestData = RequestObj.PathParts;
         }
 
-        
-        
-
-
         if (!RequestData.topic) {
-
             OnComplete('Please supply a topic!', null);
-
-
         } else {
-
             const activeTopic = topics[RequestData.topic];
 
             if (!activeTopic) {
@@ -130,7 +110,7 @@ function ServiceRequest(RequestObj,RequestData,  OnComplete) {
         }
     }
     catch (errorService) {
-        OnComplete(errorService.message, null); 
-    } 
+        OnComplete(errorService.message, null);
+    }
 }
 exports.ServiceRequest = ServiceRequest;
