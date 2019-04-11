@@ -14,7 +14,7 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
-    Version: '1.0b',
+    Version: '1.01b',
     CERTS: {
         //Change this for your own domain!
         path: 'demo.tektology.com'
@@ -54,7 +54,8 @@ const IPC = {
         const http = require('http');
         const https = require("https");
 
-        console.log('Start Web Servers using version:'+global.SERVER.Version);
+        
+        console.log('\r\nStart Web Servers using version:'+global.SERVER.Version + ' on ' + SERVER.Started.toLocaleString());
 
 
         var httpServer = http.createServer(function (requset, response) {
@@ -541,7 +542,7 @@ CompileDebugFiles(function (err, DebugFileStatus) {
         console.log(err);
 
     } else {
-        console.log(DebugFileStatus);
+        // console.log(DebugFileStatus);
 
         //Lets get this party started. :-)
         IPC.Start();
