@@ -380,30 +380,7 @@ const DebugUI = {
                     help: 'Check out the man page for curl for more information.',
                 }
             },
-            'javascript-fetch': function () {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            'javascript-fetch': function () {   
 
                 return {
                     title: 'Browser javascript',
@@ -443,7 +420,7 @@ const DebugUI = {
             },
             'python 3': function () {
                 return {
-                    title: 'Python 3 Example',
+                    title: 'Python 3 Broken Example :-)',
                     code: `
 
 import json

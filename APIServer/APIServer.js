@@ -21,7 +21,20 @@ global.SERVER = {
     },
     Started: new Date(),
     RootFolder: __dirname
-}
+};
+
+/*
+    Setup logfile logcation.    
+
+    Use this log file for the life of the server but change
+    the name to the date of it's birth. We just do this for
+    the demo because it's easier to drag across the network.
+*/
+SERVER.LogFileName = __dirname + '/../SECRET/IPLog-' +
+    SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
+
+
+
 
 
 /*
@@ -343,20 +356,27 @@ window.debugdata = {
 
                 /*
                       Quick log to see the history of our traffic...
-                  */
-                //    SERVER.Started 
+                */
                 const ipLogItem = "@" + SERVER.Started.toISOString() + " " +
                     request.connection.remoteAddress +
                     "[" + request.method + "]" +
                     "" + request.url + " ** " + body + "\r\n";
 
-                fs.appendFile(__dirname + '/../SECRET/IPLog-' + SERVER.Started.toLocaleTimeString().replace(/\s/g, '') + '.log', ipLogItem, function (err) {
-                    if (err) throw err;
 
+
+                fs.appendFile(SERVER.LogFileName, ipLogItem, function (err) {
+                    if (err) throw err;
                 });
 
 
+  
 
+
+
+
+                /*
+                    Now work with the body of the request. 
+                */
                 if (body == '') {
                     request.RequestData = {};
                 }
