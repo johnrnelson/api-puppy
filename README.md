@@ -1,6 +1,6 @@
 # api-puppy :dog:
 
-This is most likely **NOT** what you think it is. :grin:
+This is most likely **NOT** what you think it is. :thinking:
 
 ## Index 
 - [Installing](Notes/installing.md) 
