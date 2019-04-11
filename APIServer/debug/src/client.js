@@ -600,6 +600,7 @@ const UIHelper = {
             //Make sure display is read only!
             UIHelper.Ace.AceDisplayRsults.setReadOnly(true);
 
+            UIHelper.Ace.AceDisplayRsults.setTheme("ace/theme/monokai");            
 
             //Only hook the actual editor!!!!!
             UIHelper.Ace.HookEvents(UIHelper.Ace.AceEditor);
@@ -674,8 +675,8 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
-    // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('TabMain');
+    UIHelper.ShowTab('TabDebugger');
 
 
 };

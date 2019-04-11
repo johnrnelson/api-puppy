@@ -644,6 +644,7 @@ const UIHelper = {
             //Make sure display is read only!
             UIHelper.Ace.AceDisplayRsults.setReadOnly(true);
 
+            UIHelper.Ace.AceDisplayRsults.setTheme("ace/theme/monokai");            
 
             //Only hook the actual editor!!!!!
             UIHelper.Ace.HookEvents(UIHelper.Ace.AceEditor);
@@ -718,8 +719,8 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
-    // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('TabMain');
+    UIHelper.ShowTab('TabDebugger');
 
 
 };
@@ -765,12 +766,13 @@ MainTabDisplay {
 MainTabDisplay .container {
     margin: 10px;
     padding: 10px;
-/*     
+    /*     
     margin-left: 10px;
     padding-left: 10px;
     margin-right: 0;
     padding-right: 0; */
 }
+
 /* 
 
     Other stuff.....
@@ -1004,6 +1006,17 @@ slightly modified....
     /* border: 1px solid black; */
 }
 
+.split-container .split .header {
+    width: 100%;
+    background-color: rgb(0, 70, 70);
+    color: white;
+    cursor: default;
+    border: solid 1px silver;
+    padding: 2px;
+    font-size: 14px;
+}
+
+
 .split> :nth-child(1) {
     overflow: scroll;
 }
@@ -1074,7 +1087,7 @@ slightly modified....
                     <li class="nav-item" title="Basic help about the user interface">
                         <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabMain')">Main Help</a>
                     </li>
-                    <li class="nav-item"  title="Interactive debugger to test with">
+                    <li class="nav-item" title="Interactive debugger to test with">
                         <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabDebugger')">Debug Tool</a>
                     </li>
                     <li class="nav-item dropdown">
@@ -1084,13 +1097,13 @@ slightly modified....
                             <a target="_blank" class="dropdown-item" title="The actual source code for the project"
                                 href="https://github.com/johnrnelson/api-puppy">Project</a>
                             <a target="_blank" class="dropdown-item" title="Issues? We all have them. :-)""
-                                href="https://github.com/johnrnelson/api-puppy/issues">Issues</a>
-                            <div class="dropdown-divider"></div>
-                            <a target="_blank" class="dropdown-item" title="Hope this is helpful"
-                                href="https://github.com/johnrnelson/api-puppy/tree/master/Notes">Notes</a>
-                        </div>
-                    </li>
-                </ul>
+                                href=" https://github.com/johnrnelson/api-puppy/issues">Issues </a> <div
+                                class="dropdown-divider"></div>
+                        <a target="_blank" class="dropdown-item" title="Hope this is helpful"
+                            href="https://github.com/johnrnelson/api-puppy/tree/master/Notes">Notes</a>
+            </div>
+            </li>
+            </ul>
             </div>
         </nav>
     </TopNav>
@@ -1124,15 +1137,18 @@ slightly modified....
 
                 </div>
 
-                <div title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')" class="ActionButton">CURL</div>
+                <div title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')" class="ActionButton">CURL
+                </div>
 
-                <div title="Export sample code for JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')" class="ActionButton">
+                <div title="Export sample code for JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')"
+                    class="ActionButton">
                     JavaScript</div>
 
-                <div title="Export sample code for JavaScript HTTP Client" onclick="DebugUI.ExportCode('javascript-http-request')"
-                    class="ActionButton">NodeJS</div>
+                <div title="Export sample code for JavaScript HTTP Client"
+                    onclick="DebugUI.ExportCode('javascript-http-request')" class="ActionButton">NodeJS</div>
 
-                <div title="Export sample code for pythod 3" onclick="DebugUI.ExportCode('python 3')" class="ActionButton">Python3</div>
+                <div title="Export sample code for pythod 3" onclick="DebugUI.ExportCode('python 3')"
+                    class="ActionButton">Python3</div>
 
                 <hr width="90%" size="1" color="gold" />
 
@@ -1145,10 +1161,11 @@ slightly modified....
             <div class="split horizontal">
 
                 <div style="width:50%">
+                    <div class="header">Inbound JSON Request</div>
                     <div id="PayloadEditor" class="ace-editor"></div>
                 </div>
                 <div>
-
+                    <div class="header">Result JSON from Server</div>
                     <div id="APIDebugResults" class="APIDebugResults"></div>
 
                 </div>

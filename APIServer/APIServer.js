@@ -14,7 +14,7 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
-    Version: '1.02b',
+    Version: '1.03b',
     CERTS: {
         //Change this for your own domain!
         path: 'demo.tektology.com'
@@ -547,58 +547,27 @@ window.debugdata = {
 /*
     Save time by just compiling the debug files.. You can always make this a 
     task or use grunt or whatever ya like... :-)
+
+    Use the sync since we won't bother starting up the http servers untill
+    we have the right debug html.. 
 */
 function CompileDebugFiles(OnComplete) {
 
     const path2debug = __dirname + "/debug/";
 
-    /*
-        Sure we are nesting calls.. maybe it looks ugly but its not blocking
-        the main thread which we need to service the api requests other users
-        make on the server...
-    */
-    fs.readFile(path2debug + "src/debug.html", "utf8", function (err, debugHTML) {
-        if (err) {
-            console.log('debug.html', err);
-
-        } else {
-
-            fs.readFile(path2debug + "src/client.js", "utf8", function (err, clientjs) {
-                if (err) {
-                    console.log('client.js', err);
-
-                } else {
-                    fs.readFile(path2debug + "src/debug.css", "utf8", function (err, debugCSS) {
-                        if (err) {
-                            console.log('debug.css', err);
-
-                        } else {
-                            //
+    var debugHTML = fs.readFileSync(path2debug + "src/debug.html", 'utf8');
+    const clientjs = fs.readFileSync(path2debug + "src/client.js", 'utf8');
+    const debugCSS = fs.readFileSync(path2debug + "src/debug.css", 'utf8');
 
 
-                            debugHTML = debugHTML.replace('/* SERVER REPLACES STYLES */', debugCSS);
-                            debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
+    debugHTML = debugHTML.replace('/* SERVER REPLACES STYLES */', debugCSS);
+    debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
 
 
+    fs.writeFileSync(path2debug + 'min/debug.html', debugHTML, { flag: 'w' });
 
-                            fs.writeFileSync(path2debug + 'min/debug.html', debugHTML, { flag: 'w' });
-
-                            OnComplete(null, 'Client HTML ready for requests...');
-
-                            // response.end(debugHTML);
-                            //  *** SEND THE END RESPONSE!!!!
-
-
-
-                        }
-                    });
-
-                }
-
-            });//End Clientside javascript...
-        }
-    });//end debug html....
-
+    OnComplete(null, 'Client HTML ready for requests...');
+   
 
 }
 
