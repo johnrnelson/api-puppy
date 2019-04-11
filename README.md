@@ -27,7 +27,7 @@ NO! Absolutly not no please no not another framework or library!
 
 Why should I? Because it's easier? I think not. :smiley:
 
-**Your code looks like spaghetti cooked by a chaotic evil apprentice/newbiew!**
+**Your code looks like spaghetti cooked by a chaotic evil apprentice/newbie!**
 
 Yeah I'm just having fun here and trying to reach the lowest level of user.
 But feel free to fork, clone, or peel off what ya want and do a better job. I'd 
