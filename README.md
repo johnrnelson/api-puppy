@@ -1,5 +1,6 @@
-# api-puppy
-Is this yet another framework or library? *NO*
+# api-puppy :dog:
+
+This is most likely **NOT** what you think it is. :grin:
 
 ## Index 
 - [Important](#important) 
@@ -19,6 +20,10 @@ Why does this project exist?
 - [ ] Refactor the code to please the puritist?
 
 ## Q&A
+**Is this yet another framework or library?**
+
+NO!
+
 **Why not just use express and other 3rd party middleware?**
 
 Why should I? Because it's easier? I think not. :smiley:
@@ -28,6 +33,13 @@ Why should I? Because it's easier? I think not. :smiley:
 Yeah I'm just having fun here and trying to reach the lowest level of user.
 But feel free to fork, clone, or peel off what ya want and do a better job. I'd 
 love to see other peoples ideas of improvement. 
+
+**Why use the name "api-puppy"?**
+
+I wanted to choose a name that nobody could hate. I feel like tech these days use 
+marketing way too much but I can't beat them so I join them. A cheap jedi mind 
+trick to ensure that the name will most likely be at least liked if not loved and 
+who does not love a puppy?
 
 
 
