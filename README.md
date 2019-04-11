@@ -61,5 +61,5 @@ todo list. :-)
 - [x] [Cross Domain Example](https://www.johnrnelson.com/test/api-tek.html)
 
  
-Send us hello if you find this usefull. 
+Send us a hello if you find this usefull. 
 
