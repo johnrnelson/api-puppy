@@ -1,19 +1,7 @@
 # api-puppy
 Is this yet another framework or library? *NO*
 
-## Project Goals
-Why does this project exist? 
-
-- [x] Proof of concepts  
-- [x] Learn about technology fundamentals
-- [x] Have a lot of fun!
-- [ ] Refactor the code to please the puritist?
-
-
-Break out your favorite editor to write some code in your favorite language on your 
-favorite platform.
-
- 
+## Index 
 - [Important](#important) 
 - [Installing](Notes/installing.md) 
 - [Notes](Notes)
@@ -21,6 +9,25 @@ favorite platform.
 - [ToDo](#todo) 
 - [Helpful Links](Notes/links.md)
 
+
+#### Project Goals
+Why does this project exist? 
+
+- [x] Proof of concepts  
+- [x] Learn about technology fundamentals
+- [x] Have a lot of fun!
+- [ ] Refactor the code to please the puritist?
+
+## Q&A
+**Why not just use express and other 3rd party middleware?**
+
+Why should I? Because it's easier? I think not. :smiley:
+
+**Your code looks like spaghetti cooked by a chaotic evil apprentice/newbiew!**
+
+Yeah I'm just having fun here and trying to reach the lowest level of user.
+But feel free to fork, clone, or peel off what ya want and do a better job. I'd 
+love to see other peoples ideas of improvement. 
 
 
 
