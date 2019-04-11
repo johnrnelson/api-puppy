@@ -3,10 +3,8 @@
 This is most likely **NOT** what you think it is. :grin:
 
 ## Index 
-- [Important](#important) 
 - [Installing](Notes/installing.md) 
-- [Notes](Notes)
-- [Tools](Tools) 
+- [Notes](Notes) 
 - [Frequently Asked Questions](#faq) 
 - [ToDo](#todo) 
 - [Helpful Links](Notes/links.md)
