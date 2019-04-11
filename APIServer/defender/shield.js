@@ -1,5 +1,5 @@
 /*
-    Provide a basic shield for our API from the bad peopel who want to abuse it. 
+    Provide a basic shield for our API from the bad people who want to abuse it. 
 */
 const fs = require('fs');
 
