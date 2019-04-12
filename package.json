@@ -1,11 +1,12 @@
 {
-  "name": "asset-inventory-openair",
-  "version": "0.0.1",
-  "description": "Used for the asset inventory open-data project.",
-  "repository": "git@github.com:EugTech/asset-inventory-openair.git",
+  "name": "air-puppy",
+  "version": "1.0.5",
+  "description": "air-puppy project",
+  "repository": "git@github.com:johnrnelson/api-puppy.git",
   "keywords": [
-    "airtable",
-    "node"
+    "node",
+    "http",
+    "api"
   ],
   "author": "John Nelson <me@johnrnelson.com> (www.johnrnelson.com)",
   "dependencies": { 
