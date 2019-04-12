@@ -1,0 +1,6 @@
+{
+	"service": "time",
+	"format": "MM/DD/YY",
+	"tz": "",
+	"msg": "This is not yet working!"
+}
