@@ -13,6 +13,13 @@ body {
     left: 0;
     right: 0;
     overflow: hidden;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);     
 }
 
 TopNav {
@@ -90,9 +97,8 @@ MainTabDisplay .container {
     border: 0;
     padding: 3px;
 
-
-
     background-color: transparent;
+    font-family: 'Roboto', sans-serif;
     color: purple;
     font-weight: bold;
     text-overflow: ellipsis;
@@ -146,17 +152,22 @@ sidebar
     background-color: rgb(54, 54, 54);
     color: white;
     padding: 5px;
+    font-family: 'Abel', sans-serif;
 }
 
 #debugger-sidbar select {
     background-color: transparent;
     width: 100%;
-    color: gold;
-    /* right: 150px; */
+    color: gold;    
 }
 
 #debugger-sidbar .ActionButton {
+    font-family: 'Roboto', sans-serif;
     font-size: 16px;
+
+    font-variant: small-caps;
+
+
     border-radius: 6px;
 
     color: rgb(82, 82, 82);
@@ -167,18 +178,25 @@ sidebar
     text-align: center;
     text-decoration: none;
 
-    background-color: rgb(212, 212, 212);
-
+    /* background-color: rgb(212, 212, 212); */
     cursor: pointer;
     margin-top: 10px;
-
+    text-shadow: 1px 1px 1px #ffffff;    
+    background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, rgb(194, 194, 194) 100%);    
 }
+#debugger-sidbar .ActionButton:hover {
+    color: blue;
+     
+}
+
+
 
 /* Main help text classes...  */
 
 .HelpText {
     color: gray;
     font-size: 14px;
+    font-family: 'PT Sans', sans-serif;    
 }
 
 pre {
@@ -210,13 +228,17 @@ FOOTER STYLES!!!!!!
 .footer-row {
     padding-top: 50px;
     margin-bottom: 100px;
+    font-family: 'Abel', sans-serif;    
+    font-size: 16px;
+   
 }
 
 .FooterHeading {
     color: green;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: bold;
 }
+ 
 
 .FooterSysInfo {
     color: gray;
@@ -228,12 +250,7 @@ FOOTER STYLES!!!!!!
     cursor: hand;
 }
 
-.TableHeader {
-    color: purple;
-    font-size: 18px;
-    font-weight: bold;
-}
-
+ 
 
 
 

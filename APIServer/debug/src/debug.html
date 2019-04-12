@@ -13,6 +13,10 @@
 
     <title>Documentation and Debug Utility</title>
 
+    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,400italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300' rel='stylesheet' type='text/css'>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
@@ -117,7 +121,7 @@
         <div id="debugger-sidbar">
             <center>
 
- 
+
                 <select id="DebugVerbList" title="List of basic services provided by this server"></select>
                 <br>
                 <select id="ExampleCodeList" title="Sample code to test with."></select>
@@ -155,11 +159,13 @@
             <div class="split horizontal">
 
                 <div style="width:50%">
-                    <div class="header">Inbound JSON Request</div>
+                    <div class="header">&nbsp;<i class="fas fa-upload" style="color:white"></i>&nbsp;Upload JSON Request
+                    </div>
                     <div id="PayloadEditor" class="ace-editor"></div>
                 </div>
                 <div>
-                    <div class="header">Result JSON from Server</div>
+                    <div class="header">&nbsp;<i class="fas fa-download" style="color:white"></i>&nbsp;Download JSON
+                        from Server</div>
                     <div id="APIDebugResults" class="APIDebugResults"></div>
 
                 </div>
@@ -217,18 +223,6 @@
                     </p>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
