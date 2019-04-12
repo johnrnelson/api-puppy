@@ -559,6 +559,12 @@ function CompileDebugFiles(OnComplete) {
     const clientjs = fs.readFileSync(path2debug + "src/client.js", 'utf8');
     const debugCSS = fs.readFileSync(path2debug + "src/debug.css", 'utf8');
 
+    const HelpDisplayHTML = fs.readFileSync(path2debug + "src/HelpDisplay.html", 'utf8');
+
+
+    debugHTML = debugHTML.replace('/* SERVER REPLACES HelpDisplay */', HelpDisplayHTML);
+    
+
 
     debugHTML = debugHTML.replace('/* SERVER REPLACES STYLES */', debugCSS);
     debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
