@@ -11,7 +11,7 @@
 <head>
 
 
-    <title>Documentation and Debug Utility</title>
+    <title>api-puppy Demo Site</title>
 
     <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,400italic' rel='stylesheet' type='text/css'>
@@ -723,8 +723,8 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
-    // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('TabMain');
+    UIHelper.ShowTab('TabDebugger');
 
 
 };
@@ -1030,12 +1030,16 @@ slightly modified....
 .split-container .split .header {
     width: 100%;
     background-color: rgb(0, 70, 70);
-    color: rgb(160, 196, 3);
+    color: white;
     cursor: default;
-    border: solid 1px black;
+    border: solid 1px silver;
     padding: 2px;
-    font-size: 14px;
+
+    text-shadow: 1px 1px 1px #000000;    
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px;
     font-weight: bold;
+    /* font-variant: small-caps; */
 }
 
 
@@ -1182,12 +1186,12 @@ slightly modified....
             <div class="split horizontal">
 
                 <div style="width:50%">
-                    <div class="header">&nbsp;<i class="fas fa-upload" style="color:white"></i>&nbsp;Upload JSON Request
+                    <div class="header" title="The body of the request in JSON format">&nbsp;<i class="fas fa-upload" style="color:white"></i>&nbsp;Upload JSON Request
                     </div>
                     <div id="PayloadEditor" class="ace-editor"></div>
                 </div>
                 <div>
-                    <div class="header">&nbsp;<i class="fas fa-download" style="color:white"></i>&nbsp;Download JSON
+                    <div class="header" title="The result of the request in JSON format">&nbsp;<i class="fas fa-download" style="color:white"></i>&nbsp;Download JSON
                         from Server</div>
                     <div id="APIDebugResults" class="APIDebugResults"></div>
 
@@ -1205,7 +1209,7 @@ slightly modified....
         <div class="container">
 
             <div class="page-header">
-                <h1>Debug Utility</h1>
+                <h1>Demo for api-puppy</h1>
             </div>
 
 
