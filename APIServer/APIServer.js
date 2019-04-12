@@ -75,6 +75,12 @@ const IPC = {
         console.log('\r\nStart Web Servers using version:' + global.SERVER.Version + ' on ' + SERVER.Started.toLocaleString());
 
 
+        /*
+
+            PREP FOR WEB SOCKET SUPPORT!
+       
+        */
+
         var httpServer = http.createServer(function (requset, response) {
             IPC.ServiceWeb(requset, response);
         });
@@ -563,7 +569,7 @@ function CompileDebugFiles(OnComplete) {
 
 
     debugHTML = debugHTML.replace('/* SERVER REPLACES HelpDisplay */', HelpDisplayHTML);
-    
+
 
 
     debugHTML = debugHTML.replace('/* SERVER REPLACES STYLES */', debugCSS);
@@ -573,7 +579,7 @@ function CompileDebugFiles(OnComplete) {
     fs.writeFileSync(path2debug + 'min/debug.html', debugHTML, { flag: 'w' });
 
     OnComplete(null, 'Client HTML ready for requests...');
-   
+
 
 }
 
