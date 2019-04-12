@@ -3,10 +3,9 @@ Clone the repo and use npm to install all the packages you need.
  
     npm update
 
+Take notice of how small the `package.json` is and how simple things can be. 
 
-The list of NPMs grows so check the `package.json` file for what 
-is actually used.
-
+## Server Setup
 Setup [iptables](Server/iptables.md) to make sure the lower ports will
 work with the higher ports set in the scripts. Otherwise you have to put 
 the ports you want to use in the URI.  
