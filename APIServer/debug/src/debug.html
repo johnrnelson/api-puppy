@@ -110,13 +110,14 @@
 
     <!-- Because of the editor, you need to declare this first! -->
     <MainTabDisplay id="TabDebugger">
+        <span class="api-uri-browse" title="Open a new tab to test the URL">
+            <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
+        </span>
         <span class="api-uri-display" title="URI Endpoint address">
             <input id="api-uri-address"
                 value="/time/is/on-your-side/if-your-smart/about/it?testValA=abc&testlongvalformetotestwithis=ofmythis_isreallylongwoohooooooo" />
         </span>
-        <span class="api-uri-browse" title="Open a new tab to test the URL">
-            <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
-        </span>
+
 
         <div id="debugger-sidbar">
             <center>
@@ -155,7 +156,6 @@
 
         <div class="split-container">
             <div class="split horizontal">
-
                 <div style="width:50%">
                     <div class="header" title="The body of the request in JSON format">&nbsp;<i class="fas fa-upload"
                             style="color:silver"></i>&nbsp;Upload JSON Request

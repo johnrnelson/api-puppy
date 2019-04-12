@@ -723,8 +723,8 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
-    // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('TabMain');
+    UIHelper.ShowTab('TabDebugger');
 
 
 };
@@ -816,8 +816,8 @@ MainTabDisplay .container {
 
     top: 0;
     height: 30px;
-    left: 0;
-    right: 30px;
+    right: 0;
+    left: 30px;
     background-color: rgb(236, 236, 236);
     color: white;
     /* padding-right:1px; */
@@ -846,15 +846,18 @@ MainTabDisplay .container {
 
     top: 0;
     height: 30px;
-    /* left: 0; */
-    right: 0;
+    left: 0;
+    /* right: 0; */
     width: 30px;
     background-color: transparent;
-    color: white;
+    color: blue;
     padding: 1px;
     /* margin:4px; */
     font-size: 20px;
     text-align: center
+}
+#TabDebugger .api-uri-browse:hover {
+    color:black;
 }
 
 
@@ -1031,7 +1034,7 @@ slightly modified....
     width: 100%;
     background-color: rgb(0, 70, 70);
     color: white;
-    cursor: default;
+    cursor: help;
     border: solid 1px silver;
     padding: 2px;
 
@@ -1137,13 +1140,14 @@ slightly modified....
 
     <!-- Because of the editor, you need to declare this first! -->
     <MainTabDisplay id="TabDebugger">
+        <span class="api-uri-browse" title="Open a new tab to test the URL">
+            <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
+        </span>
         <span class="api-uri-display" title="URI Endpoint address">
             <input id="api-uri-address"
                 value="/time/is/on-your-side/if-your-smart/about/it?testValA=abc&testlongvalformetotestwithis=ofmythis_isreallylongwoohooooooo" />
         </span>
-        <span class="api-uri-browse" title="Open a new tab to test the URL">
-            <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
-        </span>
+
 
         <div id="debugger-sidbar">
             <center>
@@ -1182,7 +1186,6 @@ slightly modified....
 
         <div class="split-container">
             <div class="split horizontal">
-
                 <div style="width:50%">
                     <div class="header" title="The body of the request in JSON format">&nbsp;<i class="fas fa-upload"
                             style="color:silver"></i>&nbsp;Upload JSON Request
@@ -1222,12 +1225,10 @@ slightly modified....
 
             <div class="alert alert-primary" role="alert">
                 <small>
-                    This is not another framework or library or 
-                    even a template it's just a demo!                
-                    <br>                    
+                    This is not another framework or library or
+                    even a template, it's just a demo!
+                    <br>
                 </small>
-             
-                        
             </div>
 
         </div>
