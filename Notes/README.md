@@ -13,10 +13,11 @@ Use the markdown to help document the project.
 Lets try to keep this updated. :-)
 
 ## Update Icons
+Use this like tags to track basic changes...
 
-:notebook:          - Doc Updates
-:file_folder:       - Foolder changes
-:earth_americas:    - Global Changes
-:exclamation:       - Important Fixes!
-:question:          - Maybe not so stable
-:eyes:              - UI Changes
+<br>:notebook:          - Doc Updates
+<br>:file_folder:       - Foolder changes
+<br>:earth_americas:    - Global Changes
+<br>:exclamation:       - Important Fixes!
+<br>:question:          - Maybe not so stable
+<br>:eyes:              - UI Changes
