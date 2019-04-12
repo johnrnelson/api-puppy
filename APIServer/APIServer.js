@@ -14,7 +14,7 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
-    Version: '1.05b',
+    Version: '1.09b',
     CERTS: {
         //Change this for your own domain!
         path: 'demo.tektology.com'
