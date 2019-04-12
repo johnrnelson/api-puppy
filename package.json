@@ -9,7 +9,6 @@
   ],
   "author": "John Nelson <me@johnrnelson.com> (www.johnrnelson.com)",
   "dependencies": { 
-    "eslint": "^5.12.0", 
-    "request": "^2.88.0" 
+    "eslint": "^5.12.0"
   }
 }
