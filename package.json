@@ -1,7 +1,7 @@
 {
-  "name": "air-puppy",
+  "name": "api-puppy",
   "version": "1.0.8",
-  "description": "air-puppy project",
+  "description": "api-puppy project",
   "repository": "git@github.com:johnrnelson/api-puppy.git",
   "keywords": [
     "node",
