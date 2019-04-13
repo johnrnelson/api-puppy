@@ -1,2 +1,2 @@
-# Default Service Help
-Use this file to help describe the service.
+# Time Service Help
+Simple service to return the time.
