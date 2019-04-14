@@ -27,6 +27,10 @@ Why does this project exist? Why are you looking at it?
 
 Why should I? Because it's easier? I think not. :smiley:
 
+The best part about this whole project is the lack of NPM or 3rd party 
+influence. This is pure JavaScript, Node, and of course some HTML and 
+CSS for the debugger thing. 
+
 **Your code looks like spaghetti cooked by a chaotic evil newbie!**
 
 Yeah I'm just having fun here and trying to reach the lowest level of user.
