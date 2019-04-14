@@ -56,7 +56,7 @@ todo list. :-)
 - [x] Content Security Policy (CSP) fixes!
 - [x] Support paths and query string for routing
 - [x] Live documentation and tools
-- [ ] Web Sockets has it's own branch for now
+- [x] Web Sockets [check out](https://github.com/websockets/ws)
 
 Maybe we do or do not do.. who knows?
 
