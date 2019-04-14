@@ -473,10 +473,10 @@ print(response_data)
     SetTargetURI(TargetURI) {
         const apiURIAddress = document.getElementById('api-uri-address');
         const apiURILink = document.getElementById('api-uri-link');
- 
+
         apiURIAddress.value = TargetURI;
         apiURILink.href = TargetURI;
- 
+
 
     }
 };
@@ -593,23 +593,23 @@ const UIHelper = {
 
         BuildAceControls() {
 
-   
+
             UIHelper.Ace.AceEditor = UIHelper.Ace.SetupAceEditorDefaults('PayloadEditor');
             UIHelper.Ace.AceDisplayRsults = UIHelper.Ace.SetupAceEditorDefaults('APIDebugResults');
 
             //Make sure display is read only!
             UIHelper.Ace.AceDisplayRsults.setReadOnly(true);
 
-            UIHelper.Ace.AceDisplayRsults.setTheme("ace/theme/monokai");            
+            UIHelper.Ace.AceDisplayRsults.setTheme("ace/theme/monokai");
 
             //Only hook the actual editor!!!!!
             UIHelper.Ace.HookEvents(UIHelper.Ace.AceEditor);
- 
+
 
 
             //Add your own stuff to the drop downs...
             UIHelper.Ace.SetCompleters(UIHelper.Ace.AceEditor);
- 
+
 
             UIHelper.Ace.AceEditor.setOptions({
                 enableBasicAutocompletion: UIHelper.Ace.AceEditor.Completer,
@@ -678,5 +678,27 @@ window.onload = function () {
     // UIHelper.ShowTab('TabMain');
     UIHelper.ShowTab('TabDebugger');
 
+
+    // WEBSOCKET
+    var SocketURL;
+    if (document.location.protocol == "https") {
+        SocketURL = 'wss://' + document.location.hostname + ":" + document.location.port;
+    } else {
+        SocketURL = 'ws://' + document.location.hostname + ":" + document.location.port;
+    }
+    const connection = new WebSocket(SocketURL)
+
+    connection.onerror = error => {
+        console.log(`WebSocket error: ${error}`)
+    };
+    connection.onmessage = e => {
+        console.log(e.data)
+    };
+    connection.onopen = () => {
+        //...
+        connection.send(JSON.stringify({
+            service: "time"
+        }));
+    };
 
 };

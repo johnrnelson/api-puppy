@@ -47,6 +47,7 @@ SERVER.ErrorFileName = __dirname + '/../SECRET/ErrorLog-' +
 */
 const fs = require('fs');
 const path = require('path');
+const ServiceManager = require('./ServiceManager');
 
 
 
@@ -72,25 +73,27 @@ const IPC = {
         const https = require("https");
 
 
+
         console.log('\r\nStart Web Servers using version:' + global.SERVER.Version + ' on ' + SERVER.Started.toLocaleString());
 
-
-        /*
-
-            PREP FOR WEB SOCKET SUPPORT!
-       
-        */
 
         var httpServer = http.createServer(function (requset, response) {
             IPC.ServiceWeb(requset, response);
         });
+
+
+
+
+        SERVER.WebSocketHTTP = IPC.ServiceSocket(httpServer);
+
+
+
         //Lets start our server..
         httpServer.listen(IPC.PORT_HTTP, IPC.IPADDRESS, function () {
             console.log("Web Server Ready : http://" + IPC.IPADDRESS + ":" + IPC.PORT_HTTP);
             IPC.StartDate = new Date();
+
         });
-
-
 
 
 
@@ -112,6 +115,9 @@ const IPC = {
             const httpsServer = https.createServer(credentials, function (requset, response) {
                 IPC.ServiceWeb(requset, response);
             });
+
+
+            SERVER.WebSocketHTTPS = IPC.ServiceSocket(httpsServer);
 
 
             //Lets start our server..
@@ -223,42 +229,69 @@ window.debugdata = {
         }
     },
 
-    /*
-        Actually run the code needed to service the request! There may be 
-        multiple requests so just do your part and call back when finished...
-    */
-    ServiceRequest(RequestObj, RequestData, OnComplete) {
+    ServiceSocket(WebServer) {
+        const WebSocket = require('ws');
 
+        const WebSocketServer = new WebSocket.Server({ server: WebServer });
 
-        // We need at least a service name to work with...
-        if (!RequestData.service) {
-            OnComplete('No service defined! ', null);
-        } else {
+        WebSocketServer.Broadcast = function (MSG, Options) {
+            if (Option.Exclude) {
 
-            var finalServicePath = "";
-
-            try {
-                //Do not allow ".." in the path!!!!
-                const servicePath = RequestData.service.replace(/\./g, '');
-
-                finalServicePath = path.resolve(path.join(__dirname, "services", path.normalize(path.join(servicePath, 'index.js'))));
-
-                const route2Take = require(finalServicePath);
-
-                //Insert dagger here!!!!
-                route2Take.ServiceRequest(RequestObj, RequestData, function (ServiceError, ResponseJSON) {
-                    if (ServiceError) {
-                        // debugger;
-                    }
-                    OnComplete(ServiceError, ResponseJSON);
-
-                });
-            } catch (errinService) {
-                OnComplete(errinService.message, null);
             }
+            WebSocketServer.clients.forEach(function each(client) {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(data);
+                }
+            });
 
-        }
+        };
 
+        WebSocketServer.on('connection', function connection(ws, req) {
+
+            const ipAddress = req.connection.remoteAddress;
+
+            //Do not give away the users complete IP address over the internet!  :-)
+            const displayAddress = ipAddress.split('.').slice(0, 2).join('.') + "**";
+
+            ws.on('message', function incoming(message) {
+                try {
+
+                    const msgDATA = JSON.parse(message);
+
+                    ServiceManager.ServiceRequestWeb(null, msgDATA, function (err, data) {
+                        if (err) {
+                            ws.send(JSON.stringify({
+                                err: err
+                            }));
+                        } else {
+                            ws.send(JSON.stringify({
+                                msg: data
+                            }));
+                        }
+                    });
+                } catch (errJSON) {
+                    ws.send(JSON.stringify({
+                        err: 'Bad JSON!'
+                    }));
+                }
+
+            });
+
+            ws.send(JSON.stringify({
+                msg: 'You have connected to the web socket!'
+            }));
+
+            //Let everyone know whats up! :-)
+            WebSocketServer.clients.forEach(function each(client) {
+                if (client !== ws && client.readyState === WebSocket.OPEN) {
+                    client.send(JSON.stringify({
+                        msg: "Welcome new tester from :" + displayAddress
+                    }));
+                }
+            });
+        });
+
+        return WebSocketServer;
 
     },
 
@@ -268,7 +301,7 @@ window.debugdata = {
         Use this chance to build state and enforce rules that you expect all 
         of your clients to follow. 
     */
-    ServiceWeb: function (request, response) {
+    ServiceWeb(request, response) {
 
         //ignore this request. We are not a real web server!
         if (request.url == "/favicon.ico") {
@@ -468,7 +501,7 @@ window.debugdata = {
                                 const aSingleRequest = tasks[index];
 
                                 //By the time you get here.. you want a true web api request...
-                                IPC.ServiceRequest(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
+                                ServiceManager.ServiceRequestWeb(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
                                     totalFinished++;
 
 
@@ -492,7 +525,7 @@ window.debugdata = {
                         } else {
 
                             //By the time you get here.. you want a true web api request...
-                            IPC.ServiceRequest(request, request.RequestData, function (ServiceError, ResponseJSON) {
+                            ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                                 if (ServiceError) {
                                     //Don't leak this!! lol
                                     // response.SendError(response, ServiceError);

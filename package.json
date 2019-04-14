@@ -9,7 +9,7 @@
     "api"
   ],
   "author": "John Nelson <me@johnrnelson.com> (www.johnrnelson.com)",
-  "dependencies": { 
-     
+  "dependencies": {
+    "ws": "^6.2.1"
   }
 }
