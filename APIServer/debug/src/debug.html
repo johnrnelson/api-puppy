@@ -128,8 +128,12 @@
                 <select id="ExampleCodeList" title="Sample code to test with."></select>
                 <br>
 
-                <div title="Select a service and code example then run me" onclick="DebugUI.RunDebug()"
-                    class="ActionButton">Execute Request</div>
+                <div title="Use HTTP for the request" onclick="DebugUI.MakeHTTPRequest()"
+                    class="ActionButton">HTTP Request</div>
+
+
+                <div title="Use the socket for the request" onclick="DebugUI.MakeSocketRequest()"
+                    class="ActionButton">Socket Request</div>
 
 
                 <div style="padding-top:15px;">Export Options</div>

@@ -31,64 +31,6 @@ const DebugUI = {
     /*
         The rest is just setting up the UI for the user...
     */
-
-    //Build an HTML table with all the api help.. 
-    SetHelpTable(DisplayHTMLELement) {
-        DebugUI.DisplayTestingActions = document.getElementById(DisplayHTMLELement);
-
-
-        //Clear any old stuff...
-        DebugUI.DisplayTestingActions.innerHTML = "";
-
-        // debugger;
-
-        for (var n in debugdata.apidata) {
-            const namespace = debugdata.apidata[n];
-            AddTestingRow(n, namespace);
-        }
-
-
-        function AddTestingRow(NameSpace, RowData) {
-
-
-
-            //for each test record we have....
-            for (var t in RowData.test) {
-                const test = RowData.test[t];
-
-                // console.log(test);
-
-                const TestActionRow = document.createElement('tr');
-                TestActionRow.title = "NameSpace:" + NameSpace;
-
-                const TestActionColA = document.createElement('td');
-                const TestActionColB = document.createElement('td');
-
-                TestActionColA.innerHTML = test.text;
-                TestActionColB.innerHTML = test.title;
-
-                // TestActionColA.className = "buttonclick";
-
-                //Let children reference the test record....
-                TestActionRow.DataRecord = test;
-
-                //Set DOM links for easy scripting access....
-                TestActionColA.RowElement = TestActionRow;
-                TestActionColB.RowElement = TestActionRow;
-
-
-                TestActionRow.appendChild(TestActionColA);
-                TestActionRow.appendChild(TestActionColB);
-                DebugUI.DisplayTestingActions.appendChild(TestActionRow);
-
-
-            }
-
-
-        }
-
-
-    },
     //Show the server info via HTML in a componet fashion....
     SetSysInfo() {
         //You will find this on the `debug.html` page...
@@ -128,9 +70,8 @@ const DebugUI = {
 
 
     },
-    /*
-        Fill the side bar with options we can use in our debugger...
-    */
+
+    //Fill the side bar with options we can use in our debugger...
     FillSideBar() {
 
         const dbSidebar = document.getElementById('debugger-sidbar');
@@ -259,7 +200,8 @@ const DebugUI = {
         });
 
     },
-    RunDebug() {
+    //Use the HTTP to request the data...
+    MakeHTTPRequest() {
         console.clear();
         console.info('\r\nRun the debug code!');
 
@@ -302,6 +244,14 @@ const DebugUI = {
                 });
         }
 
+
+    },
+    //Use the socket to request the data...
+    MakeSocketRequest() {
+        //Get our contents from the editor...
+        const JSONPayload = DebugUI.GetEditorJSON();
+        console.info(JSONPayload);
+        DebugUI.WebSocketConnection.send(JSON.stringify(JSONPayload));
 
     },
     /*
@@ -483,6 +433,69 @@ print(response_data)
 
 
 const UIHelper = {
+    QueryStringBuilder(JSONData) {
+
+        //Simple function to serialize the json into array for query string...
+        function DigestQS(Prefix, QSObject, QSArray) {
+            console.log('doing obj:', QSObject);
+            for (var o in QSObject) {
+
+                if (typeof (QSObject[o]) == "object") {
+                    if (Prefix) {
+                        DigestQS(Prefix + o, QSObject[o], QSArray);
+                    } else {
+                        DigestQS(o + ".", QSObject[o], QSArray);
+                    }
+
+                } else {
+                    if (QSObject[o] != "") {
+                        if (Prefix) {
+                            QSArray.push(Prefix + o + "=" + QSObject[o]);
+                        } else {
+                            QSArray.push(o + "." + o + "=" + QSObject[o]);
+
+                        }
+
+                    }
+
+                }
+
+
+            }
+        }
+
+        try {
+            if (typeof (JSONData) == "string") {
+                JSONData = JSON.parse(JSONData);;
+            }
+
+
+            if (JSONData.service) {
+
+                var selectedService = JSONData.service;
+                delete JSONData["service"];
+
+                const basicOptions = [];
+
+
+                DigestQS("", JSONData, basicOptions);
+
+
+                if (basicOptions.length) {
+                    DebugUI.SetTargetURI('/' + selectedService + '?' + basicOptions.join('&'));
+                }
+
+            } else {
+                DebugUI.SetTargetURI("**ERROR**");
+
+            }
+
+        } catch (errBadJSON) {
+            console.warn('Error In JSON!', errBadJSON);
+            DebugUI.SetTargetURI("** bad json **");
+        }
+
+    },
     Ace: {
         AceEditor: null, //Set this in code when you are ready...
         AceDisplayRsults: null, //Set this in code when you are ready...        
@@ -534,45 +547,9 @@ const UIHelper = {
 
             Editor2Hook.getSession().on('change', function (delta) {
 
-                // debugger;
-
                 const editorJSON = Editor2Hook.getValue();
-                try {
-                    const jsonData = JSON.parse(editorJSON);
+                UIHelper.QueryStringBuilder(editorJSON);
 
-                    if (jsonData.service) {
-
-
-                        const basicOptions = [];
-
-                        for (var o in jsonData) {
-                            if (o !== "service") {
-                                if (typeof (jsonData[o]) == "object") {
-                                    basicOptions.push('' + o + "=" + JSON.stringify(jsonData[o]));
-                                } else {
-                                    if (jsonData[o] != "") {
-                                        basicOptions.push('' + o + "=" + jsonData[o]);
-                                    }
-
-                                }
-
-                            }
-                        }
-                        if (basicOptions.length) {
-                            DebugUI.SetTargetURI('/' + jsonData.service + '?' + basicOptions.join('&'));
-                        } else {
-                            DebugUI.SetTargetURI('/' + jsonData.service + '/');
-                        }
-                    } else {
-                        DebugUI.SetTargetURI(editorJSON);
-
-                    }
-
-                    // console.info('Edit Len:',editorJSON.length,delta);
-
-                } catch (errBadJSON) {
-                    DebugUI.SetTargetURI("** bad json **");
-                }
 
             });
         },
@@ -620,6 +597,8 @@ const UIHelper = {
 
         }
     },
+
+    //Simple show tab...
     ShowTab(Tab2Show) {
 
         // debugger;
@@ -635,6 +614,55 @@ const UIHelper = {
         }
         UIHelper.ActiveTab.style.display = "block";
     },
+    MasterSocket: {
+        Connnect() {
+            //
+
+
+
+            // WEBSOCKET
+            var SocketURL;
+            if (document.location.protocol == "https") {
+                SocketURL = 'wss://' + document.location.hostname + ":" + document.location.port;
+            } else {
+                SocketURL = 'ws://' + document.location.hostname + ":" + document.location.port;
+            }
+            DebugUI.WebSocketConnection = new WebSocket(SocketURL)
+
+            DebugUI.WebSocketConnection.onerror = error => {
+                console.log(`WebSocket error: ${error}`)
+            };
+            DebugUI.WebSocketConnection.onmessage = e => {
+                const jsonData = JSON.parse(e.data);
+
+                //Do not display service messages!
+                if (jsonData.TID == 0) {
+                    console.log(jsonData);
+                    return;
+                }
+                UIHelper.Ace.AceDisplayRsults.setValue(JSON.stringify(jsonData, null, "\t"));
+
+                //Set the cursor so the user can start over again...
+                UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+
+            };
+            DebugUI.WebSocketConnection.onopen = () => {
+
+                //An example...
+                /*
+                DebugUI.WebSocketConnection.send(JSON.stringify({
+                    service: "time"
+                }));
+                */
+            };
+
+
+
+
+
+
+        }
+    }
 
 };
 
@@ -653,7 +681,6 @@ window.onload = function () {
     //Setup our UI parts...
     DebugUI.SetSysInfo();
     DebugUI.FillSideBar();
-    // DebugUI.SetHelpTable();
 
 
     //Setup all of our ace editors...
@@ -674,31 +701,12 @@ window.onload = function () {
     `);
 
 
+    //Connect to our websocket server....
+    UIHelper.MasterSocket.Connnect();
+
     //Which screen do you want to show first? Are you debugging the debugger? lol
     // UIHelper.ShowTab('TabMain');
     UIHelper.ShowTab('TabDebugger');
 
-
-    // WEBSOCKET
-    var SocketURL;
-    if (document.location.protocol == "https") {
-        SocketURL = 'wss://' + document.location.hostname + ":" + document.location.port;
-    } else {
-        SocketURL = 'ws://' + document.location.hostname + ":" + document.location.port;
-    }
-    const connection = new WebSocket(SocketURL)
-
-    connection.onerror = error => {
-        console.log(`WebSocket error: ${error}`)
-    };
-    connection.onmessage = e => {
-        console.log(e.data)
-    };
-    connection.onopen = () => {
-        //...
-        connection.send(JSON.stringify({
-            service: "time"
-        }));
-    };
 
 };

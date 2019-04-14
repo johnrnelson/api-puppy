@@ -1,3 +1,7 @@
 {
-	"service": "time" 
+	"service": "time" ,
+	"QS_TEST": {
+		"TEST":"yes",
+		"working":"yes"
+	}
 }

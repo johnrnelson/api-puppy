@@ -71,6 +71,7 @@ const IPC = {
     Start: function () {
         const http = require('http');
         const https = require("https");
+        const WebSocket = require('ws');
 
 
 
@@ -85,6 +86,7 @@ const IPC = {
 
 
         SERVER.WebSocketHTTP = IPC.ServiceSocket(httpServer);
+
 
 
 
@@ -127,6 +129,32 @@ const IPC = {
             });
 
 
+
+            SERVER.SocketBroadcast = function (MSG, Options) {
+                if (Options) {
+
+                    if (Option.Exclude) {
+
+                    }
+                }
+                if (typeof (MSG) != "string") {
+                    MSG = JSON.stringify(MSG);
+                }
+
+                SERVER.WebSocketHTTP.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(MSG);
+                    }
+                });
+                SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(MSG);
+                    }
+                });
+
+            };
+
+
         } catch (errCerts) {
             console.log('Error reading cert files.\r\n');
             console.log(errCerts.message);
@@ -152,12 +180,7 @@ const IPC = {
             query string values.  :-)
         */
         response.writeHead(200, {
-            "Content-Type": "text/html",
-            //CSP Policy
-            //  "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
-
-
-
+            "Content-Type": "text/html"
         });
 
 
@@ -199,9 +222,7 @@ window.debugdata = {
 
 
                         response.end(debugHTML);
-                        //  *** SEND THE END RESPONSE!!!!
-
-
+                        //  *** SEND THE END RESPONSE!!!! 
 
                     }
                 });//End API_HELP data...
@@ -234,17 +255,6 @@ window.debugdata = {
 
         const WebSocketServer = new WebSocket.Server({ server: WebServer });
 
-        WebSocketServer.Broadcast = function (MSG, Options) {
-            if (Option.Exclude) {
-
-            }
-            WebSocketServer.clients.forEach(function each(client) {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(data);
-                }
-            });
-
-        };
 
         WebSocketServer.on('connection', function connection(ws, req) {
 
@@ -252,6 +262,19 @@ window.debugdata = {
 
             //Do not give away the users complete IP address over the internet!  :-)
             const displayAddress = ipAddress.split('.').slice(0, 2).join('.') + "**";
+
+
+            ws.User = {
+                //Using an API key or what???
+
+
+                RemoteIP: ipAddress,
+
+                ClientAgent: "WebSocket",
+                SecurityLevel: 0,
+                ProfileID: 0
+            }
+
 
             ws.on('message', function incoming(message) {
                 try {
@@ -264,9 +287,7 @@ window.debugdata = {
                                 err: err
                             }));
                         } else {
-                            ws.send(JSON.stringify({
-                                msg: data
-                            }));
+                            ws.send(JSON.stringify(data));
                         }
                     });
                 } catch (errJSON) {
@@ -278,17 +299,18 @@ window.debugdata = {
             });
 
             ws.send(JSON.stringify({
+                TID: 0,
                 msg: 'You have connected to the web socket!'
             }));
 
             //Let everyone know whats up! :-)
-            WebSocketServer.clients.forEach(function each(client) {
-                if (client !== ws && client.readyState === WebSocket.OPEN) {
-                    client.send(JSON.stringify({
-                        msg: "Welcome new tester from :" + displayAddress
-                    }));
-                }
+            SERVER.SocketBroadcast({
+                TID: 0, //System message
+
+                msg: "Welcome new tester from :" + displayAddress
             });
+
+
         });
 
         return WebSocketServer;
