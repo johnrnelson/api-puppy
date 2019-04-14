@@ -21,13 +21,13 @@ Why does this project exist? Why are you looking at it?
 ## FAQ
 **Is this yet another framework or library?**
 
-NO! Absolutly not no please no not another framework or library!
+**NO!** Absolutly not no please no not another framework or library!
 
 **Why not just use express and other 3rd party middleware?**
 
 Why should I? Because it's easier? I think not. :smiley:
 
-**Your code looks like spaghetti cooked by a chaotic evil apprentice/newbie!**
+**Your code looks like spaghetti cooked by a chaotic evil newbie!**
 
 Yeah I'm just having fun here and trying to reach the lowest level of user.
 But feel free to fork, clone, or peel off what ya want and do a better job. I'd 
@@ -39,6 +39,8 @@ I wanted to choose a name that nobody could hate. I feel like tech these days us
 marketing way too much but I can't beat them so I join them. A cheap jedi mind 
 trick to ensure that the name will most likely be at least liked if not loved and 
 who does not love a puppy?
+
+
 
 
 ## TODO
