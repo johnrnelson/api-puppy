@@ -52,11 +52,11 @@ This is a quick running *TODO* list of items that should be moved to the github 
 However it would seem as only the people actually using the code are the ones doing the 
 todo list. :-)
 
-- [x] Support multiple tasks per request  
-- [x] Content Security Policy (CSP) fixes!
-- [x] Support paths and query string for routing
-- [x] Live documentation and tools
 - [x] Web Sockets [check out](https://github.com/websockets/ws)
+- [ ] Spice up the UI
+- [ ] Better logging!
+- [ ] Better comments, notes, and documentation!
+
 
 Maybe we do or do not do.. who knows?
 
