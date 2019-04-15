@@ -482,6 +482,47 @@ window.debugdata = {
                     }
 
 
+
+
+                    /*
+                        Add to the `RequestData` whatever they put in the
+                        querystring. Object dot notation is best but of 
+                        course you don't have to use it...
+                    */
+                    try {
+                        for (var p in request.QueryData) {
+
+                            var currentObject = request.RequestData;
+
+                            const objValue = request.QueryData[p];
+                            const parts = p.split('.');
+
+                            for (let index = 0; index < parts.length; index++) {
+                                const objName = parts[index];
+
+                                if (!currentObject[objName]) {
+                                    currentObject[objName] = {}
+                                }
+
+                                if (index == parts.length - 1) {
+                                    currentObject[objName] = objValue;
+                                } else {
+                                    //Step to next object...
+                                    currentObject = currentObject[objName];
+                                }
+                            }
+
+                        }
+
+                    } catch (QStoJSON) {
+                        console.log(QStoJSON);
+                        debugger;
+                    }
+
+
+
+
+
                     //only send debug UI on emtpy request...
                     if ((request.url == "/") && (!request.RequestData.service)) {
                         IPC.ServeDebugAPP(request, response);
@@ -515,6 +556,13 @@ window.debugdata = {
                             const tasks = request.RequestData.tasks;
                             const resultObj = {};
                             var totalFinished = 0;
+
+                            if (!tasks.length) {
+                                response.SendError(response, {
+                                    err: "No taskes defined!"
+                                });
+                                return;
+                            }
 
                             /*
                                 Go through all the tasks and execute them....
