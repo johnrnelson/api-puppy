@@ -687,7 +687,7 @@ const UIHelper = {
 
             // WEBSOCKET
             var SocketURL;
-            if (document.location.protocol == "https") {
+            if (document.location.protocol == "https:") {
                 SocketURL = 'wss://' + document.location.hostname + ":" + document.location.port;
             } else {
                 SocketURL = 'ws://' + document.location.hostname + ":" + document.location.port;
