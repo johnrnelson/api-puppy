@@ -47,7 +47,16 @@ const DataActions = {
         };
         OnComplete(null, result);
        
-    },    
+    },   
+    find(fruit, OnComplete) {
+            
+        const result = {
+            msg: "Searching is not yet working...",
+            data: SERVER.IN_MEM_DB.fruit
+        };
+        OnComplete(null, result);
+       
+    }, 
 };
 
 function ServiceRequest(RequestObj, RequestData, OnComplete) {

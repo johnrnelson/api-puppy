@@ -58,7 +58,7 @@ const topics = {
 
 
         const targetService = RequestData["target-service"].replace(/\./g, '');
- 
+
         const examplesFilePath = path.join(SERVER.RootFolder, "services", targetService, "examples", sampleid + ".json");
 
 
@@ -105,7 +105,12 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                 OnComplete('Ok now write help about this topic <b>' + RequestData.topic + '<b>! lol', null);
 
             } else {
-                activeTopic(RequestData, OnComplete);
+                try {
+                    activeTopic(RequestData, OnComplete);
+
+                } catch (topicError) {
+                    OnComplete('Error in topic!', null);
+                }
             }
         }
     }

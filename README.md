@@ -53,7 +53,7 @@ However it would seem as only the people actually using the code are the ones do
 todo list. :-)
 
 - [x] Web Sockets [check out](https://github.com/websockets/ws)
-- [ ] Spice up the UI
+- [ ] Spice up the UI. It needs a lot of help!
 - [ ] Better logging!
 - [ ] Better comments, notes, and documentation!
 
