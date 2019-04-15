@@ -445,8 +445,7 @@ print(response_data)
 
 const UIHelper = {
     QueryStringBuilder(JSONData) {
-
-
+ 
         //Simple function to serialize the json into array for query string...
         function DigestQS(Prefix, QSObject, QSArray) {
 
@@ -498,9 +497,9 @@ const UIHelper = {
                 DigestQS("", JSONData, basicOptions);
 
 
-                if (basicOptions.length) {
-                    DebugUI.SetTargetURI('/' + selectedService + '?' + basicOptions.join('&'));
-                }
+                // if (basicOptions.length) {
+                // }
+                DebugUI.SetTargetURI('/' + selectedService + '?' + basicOptions.join('&'));
 
             } else {
                 DebugUI.SetTargetURI("**ERROR**");
