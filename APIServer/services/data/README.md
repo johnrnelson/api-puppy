@@ -1,5 +1,2 @@
-# MySQL Data Service
-Create easy ways to get data in and out of MySql.
-
-Add your routes to `MySQLDataModel` and make sure you take care 
-of them.
+# Data Service
+This is just a simple test service that works with an array in memory. No disk or database.
