@@ -446,8 +446,12 @@ print(response_data)
 const UIHelper = {
     QueryStringBuilder(JSONData) {
 
+
         //Simple function to serialize the json into array for query string...
         function DigestQS(Prefix, QSObject, QSArray) {
+
+            // debugger;
+
             for (var o in QSObject) {
                 if (typeof (QSObject[o]) == "object") {
                     if (Prefix) {
@@ -461,7 +465,7 @@ const UIHelper = {
                         if (Prefix) {
                             QSArray.push(Prefix + o + "=" + QSObject[o]);
                         } else {
-                            QSArray.push(o + "." + o + "=" + QSObject[o]);
+                            QSArray.push(o + "=" + QSObject[o]);
 
                         }
 

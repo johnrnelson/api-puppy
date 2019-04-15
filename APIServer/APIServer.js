@@ -508,6 +508,7 @@ window.debugdata = {
 
                             const objValue = request.QueryData[p];
                             const parts = p.split('.');
+                            
 
                             for (let index = 0; index < parts.length; index++) {
                                 const objName = parts[index];
