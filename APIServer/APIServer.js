@@ -21,7 +21,17 @@ global.SERVER = {
     },
     Started: new Date(),
     RootFolder: __dirname,
-    Defender: require("./defender/shield")
+    Defender: require("./defender/shield"),
+
+
+    /* 
+        This is used in our services to act as a database.
+        Of course it gets blown away every time the service
+        starts but thats ok because we are JUST A DEMO!!!  :-)
+    */
+    IN_MEM_DB: {
+        fruit: ['apples', 'pears', 'peaches']
+    }
 };
 
 
@@ -283,8 +293,10 @@ window.debugdata = {
 
                     ServiceManager.ServiceRequestWeb(null, msgDATA, function (err, data) {
                         if (err) {
+                            console.log(err);
                             ws.send(JSON.stringify({
-                                err: err
+                                err: 'Socket request to servce was invalid!',
+                                msg: msgDATA
                             }));
                         } else {
                             ws.send(JSON.stringify(data));

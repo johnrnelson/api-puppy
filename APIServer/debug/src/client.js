@@ -204,7 +204,8 @@ const DebugUI = {
     MakeHTTPRequest() {
         console.clear();
         console.info('\r\nRun the debug code!');
-
+        const displayDateUP = document.getElementById('Date_Downloaded');
+        displayDateUP.innerHTML = "@" + new Date().toLocaleTimeString();
 
         // debugger;
         //Get our contents from the editor...
@@ -248,6 +249,10 @@ const DebugUI = {
     },
     //Use the socket to request the data...
     MakeSocketRequest() {
+
+        const displayDateUP = document.getElementById('Date_Downloaded');
+        displayDateUP.innerHTML = "@" + new Date().toLocaleTimeString();
+
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
         console.info(JSONPayload);
@@ -424,8 +429,14 @@ print(response_data)
         const apiURIAddress = document.getElementById('api-uri-address');
         const apiURILink = document.getElementById('api-uri-link');
 
+
+        // const displayDateDOWN = document.getElementById('Date_Uploaded');
+        // displayDateDOWN.innerHTML = "@" + new Date().toLocaleTimeString();
+
+
         apiURIAddress.value = TargetURI;
         apiURILink.href = TargetURI;
+
 
 
     }
@@ -437,9 +448,7 @@ const UIHelper = {
 
         //Simple function to serialize the json into array for query string...
         function DigestQS(Prefix, QSObject, QSArray) {
-            console.log('doing obj:', QSObject);
             for (var o in QSObject) {
-
                 if (typeof (QSObject[o]) == "object") {
                     if (Prefix) {
                         DigestQS(Prefix + o, QSObject[o], QSArray);
@@ -466,6 +475,10 @@ const UIHelper = {
 
         try {
             if (typeof (JSONData) == "string") {
+                if (JSONData.length == 0) {
+                    DebugUI.SetTargetURI("**EMPTY**");
+                    return;
+                }
                 JSONData = JSON.parse(JSONData);;
             }
 
@@ -637,7 +650,7 @@ const UIHelper = {
 
                 //Do not display service messages!
                 if (jsonData.TID == 0) {
-                    console.log(jsonData);
+                    console.log('Web Socket:', jsonData);
                     return;
                 }
                 UIHelper.Ace.AceDisplayRsults.setValue(JSON.stringify(jsonData, null, "\t"));

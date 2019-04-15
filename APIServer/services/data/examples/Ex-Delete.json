@@ -1,7 +1,5 @@
 {
 	"service": "data",
 	"action": "delete",
-	"record": {
-		"id": "abc123"
-	}
+	"fruit": "banna"
 }

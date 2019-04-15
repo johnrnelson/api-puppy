@@ -17,7 +17,8 @@
             "reqID": "TestB",
             "request": {
                 "service": "data",
-                "view": "AllAssets"
+                "fruit": "*",
+                "action": "list"
             }
         }
     ]

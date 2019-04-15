@@ -1,0 +1,5 @@
+{
+	"service": "data",
+	"fruit": "*",
+	"action": "list"
+}
