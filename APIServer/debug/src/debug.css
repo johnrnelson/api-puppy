@@ -13,13 +13,7 @@ body {
     left: 0;
     right: 0;
     overflow: hidden;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);     
+
 }
 
 TopNav {
@@ -66,7 +60,7 @@ MainTabDisplay .container {
     border: solid 1px silver;
     position: relative;
     height: 100%;
-    width: 100%;
+    width: 100%;    
 }
 
 .APIDebugResults {
@@ -122,8 +116,9 @@ MainTabDisplay .container {
     font-size: 20px;
     text-align: center
 }
+
 #TabDebugger .api-uri-browse:hover {
-    color:black;
+    color: black;
 }
 
 
@@ -138,13 +133,7 @@ MainTabDisplay .container {
 
 
 /* 
-
-
 sidebar 
-
-
-
-
 */
 #TabDebugger #debugger-sidbar {
     position: absolute;
@@ -156,12 +145,19 @@ sidebar
     color: white;
     padding: 5px;
     font-family: 'Abel', sans-serif;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 #debugger-sidbar select {
     background-color: transparent;
     width: 100%;
-    color: gold;    
+    color: gold;
 }
 
 #debugger-sidbar .ActionButton {
@@ -184,12 +180,13 @@ sidebar
     /* background-color: rgb(212, 212, 212); */
     cursor: pointer;
     margin-top: 10px;
-    text-shadow: 1px 1px 1px #ffffff;    
-    background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, rgb(194, 194, 194) 100%);    
+    text-shadow: 1px 1px 1px #ffffff;
+    background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, rgb(194, 194, 194) 100%);
 }
+
 #debugger-sidbar .ActionButton:hover {
     color: blue;
-     
+
 }
 
 
@@ -199,7 +196,7 @@ sidebar
 .HelpText {
     color: rgb(94, 94, 94);
     font-size: 16px;
-    font-family: 'PT Sans', sans-serif;    
+    font-family: 'PT Sans', sans-serif;
 }
 
 pre {
@@ -231,9 +228,9 @@ FOOTER STYLES!!!!!!
 .footer-row {
     padding-top: 50px;
     margin-bottom: 100px;
-    font-family: 'Abel', sans-serif;    
+    font-family: 'Abel', sans-serif;
     font-size: 16px;
-   
+
 }
 
 .FooterHeading {
@@ -241,7 +238,7 @@ FOOTER STYLES!!!!!!
     font-size: 18px;
     font-weight: bold;
 }
- 
+
 
 .FooterSysInfo {
     color: gray;
@@ -253,7 +250,7 @@ FOOTER STYLES!!!!!!
     cursor: hand;
 }
 
- 
+
 
 
 
@@ -304,7 +301,7 @@ slightly modified....
     border: solid 1px silver;
     padding: 2px;
 
-    text-shadow: 1px 1px 1px #202020;    
+    text-shadow: 1px 1px 1px #202020;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 16px;
     font-weight: bold;

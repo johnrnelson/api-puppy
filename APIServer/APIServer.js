@@ -42,11 +42,9 @@ global.SERVER = {
     the name to the date of it's birth. We just do this for
     the demo because it's easier to drag across the network.
 */
-SERVER.LogFileName = __dirname + '/../SECRET/IPLog-' +
-    SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
+SERVER.LogFileName = __dirname + '/../SECRET/IPLog-' + SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
 
-SERVER.ErrorFileName = __dirname + '/../SECRET/ErrorLog-' +
-    SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
+SERVER.ErrorFileName = __dirname + '/../SECRET/ErrorLog-' + SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
 
 
 
@@ -507,7 +505,7 @@ window.debugdata = {
                             var currentObject = request.RequestData;
 
                             const objValue = request.QueryData[p];
-                            const parts = p.split('.');                            
+                            const parts = p.split('.');
 
                             for (let index = 0; index < parts.length; index++) {
                                 const objName = parts[index];
