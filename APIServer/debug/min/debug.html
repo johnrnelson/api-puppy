@@ -701,9 +701,6 @@ const UIHelper = {
  
                 DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
  
- 
-
-
             };
             DebugUI.WebSocketConnection.onopen = () => {
 
@@ -841,9 +838,9 @@ window.onload = function () {
     UIHelper.MasterSocket.Connnect();
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabMain');
     // debugger;
-    // UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabDebugger');
     // UIHelper.ShowTab('HistoryLogger');
 
     UIHelper.Logger.Add({
@@ -1028,7 +1025,6 @@ MainTabDisplay .h-menu li:hover {
 
 #TabDebugger .api-uri-display {
     position: absolute;
-
     top: 0;
     height: 30px;
     right: 0;
@@ -1051,6 +1047,7 @@ MainTabDisplay .h-menu li:hover {
     color: purple;
     font-weight: bold;
     text-overflow: ellipsis;
+    font-size: 18px;
 
 }
 

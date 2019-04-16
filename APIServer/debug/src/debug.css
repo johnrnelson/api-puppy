@@ -167,7 +167,6 @@ MainTabDisplay .h-menu li:hover {
 
 #TabDebugger .api-uri-display {
     position: absolute;
-
     top: 0;
     height: 30px;
     right: 0;
@@ -190,6 +189,7 @@ MainTabDisplay .h-menu li:hover {
     color: purple;
     font-weight: bold;
     text-overflow: ellipsis;
+    font-size: 18px;
 
 }
 
