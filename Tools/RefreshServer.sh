@@ -1,3 +1,5 @@
+echo "Hardpulling the source..."
+./HardPull.sh
 echo "Getting the code...."
 git pull
 pm2 restart all
