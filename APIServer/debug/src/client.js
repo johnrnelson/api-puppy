@@ -622,19 +622,39 @@ const UIHelper = {
 
     //Simple show tab...
     ShowTab(Tab2Show) {
-
-        // debugger;
+        var TabElement;
+        var BTNElement;
+  
         if (typeof (Tab2Show) == "string") {
-            Tab2Show = document.getElementById(Tab2Show);
+            TabElement = document.getElementById(Tab2Show);
+            BTNElement = document.getElementById(Tab2Show+"-BTN");
+        }else{
+            console.warn('ShowTab Error!','"Tab2Show" must be a string!');
+            debugger;
         }
 
         if (!UIHelper.ActiveTab) {
-            UIHelper.ActiveTab = Tab2Show;
+            UIHelper.ActiveTab = TabElement;
+            UIHelper.ActiveTabButton = BTNElement;
+            // UIHelper.ActiveTabButton.style.backgroundColor = "blue";
+            // UIHelper.ActiveTabButton.addCl('selected')
+            UIHelper.ActiveTabButton.classList.add("selected-maintab");
         } else {
             UIHelper.ActiveTab.style.display = "none";
-            UIHelper.ActiveTab = Tab2Show;
+            UIHelper.ActiveTab.style.display = "none";
+            UIHelper.ActiveTab = TabElement;
+            // UIHelper.ActiveTabButton.style.backgroundColor = "transparent";
+            UIHelper.ActiveTabButton.classList.remove("selected-maintab");
+
+
+
+            UIHelper.ActiveTabButton = BTNElement;
+            // UIHelper.ActiveTabButton.style.backgroundColor = "blue";
+            UIHelper.ActiveTabButton.classList.add("selected-maintab");
         }
+
         UIHelper.ActiveTab.style.display = "block";
+         
     },
     MasterSocket: {
         Connnect() {

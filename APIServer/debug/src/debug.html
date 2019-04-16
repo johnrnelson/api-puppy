@@ -59,15 +59,14 @@
     <sidemenu>
         <!-- https://metroui.org.ua/menu.html#_h_menu -->
         <ul class="t-menu open verticle compact">
-            <li title="Basic help about the user interface"><a href="JavaScript:UIHelper.ShowTab('TabMain')"><span
-                        class=" fas fa-home"></span></a></li>
-            <li title="Interactive debugger to test with"><a href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span
-                        class=" fas fa-bug"></span></a></li>
-            <li><a href="JavaScript:UIHelper.ShowTab('HistoryLogger')"
-                    title="Simple logger so you don't have to use the console"><span
-                        class=" fas fa-file-code"></span></a></li>
+            <li id="TabMain-BTN" title="Basic help about the user interface"><a
+                    href="JavaScript:UIHelper.ShowTab('TabMain')"><span class="fas fa-home"></span></a></li>
+            <li id="TabDebugger-BTN" title="Interactive debugger to test with"><a
+                    href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span class="fas fa-bug"></span></a></li>
+            <li id="HistoryLogger-BTN" title="Simple logger so you don't have to use the console"><a
+                    href="JavaScript:UIHelper.ShowTab('HistoryLogger')"><span class="fas fa-file-code"></span></a></li>
 
-            <li title="GitHub project for the source code"><a href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
+            <li id="GitHubLinks-BTN" title="GitHub project for the source code"><a href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
                     <span class="fab fa-github"></span></a></li>
         </ul>
 
@@ -80,7 +79,7 @@
         <p>
             Use the links below to get to the source code of the stuff needed to use this project.
         </p>
-        <br> 
+        <br>
         <div class="HelpText">
 
 
@@ -119,6 +118,7 @@
             <li title="Export to a file"><a href="#">Export</a></li>
         </ul>
 
+
         <HistoryLoggerTable>
             <table class="table  striped compact" style="background: transparent;">
                 <thead xxclass="sortable-column">
@@ -150,7 +150,7 @@
             <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
         </span>
         <span class="api-uri-display" title="URI Endpoint address">
-            <input id="api-uri-address" value="" onchange="document.getElementById('api-uri-link').href=this.value;"/>
+            <input id="api-uri-address" value="" onchange="document.getElementById('api-uri-link').href=this.value;" />
         </span>
 
 

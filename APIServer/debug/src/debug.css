@@ -23,6 +23,9 @@ body {
 
 
 sidemenu {
+    background-color: rgb(70, 70, 70);
+    color: blue;
+
     display: block;
     overflow: hidden;
     position: absolute;
@@ -31,18 +34,30 @@ sidemenu {
     left: 0;
     /* right: 0 */
     width: 40px;
-    /* border: solid 1px silver; */
+    border: solid 1px silver;
 }
 
-sidemenu .v-menu {
-    position: relative;
+sidemenu .t-menu {
+    background-color: transparent;
 }
 
+sidemenu li {
+    color: white !important;
+    text-shadow: 1px 1px 1px #6e6e6e;
+}
 
+sidemenu li:hover {
+    color: rgb(200, 192, 235) !important;
+}
 
+sidemenu .selected-maintab {
+    color: white;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
 
-
-
+ 
 
 
 

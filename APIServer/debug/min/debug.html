@@ -671,19 +671,39 @@ const UIHelper = {
 
     //Simple show tab...
     ShowTab(Tab2Show) {
-
-        // debugger;
+        var TabElement;
+        var BTNElement;
+  
         if (typeof (Tab2Show) == "string") {
-            Tab2Show = document.getElementById(Tab2Show);
+            TabElement = document.getElementById(Tab2Show);
+            BTNElement = document.getElementById(Tab2Show+"-BTN");
+        }else{
+            console.warn('ShowTab Error!','"Tab2Show" must be a string!');
+            debugger;
         }
 
         if (!UIHelper.ActiveTab) {
-            UIHelper.ActiveTab = Tab2Show;
+            UIHelper.ActiveTab = TabElement;
+            UIHelper.ActiveTabButton = BTNElement;
+            // UIHelper.ActiveTabButton.style.backgroundColor = "blue";
+            // UIHelper.ActiveTabButton.addCl('selected')
+            UIHelper.ActiveTabButton.classList.add("selected-maintab");
         } else {
             UIHelper.ActiveTab.style.display = "none";
-            UIHelper.ActiveTab = Tab2Show;
+            UIHelper.ActiveTab.style.display = "none";
+            UIHelper.ActiveTab = TabElement;
+            // UIHelper.ActiveTabButton.style.backgroundColor = "transparent";
+            UIHelper.ActiveTabButton.classList.remove("selected-maintab");
+
+
+
+            UIHelper.ActiveTabButton = BTNElement;
+            // UIHelper.ActiveTabButton.style.backgroundColor = "blue";
+            UIHelper.ActiveTabButton.classList.add("selected-maintab");
         }
+
         UIHelper.ActiveTab.style.display = "block";
+         
     },
     MasterSocket: {
         Connnect() {
@@ -941,6 +961,9 @@ body {
 
 
 sidemenu {
+    background-color: rgb(70, 70, 70);
+    color: blue;
+
     display: block;
     overflow: hidden;
     position: absolute;
@@ -949,18 +972,30 @@ sidemenu {
     left: 0;
     /* right: 0 */
     width: 40px;
-    /* border: solid 1px silver; */
+    border: solid 1px silver;
 }
 
-sidemenu .v-menu {
-    position: relative;
+sidemenu .t-menu {
+    background-color: transparent;
 }
 
+sidemenu li {
+    color: white !important;
+    text-shadow: 1px 1px 1px #6e6e6e;
+}
 
+sidemenu li:hover {
+    color: rgb(200, 192, 235) !important;
+}
 
+sidemenu .selected-maintab {
+    color: white;
+    background-color: black;
+    margin: 0;
+    padding: 0;
+}
 
-
-
+ 
 
 
 
@@ -1334,15 +1369,14 @@ slightly modified....
     <sidemenu>
         <!-- https://metroui.org.ua/menu.html#_h_menu -->
         <ul class="t-menu open verticle compact">
-            <li title="Basic help about the user interface"><a href="JavaScript:UIHelper.ShowTab('TabMain')"><span
-                        class=" fas fa-home"></span></a></li>
-            <li title="Interactive debugger to test with"><a href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span
-                        class=" fas fa-bug"></span></a></li>
-            <li><a href="JavaScript:UIHelper.ShowTab('HistoryLogger')"
-                    title="Simple logger so you don't have to use the console"><span
-                        class=" fas fa-file-code"></span></a></li>
+            <li id="TabMain-BTN" title="Basic help about the user interface"><a
+                    href="JavaScript:UIHelper.ShowTab('TabMain')"><span class="fas fa-home"></span></a></li>
+            <li id="TabDebugger-BTN" title="Interactive debugger to test with"><a
+                    href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span class="fas fa-bug"></span></a></li>
+            <li id="HistoryLogger-BTN" title="Simple logger so you don't have to use the console"><a
+                    href="JavaScript:UIHelper.ShowTab('HistoryLogger')"><span class="fas fa-file-code"></span></a></li>
 
-            <li title="GitHub project for the source code"><a href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
+            <li id="GitHubLinks-BTN" title="GitHub project for the source code"><a href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
                     <span class="fab fa-github"></span></a></li>
         </ul>
 
@@ -1355,7 +1389,7 @@ slightly modified....
         <p>
             Use the links below to get to the source code of the stuff needed to use this project.
         </p>
-        <br> 
+        <br>
         <div class="HelpText">
 
 
@@ -1394,6 +1428,7 @@ slightly modified....
             <li title="Export to a file"><a href="#">Export</a></li>
         </ul>
 
+
         <HistoryLoggerTable>
             <table class="table  striped compact" style="background: transparent;">
                 <thead xxclass="sortable-column">
@@ -1425,7 +1460,7 @@ slightly modified....
             <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
         </span>
         <span class="api-uri-display" title="URI Endpoint address">
-            <input id="api-uri-address" value="" onchange="document.getElementById('api-uri-link').href=this.value;"/>
+            <input id="api-uri-address" value="" onchange="document.getElementById('api-uri-link').href=this.value;" />
         </span>
 
 
