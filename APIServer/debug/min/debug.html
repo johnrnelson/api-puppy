@@ -246,20 +246,29 @@ const DebugUI = {
     },
     //Use the HTTP to request the data...
     MakeHTTPRequest() {
-        console.clear();
-        console.info('\r\nRun the debug code!');
-
-
+        
         // debugger;
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
+
+
+
 
         if (JSONPayload) {
             DebugUI.Fetch(JSONPayload)
                 .then(data => {
 
-                    DebugUI.ShowJSONResult('HTTP', JSON.stringify(data, null, "\t"));
+                    const resultJSONText = JSON.stringify(data, null, "\t");
+                    DebugUI.ShowJSONResult('HTTP', resultJSONText);
 
+                    UIHelper.Logger.Add({
+                        TID: 0,
+                        Type: 200,
+                        DT: new Date(),
+                        Topic: "HTTP Request",
+                        Source: "Browser",
+                        Body: "Result length : " + resultJSONText.length,
+                    });
 
                 }) // JSON-string from `response.json()` call
                 .catch(error => {
@@ -800,6 +809,11 @@ const UIHelper = {
                 if (LogMSG.Type > 0) {
                     dispLogType = '<i class="fas fa-file fa-lg"></i>';
                 }
+
+                if (LogMSG.Type == 200) {
+                    dispLogType = '<i class="fas fa-globe-americas fa-lg"></i>';
+                }
+
                 if (LogMSG.Type == 411) {
                     dispLogType = '<i class="fas fa-info-circle fa-lg"></i>';
                 }
@@ -807,6 +821,11 @@ const UIHelper = {
                 if (LogMSG.Type == 466) {
                     dispLogType = '<i class="fas fa-share-alt fa-lg"></i>';
                 }
+
+                if (LogMSG.Type == 707) {
+                    dispLogType = '<i class="far fa-eye fa-lg"></i>';
+                }
+
 
 
                 const tblBody = document.getElementById('HistoryLoggerTable');
@@ -877,25 +896,14 @@ window.onload = function () {
     // UIHelper.ShowTab('TabDebugger');
     UIHelper.ShowTab('HistoryLogger');
 
-    for (let index = 0; index < 25; index++) {
-        UIHelper.Logger.Add({
-            TID: 0,
-            Type: 707,
-            DT: new Date(),
-            Topic: "UI Status " + index,
-            Source: "Browser " + index,
-            Body: "The browser UI should be loaded and ready to go!",
-        });
-
-    }
-    // UIHelper.Logger.Add({
-    //     TID: 0,
-    //     Type: 707,
-    //     DT: new Date(),
-    //     Topic: "UI Status",
-    //     Source: "Browser",
-    //     Body: "The browser UI should be loaded and ready to go!",
-    // });
+    UIHelper.Logger.Add({
+        TID: 0,
+        Type: 707,
+        DT: new Date(),
+        Topic: "UI Status",
+        Source: "Browser",
+        Body: "The browser UI should be loaded and ready to go!",
+    });
 
 
 };
