@@ -16,6 +16,36 @@ body {
 
 }
 
+
+
+
+
+
+
+sidemenu {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* right: 0 */
+    width: 40px;
+    /* border: solid 1px silver; */
+}
+
+sidemenu .v-menu {
+    position: relative;
+}
+
+ 
+
+
+
+
+
+
+
 TopNav {
     position: absolute;
     top: 0;
@@ -28,10 +58,10 @@ MainTabDisplay {
     display: none;
     overflow: hidden;
     position: absolute;
-    top: 60px;
+    top: 0;
     bottom: 0;
-    left: 0;
-    right: 0
+    left: 40px;
+    right: 0;
 }
 
 MainTabDisplay .container {
@@ -58,17 +88,58 @@ MainTabDisplay .container {
 
 .ace-editor {
     border: solid 1px silver;
-    position: relative;
-    height: 100%;
-    width: 100%;    
+    position: absolute;
+    top:30px;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:auto;
+    /* height: 100%; */
+    /* width: 100%;     */
 }
 
 .APIDebugResults {
     border: solid 1px silver;
-    position: relative;
+    /* position: relative;
     height: 100%;
-    width: 100%;
+    width: 100%; */
+    position: absolute;
+    top:30px;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:auto;    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #TabDebugger .api-uri-display {
@@ -122,13 +193,7 @@ MainTabDisplay .container {
 }
 
 
-
-
-
-
-
-
-
+ 
 
 
 
@@ -283,18 +348,15 @@ slightly modified....
     bottom: 0;
     border: 0;
     background-color: transparent;
-
-
 }
 
-.split {
-    display: flex;
-    height: 100%;
-    /* border: 1px solid black; */
-}
-
-.split-container .split .header {
-    width: 100%;
+.split-header {
+    position: absolute;
+    top:0;
+    height:30px;
+    left:0;
+    right:0;      
+    /* width: 100%; */
     background-color: rgb(0, 70, 70);
     color: white;
     cursor: help;
@@ -307,40 +369,3 @@ slightly modified....
     font-weight: bold;
     /* font-variant: small-caps; */
 }
-
-
-.split> :nth-child(1) {
-    overflow: scroll;
-}
-
-.split> :nth-child(2) {
-    flex-grow: 1;
-}
-
-/* Vertical */
-
-.split.vertical {
-    flex-direction: column;
-}
-
-.split.vertical> :nth-child(1) {
-    resize: vertical;
-}
-
-/* Horizontal */
-
-.split.horizontal {
-    flex-direction: row;
-}
-
-.split.horizontal> :nth-child(1) {
-    resize: horizontal;
-}
-
-
-
-
-/* 
- Bad results here!
-.split div {} 
-*/

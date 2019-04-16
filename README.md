@@ -53,7 +53,7 @@ However it would seem as only the people actually using the code are the ones do
 todo list. :-)
 
 - [x] Web Sockets [check out](https://github.com/websockets/ws)
-- [ ] Spice up the UI. It needs a lot of help!
+- [ ] Spice up the UI. It needs a lot of help! [metro](https://metroui.org.ua/)
 - [ ] Better logging!
 - [ ] Better comments, notes, and documentation!
 
@@ -65,6 +65,7 @@ Maybe we do or do not do.. who knows?
 - [x] [HTTP demo.tektology.com](http://demo.tektology.com/)
 - [x] [Local Host](http://0.0.0.0:9080)
 - [x] [Cross Domain Example](https://www.johnrnelson.com/test/api-tek.html)
+- [ ] [GitHub Pagtes](https://www.johnrnelson.com/api-puppy)
 
  
 Send us a hello if you find this usefull. 

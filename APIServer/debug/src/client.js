@@ -186,18 +186,13 @@ const DebugUI = {
     OpenDialog(DialogInfo) {
         // debugger;
 
-
-
-        const modalWindow = document.querySelector('#mastermodal');
-        const modalWindowTitle = modalWindow.querySelector('.modal-title');
-        const modalWindowBody = modalWindow.querySelector('.modal-body');
-
-        modalWindowTitle.innerHTML = DialogInfo.title;
-        modalWindowBody.innerHTML = DialogInfo.body;
-
-        $('#mastermodal').modal({
-            show: true
-        });
+ 
+        console.info('ok kill it')
+        Metro.dialog.create({
+            title: DialogInfo.title,
+            content: DialogInfo.body,
+            closeButton: true
+        });        
 
     },
     //Use the HTTP to request the data...
@@ -721,8 +716,8 @@ window.onload = function () {
     UIHelper.MasterSocket.Connnect();
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    // UIHelper.ShowTab('TabMain');
-    UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabDebugger');
 
 
 };

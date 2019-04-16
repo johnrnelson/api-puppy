@@ -20,20 +20,18 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro.min.css">
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-colors.min.css">
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-icons.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+
 
     <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js> </script> <!-- SERVER SIDE -->
     <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js> </script> <!-- SERVER SIDE -->
@@ -234,18 +232,13 @@ const DebugUI = {
     OpenDialog(DialogInfo) {
         // debugger;
 
-
-
-        const modalWindow = document.querySelector('#mastermodal');
-        const modalWindowTitle = modalWindow.querySelector('.modal-title');
-        const modalWindowBody = modalWindow.querySelector('.modal-body');
-
-        modalWindowTitle.innerHTML = DialogInfo.title;
-        modalWindowBody.innerHTML = DialogInfo.body;
-
-        $('#mastermodal').modal({
-            show: true
-        });
+ 
+        console.info('ok kill it')
+        Metro.dialog.create({
+            title: DialogInfo.title,
+            content: DialogInfo.body,
+            closeButton: true
+        });        
 
     },
     //Use the HTTP to request the data...
@@ -769,8 +762,8 @@ window.onload = function () {
     UIHelper.MasterSocket.Connnect();
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    // UIHelper.ShowTab('TabMain');
-    UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabDebugger');
 
 
 };
@@ -796,6 +789,36 @@ body {
 
 }
 
+
+
+
+
+
+
+sidemenu {
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    /* right: 0 */
+    width: 40px;
+    /* border: solid 1px silver; */
+}
+
+sidemenu .v-menu {
+    position: relative;
+}
+
+ 
+
+
+
+
+
+
+
 TopNav {
     position: absolute;
     top: 0;
@@ -808,10 +831,10 @@ MainTabDisplay {
     display: none;
     overflow: hidden;
     position: absolute;
-    top: 60px;
+    top: 0;
     bottom: 0;
-    left: 0;
-    right: 0
+    left: 40px;
+    right: 0;
 }
 
 MainTabDisplay .container {
@@ -838,17 +861,58 @@ MainTabDisplay .container {
 
 .ace-editor {
     border: solid 1px silver;
-    position: relative;
-    height: 100%;
-    width: 100%;    
+    position: absolute;
+    top:30px;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:auto;
+    /* height: 100%; */
+    /* width: 100%;     */
 }
 
 .APIDebugResults {
     border: solid 1px silver;
-    position: relative;
+    /* position: relative;
     height: 100%;
-    width: 100%;
+    width: 100%; */
+    position: absolute;
+    top:30px;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:auto;    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #TabDebugger .api-uri-display {
@@ -902,13 +966,7 @@ MainTabDisplay .container {
 }
 
 
-
-
-
-
-
-
-
+ 
 
 
 
@@ -1063,18 +1121,15 @@ slightly modified....
     bottom: 0;
     border: 0;
     background-color: transparent;
-
-
 }
 
-.split {
-    display: flex;
-    height: 100%;
-    /* border: 1px solid black; */
-}
-
-.split-container .split .header {
-    width: 100%;
+.split-header {
+    position: absolute;
+    top:0;
+    height:30px;
+    left:0;
+    right:0;      
+    /* width: 100%; */
     background-color: rgb(0, 70, 70);
     color: white;
     cursor: help;
@@ -1087,43 +1142,6 @@ slightly modified....
     font-weight: bold;
     /* font-variant: small-caps; */
 }
-
-
-.split> :nth-child(1) {
-    overflow: scroll;
-}
-
-.split> :nth-child(2) {
-    flex-grow: 1;
-}
-
-/* Vertical */
-
-.split.vertical {
-    flex-direction: column;
-}
-
-.split.vertical> :nth-child(1) {
-    resize: vertical;
-}
-
-/* Horizontal */
-
-.split.horizontal {
-    flex-direction: row;
-}
-
-.split.horizontal> :nth-child(1) {
-    resize: horizontal;
-}
-
-
-
-
-/* 
- Bad results here!
-.split div {} 
-*/
     </style>
 </head>
 
@@ -1133,25 +1151,24 @@ slightly modified....
 
 
 
-    <div id="mastermodal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Set via code....</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <!-- <div id="mastermodal" class="dialog" tabindex="-1" data-role="dialog">
+
+
+        <div class="dialog-title">Set via code....</div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                </div>
-                <div class="modal-body">Set via code....</div>
 
-            </div>
-        </div>
-    </div>
+        <div class="dialog-content">Set via code....</div>
 
 
 
+    </div> -->
 
 
+
+
+    <!-- 
     <TopNav>
         <nav class="navbar navbar-expand navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -1178,7 +1195,44 @@ slightly modified....
             </ul>
             </div>
         </nav>
-    </TopNav>
+    </TopNav> -->
+
+
+
+
+
+    <sidemenu>
+        <!-- https://metroui.org.ua/menu.html#_h_menu -->
+        <ul class="t-menu open verticle compact">
+            <li><a href="JavaScript:UIHelper.ShowTab('TabMain')""><span class=" fas fa-home"></span></a></li>
+            <li><a href="JavaScript:UIHelper.ShowTab('TabDebugger')""><span class=" fas fa-bug"></span></a></li>
+            <li><a href="JavaScript:UIHelper.ShowTab('Logger')""><span class=" fas fa-file-code"></span></a></li>
+            <li><a href="#"><span class="mif-bubble icon"></span></a></li>
+            <li><a href="#"><span class="fas fa-download"></span></a></li>
+        </ul>
+
+    </sidemenu>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Because of the editor, you need to declare this first! -->
+    <MainTabDisplay id="Logger">
+        div wooot 
+    </MainTabDisplay>
+
+
+
+
 
 
     <!-- Because of the editor, you need to declare this first! -->
@@ -1230,22 +1284,35 @@ slightly modified....
             </center>
         </div>
 
+
+
+
+
+
+
         <div class="split-container">
-            <div class="split horizontal">
-                <div style="width:50%">
-                    <div class="header" title="The body of the request in JSON format">&nbsp;<i class="fas fa-upload"
-                            style="color:silver"></i>&nbsp;Upload JSON Request <span id="Date_Uploaded"></span>
+
+
+
+            <div data-role="splitter" class="h-100" data-split-sizes="70, 30" data-min-sizes="60,60"
+                data-gutter-size="8">
+
+                <div class="d-flex flex-justify-center flex-align-center">
+                    <div class="split-header" title="The body of the request in JSON format">&nbsp;<i
+                            class="fas fa-upload" style="color:silver"></i>&nbsp;Upload JSON Request <span
+                            id="Date_Uploaded"></span>
                     </div>
                     <div id="PayloadEditor" class="ace-editor"></div>
                 </div>
-                <div>
-                    <div class="header" title="The result of the request in JSON format">
+                <div class="d-flex flex-justify-center flex-align-center">
+                    <div class="split-header" title="The result of the request in JSON format">
                         &nbsp;<i class="fas fa-download" style="color:silver"></i>&nbsp;Download JSON
                         from Server <span id="Date_Downloaded"></span></div>
                     <div id="APIDebugResults" class="APIDebugResults"></div>
-
                 </div>
             </div>
+
+
         </div>
 
 
@@ -1258,18 +1325,23 @@ slightly modified....
 
 <div class="container">
 
-    <!-- <div class="page-header">
-                <h1>api-puppy</h1>
-            </div> -->
+
+
+
+
+
+    <div class="page-header">
+        <h1>api-puppy Demo</h1>
+    </div>
 
 
     <div class="row">
-        <div class="col-sm-4">
-            <div class="alert alert-info" role="alert">
+        <div class="cell">
+            <div>
                 This is just a Demo for api-puppy
             </div>
 
-            <div class="alert alert-primary" role="alert">
+            <div>
                 <small>
                     This is not another framework or library or
                     even a template, it's just a demo!
@@ -1278,7 +1350,7 @@ slightly modified....
             </div>
 
         </div>
-        <div class="col-sm-8">
+        <div class="cell">
             <div class="HelpText">
 
                 <p>
@@ -1304,7 +1376,7 @@ slightly modified....
 
                 <p>
                     The only way to see the web socket data is using the console.
-                    Not enough time is being spent on the UI. 
+                    Not enough time is being spent on the UI.
                 </p>
             </div>
         </div>
@@ -1318,10 +1390,10 @@ slightly modified....
 
     <!-- footer -->
     <div class="row footer-row">
-        <div id="SystemInfo" class="col-md-8">
+        <div id="SystemInfo" class="cell">
             <div class="FooterHeading">System Information</div>
         </div>
-        <div class="col-md-4">
+        <div class="cell">
             <div class="FooterHeading">Open Source Components</div>
 
             <a title="Used to make the simple UI" target="_blank" href="https://getbootstrap.com/">Bootstrap</a>
