@@ -82,6 +82,7 @@ MainTabDisplay {
 MainTabDisplay#GitHubLinks {
     margin: 15px;
     padding: 10px;
+    overflow: auto;
 }
 
 MainTabDisplay .container {
