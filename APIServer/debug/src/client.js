@@ -828,25 +828,14 @@ window.onload = function () {
     // UIHelper.ShowTab('TabDebugger');
     UIHelper.ShowTab('HistoryLogger');
 
-    for (let index = 0; index < 25; index++) {
-        UIHelper.Logger.Add({
-            TID: 0,
-            Type: 707,
-            DT: new Date(),
-            Topic: "UI Status " + index,
-            Source: "Browser " + index,
-            Body: "The browser UI should be loaded and ready to go!",
-        });
-
-    }
-    // UIHelper.Logger.Add({
-    //     TID: 0,
-    //     Type: 707,
-    //     DT: new Date(),
-    //     Topic: "UI Status",
-    //     Source: "Browser",
-    //     Body: "The browser UI should be loaded and ready to go!",
-    // });
+    UIHelper.Logger.Add({
+        TID: 0,
+        Type: 707,
+        DT: new Date(),
+        Topic: "UI Status",
+        Source: "Browser",
+        Body: "The browser UI should be loaded and ready to go!",
+    });
 
 
 };
