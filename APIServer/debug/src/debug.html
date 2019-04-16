@@ -56,30 +56,61 @@
 </head>
 
 <body>
-
-
-
-
     <sidemenu>
         <!-- https://metroui.org.ua/menu.html#_h_menu -->
         <ul class="t-menu open verticle compact">
-            <li><a href="JavaScript:UIHelper.ShowTab('TabMain')" title="Basic help about the user interface"><span
+            <li title="Basic help about the user interface"><a href="JavaScript:UIHelper.ShowTab('TabMain')"><span
                         class=" fas fa-home"></span></a></li>
-            <li><a href="JavaScript:UIHelper.ShowTab('TabDebugger')" title="Interactive debugger to test with"><span
+            <li title="Interactive debugger to test with"><a href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span
                         class=" fas fa-bug"></span></a></li>
             <li><a href="JavaScript:UIHelper.ShowTab('HistoryLogger')"
                     title="Simple logger so you don't have to use the console"><span
                         class=" fas fa-file-code"></span></a></li>
 
-            <li><a href="https://github.com/johnrnelson/api-puppy" target="blank"><span
-                        class="fab fa-github"></span></a></li>
+            <li title="GitHub project for the source code"><a href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
+                    <span class="fab fa-github"></span></a></li>
         </ul>
 
     </sidemenu>
 
+    <MainTabDisplay id="GitHubLinks">
+        <!-- footer -->
+        <h2>GitHub Project Links</h2>
+
+        <p>
+            Use the links below to get to the source code of the stuff needed to use this project.
+        </p>
+        <br> 
+        <div class="HelpText">
 
 
-    <!-- Because of the editor, you need to declare this first! -->
+            <div>
+                <a href="https://github.com/johnrnelson/api-puppy" target="_blank">api-puppy Project</a>
+                <br>
+                Actual source code for this project.
+            </div>
+            <div>
+                <a href="https://github.com/ajaxorg/ace" target="_blank">Ace Editor</a>
+                <br>
+                The HTML editor used for UI. It's good stuff, you should check it out.
+            </div>
+            <div>
+                <a href="https://github.com/olton/Metro-UI-CSS" target="_blank">Metro-UI-CSS</a>
+                <br>
+                A step up from bootstrap. Nice and easy HTML and CSS to display what we need.
+            </div>
+            <div>
+                <a href="https://github.com/moment/moment" target="_blank">Moment.js</a>
+                <br>
+                Parse, validate, manipulate, and display dates and times in JavaScript.
+            </div>
+
+
+        </div>
+
+
+    </MainTabDisplay>
+    <!-- Log the history and help the user know whats up... -->
     <MainTabDisplay id="HistoryLogger">
 
 
@@ -126,7 +157,7 @@
         <div id="debugger-sidbar">
             <center>
 
-                
+
                 <select id="DebugVerbList" title="List of basic services provided by this server"></select>
                 <br>
                 <select id="ExampleCodeList" title="Sample code to test with."></select>

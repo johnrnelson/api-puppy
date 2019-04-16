@@ -197,7 +197,7 @@ const DebugUI = {
     },
     //Use the HTTP to request the data...
     MakeHTTPRequest() {
-        
+
         // debugger;
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
@@ -434,13 +434,15 @@ print(response_data)
         //Set the cursor so the user can start over again...
         UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
 
+        UIHelper.Ace.AceDisplayRsults.resize();
+
         UIHelper.Logger.Add({
             TID: 0,
             Type: 707,
             DT: new Date(),
-            Topic: "UI Status",
+            Topic: "Server Response",
             Source: "Browser",
-            Body: "The browser UI should be loaded and ready to go!",
+            Body: "JSON Length:" + JSONText.length + " ",
         });
 
     }
@@ -655,18 +657,20 @@ const UIHelper = {
             DebugUI.WebSocketConnection.onmessage = e => {
                 const jsonData = JSON.parse(e.data);
 
+                UIHelper.Logger.Add({
+                    Type: 466,
+                    TID: 505,
+                    DT: new Date(),
+                    Topic: "Socket Traffic!",
+                    Source: "Socket",
+                    Body: "Socket data length:" + e.data.length + "",
+                });
+
                 //Do not display service messages!
                 if (jsonData.TID == 0) {
                     // console.log('Web Socket:', jsonData);
                     // // debugger;
-                    UIHelper.Logger.Add({
-                        Type: 466,
-                        TID: jsonData.TID,
-                        DT: new Date(),
-                        Topic: "Socket Traffic!",
-                        Source: "Socket",
-                        Body: jsonData.msg,
-                    });
+
                     return;
                 }
 
@@ -727,23 +731,23 @@ const UIHelper = {
         },
         Add(LogMSG) {
 
-            if (!LogMSG.Type) {
-                LogMSG.Type = 0;
-            }
 
-            function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
-                const newCell = document.createElement('td');
-                newCell.title = Title;
-                newCell.className = ClassName;
-                newCell.innerHTML = HTMLValue;
-                newCell.vAlign = "top";
-                newCell.align = "left";
-
-                HostRow.appendChild(newCell)
-                // return newCell
-            }
             try {
+                if (!LogMSG.Type) {
+                    LogMSG.Type = 0;
+                }
 
+                function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
+                    const newCell = document.createElement('td');
+                    newCell.title = Title;
+                    newCell.className = ClassName;
+                    newCell.innerHTML = HTMLValue;
+                    newCell.vAlign = "top";
+                    newCell.align = "left";
+
+                    HostRow.appendChild(newCell)
+                    // return newCell
+                }
 
                 if (!LogMSG.DT) {
                     LogMSG.DT = new Date()
@@ -842,10 +846,11 @@ window.onload = function () {
     UIHelper.MasterSocket.Connnect();
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabMain');
     // debugger;
     // UIHelper.ShowTab('TabDebugger');
     // UIHelper.ShowTab('HistoryLogger');
+    UIHelper.ShowTab('GitHubLinks');
 
     UIHelper.Logger.Add({
         TID: 0,

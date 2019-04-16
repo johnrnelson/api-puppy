@@ -64,6 +64,11 @@ MainTabDisplay {
     right: 0;
 }
 
+MainTabDisplay#GitHubLinks {
+    margin: 15px;
+    padding: 10px;
+}
+
 MainTabDisplay .container {
     margin: 10px;
     padding: 10px;
@@ -88,7 +93,7 @@ MainTabDisplay HistoryLoggerTable {
     margin: 0;
     padding: 10px;
     background-color: transparent !important;
-    color: black;   
+    color: black;
     /* height: 100%;
     width: 100%; */
     overflow: auto !important;
@@ -103,6 +108,7 @@ MainTabDisplay .h-menu {
 MainTabDisplay .h-menu a {
     color: white;
 }
+
 MainTabDisplay .h-menu li:hover {
     color: gold;
 }
