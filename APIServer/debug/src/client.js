@@ -208,9 +208,9 @@ const DebugUI = {
         if (JSONPayload) {
             DebugUI.Fetch(JSONPayload)
                 .then(data => {
- 
+
                     DebugUI.ShowJSONResult('HTTP', JSON.stringify(data, null, "\t"));
- 
+
 
                 }) // JSON-string from `response.json()` call
                 .catch(error => {
@@ -230,9 +230,9 @@ const DebugUI = {
 
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
-        console.info(JSONPayload);
+        // console.info(JSONPayload);
         DebugUI.WebSocketConnection.send(JSON.stringify(JSONPayload));
-        
+
 
     },
     /*
@@ -424,6 +424,16 @@ print(response_data)
 
         //Set the cursor so the user can start over again...
         UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+
+        UIHelper.Logger.Add({
+            TID: 0,
+            Type: 707,
+            DT: new Date(),
+            Topic: "UI Status",
+            Source: "Browser",
+            Body: "The browser UI should be loaded and ready to go!",
+        });
+
     }
 };
 
@@ -638,20 +648,21 @@ const UIHelper = {
 
                 //Do not display service messages!
                 if (jsonData.TID == 0) {
-                    console.log('Web Socket:', jsonData);
-                    // debugger;
+                    // console.log('Web Socket:', jsonData);
+                    // // debugger;
                     UIHelper.Logger.Add({
+                        Type: 466,
                         TID: jsonData.TID,
                         DT: new Date(),
-                        Topic: "Socket MSG!",
+                        Topic: "Socket Traffic!",
                         Source: "Socket",
                         Body: jsonData.msg,
-                    });                    
+                    });
                     return;
-                }      
- 
+                }
+
                 DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
- 
+
             };
             DebugUI.WebSocketConnection.onopen = () => {
 
@@ -662,6 +673,7 @@ const UIHelper = {
                 }));
                 */
                 UIHelper.Logger.Add({
+                    Type: 411,
                     TID: 0,
                     DT: new Date(),
                     Topic: "Socket Connected!",
@@ -706,6 +718,10 @@ const UIHelper = {
         },
         Add(LogMSG) {
 
+            if (!LogMSG.Type) {
+                LogMSG.Type = 0;
+            }
+
             function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
                 const newCell = document.createElement('td');
                 newCell.title = Title;
@@ -725,6 +741,23 @@ const UIHelper = {
                 }
 
                 const displayDT = moment(LogMSG.DT);
+                var dispLogType;
+                if (LogMSG.Type < 0) {
+                    dispLogType = '<i class="fas fa-globe fa-lg"></i>';
+                }
+                if (LogMSG.Type == 0) {
+                    dispLogType = '<i class="fas fa-disk fa-lg"></i>';
+                }
+                if (LogMSG.Type > 0) {
+                    dispLogType = '<i class="fas fa-file fa-lg"></i>';
+                }
+                if (LogMSG.Type == 411) {
+                    dispLogType = '<i class="fas fa-info-circle fa-lg"></i>';
+                }
+
+                if (LogMSG.Type == 466) {
+                    dispLogType = '<i class="fas fa-share-alt fa-lg"></i>';
+                }
 
 
                 const tblBody = document.getElementById('HistoryLoggerTable');
@@ -734,6 +767,7 @@ const UIHelper = {
                 // debugger;
 
                 CellBuider(tr, "", "TID Help", "", LogMSG.TID);
+                CellBuider(tr, "", "Type Of Log Item [" + LogMSG.Type + "]", "", dispLogType);
                 CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
                 CellBuider(tr, "", "", "", LogMSG.Topic);
                 CellBuider(tr, "", "", "", LogMSG.Source);
@@ -791,15 +825,28 @@ window.onload = function () {
     //Which screen do you want to show first? Are you debugging the debugger? lol
     // UIHelper.ShowTab('TabMain');
     // debugger;
-    UIHelper.ShowTab('TabDebugger');
-    // UIHelper.ShowTab('HistoryLogger');
+    // UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('HistoryLogger');
 
-    UIHelper.Logger.Add({
-        TID: 0,
-        DT: new Date(),
-        Topic: "UI Status",
-        Source: "Browser",
-        Body: "The browser UI should be loaded and ready to go!",
-    });
+    for (let index = 0; index < 25; index++) {
+        UIHelper.Logger.Add({
+            TID: 0,
+            Type: 707,
+            DT: new Date(),
+            Topic: "UI Status " + index,
+            Source: "Browser " + index,
+            Body: "The browser UI should be loaded and ready to go!",
+        });
+
+    }
+    // UIHelper.Logger.Add({
+    //     TID: 0,
+    //     Type: 707,
+    //     DT: new Date(),
+    //     Topic: "UI Status",
+    //     Source: "Browser",
+    //     Body: "The browser UI should be loaded and ready to go!",
+    // });
+
 
 };
