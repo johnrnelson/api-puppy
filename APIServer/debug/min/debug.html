@@ -13,28 +13,31 @@
 
     <title>api-puppy Demo Site</title>
 
-    <link href='https://fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=PT+Sans:400,400italic' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:300' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Roboto+Condensed:300' rel='stylesheet' type='text/css'>
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
 
 
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">
+    <link rel="stylesheet" href="//cdn.metroui.org.ua/v4/css/metro-all.min.css">
 
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro.min.css">
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-colors.min.css">
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-rtl.min.css">
-    <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-icons.min.css">
+    <link rel="stylesheet" href="//cdn.metroui.org.ua/v4/css/metro.min.css">
+    <link rel="stylesheet" href="//cdn.metroui.org.ua/v4/css/metro-colors.min.css">
+    <link rel="stylesheet" href="//cdn.metroui.org.ua/v4/css/metro-rtl.min.css">
+    <link rel="stylesheet" href="//cdn.metroui.org.ua/v4/css/metro-icons.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.metroui.org.ua/v4/js/metro.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="//cdn.metroui.org.ua/v4/js/metro.min.js"></script>
 
 
-    <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js> </script> <!-- SERVER SIDE -->
-    <script src=https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js> </script> <!-- SERVER SIDE -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js"> </script> <!-- SERVER SIDE -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js"> </script> <!-- SERVER SIDE -->
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"> </script> <!-- SERVER SIDE -->
 
 
 
@@ -232,21 +235,20 @@ const DebugUI = {
     OpenDialog(DialogInfo) {
         // debugger;
 
- 
+
         console.info('ok kill it')
         Metro.dialog.create({
             title: DialogInfo.title,
             content: DialogInfo.body,
             closeButton: true
-        });        
+        });
 
     },
     //Use the HTTP to request the data...
     MakeHTTPRequest() {
         console.clear();
         console.info('\r\nRun the debug code!');
-        const displayDateUP = document.getElementById('Date_Downloaded');
-        displayDateUP.innerHTML = "@" + new Date().toLocaleTimeString();
+
 
         // debugger;
         //Get our contents from the editor...
@@ -255,28 +257,9 @@ const DebugUI = {
         if (JSONPayload) {
             DebugUI.Fetch(JSONPayload)
                 .then(data => {
-
-
-
-                    /*
-                    if (data.err) {
-                        DebugUI.OpenDialog({
-                            title: "Error runing the service",
-                            body: `
-                            <div>Please report this to support!</div>
-                            <b>Error Message</b> : ${data.err}
-                            `
-                        }); 
-                    }
-                    */
-
-
-                    UIHelper.Ace.AceDisplayRsults.setValue(JSON.stringify(data, null, "\t"));
-
-                    //Set the cursor so the user can start over again...
-                    UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
-
-
+ 
+                    DebugUI.ShowJSONResult('HTTP', JSON.stringify(data, null, "\t"));
+ 
 
                 }) // JSON-string from `response.json()` call
                 .catch(error => {
@@ -298,6 +281,7 @@ const DebugUI = {
         const JSONPayload = DebugUI.GetEditorJSON();
         console.info(JSONPayload);
         DebugUI.WebSocketConnection.send(JSON.stringify(JSONPayload));
+        
 
     },
     /*
@@ -480,13 +464,22 @@ print(response_data)
 
 
 
+    },
+    ShowJSONResult(JSONSource, JSONText) {
+        const displayDateMod = document.getElementById('Date_Downloaded');
+        displayDateMod.innerHTML = ' from [' + JSONSource + '] &nbsp;@' + new Date().toLocaleTimeString();
+
+        UIHelper.Ace.AceDisplayRsults.setValue(JSONText);
+
+        //Set the cursor so the user can start over again...
+        UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
     }
 };
 
 
 const UIHelper = {
     QueryStringBuilder(JSONData) {
- 
+
         //Simple function to serialize the json into array for query string...
         function DigestQS(Prefix, QSObject, QSArray) {
 
@@ -695,12 +688,21 @@ const UIHelper = {
                 //Do not display service messages!
                 if (jsonData.TID == 0) {
                     console.log('Web Socket:', jsonData);
+                    // debugger;
+                    UIHelper.Logger.Add({
+                        TID: jsonData.TID,
+                        DT: new Date(),
+                        Topic: "Socket MSG!",
+                        Source: "Socket",
+                        Body: jsonData.msg,
+                    });                    
                     return;
-                }
-                UIHelper.Ace.AceDisplayRsults.setValue(JSON.stringify(jsonData, null, "\t"));
+                }      
+ 
+                DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
+ 
+ 
 
-                //Set the cursor so the user can start over again...
-                UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
 
             };
             DebugUI.WebSocketConnection.onopen = () => {
@@ -711,11 +713,88 @@ const UIHelper = {
                     service: "time"
                 }));
                 */
+                UIHelper.Logger.Add({
+                    TID: 0,
+                    DT: new Date(),
+                    Topic: "Socket Connected!",
+                    Source: "Browser",
+                    Body: "Woot",
+                });
             };
 
 
 
 
+
+
+        }
+    },
+    Logger: {
+        Clear() {
+
+            Metro.dialog.create({
+                title: "Clear the history?",
+                content: "<div>Are you sure you want to do this?</div>",
+                actions: [
+                    {
+                        caption: "Agree",
+                        cls: "js-dialog-close alert",
+                        onclick: function () {
+                            const tblBody = document.getElementById('HistoryLoggerTable');
+                            tblBody.innerHTML = "";
+                        }
+                    },
+                    {
+                        caption: "Disagree",
+                        cls: "js-dialog-close",
+                        onclick: function () {
+                            console.info("History was not deleted!");
+                        }
+                    }
+                ]
+            });
+
+
+        },
+        Add(LogMSG) {
+
+            function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
+                const newCell = document.createElement('td');
+                newCell.title = Title;
+                newCell.className = ClassName;
+                newCell.innerHTML = HTMLValue;
+                newCell.vAlign = "top";
+                newCell.align = "left";
+
+                HostRow.appendChild(newCell)
+                // return newCell
+            }
+            try {
+
+
+                if (!LogMSG.DT) {
+                    LogMSG.DT = new Date()
+                }
+
+                const displayDT = moment(LogMSG.DT);
+
+
+                const tblBody = document.getElementById('HistoryLoggerTable');
+
+                const tr = document.createElement('tr');
+
+                // debugger;
+
+                CellBuider(tr, "", "TID Help", "", LogMSG.TID);
+                CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
+                CellBuider(tr, "", "", "", LogMSG.Topic);
+                CellBuider(tr, "", "", "", LogMSG.Source);
+                CellBuider(tr, "", "", "", LogMSG.Body);
+
+                tblBody.appendChild(tr);
+            } catch (errAddLogItem) {
+                alert('Error adding to the log!!!\r\n' + errAddLogItem.message);
+            }
 
 
         }
@@ -763,8 +842,17 @@ window.onload = function () {
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
     UIHelper.ShowTab('TabMain');
+    // debugger;
     // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('HistoryLogger');
 
+    UIHelper.Logger.Add({
+        TID: 0,
+        DT: new Date(),
+        Topic: "UI Status",
+        Source: "Browser",
+        Body: "The browser UI should be loaded and ready to go!",
+    });
 
 };
 
@@ -811,7 +899,7 @@ sidemenu .v-menu {
     position: relative;
 }
 
- 
+
 
 
 
@@ -847,6 +935,29 @@ MainTabDisplay .container {
     padding-right: 0; */
 }
 
+
+
+MainTabDisplay HistoryLoggerTable {
+    display: block;
+    margin: 0;
+    padding: 10px;
+    background-color: transparent !important;
+    color: purple;
+   
+}
+
+MainTabDisplay .h-menu {
+    background-color: rgb(0, 0, 54);
+}
+
+MainTabDisplay .h-menu a {
+    color: white;
+}
+MainTabDisplay .h-menu li:hover {
+    color: gold;
+}
+
+
 /* 
 
     Other stuff.....
@@ -862,11 +973,11 @@ MainTabDisplay .container {
 .ace-editor {
     border: solid 1px silver;
     position: absolute;
-    top:30px;
-    bottom:0;
-    left:0;
-    right:0;
-    overflow:auto;
+    top: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
     /* height: 100%; */
     /* width: 100%;     */
 }
@@ -877,11 +988,11 @@ MainTabDisplay .container {
     height: 100%;
     width: 100%; */
     position: absolute;
-    top:30px;
-    bottom:0;
-    left:0;
-    right:0;
-    overflow:auto;    
+    top: 30px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
 }
 
 
@@ -966,7 +1077,7 @@ MainTabDisplay .container {
 }
 
 
- 
+
 
 
 
@@ -1125,10 +1236,10 @@ slightly modified....
 
 .split-header {
     position: absolute;
-    top:0;
-    height:30px;
-    left:0;
-    right:0;      
+    top: 0;
+    height: 30px;
+    left: 0;
+    right: 0;
     /* width: 100%; */
     background-color: rgb(0, 70, 70);
     color: white;
@@ -1150,84 +1261,51 @@ slightly modified....
 
 
 
-
-    <!-- <div id="mastermodal" class="dialog" tabindex="-1" data-role="dialog">
-
-
-        <div class="dialog-title">Set via code....</div>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-
-        <div class="dialog-content">Set via code....</div>
-
-
-
-    </div> -->
-
-
-
-
-    <!-- 
-    <TopNav>
-        <nav class="navbar navbar-expand navbar-light bg-light">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item" title="Basic help about the user interface">
-                        <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabMain')">Main Help</a>
-                    </li>
-                    <li class="nav-item" title="Interactive debugger to test with">
-                        <a class="nav-link" href="JavaScript:UIHelper.ShowTab('TabDebugger')">Debug Tool</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GitHub</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a target="_blank" class="dropdown-item" title="The actual source code for the project"
-                                href="https://github.com/johnrnelson/api-puppy">Project</a>
-                            <a target="_blank" class="dropdown-item" title="Issues? We all have them. :-)""
-                                href=" https://github.com/johnrnelson/api-puppy/issues">Issues </a> <div
-                                class="dropdown-divider"></div>
-                        <a target="_blank" class="dropdown-item" title="Hope this is helpful"
-                            href="https://github.com/johnrnelson/api-puppy/tree/master/Notes">Notes</a>
-            </div>
-            </li>
-            </ul>
-            </div>
-        </nav>
-    </TopNav> -->
-
-
-
-
-
     <sidemenu>
         <!-- https://metroui.org.ua/menu.html#_h_menu -->
         <ul class="t-menu open verticle compact">
-            <li><a href="JavaScript:UIHelper.ShowTab('TabMain')""><span class=" fas fa-home"></span></a></li>
-            <li><a href="JavaScript:UIHelper.ShowTab('TabDebugger')""><span class=" fas fa-bug"></span></a></li>
-            <li><a href="JavaScript:UIHelper.ShowTab('Logger')""><span class=" fas fa-file-code"></span></a></li>
-            <li><a href="#"><span class="mif-bubble icon"></span></a></li>
-            <li><a href="#"><span class="fas fa-download"></span></a></li>
+            <li><a href="JavaScript:UIHelper.ShowTab('TabMain')" title="Basic help about the user interface"><span
+                        class=" fas fa-home"></span></a></li>
+            <li><a href="JavaScript:UIHelper.ShowTab('TabDebugger')" title="Interactive debugger to test with"><span
+                        class=" fas fa-bug"></span></a></li>
+            <li><a href="JavaScript:UIHelper.ShowTab('HistoryLogger')"
+                    title="Simple logger so you don't have to use the console"><span
+                        class=" fas fa-file-code"></span></a></li>
+
+            <li><a href="https://github.com/johnrnelson/api-puppy" target="blank"><span
+                        class="fab fa-github"></span></a></li>
         </ul>
 
     </sidemenu>
 
 
 
-
-
-
-
-
-
-
-
-
-
     <!-- Because of the editor, you need to declare this first! -->
-    <MainTabDisplay id="Logger">
-        div wooot 
+    <MainTabDisplay id="HistoryLogger">
+
+
+        <ul class="h-menu">
+            <li title="Clear the log history"><a href="JavaScript:UIHelper.Logger.Clear()">Clear</a></li>
+            <li title="Export to a file"><a href="#">Export</a></li>
+        </ul>
+
+        <HistoryLoggerTable>
+            <table class="table  striped compact" style="background: transparent;">
+                <thead class="sortable-column">
+                    <tr>
+                        <th width="30px" vertical-align="top">#</th>
+                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                        <th width="200px" vertical-align="top" class="sort-asc" nowrap="true">Topic</th>
+                        <th width="200px" vertical-align="top" nowrap="true">Source</th>
+                        <th widht="80%" vertical-align="top">Body</th>
+                    </tr>
+                </thead>
+                <tbody id="HistoryLoggerTable" class="row-hover">
+                </tbody>
+            </table>
+        </HistoryLoggerTable>
+
+
     </MainTabDisplay>
 
 
@@ -1248,7 +1326,7 @@ slightly modified....
         <div id="debugger-sidbar">
             <center>
 
-
+                
                 <select id="DebugVerbList" title="List of basic services provided by this server"></select>
                 <br>
                 <select id="ExampleCodeList" title="Sample code to test with."></select>
@@ -1298,9 +1376,17 @@ slightly modified....
                 data-gutter-size="8">
 
                 <div class="d-flex flex-justify-center flex-align-center">
-                    <div class="split-header" title="The body of the request in JSON format">&nbsp;<i
-                            class="fas fa-upload" style="color:silver"></i>&nbsp;Upload JSON Request <span
-                            id="Date_Uploaded"></span>
+                    <div class="split-header" title="The body of the request in JSON format">
+
+
+
+
+                        &nbsp;<i class="fas fa-upload" style="color:silver"></i>
+                        &nbsp;Upload JSON Request
+                        <!-- <select id="DebugVerbList" title="List of basic services provided by this server"></select>
+                        <select id="ExampleCodeList" title="Sample code to test with."></select> -->
+
+                        <span id="Date_Uploaded"></span>
                     </div>
                     <div id="PayloadEditor" class="ace-editor"></div>
                 </div>
@@ -1335,56 +1421,38 @@ slightly modified....
     </div>
 
 
-    <div class="row">
-        <div class="cell">
-            <div>
-                This is just a Demo for api-puppy
-            </div>
 
-            <div>
-                <small>
-                    This is not another framework or library or
-                    even a template, it's just a demo!
-                    <br>
-                </small>
-            </div>
-
+    <div class="HelpText">
+        <div>
+            This is not another framework or library or
+            even a template, it's just a demo!
         </div>
-        <div class="cell">
-            <div class="HelpText">
+        <p>
+            This is actually the API. Seriously!
 
-                <p>
-                    This is actually the API. Seriously!
+        </p>
 
-                </p>
+        <p>
+            You are going to find bugs because this is just a DEMO! Lots of work
+            needs to be done and things may or may not get worked on. Use Google
+            Chrome and you will get less errors in the DEBU UI.
+        </p>
+        <p>
+            Check out the
+            <a target="_blank" href="https://github.com/johnrnelson/api-puppy">GitHub Project</a> to
+            see the source code to see how you can use it in your own projects.
+        </p>
 
-                <p>
-                    You are going to find bugs because this is just a DEMO! Lots of work
-                    needs to be done and things may or may not get worked on. Use Google
-                    Chrome and you will get less errors in the DEBU UI.
-                </p>
-                <p>
-                    Check out the
-                    <a target="_blank" href="https://github.com/johnrnelson/api-puppy">GitHub Project</a> to
-                    see the source code to see how you can use it in your own projects.
-                </p>
+        <p>
+            Use the <a href="JavaScript:UIHelper.ShowTab('TabDebugger')">Debug Tool</a> for testing
+            the API to make sure you get what you want before having to test it in your own code.
+        </p>
 
-                <p>
-                    Use the <a href="JavaScript:UIHelper.ShowTab('TabDebugger')">Debug Tool</a> for testing
-                    the API to make sure you get what you want before having to test it in your own code.
-                </p>
-
-                <p>
-                    The only way to see the web socket data is using the console.
-                    Not enough time is being spent on the UI.
-                </p>
-            </div>
-        </div>
+        <p>
+            The only way to see the web socket data is using the console.
+            Not enough time is being spent on the UI.
+        </p>
     </div>
-
-
-
-
 
 
 

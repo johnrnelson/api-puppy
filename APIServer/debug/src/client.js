@@ -186,21 +186,20 @@ const DebugUI = {
     OpenDialog(DialogInfo) {
         // debugger;
 
- 
+
         console.info('ok kill it')
         Metro.dialog.create({
             title: DialogInfo.title,
             content: DialogInfo.body,
             closeButton: true
-        });        
+        });
 
     },
     //Use the HTTP to request the data...
     MakeHTTPRequest() {
         console.clear();
         console.info('\r\nRun the debug code!');
-        const displayDateUP = document.getElementById('Date_Downloaded');
-        displayDateUP.innerHTML = "@" + new Date().toLocaleTimeString();
+
 
         // debugger;
         //Get our contents from the editor...
@@ -209,28 +208,9 @@ const DebugUI = {
         if (JSONPayload) {
             DebugUI.Fetch(JSONPayload)
                 .then(data => {
-
-
-
-                    /*
-                    if (data.err) {
-                        DebugUI.OpenDialog({
-                            title: "Error runing the service",
-                            body: `
-                            <div>Please report this to support!</div>
-                            <b>Error Message</b> : ${data.err}
-                            `
-                        }); 
-                    }
-                    */
-
-
-                    UIHelper.Ace.AceDisplayRsults.setValue(JSON.stringify(data, null, "\t"));
-
-                    //Set the cursor so the user can start over again...
-                    UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
-
-
+ 
+                    DebugUI.ShowJSONResult('HTTP', JSON.stringify(data, null, "\t"));
+ 
 
                 }) // JSON-string from `response.json()` call
                 .catch(error => {
@@ -252,6 +232,7 @@ const DebugUI = {
         const JSONPayload = DebugUI.GetEditorJSON();
         console.info(JSONPayload);
         DebugUI.WebSocketConnection.send(JSON.stringify(JSONPayload));
+        
 
     },
     /*
@@ -434,13 +415,22 @@ print(response_data)
 
 
 
+    },
+    ShowJSONResult(JSONSource, JSONText) {
+        const displayDateMod = document.getElementById('Date_Downloaded');
+        displayDateMod.innerHTML = ' from [' + JSONSource + '] &nbsp;@' + new Date().toLocaleTimeString();
+
+        UIHelper.Ace.AceDisplayRsults.setValue(JSONText);
+
+        //Set the cursor so the user can start over again...
+        UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
     }
 };
 
 
 const UIHelper = {
     QueryStringBuilder(JSONData) {
- 
+
         //Simple function to serialize the json into array for query string...
         function DigestQS(Prefix, QSObject, QSArray) {
 
@@ -649,13 +639,19 @@ const UIHelper = {
                 //Do not display service messages!
                 if (jsonData.TID == 0) {
                     console.log('Web Socket:', jsonData);
+                    // debugger;
+                    UIHelper.Logger.Add({
+                        TID: jsonData.TID,
+                        DT: new Date(),
+                        Topic: "Socket MSG!",
+                        Source: "Socket",
+                        Body: jsonData.msg,
+                    });                    
                     return;
-                }
-                UIHelper.Ace.AceDisplayRsults.setValue(JSON.stringify(jsonData, null, "\t"));
-
-                //Set the cursor so the user can start over again...
-                UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
-
+                }      
+ 
+                DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
+ 
             };
             DebugUI.WebSocketConnection.onopen = () => {
 
@@ -665,11 +661,88 @@ const UIHelper = {
                     service: "time"
                 }));
                 */
+                UIHelper.Logger.Add({
+                    TID: 0,
+                    DT: new Date(),
+                    Topic: "Socket Connected!",
+                    Source: "Browser",
+                    Body: "Woot",
+                });
             };
 
 
 
 
+
+
+        }
+    },
+    Logger: {
+        Clear() {
+
+            Metro.dialog.create({
+                title: "Clear the history?",
+                content: "<div>Are you sure you want to do this?</div>",
+                actions: [
+                    {
+                        caption: "Agree",
+                        cls: "js-dialog-close alert",
+                        onclick: function () {
+                            const tblBody = document.getElementById('HistoryLoggerTable');
+                            tblBody.innerHTML = "";
+                        }
+                    },
+                    {
+                        caption: "Disagree",
+                        cls: "js-dialog-close",
+                        onclick: function () {
+                            console.info("History was not deleted!");
+                        }
+                    }
+                ]
+            });
+
+
+        },
+        Add(LogMSG) {
+
+            function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
+                const newCell = document.createElement('td');
+                newCell.title = Title;
+                newCell.className = ClassName;
+                newCell.innerHTML = HTMLValue;
+                newCell.vAlign = "top";
+                newCell.align = "left";
+
+                HostRow.appendChild(newCell)
+                // return newCell
+            }
+            try {
+
+
+                if (!LogMSG.DT) {
+                    LogMSG.DT = new Date()
+                }
+
+                const displayDT = moment(LogMSG.DT);
+
+
+                const tblBody = document.getElementById('HistoryLoggerTable');
+
+                const tr = document.createElement('tr');
+
+                // debugger;
+
+                CellBuider(tr, "", "TID Help", "", LogMSG.TID);
+                CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
+                CellBuider(tr, "", "", "", LogMSG.Topic);
+                CellBuider(tr, "", "", "", LogMSG.Source);
+                CellBuider(tr, "", "", "", LogMSG.Body);
+
+                tblBody.appendChild(tr);
+            } catch (errAddLogItem) {
+                alert('Error adding to the log!!!\r\n' + errAddLogItem.message);
+            }
 
 
         }
@@ -717,7 +790,16 @@ window.onload = function () {
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
     UIHelper.ShowTab('TabMain');
+    // debugger;
     // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('HistoryLogger');
 
+    UIHelper.Logger.Add({
+        TID: 0,
+        DT: new Date(),
+        Topic: "UI Status",
+        Source: "Browser",
+        Body: "The browser UI should be loaded and ready to go!",
+    });
 
 };
