@@ -895,11 +895,11 @@ window.onload = function () {
     UIHelper.MasterSocket.Connnect();
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    // UIHelper.ShowTab('TabMain');
+    UIHelper.ShowTab('TabMain');
     // debugger;
     // UIHelper.ShowTab('TabDebugger');
     // UIHelper.ShowTab('HistoryLogger');
-    UIHelper.ShowTab('GitHubLinks');
+    // UIHelper.ShowTab('GitHubLinks');
 
     UIHelper.Logger.Add({
         TID: 0,
@@ -1425,7 +1425,7 @@ slightly modified....
             <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
         </span>
         <span class="api-uri-display" title="URI Endpoint address">
-            <input id="api-uri-address" value="" />
+            <input id="api-uri-address" value="" onchange="document.getElementById('api-uri-link').href=this.value;"/>
         </span>
 
 
@@ -1478,7 +1478,7 @@ slightly modified....
 
 
 
-            <div data-role="splitter" class="h-100" data-split-sizes="70, 30" data-min-sizes="60,60"
+            <div data-role="splitter" class="h-100" data-split-sizes="60, 40" data-min-sizes="60,60"
                 data-gutter-size="8">
 
                 <div class="d-flex flex-justify-center flex-align-center">
