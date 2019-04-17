@@ -211,16 +211,25 @@ MainTabDisplay .h-menu li:hover {
     /* right: 0; */
     width: 30px;
     background-color: transparent;
-    color: blue;
+
     padding: 1px;
     /* margin:4px; */
     font-size: 20px;
-    text-align: center
+    text-align: center;
+
 }
 
-#TabDebugger .api-uri-browse:hover {
-    color: rgb(222, 211, 253);
+ 
+#api-uri-link {
+    color: rgb(21, 252, 40);
+    font-size: 25px;
 }
+#api-uri-link:hover {
+    color: rgb(233, 231, 250);
+}
+
+
+
 
 
 #TabDebugger .api-uri-display {
@@ -250,7 +259,7 @@ MainTabDisplay .h-menu li:hover {
 
     text-overflow: ellipsis;
     font-size: 18px;
-  
+
 }
 
 #TabDebugger .api-uri-display #api-uri-address:focus {
