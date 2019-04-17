@@ -861,11 +861,16 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    // UIHelper.ShowTab('TabMain');
+    UIHelper.ShowTab('TabMain');
     // debugger;
-    UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('TabDebugger');
     // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
+
+
+
+
+
 
     UIHelper.Logger.Add({
         TID: 0,
