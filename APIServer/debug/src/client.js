@@ -146,12 +146,14 @@ const DebugUI = {
 
                     //Set the cursor so the user can start over again...
                     UIHelper.Ace.AceEditor.moveCursorTo(0);
+                    UIHelper.Ace.AceEditor.resize();
 
 
                     UIHelper.Ace.AceDisplayRsults.setValue("{}");
 
                     //Set the cursor so the user can start over again...
                     UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+                    UIHelper.Ace.AceDisplayRsults.resize();
                 }
 
 
@@ -949,7 +951,7 @@ window.onload = function () {
     //Which screen do you want to show first? Are you debugging the debugger? lol
     UIHelper.ShowTab('TabMain');
     // debugger;
-    // UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabDebugger');
     // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
 

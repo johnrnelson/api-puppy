@@ -195,12 +195,14 @@ const DebugUI = {
 
                     //Set the cursor so the user can start over again...
                     UIHelper.Ace.AceEditor.moveCursorTo(0);
+                    UIHelper.Ace.AceEditor.resize();
 
 
                     UIHelper.Ace.AceDisplayRsults.setValue("{}");
 
                     //Set the cursor so the user can start over again...
                     UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+                    UIHelper.Ace.AceDisplayRsults.resize();
                 }
 
 
@@ -998,7 +1000,7 @@ window.onload = function () {
     //Which screen do you want to show first? Are you debugging the debugger? lol
     UIHelper.ShowTab('TabMain');
     // debugger;
-    // UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabDebugger');
     // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
 
@@ -1029,18 +1031,18 @@ window.onload = function () {
                 <a href="JavaScript:UIHelper.ShowTab('TabMain')"><span class="fas fa-home"></span></a>
             </li>
 
-            <li id="TabDebugger-BTN" data-role="hint"
-                data-hint-position="right" data-hint-text="Interactive debugger to test with">
+            <li id="TabDebugger-BTN" data-role="hint" data-hint-position="right"
+                data-hint-text="Interactive debugger to test with">
                 <a href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span class="fas fa-bug"></span></a></li>
 
 
 
-            <li id="HistoryLogger-BTN" data-role="hint"
-            data-hint-position="right" data-hint-text="Simple logger so you don't have to use the console"><a
+            <li id="HistoryLogger-BTN" data-role="hint" data-hint-position="right"
+                data-hint-text="Simple logger so you don't have to use the console"><a
                     href="JavaScript:UIHelper.ShowTab('HistoryLogger')"><span class="fas fa-file-code"></span></a></li>
 
-            <li id="GitHubLinks-BTN"   data-role="hint"
-            data-hint-position="right" data-hint-text="GitHub project for the source code"><a
+            <li id="GitHubLinks-BTN" data-role="hint" data-hint-position="right"
+                data-hint-text="GitHub project for the source code"><a
                     href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
                     <span class="fab fa-github"></span></a></li>
         </ul>
@@ -1132,9 +1134,11 @@ window.onload = function () {
             <center>
 
 
-                <select id="DebugVerbList" title="List of basic services provided by this server"></select>
+                <select id="DebugVerbList" data-role="hint" data-hint-position="right"
+                    data-hint-text="Select one of the services provided by this server"></select>
                 <br>
-                <select id="ExampleCodeList" title="Sample code to test with."></select>
+                <select id="ExampleCodeList" data-role="hint" data-hint-position="right"
+                    data-hint-text="Select a sample file with work with"></select>
                 <br>
 
                 <div title="Use HTTP for the request" onclick="DebugUI.MakeHTTPRequest()" class="ActionButton">HTTP
