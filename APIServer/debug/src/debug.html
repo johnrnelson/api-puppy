@@ -50,21 +50,31 @@
         /* SERVER REPLACES SCRIPTS */
     </script>
 
-    
+
 </head>
 
 <body>
     <sidemenu>
         <!-- https://metroui.org.ua/menu.html#_h_menu -->
         <ul class="t-menu open verticle compact">
-            <li id="TabMain-BTN" title="Basic help about the user interface"><a
-                    href="JavaScript:UIHelper.ShowTab('TabMain')"><span class="fas fa-home"></span></a></li>
-            <li id="TabDebugger-BTN" title="Interactive debugger to test with"><a
-                    href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span class="fas fa-bug"></span></a></li>
-            <li id="HistoryLogger-BTN" title="Simple logger so you don't have to use the console"><a
+            <li id="TabMain-BTN" data-role="hint" data-hint-position="right"
+                data-hint-text="Basic help about the user interface">
+                <a href="JavaScript:UIHelper.ShowTab('TabMain')"><span class="fas fa-home"></span></a>
+            </li>
+
+            <li id="TabDebugger-BTN" data-role="hint"
+                data-hint-position="right" data-hint-text="Interactive debugger to test with">
+                <a href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span class="fas fa-bug"></span></a></li>
+
+
+
+            <li id="HistoryLogger-BTN" data-role="hint"
+            data-hint-position="right" data-hint-text="Simple logger so you don't have to use the console"><a
                     href="JavaScript:UIHelper.ShowTab('HistoryLogger')"><span class="fas fa-file-code"></span></a></li>
 
-            <li id="GitHubLinks-BTN" title="GitHub project for the source code"><a href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
+            <li id="GitHubLinks-BTN"   data-role="hint"
+            data-hint-position="right" data-hint-text="GitHub project for the source code"><a
+                    href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
                     <span class="fab fa-github"></span></a></li>
         </ul>
 
@@ -120,7 +130,7 @@
         <HistoryLoggerTable>
             <table class="table  striped compact" style="background: transparent;">
                 <thead xxclass="sortable-column">
-                    <tr>                        
+                    <tr>
                         <th width="50px" vertical-align="top">Type</th>
                         <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
                         <th width="20%" vertical-align="top" nowrap="true">Topic</th>
