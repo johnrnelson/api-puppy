@@ -64,8 +64,7 @@ Maybe we do or do not do.. who knows?
 - [x] [SSL/HTTPS demo.tektology.com](https://demo.tektology.com/)  
 - [x] [HTTP demo.tektology.com](http://demo.tektology.com/)
 - [x] [Local Host](http://0.0.0.0:9080)
-- [x] [Cross Domain Example](https://www.johnrnelson.com/test/api-tek.html)
-- [ ] [GitHub Hosted Pages](https://www.johnrnelson.com/api-puppy)
+- [x] [Cross Domain Example](https://www.johnrnelson.com/test/api-tek.html) 
 - [ ] [GitHub Hosted Domain](https://api-puppy.johnrnelson.com/)
 
  
