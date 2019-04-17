@@ -65,7 +65,8 @@ Maybe we do or do not do.. who knows?
 - [x] [HTTP demo.tektology.com](http://demo.tektology.com/)
 - [x] [Local Host](http://0.0.0.0:9080)
 - [x] [Cross Domain Example](https://www.johnrnelson.com/test/api-tek.html)
-- [ ] [GitHub Pagtes](https://www.johnrnelson.com/api-puppy)
+- [ ] [GitHub Hosted Pages](https://www.johnrnelson.com/api-puppy)
+- [ ] [GitHub Hosted Domain](https://api-puppy.johnrnelson.com/)
 
  
 Send us a hello if you find this usefull. 
