@@ -811,6 +811,23 @@ UIHelper.GetHelpFile('debug.css', function (filecontents) {
 });
 
 
+UIHelper.GetHelpFile('HelpDisplay.html', function (filecontents) {
+    const MainDisplay = document.getElementById("TabMain");
+ 
+    MainDisplay.innerHTML = filecontents.body;
+ 
+    UIHelper.Logger.Add({
+        TID: 0,
+        Type: 707,
+        DT: new Date(),
+        Topic: "UI Set Main Help",
+        Source: "Browser",
+        Body: "Basic help HTML has been set!",
+    });
+});
+
+
+
 /*
     After page has loaded, you can be sure that everything you need
     is already loaded and ready to go...
@@ -818,6 +835,7 @@ UIHelper.GetHelpFile('debug.css', function (filecontents) {
 window.onload = function () {
 
 
+    
 
 
     //Setup our UI parts...
@@ -843,9 +861,9 @@ window.onload = function () {
 
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabMain');
     // debugger;
-    // UIHelper.ShowTab('TabDebugger');
+    UIHelper.ShowTab('TabDebugger');
     // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
 
