@@ -878,17 +878,15 @@ window.onload = function () {
     UIHelper.Ace.BuildAceControls();
 
 
-    console.info('The API Client has loaded. Feel free to explore this object in the console.');
+    
 
     /*
         This is only available to the debug client. We 
         don't put this in normal requests from users... 
     */
-    console.info(`
-    
+    console.info(`    
         Use : "ServerAPI" for easy code to help with testing.
-        Use : "debugdata" in the console for the api data help.
-    
+        Use : "debugdata" in the console for the api data help.    
     `);
 
 
@@ -909,11 +907,22 @@ window.onload = function () {
         Body: "The browser UI should be loaded and ready to go!",
     });
 
+
+    /*
+        Use the help service to get the Socket API code. 
+        It's just another way to use the API and shows
+        how you can do this own a seperate domain and 
+        still get the updates...
+    */
     UIHelper.GetHelpFile('SocketAPI.js', function (filecontents) {
         const srcSocketAPI = document.createElement("script");
         srcSocketAPI.innerHTML = filecontents.body;
         document.body.appendChild(srcSocketAPI);
 
+        /*
+            Overwrite the events to customize it for 
+            this domain and this DEMO!
+        */
         SocketAPI.MasterSocket.Events.onmessage = function (e) {
             const jsonData = JSON.parse(e.data);
             var displaymsg;
@@ -934,9 +943,7 @@ window.onload = function () {
 
             //Do not display service messages!
             if (jsonData.TID == 0) {
-                // console.log('Web Socket:', jsonData);
-                // // debugger;
-
+                // console.log('Web Socket Service Mesage:', jsonData);                
                 return;
             }
 
@@ -944,7 +951,9 @@ window.onload = function () {
 
         };
 
+        //Once connected...
         SocketAPI.MasterSocket.Events.onopen = function () {
+
             UIHelper.Logger.Add({
                 Type: 411,
                 TID: 0,
@@ -953,8 +962,10 @@ window.onload = function () {
                 Source: "Browser",
                 Body: "The web socket is connected and ready to go!",
             });
+
         };
  
+        //After events are rewired, connect the socket...
         SocketAPI.MasterSocket.Connnect();
     });
 
