@@ -615,7 +615,7 @@ const UIHelper = {
         },
 
         //Make sure we deal with change to the editor...
-        HookEvents(Editor2Hook) { 
+        HookEvents(Editor2Hook) {
             Editor2Hook.getSession().on('change', function (delta) {
                 const editorJSON = Editor2Hook.getValue();
                 UIHelper.QueryStringBuilder(editorJSON);
@@ -862,9 +862,9 @@ UIHelper.GetHelpFile('debug.css', function (filecontents) {
 
 UIHelper.GetHelpFile('HelpDisplay.html', function (filecontents) {
     const MainDisplay = document.getElementById("TabMain");
- 
+
     MainDisplay.innerHTML = filecontents.body;
- 
+
     UIHelper.Logger.Add({
         TID: 0,
         Type: 707,
@@ -873,6 +873,10 @@ UIHelper.GetHelpFile('HelpDisplay.html', function (filecontents) {
         Source: "Browser",
         Body: "Basic help HTML has been set!",
     });
+
+    //Now show the sys info in the main display...
+    DebugUI.SetSysInfo();
+
 });
 
 
@@ -884,37 +888,7 @@ UIHelper.GetHelpFile('HelpDisplay.html', function (filecontents) {
 window.onload = function () {
 
 
-    
 
-
-    //Setup our UI parts...
-    DebugUI.SetSysInfo();
-    DebugUI.FillSideBar();
-
-
-    //Setup all of our ace editors...
-    UIHelper.Ace.BuildAceControls();
-
-
-    
-
-    /*
-        This is only available to the debug client. We 
-        don't put this in normal requests from users... 
-    */
-    console.info(`    
-        Use : "ServerAPI" for easy code to help with testing.
-        Use : "debugdata" in the console for the api data help.    
-    `);
-
-
-
-    //Which screen do you want to show first? Are you debugging the debugger? lol
-    // UIHelper.ShowTab('TabMain');
-    // debugger;
-    UIHelper.ShowTab('TabDebugger');
-    // UIHelper.ShowTab('HistoryLogger');
-    // UIHelper.ShowTab('GitHubLinks');
 
 
 
@@ -987,10 +961,57 @@ window.onload = function () {
             });
 
         };
- 
+
         //After events are rewired, connect the socket...
         SocketAPI.MasterSocket.Connnect();
     });
+
+
+
+
+
+
+
+
+
+    //Setup our UI parts...
+    DebugUI.FillSideBar();
+
+
+    //Setup all of our ace editors...
+    UIHelper.Ace.BuildAceControls();
+
+
+
+
+    /*
+        This is only available to the debug client. We 
+        don't put this in normal requests from users... 
+    */
+    console.info(`    
+        Use : "ServerAPI" for easy code to help with testing.
+        Use : "debugdata" in the console for the api data help.    
+    `);
+
+
+
+    //Which screen do you want to show first? Are you debugging the debugger? lol
+    // UIHelper.ShowTab('TabMain');
+    // debugger;
+    UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('HistoryLogger');
+    // UIHelper.ShowTab('GitHubLinks');
+
+
+
+
+
+
+
+
+
+
+
 
 };
 
