@@ -18,7 +18,7 @@ const DataActions = {
         OnComplete(null, result);
         SERVER.SocketBroadcast({
             TID:0,
-            msg:'Fruid ['+fruit+'] was added!'
+            msg:'The fruit ['+fruit+'] was added!'
         });
     },
     delete(fruit, OnComplete){

@@ -267,7 +267,7 @@ const DebugUI = {
                         DT: new Date(),
                         Topic: "HTTP Request",
                         Source: "Browser",
-                        Body: "Result length : " + resultJSONText.length,
+                        Body: "<i>" + resultJSONText + "</i>",
                     });
 
                 }) // JSON-string from `response.json()` call
@@ -289,7 +289,7 @@ const DebugUI = {
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
         // console.info(JSONPayload);
-        DebugUI.WebSocketConnection.send(JSON.stringify(JSONPayload));
+        SocketAPI.MasterSocket.WebSocketConnection.send(JSON.stringify(JSONPayload));
 
 
     },
@@ -489,9 +489,9 @@ print(response_data)
             TID: 0,
             Type: 707,
             DT: new Date(),
-            Topic: "Server Response",
+            Topic: "Display JSON from the server",
             Source: "Browser",
-            Body: "JSON Length:" + JSONText.length + " ",
+            Body: "<i>" + JSONText + "</i>",
         });
 
     }
@@ -613,17 +613,16 @@ const UIHelper = {
             }
             langTools.addCompleter(Editor2Complete.Completer);
         },
-        HookEvents(Editor2Hook) {
-            console.info('Hooking Events for the editor...');
 
+        //Make sure we deal with change to the editor...
+        HookEvents(Editor2Hook) { 
             Editor2Hook.getSession().on('change', function (delta) {
-
                 const editorJSON = Editor2Hook.getValue();
                 UIHelper.QueryStringBuilder(editorJSON);
-
-
             });
         },
+
+        //Setup some defaults...
         SetupAceEditorDefaults(ParentHTMLTagID) {
 
             //Ace Editor is awesome! 
@@ -673,12 +672,12 @@ const UIHelper = {
     ShowTab(Tab2Show) {
         var TabElement;
         var BTNElement;
-  
+
         if (typeof (Tab2Show) == "string") {
             TabElement = document.getElementById(Tab2Show);
-            BTNElement = document.getElementById(Tab2Show+"-BTN");
-        }else{
-            console.warn('ShowTab Error!','"Tab2Show" must be a string!');
+            BTNElement = document.getElementById(Tab2Show + "-BTN");
+        } else {
+            console.warn('ShowTab Error!', '"Tab2Show" must be a string!');
             debugger;
         }
 
@@ -703,74 +702,9 @@ const UIHelper = {
         }
 
         UIHelper.ActiveTab.style.display = "block";
-         
+
     },
-    MasterSocket: {
-        Connnect() {
-            //
 
-
-
-            // WEBSOCKET
-            var SocketURL;
-            if (document.location.protocol == "https:") {
-                SocketURL = 'wss://' + document.location.hostname + ":" + document.location.port;
-            } else {
-                SocketURL = 'ws://' + document.location.hostname + ":" + document.location.port;
-            }
-            DebugUI.WebSocketConnection = new WebSocket(SocketURL)
-
-            DebugUI.WebSocketConnection.onerror = error => {
-                console.log(`WebSocket error: ${error}`)
-            };
-            DebugUI.WebSocketConnection.onmessage = e => {
-                const jsonData = JSON.parse(e.data);
-
-                UIHelper.Logger.Add({
-                    Type: 466,
-                    TID: 505,
-                    DT: new Date(),
-                    Topic: "Socket Traffic!",
-                    Source: "Socket",
-                    Body: "Socket data length:" + e.data.length + "",
-                });
-
-                //Do not display service messages!
-                if (jsonData.TID == 0) {
-                    // console.log('Web Socket:', jsonData);
-                    // // debugger;
-
-                    return;
-                }
-
-                DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
-
-            };
-            DebugUI.WebSocketConnection.onopen = () => {
-
-                //An example...
-                /*
-                DebugUI.WebSocketConnection.send(JSON.stringify({
-                    service: "time"
-                }));
-                */
-                UIHelper.Logger.Add({
-                    Type: 411,
-                    TID: 0,
-                    DT: new Date(),
-                    Topic: "Socket Connected!",
-                    Source: "Browser",
-                    Body: "Woot",
-                });
-            };
-
-
-
-
-
-
-        }
-    },
     Logger: {
         Clear() {
 
@@ -858,7 +792,7 @@ const UIHelper = {
 
                 // debugger;
 
-                CellBuider(tr, "", "TID Help", "", LogMSG.TID);
+                // CellBuider(tr, "", "TID Help", "", LogMSG.TID);
                 CellBuider(tr, "", "Type Of Log Item [" + LogMSG.Type + "]", "", dispLogType);
                 CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
                 CellBuider(tr, "", "", "", LogMSG.Topic);
@@ -872,10 +806,58 @@ const UIHelper = {
 
 
         }
+    },
+    GetHelpFile(FilePath, OnFetch) {
+        // UIHelper.GetHelpFile('',function(){});
+
+        DebugUI.Fetch({
+            service: 'help',
+            data: {
+                topic: 'debug-code-fetch',
+                filepath: FilePath
+            }
+        }).then(data => {
+            if (data.err) {
+                console.warn(data.err);
+            } else {
+                OnFetch(data);
+            }
+
+
+        }) // JSON-string from `response.json()` call
+            .catch(error => {
+                console.warn('Error!');
+                console.warn(data);
+                console.error(error);
+                // debugger;
+            });
+
     }
 
 };
 
+
+
+/* 
+    Go grab our style using the API to show an example of
+    another way to use it. Of course you don't want to 
+    actually get your CSS files this way, but it's yet
+    another example of how to use a web API...
+*/
+UIHelper.GetHelpFile('debug.css', function (filecontents) {
+    const CSSFile = document.createElement("style");
+    CSSFile.type = "text/css";
+    CSSFile.innerHTML = filecontents.body;
+    document.body.appendChild(CSSFile);
+    UIHelper.Logger.Add({
+        TID: 0,
+        Type: 707,
+        DT: new Date(),
+        Topic: "UI Styles",
+        Source: "Browser",
+        Body: "The extra stryles [<b>debug.css</b>] have been set via the API. :-) ",
+    });
+});
 
 
 /*
@@ -883,7 +865,6 @@ const UIHelper = {
     is already loaded and ready to go...
 */
 window.onload = function () {
-
 
 
 
@@ -911,14 +892,12 @@ window.onload = function () {
     `);
 
 
-    //Connect to our websocket server....
-    UIHelper.MasterSocket.Connnect();
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabMain');
     // debugger;
     // UIHelper.ShowTab('TabDebugger');
-    // UIHelper.ShowTab('HistoryLogger');
+    UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
 
     UIHelper.Logger.Add({
@@ -930,440 +909,60 @@ window.onload = function () {
         Body: "The browser UI should be loaded and ready to go!",
     });
 
+    UIHelper.GetHelpFile('SocketAPI.js', function (filecontents) {
+        const srcSocketAPI = document.createElement("script");
+        srcSocketAPI.innerHTML = filecontents.body;
+        document.body.appendChild(srcSocketAPI);
+
+        SocketAPI.MasterSocket.Events.onmessage = function (e) {
+            const jsonData = JSON.parse(e.data);
+            var displaymsg;
+            if (jsonData.msg) {
+                displaymsg = jsonData.msg;
+            } else {
+                displaymsg = e.data;
+            }
+
+            UIHelper.Logger.Add({
+                Type: 466,
+                TID: 505,
+                DT: new Date(),
+                Topic: "Socket Traffic",
+                Source: "Socket",
+                Body: displaymsg
+            });
+
+            //Do not display service messages!
+            if (jsonData.TID == 0) {
+                // console.log('Web Socket:', jsonData);
+                // // debugger;
+
+                return;
+            }
+
+            DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
+
+        };
+
+        SocketAPI.MasterSocket.Events.onopen = function () {
+            UIHelper.Logger.Add({
+                Type: 411,
+                TID: 0,
+                DT: new Date(),
+                Topic: "Socket Connected!",
+                Source: "Browser",
+                Body: "The web socket is connected and ready to go!",
+            });
+        };
+ 
+        SocketAPI.MasterSocket.Connnect();
+    });
 
 };
 
     </script>
 
-    <style>
-        /* 
-
-    This is your chance to color up the debug UI!!! 
-
-    Don't blame John for the ugly CSS. He's slow and color blind. :-) 
-
-*/
-
-body {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-
-}
-
-
-
-
-
-
-
-sidemenu {
-    background-color: rgb(70, 70, 70);
-    color: blue;
-
-    display: block;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    /* right: 0 */
-    width: 40px;
-    border: solid 1px silver;
-}
-
-sidemenu .t-menu {
-    background-color: transparent;
-}
-
-sidemenu li {
-    color: white !important;
-    text-shadow: 1px 1px 1px #6e6e6e;
-}
-
-sidemenu li:hover {
-    color: rgb(200, 192, 235) !important;
-}
-
-sidemenu .selected-maintab {
-    color: white;
-    background-color: black;
-    margin: 0;
-    padding: 0;
-}
-
- 
-
-
-
-TopNav {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0
-}
-
-MainTabDisplay {
-    display: none;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 40px;
-    right: 0;
-}
-
-MainTabDisplay#GitHubLinks {
-    margin: 15px;
-    padding: 10px;
-    overflow: auto;
-}
-
-MainTabDisplay .container {
-    margin: 10px;
-    padding: 10px;
-    /*     
-    margin-left: 10px;
-    padding-left: 10px;
-    margin-right: 0;
-    padding-right: 0; */
-}
-
-
-
-MainTabDisplay HistoryLoggerTable {
-    position: absolute;
-
-    top: 40px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    display: block;
-    margin: 0;
-    padding: 10px;
-    background-color: transparent !important;
-    color: black;
-    /* height: 100%;
-    width: 100%; */
-    overflow: auto !important;
-}
-
-
-
-MainTabDisplay .h-menu {
-    background-color: rgb(0, 0, 54);
-}
-
-MainTabDisplay .h-menu a {
-    color: white;
-}
-
-MainTabDisplay .h-menu li:hover {
-    color: gold;
-}
-
-
-/* 
-
-    Other stuff.....
-
-*/
-
-
-
-
-/* The debugger section */
-
-
-.ace-editor {
-    border: solid 1px silver;
-    position: absolute;
-    top: 30px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: auto;
-    /* height: 100%; */
-    /* width: 100%;     */
-}
-
-.APIDebugResults {
-    border: solid 1px silver;
-    /* position: relative;
-    height: 100%;
-    width: 100%; */
-    position: absolute;
-    top: 30px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: auto;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#TabDebugger .api-uri-display {
-    position: absolute;
-    top: 0;
-    height: 30px;
-    right: 0;
-    left: 30px;
-    background-color: rgb(236, 236, 236);
-    color: white;
-    /* padding-right:1px; */
-    /* margin:4px; */
-}
-
-#TabDebugger .api-uri-display #api-uri-address {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    padding: 3px;
-
-    background-color: transparent;
-    font-family: 'Roboto', sans-serif;
-    color: purple;
-    font-weight: bold;
-    text-overflow: ellipsis;
-    font-size: 18px;
-
-}
-
-
-
-#TabDebugger .api-uri-browse {
-    position: absolute;
-
-    top: 0;
-    height: 30px;
-    left: 0;
-    /* right: 0; */
-    width: 30px;
-    background-color: transparent;
-    color: blue;
-    padding: 1px;
-    /* margin:4px; */
-    font-size: 20px;
-    text-align: center
-}
-
-#TabDebugger .api-uri-browse:hover {
-    color: black;
-}
-
-
-
-
-
-
-/* 
-sidebar 
-*/
-#TabDebugger #debugger-sidbar {
-    position: absolute;
-    top: 35px;
-    bottom: 0;
-    left: 0;
-    width: 150px;
-    background-color: rgb(54, 54, 54);
-    color: white;
-    padding: 5px;
-    font-family: 'Abel', sans-serif;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-#debugger-sidbar select {
-    background-color: transparent;
-    width: 100%;
-    color: gold;
-}
-
-#debugger-sidbar .ActionButton {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-
-    font-variant: small-caps;
-
-
-    border-radius: 6px;
-
-    color: rgb(82, 82, 82);
-
-    left: 0;
-    right: 0;
-
-    text-align: center;
-    text-decoration: none;
-
-    /* background-color: rgb(212, 212, 212); */
-    cursor: pointer;
-    margin-top: 10px;
-    text-shadow: 1px 1px 1px #ffffff;
-    background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, rgb(194, 194, 194) 100%);
-}
-
-#debugger-sidbar .ActionButton:hover {
-    color: blue;
-
-}
-
-
-
-/* Main help text classes...  */
-
-.HelpText {
-    color: rgb(94, 94, 94);
-    font-size: 16px;
-    font-family: 'PT Sans', sans-serif;
-}
-
-pre {
-    margin: 5px;
-    padding: 25px;
-    background-color: rgb(238, 238, 238);
-    height: 80%;
-    overflow: auto;
-}
-
-pre code {
-    white-space: nowrap !important;
-}
-
-.buttonclick {
-    cursor: pointer;
-    color: green;
-}
-
-.todo-item {
-    color: green;
-    font-size: 12px;
-}
-
-/* 
-FOOTER STYLES!!!!!! 
-*/
-
-.footer-row {
-    padding-top: 50px;
-    margin-bottom: 100px;
-    font-family: 'Abel', sans-serif;
-    font-size: 16px;
-
-}
-
-.FooterHeading {
-    color: green;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-
-.FooterSysInfo {
-    color: gray;
-    cursor: default;
-}
-
-.FooterSysInfo:hover {
-    color: silver !important;
-    cursor: hand;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 
-split info from https://gist.github.com/jpnelson/52d6f38820c6d028bdf8
-
-slightly modified.... 
-*/
-
-
-.split-container {
-    position: absolute;
-    left: 150px;
-    right: 0;
-    top: 35px;
-    bottom: 0;
-    border: 0;
-    background-color: transparent;
-}
-
-.split-header {
-    position: absolute;
-    top: 0;
-    height: 30px;
-    left: 0;
-    right: 0;
-    /* width: 100%; */
-    background-color: rgb(0, 70, 70);
-    color: white;
-    cursor: help;
-    border: solid 1px silver;
-    padding: 2px;
-
-    text-shadow: 1px 1px 1px #202020;
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 16px;
-    font-weight: bold;
-    /* font-variant: small-caps; */
-}
-    </style>
+    
 </head>
 
 <body>
@@ -1433,12 +1032,11 @@ slightly modified....
         <HistoryLoggerTable>
             <table class="table  striped compact" style="background: transparent;">
                 <thead xxclass="sortable-column">
-                    <tr>
-                        <th width="30px" vertical-align="top">#</th>
+                    <tr>                        
                         <th width="50px" vertical-align="top">Type</th>
                         <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                        <th width="200px" vertical-align="top" nowrap="true">Topic</th>
-                        <th width="200px" vertical-align="top" nowrap="true">Source</th>
+                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
                         <th widht="80%" vertical-align="top">Body</th>
                     </tr>
                 </thead>

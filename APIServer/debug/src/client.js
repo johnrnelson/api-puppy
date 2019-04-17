@@ -218,7 +218,7 @@ const DebugUI = {
                         DT: new Date(),
                         Topic: "HTTP Request",
                         Source: "Browser",
-                        Body: "Result length : " + resultJSONText.length,
+                        Body: "<i>" + resultJSONText + "</i>",
                     });
 
                 }) // JSON-string from `response.json()` call
@@ -240,7 +240,7 @@ const DebugUI = {
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
         // console.info(JSONPayload);
-        DebugUI.WebSocketConnection.send(JSON.stringify(JSONPayload));
+        SocketAPI.MasterSocket.WebSocketConnection.send(JSON.stringify(JSONPayload));
 
 
     },
@@ -440,9 +440,9 @@ print(response_data)
             TID: 0,
             Type: 707,
             DT: new Date(),
-            Topic: "Server Response",
+            Topic: "Display JSON from the server",
             Source: "Browser",
-            Body: "JSON Length:" + JSONText.length + " ",
+            Body: "<i>" + JSONText + "</i>",
         });
 
     }
@@ -564,17 +564,16 @@ const UIHelper = {
             }
             langTools.addCompleter(Editor2Complete.Completer);
         },
-        HookEvents(Editor2Hook) {
-            console.info('Hooking Events for the editor...');
 
+        //Make sure we deal with change to the editor...
+        HookEvents(Editor2Hook) { 
             Editor2Hook.getSession().on('change', function (delta) {
-
                 const editorJSON = Editor2Hook.getValue();
                 UIHelper.QueryStringBuilder(editorJSON);
-
-
             });
         },
+
+        //Setup some defaults...
         SetupAceEditorDefaults(ParentHTMLTagID) {
 
             //Ace Editor is awesome! 
@@ -624,12 +623,12 @@ const UIHelper = {
     ShowTab(Tab2Show) {
         var TabElement;
         var BTNElement;
-  
+
         if (typeof (Tab2Show) == "string") {
             TabElement = document.getElementById(Tab2Show);
-            BTNElement = document.getElementById(Tab2Show+"-BTN");
-        }else{
-            console.warn('ShowTab Error!','"Tab2Show" must be a string!');
+            BTNElement = document.getElementById(Tab2Show + "-BTN");
+        } else {
+            console.warn('ShowTab Error!', '"Tab2Show" must be a string!');
             debugger;
         }
 
@@ -654,74 +653,9 @@ const UIHelper = {
         }
 
         UIHelper.ActiveTab.style.display = "block";
-         
+
     },
-    MasterSocket: {
-        Connnect() {
-            //
 
-
-
-            // WEBSOCKET
-            var SocketURL;
-            if (document.location.protocol == "https:") {
-                SocketURL = 'wss://' + document.location.hostname + ":" + document.location.port;
-            } else {
-                SocketURL = 'ws://' + document.location.hostname + ":" + document.location.port;
-            }
-            DebugUI.WebSocketConnection = new WebSocket(SocketURL)
-
-            DebugUI.WebSocketConnection.onerror = error => {
-                console.log(`WebSocket error: ${error}`)
-            };
-            DebugUI.WebSocketConnection.onmessage = e => {
-                const jsonData = JSON.parse(e.data);
-
-                UIHelper.Logger.Add({
-                    Type: 466,
-                    TID: 505,
-                    DT: new Date(),
-                    Topic: "Socket Traffic!",
-                    Source: "Socket",
-                    Body: "Socket data length:" + e.data.length + "",
-                });
-
-                //Do not display service messages!
-                if (jsonData.TID == 0) {
-                    // console.log('Web Socket:', jsonData);
-                    // // debugger;
-
-                    return;
-                }
-
-                DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
-
-            };
-            DebugUI.WebSocketConnection.onopen = () => {
-
-                //An example...
-                /*
-                DebugUI.WebSocketConnection.send(JSON.stringify({
-                    service: "time"
-                }));
-                */
-                UIHelper.Logger.Add({
-                    Type: 411,
-                    TID: 0,
-                    DT: new Date(),
-                    Topic: "Socket Connected!",
-                    Source: "Browser",
-                    Body: "Woot",
-                });
-            };
-
-
-
-
-
-
-        }
-    },
     Logger: {
         Clear() {
 
@@ -809,7 +743,7 @@ const UIHelper = {
 
                 // debugger;
 
-                CellBuider(tr, "", "TID Help", "", LogMSG.TID);
+                // CellBuider(tr, "", "TID Help", "", LogMSG.TID);
                 CellBuider(tr, "", "Type Of Log Item [" + LogMSG.Type + "]", "", dispLogType);
                 CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
                 CellBuider(tr, "", "", "", LogMSG.Topic);
@@ -823,10 +757,58 @@ const UIHelper = {
 
 
         }
+    },
+    GetHelpFile(FilePath, OnFetch) {
+        // UIHelper.GetHelpFile('',function(){});
+
+        DebugUI.Fetch({
+            service: 'help',
+            data: {
+                topic: 'debug-code-fetch',
+                filepath: FilePath
+            }
+        }).then(data => {
+            if (data.err) {
+                console.warn(data.err);
+            } else {
+                OnFetch(data);
+            }
+
+
+        }) // JSON-string from `response.json()` call
+            .catch(error => {
+                console.warn('Error!');
+                console.warn(data);
+                console.error(error);
+                // debugger;
+            });
+
     }
 
 };
 
+
+
+/* 
+    Go grab our style using the API to show an example of
+    another way to use it. Of course you don't want to 
+    actually get your CSS files this way, but it's yet
+    another example of how to use a web API...
+*/
+UIHelper.GetHelpFile('debug.css', function (filecontents) {
+    const CSSFile = document.createElement("style");
+    CSSFile.type = "text/css";
+    CSSFile.innerHTML = filecontents.body;
+    document.body.appendChild(CSSFile);
+    UIHelper.Logger.Add({
+        TID: 0,
+        Type: 707,
+        DT: new Date(),
+        Topic: "UI Styles",
+        Source: "Browser",
+        Body: "The extra stryles [<b>debug.css</b>] have been set via the API. :-) ",
+    });
+});
 
 
 /*
@@ -834,7 +816,6 @@ const UIHelper = {
     is already loaded and ready to go...
 */
 window.onload = function () {
-
 
 
 
@@ -862,14 +843,12 @@ window.onload = function () {
     `);
 
 
-    //Connect to our websocket server....
-    UIHelper.MasterSocket.Connnect();
 
     //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
+    // UIHelper.ShowTab('TabMain');
     // debugger;
     // UIHelper.ShowTab('TabDebugger');
-    // UIHelper.ShowTab('HistoryLogger');
+    UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
 
     UIHelper.Logger.Add({
@@ -881,5 +860,53 @@ window.onload = function () {
         Body: "The browser UI should be loaded and ready to go!",
     });
 
+    UIHelper.GetHelpFile('SocketAPI.js', function (filecontents) {
+        const srcSocketAPI = document.createElement("script");
+        srcSocketAPI.innerHTML = filecontents.body;
+        document.body.appendChild(srcSocketAPI);
+
+        SocketAPI.MasterSocket.Events.onmessage = function (e) {
+            const jsonData = JSON.parse(e.data);
+            var displaymsg;
+            if (jsonData.msg) {
+                displaymsg = jsonData.msg;
+            } else {
+                displaymsg = e.data;
+            }
+
+            UIHelper.Logger.Add({
+                Type: 466,
+                TID: 505,
+                DT: new Date(),
+                Topic: "Socket Traffic",
+                Source: "Socket",
+                Body: displaymsg
+            });
+
+            //Do not display service messages!
+            if (jsonData.TID == 0) {
+                // console.log('Web Socket:', jsonData);
+                // // debugger;
+
+                return;
+            }
+
+            DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
+
+        };
+
+        SocketAPI.MasterSocket.Events.onopen = function () {
+            UIHelper.Logger.Add({
+                Type: 411,
+                TID: 0,
+                DT: new Date(),
+                Topic: "Socket Connected!",
+                Source: "Browser",
+                Body: "The web socket is connected and ready to go!",
+            });
+        };
+ 
+        SocketAPI.MasterSocket.Connnect();
+    });
 
 };

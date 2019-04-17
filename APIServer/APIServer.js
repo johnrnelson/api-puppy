@@ -14,7 +14,7 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
-    Version: '1.10.10',
+    Version: '1.10.12',
     CERTS: {
         //Change this for your own domain!
         path: 'demo.tektology.com'
@@ -676,16 +676,13 @@ function CompileDebugFiles(OnComplete) {
 
     var debugHTML = fs.readFileSync(path2debug + "src/debug.html", 'utf8');
     const clientjs = fs.readFileSync(path2debug + "src/client.js", 'utf8');
-    const debugCSS = fs.readFileSync(path2debug + "src/debug.css", 'utf8');
-
+ 
     const HelpDisplayHTML = fs.readFileSync(path2debug + "src/HelpDisplay.html", 'utf8');
 
 
     debugHTML = debugHTML.replace('/* SERVER REPLACES HelpDisplay */', HelpDisplayHTML);
 
-
-
-    debugHTML = debugHTML.replace('/* SERVER REPLACES STYLES */', debugCSS);
+    
     debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
 
 

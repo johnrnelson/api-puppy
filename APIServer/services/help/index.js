@@ -80,6 +80,37 @@ const topics = {
                 });
             }
         });//End reading file...
+    },
+    //get the actual sample file...
+    'debug-code-fetch': function (RequestData, OnComplete) {
+
+        const fs = require('fs');
+        const path = require('path');
+
+        /* 
+            Make sure there is not funky monkey going on with their request!!! 
+
+            This means all files must go in the debug/src folder!!!!
+        */
+        const filepath = path.basename(RequestData.filepath);
+
+        const examplesFilePath = path.join(SERVER.RootFolder, "debug", "src", filepath);
+ 
+
+        fs.readFile(examplesFilePath, 'utf8', function (err, data) {
+            if (err) {
+                debugger;              
+                OnComplete(null, {
+                    path: examplesFilePath,
+                    err: err.message,
+                    debug: RequestData
+                });
+            } else {
+                OnComplete(null, {
+                    body: data,
+                });
+            }
+        });//End reading file...
     }
 };
 
