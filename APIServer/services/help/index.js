@@ -94,12 +94,12 @@ const topics = {
         */
         const filepath = path.basename(RequestData.filepath);
 
-        const examplesFilePath = path.join(SERVER.RootFolder, "debug", "src", filepath);
- 
+        const examplesFilePath = path.join(SERVER.RootFolder, "/../", "docs", "debug", "src", filepath);
+
 
         fs.readFile(examplesFilePath, 'utf8', function (err, data) {
             if (err) {
-                debugger;              
+                debugger;
                 OnComplete(null, {
                     path: examplesFilePath,
                     err: err.message,

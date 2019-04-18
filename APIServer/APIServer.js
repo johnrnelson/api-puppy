@@ -198,13 +198,13 @@ const IPC = {
             the main thread which we need to service the api requests other users
             make on the server...
         */
-        fs.readFile(__dirname + "/debug/min/debug.html", "utf8", function (err, debugHTML) {
+        fs.readFile(__dirname + "/../docs/debug/min/debug.html", "utf8", function (err, debugHTML) {
             if (err) {
                 SendError('debug.html');
 
             } else {
 
-                fs.readFile(__dirname + "/debug/API_HELP.json", "utf8", function (err, API_HELP) {
+                fs.readFile(__dirname + "/../docs/debug/API_HELP.json", "utf8", function (err, API_HELP) {
                     if (err) {
                         SendError('API_HELP.json');
 
@@ -672,13 +672,13 @@ window.debugdata = {
 */
 function CompileDebugFiles(OnComplete) {
 
-    const path2debug = __dirname + "/debug/";
+    const path2debug = __dirname + "/../docs/debug/";
 
     var debugHTML = fs.readFileSync(path2debug + "src/debug.html", 'utf8');
     const clientjs = fs.readFileSync(path2debug + "src/client.js", 'utf8');
- 
- 
-    
+
+
+
     debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
 
 
