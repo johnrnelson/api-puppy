@@ -1,10 +1,11 @@
 /*
     Simple SocketAPI code to handle the events form the socket...
 */
- 
+
 
 const SocketAPI = {
     MasterSocket: {
+        URL: false,
         //Make sure you overwrite the events in your own script!
         Events: {
             onmessage() {
@@ -17,16 +18,16 @@ const SocketAPI = {
         Connnect() {
             //
 
+            if (!SocketAPI.MasterSocket.URL) {
 
+                if (document.location.protocol == "https:") {
+                    SocketAPI.MasterSocket.URL = 'wss://' + document.location.hostname + ":" + document.location.port;
+                } else {
+                    SocketAPI.MasterSocket.URL = 'ws://' + document.location.hostname + ":" + document.location.port;
+                }
 
-            // WEBSOCKET
-            var SocketURL;
-            if (document.location.protocol == "https:") {
-                SocketURL = 'wss://' + document.location.hostname + ":" + document.location.port;
-            } else {
-                SocketURL = 'ws://' + document.location.hostname + ":" + document.location.port;
             }
-            SocketAPI.MasterSocket.WebSocketConnection = new WebSocket(SocketURL)
+            SocketAPI.MasterSocket.WebSocketConnection = new WebSocket(SocketAPI.MasterSocket.URL)
 
             SocketAPI.MasterSocket.WebSocketConnection.onerror = error => {
                 console.log(`WebSocket error: ${error}`)
