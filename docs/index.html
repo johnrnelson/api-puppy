@@ -43,6 +43,8 @@
     <h1>api-puppy</h1>
     <div>
         This is not another framework or library or even a template, it's just a demo!
+        <br>
+        A fun project to play with different ways to use Web APIs
     </div>
     <br>
 
@@ -62,13 +64,21 @@
 
         <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
 
-                    <div class="alert alert-success" role="alert">
-                        <div>DEMO Server</div>
+                    <div id="ServerStatus" class="alert alert-success" role="alert">
+                        <a href="https://demo.tektology.com" target="_blank">DEMO Server</a>
                         <div id="DisplayServerStatus">??</div>
-
+                        <div id="DisplayServerDate">??</div>
                     </div>
+
+
+                    <div id="SocketStatus" class="alert alert-success" role="alert">
+                            <div>Socket Status</div>
+                            <div id="Total Users">N/A</div>
+                            <div id="Last User">N/A</div>
+                        </div>
+
                 </div>
 
 
@@ -76,20 +86,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-                
-                <div class="col-sm-8">
+                <div class="col-sm-9">
 
 
                     <h3 id="ndxProjectDocumentation">Project Documentation</h3>

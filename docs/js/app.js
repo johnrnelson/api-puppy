@@ -60,7 +60,7 @@ const WebApp = {
         };
 
         xhttp.open(VERB, ROUTE, true);
-        
+
         // CORS stuff...       
         xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
@@ -107,54 +107,67 @@ const WebApp = {
         SocketAPI.MasterSocket.Connnect();
     }
 };
+const UIHelper = {
+    ShowServerStatus() {
 
+        const elServerStatus = document.getElementById('ServerStatus');
+
+        const elDisplayServerStatus = elServerStatus.querySelector('#DisplayServerStatus')
+        const elDisplayServerDate = elServerStatus.querySelector('#DisplayServerDate');
+
+
+        elDisplayServerStatus.innerHTML = "Checking...";
+
+
+
+        try {
+
+            WebApp.xhr('PUT', 'https://demo.tektology.com/', {
+                "service": "time"
+            }, function (ServerResponse) {
+                const dispServerTime = moment(ServerResponse.dt);
+                // elDisplayServerStatus.innerHTML = "" + dispServerTime + "";
+                elServerStatus.title = " Server Time : " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
+                elDisplayServerDate.innerHTML = dispServerTime.fromNow();
+                elDisplayServerStatus.innerHTML = `
+                    <span class="fas fa-thumbs-up"></span> It's UP!
+                `;
+                WebApp.OpenSocket();
+
+            }, function (ErrorInfo) {
+                console.warn("Error in request!");
+                console.info(ErrorInfo);
+                elDisplayServerStatus.innerHTML = `
+                    <span class="fas fa-thumbs-down"></span> It's down! :-(
+                `;
+
+            }, function (errOHMY) {
+                console.warn('EEEEE');
+                console.warn(errOHMY);
+                debugger;
+            });
+
+        } catch (errWTF) {
+            console.warn('ERROR');
+            console.warn(errWTF);
+        }
+
+    },
+    ShowSocketStatus(){
+        const elServerStatus = document.getElementById('SocketStatus');
+
+        const elDisplayServerStatus = elServerStatus.querySelector('#DisplayServerStatus')
+        const elDisplayServerDate = elServerStatus.querySelector('#DisplayServerDate');
+
+
+        elDisplayServerStatus.innerHTML = "Checking...";
+
+
+    }
+};
 window.onload = function () {
 
-
-
-    const elDisplayServerStatus = document.getElementById('DisplayServerStatus');
-
-
-    elDisplayServerStatus.innerHTML = "Checking...";
-
-
-
-
-
-
-    try {
-
-        WebApp.xhr('PUT', 'https://demo.tektology.com/', {
-            "service": "time"
-        }, function (ServerResponse) {
-            const dispServerTime = moment(ServerResponse.dt).format('dddd, MMMM Do YYYY, h:mm:ss a');
-            // elDisplayServerStatus.innerHTML = "" + dispServerTime + "";
-            elDisplayServerStatus.title = dispServerTime;
-            elDisplayServerStatus.innerHTML = `
-                <span class="fas fa-thumbs-up"></span> It's UP!
-            `;
-            WebApp.OpenSocket();
-
-        }, function (ErrorInfo) {
-            console.warn("Error in request!");
-            console.info(ErrorInfo);
-            elDisplayServerStatus.innerHTML = `
-                <span class="fas fa-thumbs-down"></span> It's down! :-(
-            `;
-         
-        }, function (errOHMY) {
-            console.warn('EEEEE');
-            console.warn(errOHMY);
-            debugger;
-        });
-
-    } catch (errWTF) {
-        console.warn('ERROR');
-        console.warn(errWTF);
-    }
-
-
-
-
+    UIHelper.ShowServerStatus();
+ 
 
 }
