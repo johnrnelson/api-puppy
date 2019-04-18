@@ -1,5 +1,6 @@
 # GitHub Hosted Files
-Dump your static files here. I mean it's free after all. :-)
+Check out [https://api-puppy.johnrnelson.com/](https://api-puppy.johnrnelson.com/) to see the files from 
+this folder in your browser.
 
 
 ## Thoughts
