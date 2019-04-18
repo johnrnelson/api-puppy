@@ -117,7 +117,7 @@ window.onload = function () {
 
     try {
 
-        WebApp.xhr('PUT', 'http://demo.tektology.com/', {
+        WebApp.xhr('PUT', 'https://demo.tektology.com/', {
             "service": "time"
         }, function (ServerResponse) {
             const dispServerTime = moment(ServerResponse.dt).format('dddd, MMMM Do YYYY, h:mm:ss a');
