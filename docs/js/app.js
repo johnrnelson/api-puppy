@@ -70,7 +70,7 @@ const WebApp = {
     },
     OpenSocket() {
 
-        SocketAPI.MasterSocket.URL = "ws://demo.tektology.com";
+        SocketAPI.MasterSocket.URL = "wss://demo.tektology.com";
         /*
             Overwrite the events to customize it for 
             this domain and this DEMO!
