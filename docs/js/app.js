@@ -9,6 +9,8 @@ const WebApp = {
     xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
 
         var xhttp = new XMLHttpRequest();
+
+
         xhttp.onreadystatechange = function () {
 
             if (this.readyState == 3) {
@@ -58,6 +60,11 @@ const WebApp = {
         };
 
         xhttp.open(VERB, ROUTE, true);
+        
+        // CORS stuff...       
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
 
         try {
             //Trying to trap the network errors?
