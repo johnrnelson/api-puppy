@@ -1,6 +1,5 @@
-<html>
-
-
+<!DOCTYPE html">
+<html lang="en-US">
 
 <head>
 
@@ -38,169 +37,217 @@
 </head>
 
 <body style="padding:20px;overflow:auto;">
+
+
+    <h1>api-puppy</h1>
     <div>
-        <h1>api-puppy</h1>
-        <div>
-            This is not another framework or library or even a template, it's just a demo!
+        This is not another framework or library or even a template, it's just a demo!
+    </div>
+    <br>
+
+    <nav>
+        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+
+            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                aria-controls="nav-home" aria-selected="true">Home</a>
+            <a class="nav-item nav-link" id="nav-faq-tab" data-toggle="tab" href="#nav-faq" role="tab"
+                aria-controls="nav-faq" aria-selected="false">FAQ</a>
+            <a class="nav-item nav-link" id="nav-codehelp-tab" data-toggle="tab" href="#nav-codehelp" role="tab"
+                aria-controls="nav-codehelp" aria-selected="false">Code Help</a>
+
         </div>
-        <br>
+    </nav>
+    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
 
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+            <div class="row">
+                <div class="col-sm-4">
 
-        <div class="row">
-            <div class="col-sm-2">
-                <a href="#FAQ">FAQ</a>
-                <br>
-                <a href="#APIServerHelp">API Server</a>
-                <br>
-                <a href="#APIServicesHelp">API Services</a>
-            </div>
-            <div class="col-sm-10">
-                <h3 id="ndxProjectDocumentation">Project Documentation</h3>
-                <div class="HelpText">
-                    <p>
-                        You are going to find bugs because this is just a DEMO! Lots of work
-                        needs to be done and things may or may not get worked on. Use Google
-                        Chrome and you will get less errors in the DEBU UI.
-                    </p>
+                    <div class="alert alert-success" role="alert">
 
-                    <p>
-                        Have fun with this code. <a href="https://github.com/johnrnelson/api-puppy"
-                            target="_blank">Clone the project</a> and host it yourself. It's easy to learn
-                        by breaking things and this is the project to do it in.
-                    </p>
-                    <p>
-
-                        A working server(<a href="https://demo.tektology.com/"
-                            target="_blank">https://demo.tektology.com/</a>) is up and running most of
-                        the time, but it's my server that I have to pay for so it may or may not be up at any given
-                        time.
-                    </p>
+                        <div class="row vertical-align">
+                            <div class="col-xs-1 text-center">
+                                <i class="fa fa-check fa-2x"></i>
+                            </div>
+                            <div class="col-xs-11">
+                                <strong>Success:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing
+                                elit. Vivamus augue eros, elementum sed scelerisque eget, rhoncus in orci.
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div id="FAQ" class="HelpText">
-                    <h3>FAQ</h3>
-                    <div>Frequently Asked Questions</div>
-                    <br>
-                    <div class="panel-group" id="faqAccordion">
-                        <div class="panel panel-default ">
+                <div class="col-sm-8">
 
-                            <div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse"
-                                data-parent="#faqAccordion" data-target="#question0">
-                                <h4 class="panel-title">
-                                    <a xxhref="#" class="ing">Is this yet another framework or library?</a>
-                                </h4>
 
-                            </div>
-                            <div id="question0" class="panel-collapse collapse" style="height: 0px;">
-                                <div class="panel-body">
-                                    <h5><span class="label label-primary">NO!</span></h5>
+                    <h3 id="ndxProjectDocumentation">Project Documentation</h3>
+                    <div class="HelpText">
+                        <p>
+                            You are going to find bugs because this is just a DEMO! Lots of work
+                            needs to be done and things may or may not get worked on. Use Google
+                            Chrome and you will get less errors in the DEBU UI.
+                        </p>
 
-                                    <p>
-                                        Absolutly not no please no not another framework or library!
-                                    </p>
-                                </div>
+                        <p>
+                            Have fun with this code. <a href="https://github.com/johnrnelson/api-puppy"
+                                target="_blank">Clone the project</a> and host it yourself. It's easy to learn
+                            by breaking things and this is the project to do it in.
+                        </p>
+                        <p>
+
+                            A working server(<a href="https://demo.tektology.com/"
+                                target="_blank">https://demo.tektology.com/</a>) is up and running most of
+                            the time, but it's my server that I have to pay for so it may or may not be up at any given
+                            time.
+                        </p>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="tab-pane fade" id="nav-faq" role="tabpanel" aria-labelledby="nav-faq-tab">
+
+            <div id="FAQ" class="HelpText">
+                <h3>FAQ</h3>
+                <div>Frequently Asked Questions</div>
+                <br>
+                <div class="panel-group" id="faqAccordion">
+                    <div class="panel panel-default ">
+
+                        <div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse"
+                            data-parent="#faqAccordion" data-target="#question0">
+                            <h4 class="panel-title">
+                                <a xxhref="#" class="ing">Is this yet another framework or library?</a>
+                            </h4>
+
+                        </div>
+                        <div id="question0" class="panel-collapse collapse" style="height: 0px;">
+                            <div class="panel-body">
+                                <h5><span class="label label-primary">NO!</span></h5>
+
+                                <p>
+                                    Absolutly not no please no not another framework or library!
+                                </p>
                             </div>
                         </div>
-                        <div class="panel panel-default ">
-                            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
-                                data-parent="#faqAccordion" data-target="#question1">
-                                <h4 class="panel-title">
-                                    <a xxhref="#" class="ing">Why not just use express and other 3rd party
-                                        middleware?</a>
-                                </h4>
+                    </div>
+                    <div class="panel panel-default ">
+                        <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
+                            data-parent="#faqAccordion" data-target="#question1">
+                            <h4 class="panel-title">
+                                <a xxhref="#" class="ing">Why not just use express and other 3rd party
+                                    middleware?</a>
+                            </h4>
 
-                            </div>
-                            <div id="question1" class="panel-collapse collapse" style="height: 0px;">
-                                <div class="panel-body">
-                                    <h5><span class="label label-primary">Why?</span></h5>
+                        </div>
+                        <div id="question1" class="panel-collapse collapse" style="height: 0px;">
+                            <div class="panel-body">
+                                <h5><span class="label label-primary">Why?</span></h5>
 
-                                    <p>Why should I add extra code thats not needed? Because it's easier? I think not.
-                                        :-)</p>
-                                    <p>
+                                <p>Why should I add extra code thats not needed? Because it's easier? I think
+                                    not.
+                                    :-)</p>
+                                <p>
 
-                                        The best part about this whole project is the lack of NPM or 3rd party
-                                        influence. This is pure JavaScript, Node, and of course some HTML and
-                                        CSS for the debugger thing.
-                                    </p>
+                                    The best part about this whole project is the lack of NPM or 3rd party
+                                    influence. This is pure JavaScript, Node, and of course some HTML and
+                                    CSS for the debugger thing.
+                                </p>
 
-                                </div>
                             </div>
                         </div>
-                        <div class="panel panel-default ">
-                            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
-                                data-parent="#faqAccordion" data-target="#question2">
-                                <h4 class="panel-title">
-                                    <a xxhref="#" class="ing">Your code looks like spaghetti cooked by a chaotic evil
-                                        newbie!</a>
-                                </h4>
+                    </div>
+                    <div class="panel panel-default ">
+                        <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
+                            data-parent="#faqAccordion" data-target="#question2">
+                            <h4 class="panel-title">
+                                <a xxhref="#" class="ing">Your code looks like spaghetti cooked by a chaotic
+                                    evil
+                                    newbie!</a>
+                            </h4>
 
-                            </div>
-                            <div id="question2" class="panel-collapse collapse" style="height: 0px;">
-                                <div class="panel-body">
-                                    <h5><span class="label label-primary">Yep</span></h5>
+                        </div>
+                        <div id="question2" class="panel-collapse collapse" style="height: 0px;">
+                            <div class="panel-body">
+                                <h5><span class="label label-primary">Yep</span></h5>
 
-                                    <p>I'm just having fun here and trying to reach the lowest level of user.
-                                        But feel free to fork, clone, or peel off what ya want and do a better job. I'd
-                                        love to see other peoples ideas of improvement. </p>
-                                </div>
+                                <p>I'm just having fun here and trying to reach the lowest level of user.
+                                    But feel free to fork, clone, or peel off what ya want and do a better job.
+                                    I'd
+                                    love to see other peoples ideas of improvement. </p>
                             </div>
                         </div>
-                        <div class="panel panel-default ">
-                            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
-                                data-parent="#faqAccordion" data-target="#question3">
-                                <h4 class="panel-title">
-                                    <a xxhref="#" class="ing">Why use the name "api-puppy"?</a>
-                                </h4>
+                    </div>
+                    <div class="panel panel-default ">
+                        <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
+                            data-parent="#faqAccordion" data-target="#question3">
+                            <h4 class="panel-title">
+                                <a xxhref="#" class="ing">Why use the name "api-puppy"?</a>
+                            </h4>
 
-                            </div>
-                            <div id="question3" class="panel-collapse collapse" style="height: 0px;">
-                                <div class="panel-body">
-                                    <h5><span class="label label-primary">Everyone loves puppies!</span></h5>
+                        </div>
+                        <div id="question3" class="panel-collapse collapse" style="height: 0px;">
+                            <div class="panel-body">
+                                <h5><span class="label label-primary">Everyone loves puppies!</span></h5>
 
-                                    <p> I wanted to choose a name that nobody could hate. I feel like tech these days
-                                        use
-                                        marketing way too much but I can't beat them so I join them. A cheap jedi mind
-                                        trick to ensure that the name will most likely be at least liked if not loved
-                                        and
-                                        who does not love a puppy?</p>
-                                </div>
+                                <p> I wanted to choose a name that nobody could hate. I feel like tech these
+                                    days
+                                    use
+                                    marketing way too much but I can't beat them so I join them. A cheap jedi
+                                    mind
+                                    trick to ensure that the name will most likely be at least liked if not
+                                    loved
+                                    and
+                                    who does not love a puppy?</p>
                             </div>
                         </div>
-
                     </div>
 
                 </div>
-                <div id="APIServerHelp" class="HelpText">
-                    <h3>APIServer.js</h3>
-                    <p>
-                        The <a href="https://github.com/johnrnelson/api-puppy/blob/master/APIServer/APIServer.js"
-                            target="_blank">APIServer.js</a> file
-                        is the master script to run on your local machine to play with the code.
-                    </p>
-                    <p>
-                        Change the port number and host name (if you plan on using https) then open your browser
-                        to the address listed in the console. By default, it's
-                        <a href="http://0.0.0.0:9080" target="_blank">http://0.0.0.0:9080</a>
-                    </p>
-                </div>
-                <div id="APIServicesHelp" class="HelpText">
-                    <h3>API Services</h3>
-                    <p>
-                        It's easy to add a new service.
-                    </p>
-                    <p>
-                        The services folder is where you put your new folder that is, in fact, your service. An easy way
-                        to get started is to just copy the default folder and start from there.
-                    </p>
-                </div>
 
             </div>
+
+
+
         </div>
+        <div class="tab-pane fade" id="nav-codehelp" role="tabpanel" aria-labelledby="nav-codehelp-tab">
 
 
 
 
+            <div id="APIServerHelp" class="HelpText">
+                <h3>APIServer.js</h3>
+                <p>
+                    The <a href="https://github.com/johnrnelson/api-puppy/blob/master/APIServer/APIServer.js"
+                        target="_blank">APIServer.js</a> file
+                    is the master script to run on your local machine to play with the code.
+                </p>
+                <p>
+                    Change the port number and host name (if you plan on using https) then open your browser
+                    to the address listed in the console. By default, it's
+                    <a href="http://0.0.0.0:9080" target="_blank">http://0.0.0.0:9080</a>
+                </p>
+            </div>
+            <div id="APIServicesHelp" class="HelpText">
+                <h3>API Services</h3>
+                <p>
+                    It's easy to add a new service.
+                </p>
+                <p>
+                    The services folder is where you put your new folder that is, in fact, your service. An easy
+                    way
+                    to get started is to just copy the default folder and start from there.
+                </p>
+            </div>
 
+
+        </div>
     </div>
+
+
 </body>
 
 </html>

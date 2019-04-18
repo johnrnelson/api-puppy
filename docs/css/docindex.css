@@ -2,6 +2,12 @@
 
 body {
     background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, #E0E0E0 100%);
+    /* position: absolute;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    border:solid 2px blue; */
 }
 
 
@@ -11,4 +17,10 @@ body {
     text-decoration: none;
     cursor: hand;
 
+}
+
+nav .nav-item.active {
+    background: -webkit-radial-gradient(center, ellipse cover, rgb(228, 228, 228) 5%, transparent 80%) !important;
+ 
+    color: black;
 }
