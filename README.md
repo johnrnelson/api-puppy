@@ -6,13 +6,6 @@ Check out the [working server](https://demo.tektology.com/) to see the code in a
 [read more](https://api-puppy.johnrnelson.com/) about what this is what why you are looking at it.
 
 
-## Index 
-- [Installing](Notes/installing.md) 
-- [Notes](Notes)  
-- [ToDo](#todo) 
-- [Helpful Links](Notes/links.md)
-
-
 #### Project Goals
 Why does this project exist? Why are you looking at it?
 
