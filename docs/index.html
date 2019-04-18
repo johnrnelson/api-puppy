@@ -1,12 +1,10 @@
 <html>
-<style>
-    body {
-        padding: 20px;
-    }
-</style>
+
+
 
 <head>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>api-puppy Documentation Site</title>
 
@@ -32,41 +30,156 @@
     <!-- Latest compiled JavaScript -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+    <script src="debug/src/SocketAPI.js"></script>
+
+    <link rel="stylesheet" href="debug/src/debug.css">
+    <link rel="stylesheet" href="css/docindex.css">
+
 </head>
 
-<body>
+<body style="padding:20px;overflow:auto;">
     <div>
-        <h1>api-puppy Project Documentation</h1>
-        <p>
-            Use the github project and demo site to test the code, then
-            clone the project and test it on your own box. Please! :-)
-        </p>
-
+        <h1>api-puppy</h1>
         <div>
-            <div class="card-deck">
+            This is not another framework or library or even a template, it's just a demo!
+        </div>
+        <br>
 
-                <div class="card bg-lightf">
-                    <div class="card-body text-center">
-                        <p class="card-text">Need to work on this!</p>
-                        <div>
-                            Ok check back soon. :-)
-                        </div>
-                    </div>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="#FAQ">FAQ</a>
+                <br>
+                <a href="#APIServerHelp">APIServer</a>
+            </div>
+            <div class="col-sm-10">
+                <h3 id="ndxProjectDocumentation">Project Documentation</h3>
+                <div class="HelpText">
+                    <p>
+                        You are going to find bugs because this is just a DEMO! Lots of work
+                        needs to be done and things may or may not get worked on. Use Google
+                        Chrome and you will get less errors in the DEBU UI.
+                    </p>
+
+                    <p>
+                        Have fun with this code. Clone the project and host it yourself. It's easy to learn
+                        by breaking things and this is the project to do it in.
+                    </p>
                 </div>
+                <div id="FAQ" class="HelpText">
+                    <h3>FAQ</h3>
+                    <div>Frequently Asked Questions</div>
+                    <br>
+                    <div class="panel-group" id="faqAccordion">
+                        <div class="panel panel-default ">
 
-                <div class="card bg-light">
-                    <div class="card-body text-center">
-                        <p class="card-text">
+                            <div class="panel-heading accordion-toggle question-toggle collapsed" data-toggle="collapse"
+                                data-parent="#faqAccordion" data-target="#question0">
+                                <h4 class="panel-title">
+                                    <a href="#" class="ing">Is this yet another framework or library?</a>
+                                </h4>
 
-                            This is the next thing to be fixed! :-)
+                            </div>
+                            <div id="question0" class="panel-collapse collapse" style="height: 0px;">
+                                <div class="panel-body">
+                                    <h5><span class="label label-primary">NO!</span></h5>
 
-                        </p>
+                                    <p>
+                                        Absolutly not no please no not another framework or library!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default ">
+                            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
+                                data-parent="#faqAccordion" data-target="#question1">
+                                <h4 class="panel-title">
+                                    <a href="#" class="ing">Why not just use express and other 3rd party middleware?</a>
+                                </h4>
+
+                            </div>
+                            <div id="question1" class="panel-collapse collapse" style="height: 0px;">
+                                <div class="panel-body">
+                                    <h5><span class="label label-primary">Why?</span></h5>
+
+                                    <p>Why should I add extra code thats not needed? Because it's easier? I think not.
+                                        :-)</p>
+                                    <p>
+
+                                        The best part about this whole project is the lack of NPM or 3rd party
+                                        influence. This is pure JavaScript, Node, and of course some HTML and
+                                        CSS for the debugger thing.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default ">
+                            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
+                                data-parent="#faqAccordion" data-target="#question2">
+                                <h4 class="panel-title">
+                                    <a href="#" class="ing">Your code looks like spaghetti cooked by a chaotic evil
+                                        newbie!</a>
+                                </h4>
+
+                            </div>
+                            <div id="question2" class="panel-collapse collapse" style="height: 0px;">
+                                <div class="panel-body">
+                                    <h5><span class="label label-primary">Yep</span></h5>
+
+                                    <p>I'm just having fun here and trying to reach the lowest level of user.
+                                        But feel free to fork, clone, or peel off what ya want and do a better job. I'd
+                                        love to see other peoples ideas of improvement. </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default ">
+                            <div class="panel-heading accordion-toggle collapsed question-toggle" data-toggle="collapse"
+                                data-parent="#faqAccordion" data-target="#question3">
+                                <h4 class="panel-title">
+                                    <a href="#" class="ing">Why use the name "api-puppy"?</a>
+                                </h4>
+
+                            </div>
+                            <div id="question3" class="panel-collapse collapse" style="height: 0px;">
+                                <div class="panel-body">
+                                    <h5><span class="label label-primary">Answer</span></h5>
+
+                                    <p> I wanted to choose a name that nobody could hate. I feel like tech these days
+                                        use
+                                        marketing way too much but I can't beat them so I join them. A cheap jedi mind
+                                        trick to ensure that the name will most likely be at least liked if not loved
+                                        and
+                                        who does not love a puppy?</p>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
+
+                </div>
+                <div id="APIServerHelp" class="HelpText">
+                    <h3>APIServer.js</h3>
+                    <p>
+                        The <a href="https://github.com/johnrnelson/api-puppy/blob/master/APIServer/APIServer.js"
+                            target="_blank">APIServer.js</a> file
+                        is the master script to run on your local machine to play with the code.
+                    </p>
+                    <p>
+                        Change the port number and host name (if you plan on using https) then open your browser
+                        to the address listed in the console. By default, it's 
+                        <a href="http://0.0.0.0:9080" target="_blank">http://0.0.0.0:9080</a>
+                    </p>
                 </div>
 
             </div>
-
         </div>
+
+
+
+
+
+
 
         <br><br>
 

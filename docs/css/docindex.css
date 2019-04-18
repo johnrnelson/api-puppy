@@ -1,0 +1,11 @@
+/* grr */
+
+#FAQ .panel-group{
+    padding-bottom: 30px;
+}
+#FAQ .panel-title a {
+    color:purple;
+    font-size:18px;
+    text-decoration: none;
+ 
+}

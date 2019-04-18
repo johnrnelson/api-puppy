@@ -17,43 +17,13 @@ Why does this project exist? Why are you looking at it?
 - [x] Learn about technology fundamentals
 - [x] Have a lot of fun!
 - [ ] Refactor the code to please the puritist?
-
-## FAQ
-**Is this yet another framework or library?**
-
-**NO!** Absolutly not no please no not another framework or library!
-
-**Why not just use express and other 3rd party middleware?**
-
-Why should I? Because it's easier? I think not. :smiley:
-
-The best part about this whole project is the lack of NPM or 3rd party 
-influence. This is pure JavaScript, Node, and of course some HTML and 
-CSS for the debugger thing. 
-
-**Your code looks like spaghetti cooked by a chaotic evil newbie!**
-
-Yeah I'm just having fun here and trying to reach the lowest level of user.
-But feel free to fork, clone, or peel off what ya want and do a better job. I'd 
-love to see other peoples ideas of improvement. 
-
-**Why use the name "api-puppy"?**
-
-I wanted to choose a name that nobody could hate. I feel like tech these days use 
-marketing way too much but I can't beat them so I join them. A cheap jedi mind 
-trick to ensure that the name will most likely be at least liked if not loved and 
-who does not love a puppy?
-
-
-
+ 
 
 ## TODO
 This is a quick running *TODO* list of items that should be moved to the github issues list. 
 However it would seem as only the people actually using the code are the ones doing the 
 todo list. :-)
 
-- [x] Web Sockets [check out](https://github.com/websockets/ws)
-- [ ] Spice up the UI. It needs a lot of help! [metro](https://metroui.org.ua/)
 - [ ] Better logging!
 - [ ] Better comments, notes, and documentation!
 

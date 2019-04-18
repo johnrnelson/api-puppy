@@ -9,6 +9,10 @@
 
     Keep it as simple as possible. Think before
     you "npm install" anything! Please! lol  :-)  
+
+    The only NPM at this time is "ws" @ https://github.com/websockets/ws 
+
+    
 */
 
 
