@@ -1,5 +1,9 @@
 /* grr */
 
+body {
+    background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, #E0E0E0 100%);    
+}
+
 #FAQ .panel-group{
     padding-bottom: 30px;
 }
