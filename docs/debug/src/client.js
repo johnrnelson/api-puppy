@@ -4,7 +4,7 @@
     Adding in whatever you can to help the user actually use the API!
 */
 
-const DebugUI = {
+const WebApp = {
     //Quick and easy way to get data from our api...
     Fetch(data = {}) {
         const url = document.URL + '';
@@ -26,6 +26,40 @@ const DebugUI = {
         }).then(response => response.json()); // parses JSON response into native Javascript objects 
 
     },
+    GetHelpFile(FilePath, OnFetch) {
+        // WebApp.GetHelpFile('',function(){});
+
+        WebApp.Fetch({
+            service: 'help',
+            data: {
+                topic: 'debug-code-fetch',
+                filepath: FilePath
+            }
+        }).then(data => {
+            if (data.err) {
+                console.warn(data.err);
+            } else {
+                OnFetch(data);
+            }
+
+
+        }) // JSON-string from `response.json()` call
+            .catch(error => {
+                console.warn('Error!');
+                console.error(error);
+                // debugger;
+            });
+
+    }
+};
+
+
+
+/*
+    Wrap up what ya want to make dealing with the UI as easy 
+    as possible...
+*/
+const DebugUI = {
 
 
     /*
@@ -88,7 +122,7 @@ const DebugUI = {
 
 
 
-        DebugUI.Fetch({
+        WebApp.Fetch({
             service: 'help',
             data: {
                 topic: 'sample-code-list',
@@ -98,25 +132,25 @@ const DebugUI = {
         }).then(data => {
             console.log('Set default examples---...', data);
 
-            
+
             for (let index = 0; index < data.samples.length; index++) {
                 const sample = data.samples[index];
 
                 //Set Default...
-                if(index==0){
-                    DebugUI.SelectSampleCodeOption(sample);                    
+                if (index == 0) {
+                    DebugUI.SelectSampleCodeOption(sample);
                 }
 
 
-                const optUL = document.createElement('li'); 
+                const optUL = document.createElement('li');
                 optUL.SampleName = sample;
                 optUL.onclick = function () {
                     DebugUI.SelectSampleCodeOption(this.SampleName);
                 };
                 optUL.innerHTML = '<li><a href="#">' + sample + '</a></li>';
-                DebugSampleList_UL.appendChild(optUL);                 
+                DebugSampleList_UL.appendChild(optUL);
             }
- 
+
 
         }) // JSON-string from `response.json()` call
             .catch(error => {
@@ -135,14 +169,14 @@ const DebugUI = {
         const displayDateMod = document.getElementById('Date_Downloaded');
         displayDateMod.innerHTML = "";
 
-       
+
         //Quick clear the old stuff...
         DebugSampleList_UL.innerHTML = "";
-    
+
         DebugSampleList_BTN.innerHTML = SampleCode;
 
- 
-        DebugUI.Fetch({
+
+        WebApp.Fetch({
             service: 'help',
             data: {
                 topic: 'sample-code-fetch',
@@ -189,12 +223,12 @@ const DebugUI = {
             DebugVerbList_UL.innerHTML = "";
 
             const dbSidebar = document.getElementById('debugger-sidbar');
- 
- 
+
+
             for (var n in debugdata.apidata) {
 
                 const namespaceData = debugdata.apidata[n];
- 
+
                 const optUL = document.createElement('li');
                 optUL.RecordData = namespaceData;
                 optUL.ServiceName = n;
@@ -208,7 +242,7 @@ const DebugUI = {
 
             //Use the default and set the edtor....
             DebugUI.SelectServiceOption('time');
-            
+
 
 
         } catch (errFillSideBar) {
@@ -228,7 +262,7 @@ const DebugUI = {
         });
 
     },
- 
+
     //Use the HTTP to request the data...
     MakeHTTP_PUT_Request() {
 
@@ -240,7 +274,7 @@ const DebugUI = {
 
 
         if (JSONPayload) {
-            DebugUI.Fetch(JSONPayload)
+            WebApp.Fetch(JSONPayload)
                 .then(data => {
 
                     const resultJSONText = JSON.stringify(data, null, "\t");
@@ -484,387 +518,28 @@ print(response_data)
 };
 
 
-/*
-    Easy functions to help us deal with the ever growing UI... :-)
-*/
-const UIHelper = {
-    QueryStringBuilder(JSONData) {
-
-        //Simple function to serialize the json into array for query string...
-        function DigestQS(Prefix, QSObject, QSArray) {
-
-            // debugger;
-
-            for (var o in QSObject) {
-                if (typeof (QSObject[o]) == "object") {
-                    if (Prefix) {
-                        DigestQS(Prefix + o, QSObject[o], QSArray);
-                    } else {
-                        DigestQS(o + ".", QSObject[o], QSArray);
-                    }
-
-                } else {
-                    if (QSObject[o] != "") {
-                        if (Prefix) {
-                            QSArray.push(Prefix + o + "=" + QSObject[o]);
-                        } else {
-                            QSArray.push(o + "=" + QSObject[o]);
-
-                        }
-
-                    }
-
-                }
-
-
-            }
-        }
-
-        try {
-            if (typeof (JSONData) == "string") {
-                if (JSONData.length == 0) {
-                    DebugUI.SetTargetURI("**EMPTY**");
-                    return;
-                }
-                JSONData = JSON.parse(JSONData);;
-            }
-
-
-            if (JSONData.service) {
-
-                var selectedService = JSONData.service;
-                delete JSONData["service"];
-
-                const basicOptions = [];
-
-
-                DigestQS("", JSONData, basicOptions);
-
-
-                // if (basicOptions.length) {
-                // }
-                DebugUI.SetTargetURI('/' + selectedService + '?' + basicOptions.join('&'));
-
-            } else {
-                DebugUI.SetTargetURI("**ERROR**");
-
-            }
-
-        } catch (errBadJSON) {
-            console.warn('Error In JSON!', errBadJSON);
-            DebugUI.SetTargetURI("** bad json **");
-        }
-
-    },
-    Ace: {
-        AceEditor: null, //Set this in code when you are ready...
-        AceDisplayRsults: null, //Set this in code when you are ready...        
-        SetCompleters(Editor2Complete) {
-
-
-            var langTools = ace.require("ace/ext/language_tools");
-
-            Editor2Complete.Completer = {
-                getCompletions: (editor, session, caretPosition2d, prefix, callback) => {
-
-                    var currline = editor.getSelectionRange().start.row;
-                    var content = editor.session.getLine(currline);
-
-
-                    const WordList = [];
-                    WordList.push({
-                        caption: 'service',
-                        meta: '',
-                        score: 10,
-                    });
-
-                    WordList.push({
-                        caption: 'FunStuff',
-                        meta: '',
-                        score: 10,
-                    });
-                    WordList.push({
-                        caption: 'demo',
-                        meta: '',
-                        score: 30,
-                    });
-
-
-                    callback(null, WordList.map((s) => {
-                        return {
-                            // name: s.caption,
-                            value: s.caption,
-                            score: 100,
-                            meta: s.meta,
-                        }
-                    }))
-                },
-            }
-            langTools.addCompleter(Editor2Complete.Completer);
-        },
-
-        //Make sure we deal with change to the editor...
-        HookEvents(Editor2Hook) {
-            Editor2Hook.getSession().on('change', function (delta) {
-                const editorJSON = Editor2Hook.getValue();
-                UIHelper.QueryStringBuilder(editorJSON);
-            });
-        },
-
-        //Setup some defaults...
-        SetupAceEditorDefaults(ParentHTMLTagID) {
-
-            //Ace Editor is awesome! 
-            var aceEditor = ace.edit(ParentHTMLTagID);
-
-            // Go here for more options... https://github.com/ajaxorg/ace/wiki/Configuring-Ace
-            aceEditor.setOption("mode", "ace/mode/json");
-            aceEditor.setOption("autoScrollEditorIntoView", true);
-            aceEditor.setOption("showPrintMargin", false);
-            aceEditor.setOption("fontSize", 15);
-            aceEditor.$blockScrolling = Infinity;
-
-            return aceEditor;
-        },
-
-        BuildAceControls() {
-
-
-            UIHelper.Ace.AceEditor = UIHelper.Ace.SetupAceEditorDefaults('PayloadEditor');
-            UIHelper.Ace.AceDisplayRsults = UIHelper.Ace.SetupAceEditorDefaults('APIDebugResults');
-
-            //Make sure display is read only!
-            UIHelper.Ace.AceDisplayRsults.setReadOnly(true);
-
-            UIHelper.Ace.AceDisplayRsults.setTheme("ace/theme/monokai");
-
-            //Only hook the actual editor!!!!!
-            UIHelper.Ace.HookEvents(UIHelper.Ace.AceEditor);
-
-
-
-            //Add your own stuff to the drop downs...
-            UIHelper.Ace.SetCompleters(UIHelper.Ace.AceEditor);
-
-
-            UIHelper.Ace.AceEditor.setOptions({
-                enableBasicAutocompletion: UIHelper.Ace.AceEditor.Completer,
-                enableLiveAutocompletion: true,
-                enableSnippets: true,
-            });
-
-
-        }
-    },
-
-    //Simple show tab...
-    ShowTab(Tab2Show) {
-        var TabElement;
-        var BTNElement;
-
-        if (typeof (Tab2Show) == "string") {
-            TabElement = document.getElementById(Tab2Show);
-            BTNElement = document.getElementById(Tab2Show + "-BTN");
-        } else {
-            console.warn('ShowTab Error!', '"Tab2Show" must be a string!');
-            debugger;
-        }
-
-        if (!UIHelper.ActiveTab) {
-            UIHelper.ActiveTab = TabElement;
-            UIHelper.ActiveTabButton = BTNElement;
-            // UIHelper.ActiveTabButton.style.backgroundColor = "blue";
-            // UIHelper.ActiveTabButton.addCl('selected')
-            UIHelper.ActiveTabButton.classList.add("selected-maintab");
-        } else {
-            UIHelper.ActiveTab.style.display = "none";
-            UIHelper.ActiveTab.style.display = "none";
-            UIHelper.ActiveTab = TabElement;
-            // UIHelper.ActiveTabButton.style.backgroundColor = "transparent";
-            UIHelper.ActiveTabButton.classList.remove("selected-maintab");
-
-
-
-            UIHelper.ActiveTabButton = BTNElement;
-            // UIHelper.ActiveTabButton.style.backgroundColor = "blue";
-            UIHelper.ActiveTabButton.classList.add("selected-maintab");
-        }
-
-        UIHelper.ActiveTab.style.display = "block";
-
-    },
-
-    Logger: {
-        Clear() {
-
-            Metro.dialog.create({
-                title: "Clear the history?",
-                content: "<div>Are you sure you want to do this?</div>",
-                actions: [
-                    {
-                        caption: "Agree",
-                        cls: "js-dialog-close alert",
-                        onclick: function () {
-                            const tblBody = document.getElementById('HistoryLoggerTable');
-                            tblBody.innerHTML = "";
-                        }
-                    },
-                    {
-                        caption: "Disagree",
-                        cls: "js-dialog-close",
-                        onclick: function () {
-                            console.info("History was not deleted!");
-                        }
-                    }
-                ]
-            });
-
-
-        },
-        Add(LogMSG) {
-
-
-            try {
-                if (!LogMSG.Type) {
-                    LogMSG.Type = 0;
-                }
-
-                function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
-                    const newCell = document.createElement('td');
-                    newCell.title = Title;
-                    newCell.className = ClassName;
-                    newCell.innerHTML = HTMLValue;
-                    newCell.vAlign = "top";
-                    newCell.align = "left";
-
-                    HostRow.appendChild(newCell)
-                    // return newCell
-                }
-
-                if (!LogMSG.DT) {
-                    LogMSG.DT = new Date()
-                }
-
-                const displayDT = moment(LogMSG.DT);
-                var dispLogType;
-                if (LogMSG.Type < 0) {
-                    dispLogType = '<i class="fas fa-globe fa-lg"></i>';
-                }
-                if (LogMSG.Type == 0) {
-                    dispLogType = '<i class="fas fa-disk fa-lg"></i>';
-                }
-                if (LogMSG.Type > 0) {
-                    dispLogType = '<i class="fas fa-file fa-lg"></i>';
-                }
-
-                if (LogMSG.Type == 200) {
-                    dispLogType = '<i class="fas fa-globe-americas fa-lg"></i>';
-                }
-
-                if (LogMSG.Type == 411) {
-                    dispLogType = '<i class="fas fa-info-circle fa-lg"></i>';
-                }
-
-                if (LogMSG.Type == 466) {
-                    dispLogType = '<i class="fas fa-share-alt fa-lg"></i>';
-                }
-
-                if (LogMSG.Type == 707) {
-                    dispLogType = '<i class="far fa-eye fa-lg"></i>';
-                }
-
-
-
-                const tblBody = document.getElementById('HistoryLoggerTable');
-
-                const tr = document.createElement('tr');
-
-                // debugger;
-
-                // CellBuider(tr, "", "TID Help", "", LogMSG.TID);
-                CellBuider(tr, "", "Type Of Log Item [" + LogMSG.Type + "]", "", dispLogType);
-                CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
-                CellBuider(tr, "", "", "", LogMSG.Topic);
-                CellBuider(tr, "", "", "", LogMSG.Source);
-                CellBuider(tr, "", "", "", LogMSG.Body);
-
-                tblBody.appendChild(tr);
-            } catch (errAddLogItem) {
-                alert('Error adding to the log!!!\r\n' + errAddLogItem.message);
-            }
-
-
-        }
-    },
-    GetHelpFile(FilePath, OnFetch) {
-        // UIHelper.GetHelpFile('',function(){});
-
-        DebugUI.Fetch({
-            service: 'help',
-            data: {
-                topic: 'debug-code-fetch',
-                filepath: FilePath
-            }
-        }).then(data => {
-            if (data.err) {
-                console.warn(data.err);
-            } else {
-                OnFetch(data);
-            }
-
-
-        }) // JSON-string from `response.json()` call
-            .catch(error => {
-                console.warn('Error!');
-                console.error(error);
-                // debugger;
-            });
-
-    }
-
-};
 
 
 
 /* 
-    Go grab our style using the API to show an example of
+    Go grab our styles using the API to show an example of
     another way to use it. Of course you don't want to 
     actually get your CSS files this way, but it's yet
     another example of how to use a web API...
 */
-UIHelper.GetHelpFile('debug.css', function (filecontents) {
+WebApp.GetHelpFile('debug.css', function (filecontents) {
     const CSSFile = document.createElement("style");
     CSSFile.type = "text/css";
     CSSFile.innerHTML = filecontents.body;
     document.body.appendChild(CSSFile);
-    UIHelper.Logger.Add({
-        TID: 0,
-        Type: 707,
-        DT: new Date(),
-        Topic: "UI Styles",
-        Source: "Browser",
-        Body: "The extra stryles [<b>debug.css</b>] have been set via the API. :-) ",
-    });
 });
 
 
-UIHelper.GetHelpFile('HelpDisplay.html', function (filecontents) {
-    const MainDisplay = document.getElementById("TabMain");
-
-    MainDisplay.innerHTML = filecontents.body;
-
-    UIHelper.Logger.Add({
-        TID: 0,
-        Type: 707,
-        DT: new Date(),
-        Topic: "UI Set Main Help",
-        Source: "Browser",
-        Body: "Basic help HTML has been set!",
-    });
-
+//Stuff our help display since it's so big and the least dynamic.. :-)
+WebApp.GetHelpFile('HelpDisplay.html', function (filecontents) {
+    document.getElementById("TabMain").innerHTML = filecontents.body;
     //Now show the sys info in the main display...
     DebugUI.SetSysInfo();
-
 });
 
 
@@ -875,130 +550,135 @@ UIHelper.GetHelpFile('HelpDisplay.html', function (filecontents) {
 */
 window.onload = function () {
 
-
-
-
-
-
-
-
-
-    UIHelper.Logger.Add({
-        TID: 0,
-        Type: 707,
-        DT: new Date(),
-        Topic: "UI Status",
-        Source: "Browser",
-        Body: "The browser UI should be loaded and ready to go!",
-    });
-
-
-    /*
-        Use the help service to get the Socket API code. 
-        It's just another way to use the API and shows
-        how you can do this own a seperate domain and 
-        still get the updates...
+    /* 
+        Extra Helper code...
     */
-    UIHelper.GetHelpFile('SocketAPI.js', function (filecontents) {
-        const srcSocketAPI = document.createElement("script");
-        srcSocketAPI.innerHTML = filecontents.body;
-        document.body.appendChild(srcSocketAPI);
+    WebApp.GetHelpFile('UIHelper.js', function (filecontents) {
+
+        // debugger;
+        window.eval(filecontents.body);
+
+        UIHelper.Logger.Add({
+            TID: 0,
+            Type: 707,
+            DT: new Date(),
+            Topic: "UI Help",
+            Source: "Browser",
+            Body: "The JavaScript UI helper has been loaded and we ready to go!",
+        });
+
+
+
+
+
+        //Setup our UI parts...
+        DebugUI.FillSideBar();
+
+
+        //Setup all of our ace editors...
+        UIHelper.Ace.BuildAceControls();
+
 
         /*
-            Overwrite the events to customize it for 
-            this domain and this DEMO!
+            This is only available to the debug client. We 
+            don't put this in normal requests from users... 
         */
-        SocketAPI.MasterSocket.Events.onmessage = function (e) {
-            const jsonData = JSON.parse(e.data);
-            var displaymsg;
-            if (jsonData.msg) {
-                displaymsg = jsonData.msg;
-            } else {
-                displaymsg = e.data;
-            }
-
-            UIHelper.Logger.Add({
-                Type: 466,
-                TID: 505,
-                DT: new Date(),
-                Topic: "Socket Traffic",
-                Source: "Socket",
-                Body: displaymsg
-            });
-
-            //Do not display service messages!
-            if (jsonData.TID == 0) {
-                // console.log('Web Socket Service Mesage:', jsonData);                
-                return;
-            }
-
-            DebugUI.ShowJSONResult('Socket', JSON.stringify(jsonData, null, "\t"));
-
-        };
-
-        //Once connected...
-        SocketAPI.MasterSocket.Events.onopen = function () {
-
-            UIHelper.Logger.Add({
-                Type: 411,
-                TID: 0,
-                DT: new Date(),
-                Topic: "Socket Connected!",
-                Source: "Browser",
-                Body: "The web socket is connected and ready to go!",
-            });
-
-        };
-
-        //After events are rewired, connect the socket...
-        SocketAPI.MasterSocket.Connnect();
-    });
-
-
-
-
-
-
-
-
-
-    //Setup our UI parts...
-    DebugUI.FillSideBar();
-
-
-    //Setup all of our ace editors...
-    UIHelper.Ace.BuildAceControls();
-
-
-
-
-    /*
-        This is only available to the debug client. We 
-        don't put this in normal requests from users... 
-    */
-    console.info(`    
+        console.info(`    
         Use : "ServerAPI" for easy code to help with testing.
         Use : "debugdata" in the console for the api data help.    
-    `);
+            `);
+
+
+        /*
+            Use the help service to get the Socket API code. 
+            It's just another way to use the API and shows
+            how you can do this own a seperate domain and 
+            still get the updates...
+        */
+        WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
+            const srcSocketAPI = document.createElement("script");
+            srcSocketAPI.innerHTML = filecontents.body;
+            document.body.appendChild(srcSocketAPI);
+
+            /*
+                Overwrite the events to customize it for 
+                this domain and this DEMO!
+            */
+            SocketAPI.MasterSocket.Events.onmessage = function (e) {
+                const jsonData = JSON.parse(e.data);
+                var displaymsg;
+
+                if (jsonData.msg) {
+                    displaymsg = jsonData.msg;
+                } else {
+                    displaymsg = e.data;
+                }
+
+                if (!displaymsg) {
+                    debugger;
+                }
 
 
 
-    //Which screen do you want to show first? Are you debugging the debugger? lol
-    UIHelper.ShowTab('TabMain');
-    // debugger;
-    UIHelper.ShowTab('TabDebugger');
-    // UIHelper.ShowTab('HistoryLogger');
-    // UIHelper.ShowTab('GitHubLinks');
+                UIHelper.Logger.Add({
+                    Type: 466,
+                    TID: 505,
+                    DT: new Date(),
+                    Topic: "Socket Traffic",
+                    Source: "Socket",
+                    Body: displaymsg
+                });
+
+                //Do not display service messages!
+                if (jsonData.TID == 0) {
+                    // console.log('Web Socket Service Mesage:', jsonData);                
+                    return;
+                }
+
+                DebugUI.ShowJSONResult('Socket', JSON.stringify(jsonData, null, "\t"));
+
+            };
+
+            //Once connected...
+            SocketAPI.MasterSocket.Events.onopen = function () {
+
+                UIHelper.Logger.Add({
+                    Type: 411,
+                    TID: 0,
+                    DT: new Date(),
+                    Topic: "Socket Connected!",
+                    Source: "Browser",
+                    Body: "The web socket is connected and ready to go!",
+                });
+
+            };
+
+            //After events are rewired, connect the socket...
+            SocketAPI.MasterSocket.Connnect();
+        });
 
 
 
 
+        UIHelper.Logger.Add({
+            TID: 0,
+            Type: 707,
+            DT: new Date(),
+            Topic: "UI Status",
+            Source: "Browser",
+            Body: "The browser UI should be loaded and ready to go!",
+        });
 
 
 
+        //Which screen do you want to show first? Are you debugging the debugger? lol
+        UIHelper.ShowTab('TabMain');
+        // debugger;
+        UIHelper.ShowTab('TabDebugger');
+        // UIHelper.ShowTab('HistoryLogger');
+        // UIHelper.ShowTab('GitHubLinks');
 
 
-
-
+    }); //end UIHelper....
 
 };

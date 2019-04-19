@@ -95,6 +95,12 @@
                 <br>
                 Actual source code for this project.
             </div>
+
+            <div>
+                <a href="https://api-puppy.johnrnelson.com/" target="_blank">api-puppy Web Site</a>
+                <br>
+                This is the documentation, tools, and helpful information about this project.
+            </div>
             <div>
                 <a href="https://github.com/ajaxorg/ace" target="_blank">Ace Editor</a>
                 <br>
@@ -150,22 +156,6 @@
 
     <!-- Because of the editor, you need to declare this first! -->
     <MainTabDisplay id="TabDebugger">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -228,8 +218,8 @@
                 <ul id="DebugSampleList_UL" class="d-menu" data-role="dropdown">
                 </ul>
             </div>
-         
- 
+
+
 
             <div class="dropdown-button">
                 <button id="Export_BTN" class="button dropdown-toggle">Export</button>
@@ -262,12 +252,14 @@
                 <div class="d-flex flex-justify-center flex-align-center">
                     <div class="split-header" title="The body of the request in JSON format">
                         &nbsp;<i class="fas fa-upload" style="color:silver"></i>
-                        &nbsp;Upload JSON 
+                        &nbsp;Upload JSON
                         <span id="Date_Uploaded"></span>
                         <span class="iconbuttons">
                             <a title="Use HTTP GET for the request" id="api-uri-link" href="#" target="_blank">GET</a>
-                            <a title="Use HTTP PUT for the request" href="JavaScript:DebugUI.MakeHTTP_PUT_Request();">PUT</a>
-                            <a title="Use the socket for the request" href="JavaScript:DebugUI.MakeSocketRequest();">SOCKET</a>
+                            <a title="Use HTTP PUT for the request"
+                                href="JavaScript:DebugUI.MakeHTTP_PUT_Request();">PUT</a>
+                            <a title="Use the socket for the request"
+                                href="JavaScript:DebugUI.MakeSocketRequest();">SOCKET</a>
                         </span>
                     </div>
                     <div id="PayloadEditor" class="ace-editor"></div>

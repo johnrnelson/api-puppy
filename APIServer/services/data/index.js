@@ -42,7 +42,7 @@ const DataActions = {
     list(fruit, OnComplete) {
             
         const result = {
-            msg: fruit,
+            msg: 'List all the fruits.',
             data: SERVER.IN_MEM_DB.fruit
         };
         OnComplete(null, result);
