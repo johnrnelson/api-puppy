@@ -171,7 +171,7 @@ const DebugUI = {
 
 
         //Quick clear the old stuff...
-        DebugSampleList_UL.innerHTML = "";
+        // DebugSampleList_UL.innerHTML = "";
 
         DebugSampleList_BTN.innerHTML = SampleCode;
 
