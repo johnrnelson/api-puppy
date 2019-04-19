@@ -286,24 +286,8 @@ MainTabDisplay .h-menu li:hover {
 
 
 
-
-
-
-
-
-
-
-
-#debugger-sidbar .ActionButton {
-    font-family: 'Roboto', sans-serif;
-    font-size: 16px;
-
-    font-variant: small-caps;
-
-
-    border-radius: 6px;
-
-    color: rgb(82, 82, 82);
+/* I just can't delete this code for some reason! lol */
+.AAAAAA_ActionButton {
 
     left: 0;
     right: 0;
@@ -421,7 +405,9 @@ slightly modified....
     /* width: 100%; */
     background-color: rgb(0, 70, 70);
     color: white;
-    cursor: help;
+    
+    cursor: default;
+
     border: solid 1px silver;
     padding: 2px;
 
@@ -430,4 +416,28 @@ slightly modified....
     font-size: 16px;
     font-weight: bold;
     /* font-variant: small-caps; */
+}
+
+.split-header .iconbuttons {
+    position: absolute;
+    right: 3px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+
+    font-variant: small-caps;
+    border-radius: 6px;
+
+    color: rgb(82, 82, 82);
+}
+
+.split-header .iconbuttons a {
+    color: rgb(232, 227, 255);
+    text-decoration: none;
+    padding-left: 10px;
+    /* background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, transparent 100%); */
+
+}
+
+.split-header .iconbuttons a:hover {
+    color: gold;
 }

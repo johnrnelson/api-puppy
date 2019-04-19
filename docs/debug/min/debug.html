@@ -180,6 +180,9 @@ const DebugUI = {
 
         const DebugSampleList_BTN = document.getElementById("DebugSampleList_BTN");
 
+        const displayDateMod = document.getElementById('Date_Downloaded');
+        displayDateMod.innerHTML = "";
+
        
         //Quick clear the old stuff...
         DebugSampleList_UL.innerHTML = "";
@@ -252,7 +255,7 @@ const DebugUI = {
             }
 
             //Use the default and set the edtor....
-            DebugUI.SelectServiceOption('data');
+            DebugUI.SelectServiceOption('time');
             
 
 
@@ -273,9 +276,7 @@ const DebugUI = {
         });
 
     },
-    xxxxxx____xxxx__MakeHTTP_GET_Request() {
-        console.info('ok')
-    },
+ 
     //Use the HTTP to request the data...
     MakeHTTP_PUT_Request() {
 
@@ -509,7 +510,7 @@ print(response_data)
     },
     ShowJSONResult(JSONSource, JSONText) {
         const displayDateMod = document.getElementById('Date_Downloaded');
-        displayDateMod.innerHTML = ' from [' + JSONSource + '] &nbsp;@' + new Date().toLocaleTimeString();
+        displayDateMod.innerHTML = ' using [' + JSONSource + '] &nbsp;@' + new Date().toLocaleTimeString();
 
         UIHelper.Ace.AceDisplayRsults.setValue(JSONText);
 
@@ -979,7 +980,7 @@ window.onload = function () {
                 return;
             }
 
-            DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
+            DebugUI.ShowJSONResult('Socket', JSON.stringify(jsonData, null, "\t"));
 
         };
 
@@ -1231,28 +1232,21 @@ window.onload = function () {
                 <ul id="DebugSampleList_UL" class="d-menu" data-role="dropdown">
                 </ul>
             </div>
-
-            <a id="api-uri-link" href="#" target="_blank">
-                <div class="button">
-                    GET
-                </div>
-            </a>
-
-
-            <div class="button" title="Use HTTP PUT for the request" onclick="DebugUI.MakeHTTP_PUT_Request()">PUT</div>
-
-            <div class="button" title="Use the socket for the request" onclick="DebugUI.MakeSocketRequest()">SOCKET
-            </div>
+         
+ 
 
             <div class="dropdown-button">
                 <button id="Export_BTN" class="button dropdown-toggle">Export</button>
                 <ul id="Export_UL" class="d-menu" data-role="dropdown">
-                    
-                    <li><a href="#" title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')">curl</a></li>
-                    <li><a href="#" title="Export sample code for JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
+
+                    <li><a href="#" title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')">curl</a>
+                    </li>
+                    <li><a href="#" title="Export sample code for JavaScript Browser"
+                            onclick="DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
                     <li><a href="#" title="Export sample code for JavaScript HTTP Client"
-                        onclick="DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
-                    <li><a href="#" title="Export sample code for pythod 3" onclick="DebugUI.ExportCode('python 3')">Python 3</a></li>
+                            onclick="DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
+                    <li><a href="#" title="Export sample code for pythod 3"
+                            onclick="DebugUI.ExportCode('python 3')">Python 3</a></li>
                     <li><a class="disabled" href="#" title="Export sample code for C# .Net">C#</a></li>
                 </ul>
             </div>
@@ -1260,7 +1254,7 @@ window.onload = function () {
 
         </div>
 
- 
+
 
         <div class="split-container">
 
@@ -1272,8 +1266,13 @@ window.onload = function () {
                 <div class="d-flex flex-justify-center flex-align-center">
                     <div class="split-header" title="The body of the request in JSON format">
                         &nbsp;<i class="fas fa-upload" style="color:silver"></i>
-                        &nbsp;Upload JSON Request
+                        &nbsp;Upload JSON 
                         <span id="Date_Uploaded"></span>
+                        <span class="iconbuttons">
+                            <a title="Use HTTP GET for the request" id="api-uri-link" href="#" target="_blank">GET</a>
+                            <a title="Use HTTP PUT for the request" href="JavaScript:DebugUI.MakeHTTP_PUT_Request();">PUT</a>
+                            <a title="Use the socket for the request" href="JavaScript:DebugUI.MakeSocketRequest();">SOCKET</a>
+                        </span>
                     </div>
                     <div id="PayloadEditor" class="ace-editor"></div>
                 </div>

@@ -132,6 +132,9 @@ const DebugUI = {
 
         const DebugSampleList_BTN = document.getElementById("DebugSampleList_BTN");
 
+        const displayDateMod = document.getElementById('Date_Downloaded');
+        displayDateMod.innerHTML = "";
+
        
         //Quick clear the old stuff...
         DebugSampleList_UL.innerHTML = "";
@@ -204,7 +207,7 @@ const DebugUI = {
             }
 
             //Use the default and set the edtor....
-            DebugUI.SelectServiceOption('data');
+            DebugUI.SelectServiceOption('time');
             
 
 
@@ -225,9 +228,7 @@ const DebugUI = {
         });
 
     },
-    xxxxxx____xxxx__MakeHTTP_GET_Request() {
-        console.info('ok')
-    },
+ 
     //Use the HTTP to request the data...
     MakeHTTP_PUT_Request() {
 
@@ -461,7 +462,7 @@ print(response_data)
     },
     ShowJSONResult(JSONSource, JSONText) {
         const displayDateMod = document.getElementById('Date_Downloaded');
-        displayDateMod.innerHTML = ' from [' + JSONSource + '] &nbsp;@' + new Date().toLocaleTimeString();
+        displayDateMod.innerHTML = ' using [' + JSONSource + '] &nbsp;@' + new Date().toLocaleTimeString();
 
         UIHelper.Ace.AceDisplayRsults.setValue(JSONText);
 
@@ -931,7 +932,7 @@ window.onload = function () {
                 return;
             }
 
-            DebugUI.ShowJSONResult('HTTP', JSON.stringify(jsonData, null, "\t"));
+            DebugUI.ShowJSONResult('Socket', JSON.stringify(jsonData, null, "\t"));
 
         };
 

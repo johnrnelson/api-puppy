@@ -8,7 +8,8 @@ function ServiceRequest(RequestObj,RequestData,  OnComplete) {
     const rightNOW = new Date();    
 
     OnComplete(null,{
-        dt:rightNOW.toISOString()
+        dt:rightNOW.toISOString(),
+        started:SERVER.Started.toISOString()
     });
 
 }
