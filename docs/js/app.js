@@ -1,5 +1,7 @@
+/*
+    Simple webapp for our documentation pages to be dynamic as possible.
+*/
 const WebApp = {
-    //Quick and easy way to get data from our api...
 
     /*
         Generic http request to get something from the web. Since this app is local 
@@ -93,7 +95,7 @@ const WebApp = {
 
             console.log('Web Socket Service Mesage:', jsonData);
 
-
+            UIHelper.ShowSocketStatus();
 
         };
 
@@ -156,18 +158,17 @@ const UIHelper = {
     ShowSocketStatus(){
         const elServerStatus = document.getElementById('SocketStatus');
 
-        const elDisplayServerStatus = elServerStatus.querySelector('#DisplayServerStatus')
-        const elDisplayServerDate = elServerStatus.querySelector('#DisplayServerDate');
+        const elSckTotalUsers = elServerStatus.querySelector('#SckTotalUsers')
+        const elSckLastUser = elServerStatus.querySelector('#SckLastUser');
 
 
-        elDisplayServerStatus.innerHTML = "Checking...";
-
-
+        elSckTotalUsers.innerHTML = "N/A";
+        elSckLastUser.innerHTML = "N/A";
     }
 };
 window.onload = function () {
 
-    UIHelper.ShowServerStatus();
+    UIHelper.ShowServerStatus();  
  
 
 }

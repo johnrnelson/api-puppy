@@ -65,14 +65,16 @@ const topics = {
 
         fs.readFile(examplesFilePath, 'utf8', function (err, data) {
             if (err) {
-                debugger;
+                // debugger;
                 console.log(RequestData);
                 console.log(sampleid);
                 console.log(examplesFilePath);
-                response.end(JSON.stringify({
-                    path: examplesFilePath,
-                    err: err.message,
-                }));
+
+                OnComplete(null, {
+                    err: 'Unable to get that file!',
+                    file: path.basename(examplesFilePath),
+                    debug: RequestData
+                });
             } else {
                 OnComplete(null, {
                     msg: "Have fun with this code!",

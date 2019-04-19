@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>api-puppy Demo Site</title>
+    <title>api-puppy Demo</title>
 
     <link href='//fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic' rel='stylesheet' type='text/css'>
@@ -119,119 +119,147 @@ const DebugUI = {
 
     },
 
+    SelectServiceOption(ServiceName) {
+
+
+        const DebugVerbList_BTN = document.getElementById("DebugVerbList_BTN");
+
+        const DebugSampleList_UL = document.getElementById("DebugSampleList_UL");
+
+        // const SelOpt = this.selectedOptions[0];
+
+        //Quick clear the old stuff...
+        DebugSampleList_UL.innerHTML = "";
+        // debugger;
+        DebugVerbList_BTN.innerHTML = ServiceName;
+        DebugVerbList_BTN.ServiceName = ServiceName;
+
+
+
+        DebugUI.Fetch({
+            service: 'help',
+            data: {
+                topic: 'sample-code-list',
+                sampleid: ServiceName
+
+            }
+        }).then(data => {
+            console.log('Set default examples---...', data);
+
+            
+            for (let index = 0; index < data.samples.length; index++) {
+                const sample = data.samples[index];
+
+                //Set Default...
+                if(index==0){
+                    DebugUI.SelectSampleCodeOption(sample);                    
+                }
+
+
+                const optUL = document.createElement('li'); 
+                optUL.SampleName = sample;
+                optUL.onclick = function () {
+                    DebugUI.SelectSampleCodeOption(this.SampleName);
+                };
+                optUL.innerHTML = '<li><a href="#">' + sample + '</a></li>';
+                DebugSampleList_UL.appendChild(optUL);                 
+            }
+ 
+
+        }) // JSON-string from `response.json()` call
+            .catch(error => {
+                console.warn('Error!');
+                console.error(error);
+                // debugger;
+            });
+
+    },
+    SelectSampleCodeOption(SampleCode) {
+
+        const DebugVerbList_BTN = document.getElementById("DebugVerbList_BTN");
+
+        const DebugSampleList_BTN = document.getElementById("DebugSampleList_BTN");
+
+       
+        //Quick clear the old stuff...
+        DebugSampleList_UL.innerHTML = "";
+    
+        DebugSampleList_BTN.innerHTML = SampleCode;
+
+ 
+        DebugUI.Fetch({
+            service: 'help',
+            data: {
+                topic: 'sample-code-fetch',
+                sampleid: SampleCode,
+                'target-service': DebugVerbList_BTN.ServiceName
+            }
+        }).then(data => {
+
+            if (data.err) {
+                debugger;
+                console.warn(data.err);
+            } else {
+
+                UIHelper.Ace.AceEditor.setValue(JSON.stringify(data.code, null, "\t"));
+
+                //Set the cursor so the user can start over again...
+                UIHelper.Ace.AceEditor.moveCursorTo(0);
+                UIHelper.Ace.AceEditor.resize();
+
+
+                UIHelper.Ace.AceDisplayRsults.setValue("{}");
+
+                //Set the cursor so the user can start over again...
+                UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+                UIHelper.Ace.AceDisplayRsults.resize();
+            }
+
+
+        }) // JSON-string from `response.json()` call
+            .catch(error => {
+                console.error(error);
+                debugger;
+            });
+
+
+
+    },
     //Fill the side bar with options we can use in our debugger...
     FillSideBar() {
-
-        const dbSidebar = document.getElementById('debugger-sidbar');
-        const DebugVerbList = dbSidebar.querySelector("#DebugVerbList");
-        const ExampleCodeList = dbSidebar.querySelector("#ExampleCodeList");
-
-        //When the user selects something different...
-        DebugVerbList.onchange = function () {
-
-            const SelOpt = this.selectedOptions[0];
-
-            //Quick clear the old stuff...
-            ExampleCodeList.innerHTML = "";
-            // debugger;
+        try {
 
 
+            const DebugVerbList_UL = document.getElementById("DebugVerbList_UL");
+            DebugVerbList_UL.innerHTML = "";
 
-            DebugUI.Fetch({
-                service: 'help',
-                data: {
-                    topic: 'sample-code-list',
-                    sampleid: SelOpt.value
+            const dbSidebar = document.getElementById('debugger-sidbar');
+ 
+ 
+            for (var n in debugdata.apidata) {
 
-                }
-            }).then(data => {
-                // console.log('Set default examples---...', data);
+                const namespaceData = debugdata.apidata[n];
+ 
+                const optUL = document.createElement('li');
+                optUL.RecordData = namespaceData;
+                optUL.ServiceName = n;
+                optUL.onclick = function () {
+                    DebugUI.SelectServiceOption(this.ServiceName);
+                };
+                optUL.innerHTML = '<li><a href="#">' + n + '</a></li>';
+                DebugVerbList_UL.appendChild(optUL);
 
-                for (let index = 0; index < data.samples.length; index++) {
-                    const sample = data.samples[index];
-                    const opt = document.createElement('option');
-                    opt.value = sample;
-                    opt.innerHTML = sample;
-                    ExampleCodeList.appendChild(opt);
-                }
+            }
 
-                ExampleCodeList.onchange();
-
-            }) // JSON-string from `response.json()` call
-                .catch(error => {
-                    console.warn('Error!');
-                    console.warn(data);
-                    console.error(error);
-                    // debugger;
-                });
+            //Use the default and set the edtor....
+            DebugUI.SelectServiceOption('data');
+            
 
 
-        };
-
-
-        //When the user selects something different...
-        ExampleCodeList.onchange = function () {
-
-            const SelVerb = DebugVerbList.selectedOptions[0];
-
-            const SelOpt = this.selectedOptions[0];
-
-            DebugUI.Fetch({
-                service: 'help',
-                data: {
-                    topic: 'sample-code-fetch',
-                    sampleid: SelOpt.innerHTML,
-                    'target-service': SelVerb.innerHTML
-                }
-            }).then(data => {
-
-                if (data.err) {
-                    debugger;
-                    console.warn(data.err);
-                } else {
-
-                    UIHelper.Ace.AceEditor.setValue(JSON.stringify(data.code, null, "\t"));
-
-                    //Set the cursor so the user can start over again...
-                    UIHelper.Ace.AceEditor.moveCursorTo(0);
-                    UIHelper.Ace.AceEditor.resize();
-
-
-                    UIHelper.Ace.AceDisplayRsults.setValue("{}");
-
-                    //Set the cursor so the user can start over again...
-                    UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
-                    UIHelper.Ace.AceDisplayRsults.resize();
-                }
-
-
-            }) // JSON-string from `response.json()` call
-                .catch(error => {
-                    console.error(error);
-                    debugger;
-                });
-
-
-        };
-
-
-        for (var n in debugdata.apidata) {
-            //We don't add the default here!
-            // if (n != "default") {
-            // }
-            const namespaceData = debugdata.apidata[n];
-
-            const optEl = document.createElement('option');
-            optEl.RecordData = namespaceData;
-            optEl.value = n;
-            optEl.innerHTML = n;
-            DebugVerbList.appendChild(optEl);
-
+        } catch (errFillSideBar) {
+            console.warn(errFillSideBar);
+            debugger;
         }
-
-        //Use the default and set the edtor....
-        DebugVerbList.onchange();
-
     },
     OpenDialog(DialogInfo) {
         // debugger;
@@ -245,8 +273,11 @@ const DebugUI = {
         });
 
     },
+    xxxxxx____xxxx__MakeHTTP_GET_Request() {
+        console.info('ok')
+    },
     //Use the HTTP to request the data...
-    MakeHTTPRequest() {
+    MakeHTTP_PUT_Request() {
 
         // debugger;
         //Get our contents from the editor...
@@ -461,7 +492,8 @@ print(response_data)
         Show our TargetURI for the client to call.
     */
     SetTargetURI(TargetURI) {
-        const apiURIAddress = document.getElementById('api-uri-address');
+
+        // const apiURIAddress = document.getElementById('api-uri-address');
         const apiURILink = document.getElementById('api-uri-link');
 
 
@@ -469,7 +501,7 @@ print(response_data)
         // displayDateDOWN.innerHTML = "@" + new Date().toLocaleTimeString();
 
 
-        apiURIAddress.value = TargetURI;
+        // apiURIAddress.value = TargetURI;
         apiURILink.href = TargetURI;
 
 
@@ -499,6 +531,9 @@ print(response_data)
 };
 
 
+/*
+    Easy functions to help us deal with the ever growing UI... :-)
+*/
 const UIHelper = {
     QueryStringBuilder(JSONData) {
 
@@ -828,7 +863,6 @@ const UIHelper = {
         }) // JSON-string from `response.json()` call
             .catch(error => {
                 console.warn('Error!');
-                console.warn(data);
                 console.error(error);
                 // debugger;
             });
@@ -1119,60 +1153,114 @@ window.onload = function () {
 
     <!-- Because of the editor, you need to declare this first! -->
     <MainTabDisplay id="TabDebugger">
-        <span class="api-uri-browse" title="Open a new tab to test the URL">
-            <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
-        </span>
-        <span class="api-uri-display" title="URI Endpoint address">
-            <input id="api-uri-address" value="" onchange="document.getElementById('api-uri-link').href=this.value;" />
-        </span>
 
 
-        <div id="debugger-sidbar">
-            <center>
 
 
-                <select id="DebugVerbList" data-role="hint" data-hint-position="right"
-                    data-hint-text="Select one of the services provided by this server"></select>
-                <br>
-                <select id="ExampleCodeList" data-role="hint" data-hint-position="right"
-                    data-hint-text="Select a sample file with work with"></select>
-                <br>
-
-                <div title="Use HTTP for the request" onclick="DebugUI.MakeHTTPRequest()" class="ActionButton">HTTP
-                    Request</div>
 
 
-                <div title="Use the socket for the request" onclick="DebugUI.MakeSocketRequest()" class="ActionButton">
-                    Socket Request</div>
 
 
-                <div style="padding-top:15px;">Export Options</div>
 
-                <div title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')" class="ActionButton">CURL
+
+
+
+
+
+
+
+
+
+
+        <div class="DebugToolbar" title="URI Endpoint address">
+            <!-- ribbon? 
+            <nav data-role="ribbonmenu">
+                <ul class="tabs-holder">
+                    <li><a href="#section-1-1">Main</a></li>
+                </ul>
+
+                <div class="content-holder">
+                    <div class="section" id="section-1-1">
+                        <button class="dropdown-toggle">
+                            <span class="icon">
+                                <i class="fas fa-globe"></i>
+                            </span>
+                        </button>
+                        <ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+                            <li class="checked"><a href="#">Modification</a></li>
+                            <li class="checked"><a href="#">Type</a></li>                         
+                            <li class="divider"></li>
+                            <li><a href="#">Columns...</a></li>
+                        </ul>
+
+
+                        <button class="ribbon-button">
+                            <span class="icon">
+                                <i class="fas fa-globe"></i>
+                            </span>
+                            <span class="caption">Share</span>
+                        </button>
+
+
+
+                        <button class="ribbon-button">
+                            <span class="icon">
+                                <i class="fas fa-globe"></i>
+                            </span>
+                            <span class="caption">Share</span>
+                        </button>
+
+                        <span class="title">Group aaaaa</span>
+
+
+
+
+
+
+                    </div>
                 </div>
+            </nav>
+        -->
+            <div class="dropdown-button">
+                <button id="DebugVerbList_BTN" class="button dropdown-toggle"></button>
+                <ul id="DebugVerbList_UL" class="d-menu" data-role="dropdown">
+                </ul>
+            </div>
+            <div class="dropdown-button">
+                <button id="DebugSampleList_BTN" class="button dropdown-toggle"></button>
+                <ul id="DebugSampleList_UL" class="d-menu" data-role="dropdown">
+                </ul>
+            </div>
 
-                <div title="Export sample code for JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')"
-                    class="ActionButton">
-                    JavaScript</div>
-
-                <div title="Export sample code for JavaScript HTTP Client"
-                    onclick="DebugUI.ExportCode('javascript-http-request')" class="ActionButton">NodeJS</div>
-
-                <div title="Export sample code for pythod 3" onclick="DebugUI.ExportCode('python 3')"
-                    class="ActionButton">Python3</div>
-
-                <hr width="90%" size="1" color="gold" />
+            <a id="api-uri-link" href="#" target="_blank">
+                <div class="button">
+                    GET
+                </div>
+            </a>
 
 
+            <div class="button" title="Use HTTP PUT for the request" onclick="DebugUI.MakeHTTP_PUT_Request()">PUT</div>
 
-            </center>
+            <div class="button" title="Use the socket for the request" onclick="DebugUI.MakeSocketRequest()">SOCKET
+            </div>
+
+            <div class="dropdown-button">
+                <button id="Export_BTN" class="button dropdown-toggle">Export</button>
+                <ul id="Export_UL" class="d-menu" data-role="dropdown">
+                    
+                    <li><a href="#" title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')">curl</a></li>
+                    <li><a href="#" title="Export sample code for JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
+                    <li><a href="#" title="Export sample code for JavaScript HTTP Client"
+                        onclick="DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
+                    <li><a href="#" title="Export sample code for pythod 3" onclick="DebugUI.ExportCode('python 3')">Python 3</a></li>
+                    <li><a class="disabled" href="#" title="Export sample code for C# .Net">C#</a></li>
+                </ul>
+            </div>
+
+
         </div>
 
-
-
-
-
-
+ 
 
         <div class="split-container">
 
@@ -1183,15 +1271,8 @@ window.onload = function () {
 
                 <div class="d-flex flex-justify-center flex-align-center">
                     <div class="split-header" title="The body of the request in JSON format">
-
-
-
-
                         &nbsp;<i class="fas fa-upload" style="color:silver"></i>
                         &nbsp;Upload JSON Request
-                        <!-- <select id="DebugVerbList" title="List of basic services provided by this server"></select>
-                        <select id="ExampleCodeList" title="Sample code to test with."></select> -->
-
                         <span id="Date_Uploaded"></span>
                     </div>
                     <div id="PayloadEditor" class="ace-editor"></div>

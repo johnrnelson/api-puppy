@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>api-puppy Demo Site</title>
+    <title>api-puppy Demo</title>
 
     <link href='//fonts.googleapis.com/css?family=Abel' rel='stylesheet' type='text/css'>
     <link href='//fonts.googleapis.com/css?family=PT+Sans:400,400italic' rel='stylesheet' type='text/css'>
@@ -150,60 +150,114 @@
 
     <!-- Because of the editor, you need to declare this first! -->
     <MainTabDisplay id="TabDebugger">
-        <span class="api-uri-browse" title="Open a new tab to test the URL">
-            <a id="api-uri-link" href="/testme/woof" target="_blank"> <i class="fas fa-globe"></i> </a>
-        </span>
-        <span class="api-uri-display" title="URI Endpoint address">
-            <input id="api-uri-address" value="" onchange="document.getElementById('api-uri-link').href=this.value;" />
-        </span>
 
 
-        <div id="debugger-sidbar">
-            <center>
 
 
-                <select id="DebugVerbList" data-role="hint" data-hint-position="right"
-                    data-hint-text="Select one of the services provided by this server"></select>
-                <br>
-                <select id="ExampleCodeList" data-role="hint" data-hint-position="right"
-                    data-hint-text="Select a sample file with work with"></select>
-                <br>
-
-                <div title="Use HTTP for the request" onclick="DebugUI.MakeHTTPRequest()" class="ActionButton">HTTP
-                    Request</div>
 
 
-                <div title="Use the socket for the request" onclick="DebugUI.MakeSocketRequest()" class="ActionButton">
-                    Socket Request</div>
 
 
-                <div style="padding-top:15px;">Export Options</div>
 
-                <div title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')" class="ActionButton">CURL
+
+
+
+
+
+
+
+
+
+
+        <div class="DebugToolbar" title="URI Endpoint address">
+            <!-- ribbon? 
+            <nav data-role="ribbonmenu">
+                <ul class="tabs-holder">
+                    <li><a href="#section-1-1">Main</a></li>
+                </ul>
+
+                <div class="content-holder">
+                    <div class="section" id="section-1-1">
+                        <button class="dropdown-toggle">
+                            <span class="icon">
+                                <i class="fas fa-globe"></i>
+                            </span>
+                        </button>
+                        <ul class="ribbon-dropdown" data-role="dropdown" data-duration="100">
+                            <li class="checked"><a href="#">Modification</a></li>
+                            <li class="checked"><a href="#">Type</a></li>                         
+                            <li class="divider"></li>
+                            <li><a href="#">Columns...</a></li>
+                        </ul>
+
+
+                        <button class="ribbon-button">
+                            <span class="icon">
+                                <i class="fas fa-globe"></i>
+                            </span>
+                            <span class="caption">Share</span>
+                        </button>
+
+
+
+                        <button class="ribbon-button">
+                            <span class="icon">
+                                <i class="fas fa-globe"></i>
+                            </span>
+                            <span class="caption">Share</span>
+                        </button>
+
+                        <span class="title">Group aaaaa</span>
+
+
+
+
+
+
+                    </div>
                 </div>
+            </nav>
+        -->
+            <div class="dropdown-button">
+                <button id="DebugVerbList_BTN" class="button dropdown-toggle"></button>
+                <ul id="DebugVerbList_UL" class="d-menu" data-role="dropdown">
+                </ul>
+            </div>
+            <div class="dropdown-button">
+                <button id="DebugSampleList_BTN" class="button dropdown-toggle"></button>
+                <ul id="DebugSampleList_UL" class="d-menu" data-role="dropdown">
+                </ul>
+            </div>
 
-                <div title="Export sample code for JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')"
-                    class="ActionButton">
-                    JavaScript</div>
-
-                <div title="Export sample code for JavaScript HTTP Client"
-                    onclick="DebugUI.ExportCode('javascript-http-request')" class="ActionButton">NodeJS</div>
-
-                <div title="Export sample code for pythod 3" onclick="DebugUI.ExportCode('python 3')"
-                    class="ActionButton">Python3</div>
-
-                <hr width="90%" size="1" color="gold" />
+            <a id="api-uri-link" href="#" target="_blank">
+                <div class="button">
+                    GET
+                </div>
+            </a>
 
 
+            <div class="button" title="Use HTTP PUT for the request" onclick="DebugUI.MakeHTTP_PUT_Request()">PUT</div>
 
-            </center>
+            <div class="button" title="Use the socket for the request" onclick="DebugUI.MakeSocketRequest()">SOCKET
+            </div>
+
+            <div class="dropdown-button">
+                <button id="Export_BTN" class="button dropdown-toggle">Export</button>
+                <ul id="Export_UL" class="d-menu" data-role="dropdown">
+                    
+                    <li><a href="#" title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')">curl</a></li>
+                    <li><a href="#" title="Export sample code for JavaScript Browser" onclick="DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
+                    <li><a href="#" title="Export sample code for JavaScript HTTP Client"
+                        onclick="DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
+                    <li><a href="#" title="Export sample code for pythod 3" onclick="DebugUI.ExportCode('python 3')">Python 3</a></li>
+                    <li><a class="disabled" href="#" title="Export sample code for C# .Net">C#</a></li>
+                </ul>
+            </div>
+
+
         </div>
 
-
-
-
-
-
+ 
 
         <div class="split-container">
 
@@ -214,15 +268,8 @@
 
                 <div class="d-flex flex-justify-center flex-align-center">
                     <div class="split-header" title="The body of the request in JSON format">
-
-
-
-
                         &nbsp;<i class="fas fa-upload" style="color:silver"></i>
                         &nbsp;Upload JSON Request
-                        <!-- <select id="DebugVerbList" title="List of basic services provided by this server"></select>
-                        <select id="ExampleCodeList" title="Sample code to test with."></select> -->
-
                         <span id="Date_Uploaded"></span>
                     </div>
                     <div id="PayloadEditor" class="ace-editor"></div>

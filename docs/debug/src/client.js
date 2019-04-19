@@ -71,119 +71,147 @@ const DebugUI = {
 
     },
 
+    SelectServiceOption(ServiceName) {
+
+
+        const DebugVerbList_BTN = document.getElementById("DebugVerbList_BTN");
+
+        const DebugSampleList_UL = document.getElementById("DebugSampleList_UL");
+
+        // const SelOpt = this.selectedOptions[0];
+
+        //Quick clear the old stuff...
+        DebugSampleList_UL.innerHTML = "";
+        // debugger;
+        DebugVerbList_BTN.innerHTML = ServiceName;
+        DebugVerbList_BTN.ServiceName = ServiceName;
+
+
+
+        DebugUI.Fetch({
+            service: 'help',
+            data: {
+                topic: 'sample-code-list',
+                sampleid: ServiceName
+
+            }
+        }).then(data => {
+            console.log('Set default examples---...', data);
+
+            
+            for (let index = 0; index < data.samples.length; index++) {
+                const sample = data.samples[index];
+
+                //Set Default...
+                if(index==0){
+                    DebugUI.SelectSampleCodeOption(sample);                    
+                }
+
+
+                const optUL = document.createElement('li'); 
+                optUL.SampleName = sample;
+                optUL.onclick = function () {
+                    DebugUI.SelectSampleCodeOption(this.SampleName);
+                };
+                optUL.innerHTML = '<li><a href="#">' + sample + '</a></li>';
+                DebugSampleList_UL.appendChild(optUL);                 
+            }
+ 
+
+        }) // JSON-string from `response.json()` call
+            .catch(error => {
+                console.warn('Error!');
+                console.error(error);
+                // debugger;
+            });
+
+    },
+    SelectSampleCodeOption(SampleCode) {
+
+        const DebugVerbList_BTN = document.getElementById("DebugVerbList_BTN");
+
+        const DebugSampleList_BTN = document.getElementById("DebugSampleList_BTN");
+
+       
+        //Quick clear the old stuff...
+        DebugSampleList_UL.innerHTML = "";
+    
+        DebugSampleList_BTN.innerHTML = SampleCode;
+
+ 
+        DebugUI.Fetch({
+            service: 'help',
+            data: {
+                topic: 'sample-code-fetch',
+                sampleid: SampleCode,
+                'target-service': DebugVerbList_BTN.ServiceName
+            }
+        }).then(data => {
+
+            if (data.err) {
+                debugger;
+                console.warn(data.err);
+            } else {
+
+                UIHelper.Ace.AceEditor.setValue(JSON.stringify(data.code, null, "\t"));
+
+                //Set the cursor so the user can start over again...
+                UIHelper.Ace.AceEditor.moveCursorTo(0);
+                UIHelper.Ace.AceEditor.resize();
+
+
+                UIHelper.Ace.AceDisplayRsults.setValue("{}");
+
+                //Set the cursor so the user can start over again...
+                UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+                UIHelper.Ace.AceDisplayRsults.resize();
+            }
+
+
+        }) // JSON-string from `response.json()` call
+            .catch(error => {
+                console.error(error);
+                debugger;
+            });
+
+
+
+    },
     //Fill the side bar with options we can use in our debugger...
     FillSideBar() {
-
-        const dbSidebar = document.getElementById('debugger-sidbar');
-        const DebugVerbList = dbSidebar.querySelector("#DebugVerbList");
-        const ExampleCodeList = dbSidebar.querySelector("#ExampleCodeList");
-
-        //When the user selects something different...
-        DebugVerbList.onchange = function () {
-
-            const SelOpt = this.selectedOptions[0];
-
-            //Quick clear the old stuff...
-            ExampleCodeList.innerHTML = "";
-            // debugger;
+        try {
 
 
+            const DebugVerbList_UL = document.getElementById("DebugVerbList_UL");
+            DebugVerbList_UL.innerHTML = "";
 
-            DebugUI.Fetch({
-                service: 'help',
-                data: {
-                    topic: 'sample-code-list',
-                    sampleid: SelOpt.value
+            const dbSidebar = document.getElementById('debugger-sidbar');
+ 
+ 
+            for (var n in debugdata.apidata) {
 
-                }
-            }).then(data => {
-                // console.log('Set default examples---...', data);
+                const namespaceData = debugdata.apidata[n];
+ 
+                const optUL = document.createElement('li');
+                optUL.RecordData = namespaceData;
+                optUL.ServiceName = n;
+                optUL.onclick = function () {
+                    DebugUI.SelectServiceOption(this.ServiceName);
+                };
+                optUL.innerHTML = '<li><a href="#">' + n + '</a></li>';
+                DebugVerbList_UL.appendChild(optUL);
 
-                for (let index = 0; index < data.samples.length; index++) {
-                    const sample = data.samples[index];
-                    const opt = document.createElement('option');
-                    opt.value = sample;
-                    opt.innerHTML = sample;
-                    ExampleCodeList.appendChild(opt);
-                }
+            }
 
-                ExampleCodeList.onchange();
-
-            }) // JSON-string from `response.json()` call
-                .catch(error => {
-                    console.warn('Error!');
-                    console.warn(data);
-                    console.error(error);
-                    // debugger;
-                });
+            //Use the default and set the edtor....
+            DebugUI.SelectServiceOption('data');
+            
 
 
-        };
-
-
-        //When the user selects something different...
-        ExampleCodeList.onchange = function () {
-
-            const SelVerb = DebugVerbList.selectedOptions[0];
-
-            const SelOpt = this.selectedOptions[0];
-
-            DebugUI.Fetch({
-                service: 'help',
-                data: {
-                    topic: 'sample-code-fetch',
-                    sampleid: SelOpt.innerHTML,
-                    'target-service': SelVerb.innerHTML
-                }
-            }).then(data => {
-
-                if (data.err) {
-                    debugger;
-                    console.warn(data.err);
-                } else {
-
-                    UIHelper.Ace.AceEditor.setValue(JSON.stringify(data.code, null, "\t"));
-
-                    //Set the cursor so the user can start over again...
-                    UIHelper.Ace.AceEditor.moveCursorTo(0);
-                    UIHelper.Ace.AceEditor.resize();
-
-
-                    UIHelper.Ace.AceDisplayRsults.setValue("{}");
-
-                    //Set the cursor so the user can start over again...
-                    UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
-                    UIHelper.Ace.AceDisplayRsults.resize();
-                }
-
-
-            }) // JSON-string from `response.json()` call
-                .catch(error => {
-                    console.error(error);
-                    debugger;
-                });
-
-
-        };
-
-
-        for (var n in debugdata.apidata) {
-            //We don't add the default here!
-            // if (n != "default") {
-            // }
-            const namespaceData = debugdata.apidata[n];
-
-            const optEl = document.createElement('option');
-            optEl.RecordData = namespaceData;
-            optEl.value = n;
-            optEl.innerHTML = n;
-            DebugVerbList.appendChild(optEl);
-
+        } catch (errFillSideBar) {
+            console.warn(errFillSideBar);
+            debugger;
         }
-
-        //Use the default and set the edtor....
-        DebugVerbList.onchange();
-
     },
     OpenDialog(DialogInfo) {
         // debugger;
@@ -197,8 +225,11 @@ const DebugUI = {
         });
 
     },
+    xxxxxx____xxxx__MakeHTTP_GET_Request() {
+        console.info('ok')
+    },
     //Use the HTTP to request the data...
-    MakeHTTPRequest() {
+    MakeHTTP_PUT_Request() {
 
         // debugger;
         //Get our contents from the editor...
@@ -413,7 +444,8 @@ print(response_data)
         Show our TargetURI for the client to call.
     */
     SetTargetURI(TargetURI) {
-        const apiURIAddress = document.getElementById('api-uri-address');
+
+        // const apiURIAddress = document.getElementById('api-uri-address');
         const apiURILink = document.getElementById('api-uri-link');
 
 
@@ -421,7 +453,7 @@ print(response_data)
         // displayDateDOWN.innerHTML = "@" + new Date().toLocaleTimeString();
 
 
-        apiURIAddress.value = TargetURI;
+        // apiURIAddress.value = TargetURI;
         apiURILink.href = TargetURI;
 
 
@@ -451,6 +483,9 @@ print(response_data)
 };
 
 
+/*
+    Easy functions to help us deal with the ever growing UI... :-)
+*/
 const UIHelper = {
     QueryStringBuilder(JSONData) {
 
@@ -780,7 +815,6 @@ const UIHelper = {
         }) // JSON-string from `response.json()` call
             .catch(error => {
                 console.warn('Error!');
-                console.warn(data);
                 console.error(error);
                 // debugger;
             });

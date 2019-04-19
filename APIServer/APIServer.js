@@ -12,13 +12,13 @@
 
     The only NPM at this time is "ws" @ https://github.com/websockets/ws 
 
-    
+
 */
 
 
 //Yes.. it's a global!!! 
 global.SERVER = {
-    Version: '1.10.17',
+    Version: '1.10.19',
     CERTS: {
         //Change this for your own domain!
         path: 'demo.tektology.com'
@@ -271,6 +271,12 @@ window.debugdata = {
         WebSocketServer.on('connection', function connection(ws, req) {
 
             const ipAddress = req.connection.remoteAddress;
+            var totalConnectionAttempts = 0;
+
+            WebSocketServer.clients.forEach(function each(client) {
+                console.log('Client.ID: ' + client.id);
+                totalConnectionAttempts++;
+            });
 
             //Do not give away the users complete IP address over the internet!  :-)
             const displayAddress = ipAddress.split('.').slice(0, 2).join('.') + "**";
@@ -278,10 +284,7 @@ window.debugdata = {
 
             ws.User = {
                 //Using an API key or what???
-
-
                 RemoteIP: ipAddress,
-
                 ClientAgent: "WebSocket",
                 SecurityLevel: 0,
                 ProfileID: 0
@@ -319,9 +322,9 @@ window.debugdata = {
 
             //Let everyone know whats up! :-)
             SERVER.SocketBroadcast({
-                TID: 0, //System message
-
-                msg: "Welcome new tester from :" + displayAddress
+                TID: 0, //System message                
+                msg: "Welcome new tester from :" + displayAddress + ". Total Connections [" +
+                    totalConnectionAttempts + "]"
             });
 
 

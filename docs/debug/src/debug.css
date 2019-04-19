@@ -13,7 +13,13 @@ body {
     left: 0;
     right: 0;
     overflow: hidden;
-
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 
@@ -219,87 +225,74 @@ MainTabDisplay .h-menu li:hover {
 
 }
 
- 
-#api-uri-link {
+
+/* #api-uri-link {
     color: rgb(21, 252, 40);
     font-size: 25px;
 }
 #api-uri-link:hover {
     color: rgb(233, 231, 250);
-}
+} */
 
 
 
 
 
-#TabDebugger .api-uri-display {
-    position: absolute;
+#TabDebugger .DebugToolbar {
+    /* position: absolute;
     top: 0;
-    height: 35px;
-    right: 0;
-    left: 30px;
+    height: 88px;
+    right: 0; */
+
     /* background-color: rgb(236, 236, 236); */
     background-color: transparent;
-
-
+    display: inline-block;
+    white-space: nowrap;
 }
 
-#TabDebugger .api-uri-display #api-uri-address {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: 0;
-    padding: 3px;
-    border: dotted 1px rgb(114, 114, 114);
-    /* background-color: rgb(223, 223, 223); */
-    background-color: transparent;
-
-    font-family: 'Roboto', sans-serif;
-    color: rgb(86, 172, 107);
-
-    text-overflow: ellipsis;
-    font-size: 18px;
-
-}
-
-#TabDebugger .api-uri-display #api-uri-address:focus {
-    outline: none;
-    color: white;
-}
-
-
-
-
-
-
-
-/* 
-sidebar 
-*/
-#TabDebugger #debugger-sidbar {
-    position: absolute;
-    top: 35px;
-    bottom: 0;
-    left: 0;
-    width: 150px;
-    background-color: transparent;
-    color: white;
-    padding: 5px;
+#TabDebugger .DebugToolbar .dropdown-button {
+    /* font-family: 'Roboto', sans-serif; */
     font-family: 'Abel', sans-serif;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-size: 18px;
+    font-variant: small-caps;
+    border-radius: 6px;
+    color: white;
+    background-color: rgb(66, 66, 66) !important;
+
 }
 
-#debugger-sidbar select {
-    background-color: transparent;
-    width: 100%;
-    color: gold;
+#TabDebugger .DebugToolbar .dropdown-button:hover {
+    background-color: rgb(66, 66, 66) !important;
+    color: black !important;
+
 }
+
+#TabDebugger .DebugToolbar .button {
+    /* font-family: 'Roboto', sans-serif; */
+    font-family: 'Abel', sans-serif;
+    font-size: 18px;
+    font-variant: small-caps;
+    border-radius: 6px;
+    color: white;
+    background-color: rgb(66, 66, 66) !important;
+}
+
+#TabDebugger .DebugToolbar .button:hover {
+
+    color: black !important;
+    background-color: rgb(192, 192, 192) !important;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 #debugger-sidbar .ActionButton {
     font-family: 'Roboto', sans-serif;
@@ -325,10 +318,6 @@ sidebar
     background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, rgb(194, 194, 194) 100%);
 }
 
-#debugger-sidbar .ActionButton:hover {
-    color: blue;
-
-}
 
 
 
@@ -357,11 +346,6 @@ pre code {
 .buttonclick {
     cursor: pointer;
     color: green;
-}
-
-.todo-item {
-    color: green;
-    font-size: 12px;
 }
 
 /* 
@@ -420,9 +404,9 @@ slightly modified....
 
 .split-container {
     position: absolute;
-    left: 150px;
+    left: 0;
     right: 0;
-    top: 35px;
+    top: 43px;
     bottom: 0;
     border: 0;
     background-color: transparent;
