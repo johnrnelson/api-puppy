@@ -2,7 +2,7 @@
 
 body {
     background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, #E0E0E0 100%);
-  
+
 }
 
 
@@ -15,7 +15,7 @@ body {
 }
 
 nav .nav-item.active {
-    background: -webkit-radial-gradient(center, ellipse cover, rgb(228, 228, 228) 5%, transparent 80%) !important;
- 
+    /* background: -webkit-radial-gradient(center, ellipse cover, rgb(228, 228, 228) 5%, transparent 80%) !important; */
+    border: solid 1px silver;
     color: black;
 }
