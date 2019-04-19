@@ -40,7 +40,7 @@ sidemenu {
     left: 0;
     /* right: 0 */
     width: 40px;
-    border: solid 1px silver;
+    border: solid 1px rgb(141, 141, 141);
 }
 
 sidemenu .t-menu {
@@ -248,6 +248,7 @@ MainTabDisplay .h-menu li:hover {
     background-color: transparent;
     display: inline-block;
     white-space: nowrap;
+    padding-left:5px;
 }
 
 #TabDebugger .DebugToolbar .dropdown-button {
