@@ -127,7 +127,7 @@ const UIHelper = {
             WebApp.xhr('PUT', 'https://demo.tektology.com/', {
                 "service": "time"
             }, function (ServerResponse) {
-                const dispServerTime = moment(ServerResponse.dt);
+                const dispServerTime = moment(ServerResponse.started);
                 // elDisplayServerStatus.innerHTML = "" + dispServerTime + "";
                 elServerStatus.title = " Server Time : " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
                 elDisplayServerDate.innerHTML = dispServerTime.fromNow();

@@ -274,7 +274,7 @@ window.debugdata = {
             var totalConnectionAttempts = 0;
 
             WebSocketServer.clients.forEach(function each(client) {
-                console.log('Client.ID: ' + client.id);
+                // console.log('Client.ID: ' + client);
                 totalConnectionAttempts++;
             });
 
