@@ -18,7 +18,7 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
-    Version: '1.10.21',
+    Version: '1.10.22',
     CERTS: {
         //Change this for your own domain!
         path: 'demo.tektology.com'
@@ -292,6 +292,10 @@ window.debugdata = {
 
 
             ws.on('message', function incoming(message) {
+                if(message.length>1000){
+                    //ignore for now...   
+                    return;                  
+                }
                 try {
 
                     const msgDATA = JSON.parse(message);

@@ -127,10 +127,12 @@ const UIHelper = {
             WebApp.xhr('PUT', 'https://demo.tektology.com/', {
                 "service": "time"
             }, function (ServerResponse) {
-                const dispServerTime = moment(ServerResponse.started);
-                // elDisplayServerStatus.innerHTML = "" + dispServerTime + "";
+                
+                const dispServerTime = moment(ServerResponse.dt);
+                const dispServerStarted = moment(ServerResponse.started);
+                
                 elServerStatus.title = " Server Time : " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
-                elDisplayServerDate.innerHTML = dispServerTime.fromNow();
+                elDisplayServerDate.innerHTML = dispServerStarted.fromNow();
                 elDisplayServerStatus.innerHTML = `
                     <span class="fas fa-thumbs-up"></span> It's UP!
                 `;
@@ -143,10 +145,6 @@ const UIHelper = {
                     <span class="fas fa-thumbs-down"></span> It's down! :-(
                 `;
 
-            }, function (errOHMY) {
-                console.warn('EEEEE');
-                console.warn(errOHMY);
-                debugger;
             });
 
         } catch (errWTF) {
