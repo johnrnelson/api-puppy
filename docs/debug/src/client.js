@@ -130,7 +130,7 @@ const DebugUI = {
 
             }
         }).then(data => {
-            console.log('Set default examples---...', data);
+            // console.log('Set default examples---...', data);
 
 
             for (let index = 0; index < data.samples.length; index++) {
