@@ -5,28 +5,31 @@ This is most likely **NOT** what you think it is. :thinking:
 Check out the [working server](https://demo.tektology.com/) to see the code in action or
 [read more](https://api-puppy.johnrnelson.com/) about what this is what why you are looking at it.
 
+## Quick Install Instructions
+Clone the project to a new folder.
 
-#### Project Goals
-Why does this project exist? Why are you looking at it?
+    git clone git@github.com:johnrnelson/api-puppy.git
 
-- [x] Proof of concepts  
-- [x] Learn about technology fundamentals
-- [x] Have a lot of fun!
-- [ ] Refactor the code to please the puritist?
+Install the NPM(s). There is only one. Check the `package.json` file. :smiley:
+
+    npm update
+
+Now run the SETUP if this is your first time.
+
+    node ./SETUP.js
  
+You are ready to run the API Server. 
 
-## TODO
-This is a quick running *TODO* list of items that should be moved to the github issues list. 
-However it would seem as only the people actually using the code are the ones doing the 
-todo list. :-)
+    cd APIServer
+    node APIServer.js
 
-- [ ] Better logging!
-- [ ] Better comments, notes, and documentation!
+The console will give you the port number or the default is 
+[Local Host](http://0.0.0.0:9080) or whatever you set it to in the 
+`CONFIG.json` file in the `SECRET` folder. 
 
 
-Maybe we do or do not do.. who knows?
 
-# Working Links
+## Working Links
 - [x] [SSL/HTTPS demo.tektology.com](https://demo.tektology.com/)  
 - [x] [HTTP demo.tektology.com](http://demo.tektology.com/)
 - [x] [Local Host](http://0.0.0.0:9080) 
