@@ -84,13 +84,13 @@ const WebApp = {
             Overwrite the events to customize it for 
             this domain and this DEMO!
         */
-        SocketAPI.MasterSocket.Events.onmessage = function (e) {
-            const jsonData = JSON.parse(e.data);
+        SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
+        
             var displaymsg;
             if (jsonData.msg) {
                 displaymsg = jsonData.msg;
             } else {
-                displaymsg = e.data;
+                displaymsg = jsonData;
             }
 
             console.log('Web Socket Service Mesage:', jsonData);
