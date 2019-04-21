@@ -141,17 +141,20 @@ const IPC = {
             if (typeof (MSG) != "string") {
                 MSG = JSON.stringify(MSG);
             }
-
-            SERVER.WebSocketHTTP.clients.forEach(function each(client) {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(MSG);
-                }
-            });
-            SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
-                if (client.readyState === WebSocket.OPEN) {
-                    client.send(MSG);
-                }
-            });
+            if (SERVER.WebSocketHTTP) {
+                SERVER.WebSocketHTTP.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(MSG);
+                    }
+                });
+            }
+            if (SERVER.WebSocketHTTPS) {
+                SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(MSG);
+                    }
+                });
+            }
 
         };
 
@@ -513,7 +516,7 @@ window.debugdata = {
 
                 request.on('end', function () {
 
- 
+
 
                     /*
                           Quick log to see the history of our traffic...
@@ -526,7 +529,7 @@ window.debugdata = {
                     });
 
 
- 
+
 
 
                     /*
