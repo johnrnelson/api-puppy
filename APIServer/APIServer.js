@@ -131,6 +131,31 @@ const IPC = {
         console.log('\r\nStart Web Servers using version:' + global.SERVER.Version + ' on ' + SERVER.Started.toLocaleString());
 
 
+        SERVER.SocketBroadcast = function (MSG, Options) {
+            if (Options) {
+
+                if (Option.Exclude) {
+
+                }
+            }
+            if (typeof (MSG) != "string") {
+                MSG = JSON.stringify(MSG);
+            }
+
+            SERVER.WebSocketHTTP.clients.forEach(function each(client) {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(MSG);
+                }
+            });
+            SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(MSG);
+                }
+            });
+
+        };
+
+
         var httpServer = http.createServer(function (requset, response) {
             IPC.ServiceWeb(requset, response);
         });
@@ -183,29 +208,6 @@ const IPC = {
 
 
 
-            SERVER.SocketBroadcast = function (MSG, Options) {
-                if (Options) {
-
-                    if (Option.Exclude) {
-
-                    }
-                }
-                if (typeof (MSG) != "string") {
-                    MSG = JSON.stringify(MSG);
-                }
-
-                SERVER.WebSocketHTTP.clients.forEach(function each(client) {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);
-                    }
-                });
-                SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);
-                    }
-                });
-
-            };
 
 
         } catch (errCerts) {

@@ -9,6 +9,7 @@ Check out the [working server](https://demo.tektology.com/) to see the code in a
 Clone the project to a new folder.
 
     git clone git@github.com:johnrnelson/api-puppy.git
+    cd api-puppy
 
 Install the NPM(s). There is only one. Check the `package.json` file. :smiley:
 
