@@ -5,7 +5,7 @@ Clone the repo and use npm to install all the packages you need.
 
 Take notice of how small the `package.json` is and how simple things can be. 
 
-## Server Setup
+## Production Server Setup
 Setup [iptables](Server/iptables.md) to make sure the lower ports will
 work with the higher ports set in the scripts. Otherwise you have to put 
 the ports you want to use in the URI.  
