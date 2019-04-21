@@ -48,3 +48,11 @@ function WriteLog(LogType, LogEntry) {
     });
 }
 exports.WriteLog = WriteLog;
+
+
+/*
+    Uh oh! We really gonna do this? :smiley:
+*/
+function ReadLog() {
+    //It might be a very big file!!!
+}
