@@ -3,6 +3,7 @@
 */
 
 
+
 const SocketAPI = {
     MasterSocket: {
         URL: false,
@@ -27,6 +28,9 @@ const SocketAPI = {
                 SocketAPI.MasterSocket.MsgQue.__AllMsgs[TID] = CallBackFunction;
             }
         },
+        /**
+         * Connects the websocket to the server.
+         */
         Connnect() {
             //
 
@@ -102,3 +106,18 @@ const SocketAPI = {
     },
 
 };
+
+
+
+function TESTME(){
+
+    
+    console.info('ok');
+    debugger;
+    
+    import sckTest from "https://api-puppy.johnrnelson.com/debug/src/SocketModule.js"
+    console.log(sckTest);
+
+    
+}
+TESTME();
