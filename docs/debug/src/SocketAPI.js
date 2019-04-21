@@ -108,16 +108,4 @@ const SocketAPI = {
 };
 
 
-
-function TESTME(){
-
-    
-    console.info('ok');
-    debugger;
-    
-    import sckTest from "https://api-puppy.johnrnelson.com/debug/src/SocketModule.js"
-    console.log(sckTest);
-
-    
-}
-TESTME();
+ 
