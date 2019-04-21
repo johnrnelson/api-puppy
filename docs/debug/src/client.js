@@ -319,54 +319,10 @@ const DebugUI = {
 
 
     },
+ 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*
-        Toggle the result panel if we are too lazy to check out the 
-        window console. lol  :-)
-    */
-    ToggleResult(ShowFlag) {
-
-        debugger;
-
-        const APIDebugResultsElement = document.getElementById("APIDebugResults");
-        const AceEditorElement = document.getElementById("PayloadEditor");
-
-        //Toggle if no falg defined!
-        if (!ShowFlag) {
-            if (APIDebugResultsElement.style.display == "none") {
-                ShowFlag = true;
-            } else {
-                ShowFlag = false;
-            }
-        }
-
-        debugger;
-        if (ShowFlag) {
-            APIDebugResultsElement.style.display = "";
-            // AceEditorElement.style.bottom = "200px";
-        } else {
-            APIDebugResultsElement.style.display = "none";
-            // AceEditorElement.style.bottom = "0";
-        }
-
-        //Make sure the Ace editor knows it's been resized...
-        UIHelper.Ace.AceEditor.resize();
-    },
-
+ 
 
     GetEditorJSON() {
 
@@ -613,24 +569,7 @@ window.onload = function () {
             srcSocketAPI.innerHTML = filecontents.body;
             document.body.appendChild(srcSocketAPI);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            /*
+             /*
                 Overwrite the events to customize it for 
                 this domain and this DEMO!
             */
