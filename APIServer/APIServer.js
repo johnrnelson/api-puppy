@@ -290,11 +290,12 @@ window.debugdata = {
                 ProfileID: 0
             }
 
-
-            ws.on('message', function incoming(message) {
-                if(message.length>1000){
+           
+        
+            ws.on('message', function (message) {
+                if (message.length > 1000) {
                     //ignore for now...   
-                    return;                  
+                    return;
                 }
                 try {
 
@@ -308,6 +309,8 @@ window.debugdata = {
                                 msg: msgDATA
                             }));
                         } else {
+                            //Add back the TID...
+                            data.TID = msgDATA.TID;
                             ws.send(JSON.stringify(data));
                         }
                     });

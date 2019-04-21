@@ -308,10 +308,32 @@ const DebugUI = {
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
         // console.info(JSONPayload);
-        SocketAPI.MasterSocket.WebSocketConnection.send(JSON.stringify(JSONPayload));
+
+        // SocketAPI.MasterSocket.WebSocketConnection.send(JSON.stringify(JSONPayload));
+        SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
+            console.info('call back is good--',SckData);
+
+            DebugUI.ShowJSONResult('Socket', JSON.stringify(SckData, null, "\t"));
+
+        });
 
 
     },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /*
         Toggle the result panel if we are too lazy to check out the 
         window console. lol  :-)
@@ -480,18 +502,9 @@ print(response_data)
     */
     SetTargetURI(TargetURI) {
 
-        // const apiURIAddress = document.getElementById('api-uri-address');
         const apiURILink = document.getElementById('api-uri-link');
 
-
-        // const displayDateDOWN = document.getElementById('Date_Uploaded');
-        // displayDateDOWN.innerHTML = "@" + new Date().toLocaleTimeString();
-
-
-        // apiURIAddress.value = TargetURI;
         apiURILink.href = TargetURI;
-
-
 
     },
     ShowJSONResult(JSONSource, JSONText) {
@@ -600,18 +613,35 @@ window.onload = function () {
             srcSocketAPI.innerHTML = filecontents.body;
             document.body.appendChild(srcSocketAPI);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             /*
                 Overwrite the events to customize it for 
                 this domain and this DEMO!
             */
-            SocketAPI.MasterSocket.Events.onmessage = function (e) {
-                const jsonData = JSON.parse(e.data);
+            SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
+                // const jsonData = JSON.parse(e.data);
                 var displaymsg;
 
                 if (jsonData.msg) {
                     displaymsg = jsonData.msg;
                 } else {
-                    displaymsg = e.data;
+                    displaymsg = jsonData;
                 }
 
                 if (!displaymsg) {
@@ -635,8 +665,6 @@ window.onload = function () {
                     return;
                 }
 
-                DebugUI.ShowJSONResult('Socket', JSON.stringify(jsonData, null, "\t"));
-
             };
 
             //Once connected...
@@ -650,7 +678,20 @@ window.onload = function () {
                     Source: "Browser",
                     Body: "The web socket is connected and ready to go!",
                 });
+            };
 
+            //When disconected...
+            SocketAPI.MasterSocket.Events.onclose = function () {
+                UIHelper.Logger.Add({
+                    Type: 411,
+                    TID: 0,
+                    DT: new Date(),
+                    Topic: "Socket Closed!",
+                    Source: "Browser",
+                    Body: "The web socket has disconnected!",
+                });
+
+                console.info('ask to re-connect...');
             };
 
             //After events are rewired, connect the socket...
@@ -674,7 +715,7 @@ window.onload = function () {
         //Which screen do you want to show first? Are you debugging the debugger? lol
         UIHelper.ShowTab('TabMain');
         // debugger;
-        // UIHelper.ShowTab('TabDebugger');
+        UIHelper.ShowTab('TabDebugger');
         // UIHelper.ShowTab('HistoryLogger');
         // UIHelper.ShowTab('GitHubLinks');
 
