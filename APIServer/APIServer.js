@@ -511,18 +511,7 @@ window.debugdata = {
 
                 request.on('end', function () {
 
-
-                    // const ipLogItem = "@" + new Date().toISOString() + " " +
-                    //     request.connection.remoteAddress +
-                    //     "[" + request.method + "]" +
-                    //     "" + request.url + " ** " + body + "\r\n";
-
-
-                    // //Add to our logger file whats up...
-                    // fs.appendFile(SERVER.LogFileName, ipLogItem, function (err) {
-                    //     if (err) throw err;
-                    // });
-
+ 
 
                     /*
                           Quick log to see the history of our traffic...
@@ -535,26 +524,7 @@ window.debugdata = {
                     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
                     /*
