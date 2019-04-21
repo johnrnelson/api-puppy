@@ -1,7 +1,16 @@
-# Installing
-Clone the repo and use npm to install all the packages you need.
- 
+# Quick Install Instructions
+Clone the project to a new folder.
+
+    git clone git@github.com:johnrnelson/api-puppy.git
+    cd api-puppy
+
+Install the NPM(s). There is only one. Check the `package.json` file. :smiley:
+
     npm update
+
+Now run the SETUP if this is your first time.
+
+    node ./SETUP.js
 
 Take notice of how small the `package.json` is and how simple things can be. 
 
