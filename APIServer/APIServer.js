@@ -40,26 +40,67 @@ global.SERVER = {
 
 
 /*
-    Setup logfile logcation.    
-
-    Use this log file for the life of the server but change
-    the name to the date of it's birth. We just do this for
-    the demo because it's easier to drag across the network.
-*/
-SERVER.LogFileName = __dirname + '/../SECRET/IPLog-' + SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
-
-SERVER.ErrorFileName = __dirname + '/../SECRET/ErrorLog-' + SERVER.Started.toLocaleDateString().split('/').reverse().join("-") + '.log';
-
-
-
-
-/*
     We will need access to the disk, so load up the libraries 
     needed in nodejs and get what you need....
 */
 const fs = require('fs');
 const path = require('path');
+
+
+try {
+
+    const APIServerOptions = JSON.parse(fs.readFileSync(path.join(__dirname, "/../", "SECRET", "CONFIG.json"), "utf8"));
+    console.log("APIServerOptions", APIServerOptions);
+    SERVER.CERTS = APIServerOptions.CERTS;
+
+
+} catch (err) {
+    console.log('Please fix your CONFIG.json file in the "SERCRET" folder!');
+    process.exit(1);
+}
+
+
+
+
+
 const ServiceManager = require('./ServiceManager');
+
+
+
+
+
+
+
+
+
+SERVER.ServiceLogger = require('./ServiceLogger');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -262,6 +303,9 @@ window.debugdata = {
         }
     },
 
+    /*
+        Take care of our web socket via the web server...
+    */
     ServiceSocket(WebServer) {
         const WebSocket = require('ws');
 
@@ -290,8 +334,8 @@ window.debugdata = {
                 ProfileID: 0
             }
 
-           
-        
+
+
             ws.on('message', function (message) {
                 if (message.length > 1000) {
                     //ignore for now...   
@@ -449,8 +493,6 @@ window.debugdata = {
             }
 
 
-
-
             try {
 
                 var body = '';
@@ -469,19 +511,48 @@ window.debugdata = {
 
                 request.on('end', function () {
 
+
+                    // const ipLogItem = "@" + new Date().toISOString() + " " +
+                    //     request.connection.remoteAddress +
+                    //     "[" + request.method + "]" +
+                    //     "" + request.url + " ** " + body + "\r\n";
+
+
+                    // //Add to our logger file whats up...
+                    // fs.appendFile(SERVER.LogFileName, ipLogItem, function (err) {
+                    //     if (err) throw err;
+                    // });
+
+
                     /*
                           Quick log to see the history of our traffic...
                     */
-                    const ipLogItem = "@" + new Date().toISOString() + " " +
-                        request.connection.remoteAddress +
-                        "[" + request.method + "]" +
-                        "" + request.url + " ** " + body + "\r\n";
-
-
-                    //Add to our logger file whats up...
-                    fs.appendFile(SERVER.LogFileName, ipLogItem, function (err) {
-                        if (err) throw err;
+                    SERVER.ServiceLogger.WriteLog(0, {
+                        IP4Address: request.connection.remoteAddress,
+                        HTTPVERB: request.method,
+                        URL: request.url,
+                        Body: body
                     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -29,19 +29,40 @@ function CheckRequest(RequsetObject, OnChecked) {
     */ 
     if (CheckPHP(RequsetObject.url)) {
 
-        /*
-              Quick log to see the history of our traffic...
-        */
-        const errLogItem = "@" + new Date().toISOString() + " " +
-            RequsetObject.connection.remoteAddress +
-            "[" + RequsetObject.method + "]" +
-            "" + RequsetObject.url + " ** PHP REQUEST! \r\n";
 
 
-        //Add to our logger file whats up...
-        fs.appendFile(SERVER.ErrorFileName, errLogItem, function (err) {
-            if (err) throw err;
+
+        SERVER.ServiceLogger.WriteLog('php', {
+            IP4Address: RequsetObject.connection.remoteAddress,
+            HTTPVERB: RequsetObject.method,
+            URL: RequsetObject.url,
+            Body:'** PHP REQUEST!' 
         });
+
+
+
+        
+        // /*
+        //       Quick log to see the history of our traffic...
+        // */
+        // const errLogItem = "@" + new Date().toISOString() + " " +
+        //     RequsetObject.connection.remoteAddress +
+        //     "[" + RequsetObject.method + "]" +
+        //     "" + RequsetObject.url + " ** PHP REQUEST! \r\n";
+
+
+        // //Add to our logger file whats up...
+        // fs.appendFile(SERVER.ErrorFileName, errLogItem, function (err) {
+        //     if (err) throw err;
+        // });
+
+
+
+
+
+
+
+
 
 
         OnChecked({
