@@ -440,7 +440,7 @@ print(response_data)
                 content: `
                 <div>Please help us improve this!</div>
                 
-                <textarea rows="4 cols="10" style="width:100%;height:100%" id="ExampleCodeDisplay">${active_lang.code}</textarea>
+                <textarea rows="7 cols="10" style="white-space:nowrap;width:100%;height:100%" id="ExampleCodeDisplay">${active_lang.code}</textarea>
                 <br>
                 <b><i>${active_lang.help}</i></b>
                 `,

@@ -26,12 +26,14 @@ const DataActions = {
         for (let index = 0; index < SERVER.IN_MEM_DB.fruit.length; index++) {
             const fRec = SERVER.IN_MEM_DB.fruit[index];
             if(fRec==fruit){
-                array.splice(index, 1);
+                SERVER.IN_MEM_DB.fruit.splice(index, 1);
+                break;
             }            
         }
         const result = {
             msg: fruit + ' has been removed!'
         };
+        
         OnComplete(null, result);
 
         SERVER.SocketBroadcast({
