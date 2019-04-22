@@ -25,7 +25,7 @@ You are ready to run the API Server.
     node APIServer.js
 
 The console will give you the port number or the default is 
-[Local Host](http://0.0.0.0:9080) or whatever you set it to in the 
+[Local Host](http://localhost:9080) or whatever you set it to in the 
 `CONFIG.json` file in the `SECRET` folder. 
 
 

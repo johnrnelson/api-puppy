@@ -17,48 +17,49 @@ const DataActions = {
         };
         OnComplete(null, result);
         SERVER.SocketBroadcast({
-            TID:0,
-            msg:'The fruit ['+fruit+'] was added!'
+            TID: 0,
+            msg: 'The fruit [' + fruit + '] was added!'
         });
     },
-    delete(fruit, OnComplete){
-        
+    delete(fruit, OnComplete) {
+
         for (let index = 0; index < SERVER.IN_MEM_DB.fruit.length; index++) {
             const fRec = SERVER.IN_MEM_DB.fruit[index];
-            if(fRec==fruit){
+            if (fRec == fruit) {
                 SERVER.IN_MEM_DB.fruit.splice(index, 1);
                 break;
-            }            
+            }
         }
         const result = {
             msg: fruit + ' has been removed!'
         };
-        
+
         OnComplete(null, result);
 
         SERVER.SocketBroadcast({
-            TID:0,
-            msg:'Fruit ['+fruit+'] was added!'
-        });                
+            TID: 0,
+            msg: 'Fruit [' + fruit + '] was added!'
+        });
     },
     list(fruit, OnComplete) {
-            
+
         const result = {
             msg: 'List all the fruits.',
             data: SERVER.IN_MEM_DB.fruit
         };
         OnComplete(null, result);
-       
-    },   
+
+    },
     find(fruit, OnComplete) {
-            
+
         const result = {
             msg: "Searching is not yet working...",
+            selected: fruit,
             data: SERVER.IN_MEM_DB.fruit
         };
         OnComplete(null, result);
-       
-    }, 
+
+    },
 };
 
 function ServiceRequest(RequestObj, RequestData, OnComplete) {
@@ -80,9 +81,8 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                     });
                     return;
                 }
-        
-                var fruit = RequestData.fruit.replace(/[\W_]+/g," ");
 
+                var fruit = RequestData.fruit.replace(/[\W_]+/g, "");
                 task(fruit, OnComplete);
             }
         } catch (errOnAction) {

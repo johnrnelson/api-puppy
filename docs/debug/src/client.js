@@ -423,18 +423,7 @@ print(response_data)
             console.warn('somebody update something? Did you check git for the latest code? TypeOfCode"' + TypeOfCode + '" not found!');
         } else {
 
-
-
-
-
-
-
-
-
-
-
-
-            console.info('ok kill it')
+ 
             Metro.dialog.create({
                 title: active_lang.title,
                 content: `
@@ -458,7 +447,7 @@ print(response_data)
                         caption: "Close",
                         cls: "js-dialog-close",
                         onclick: function () {
-                            console.info("History was not deleted!");
+                            //All Done...
                         }
                     }
                 ]
