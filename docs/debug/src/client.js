@@ -250,19 +250,7 @@ const DebugUI = {
             debugger;
         }
     },
-    OpenDialog(DialogInfo) {
-        // debugger;
-
-
-        console.info('ok kill it')
-        Metro.dialog.create({
-            title: DialogInfo.title,
-            content: DialogInfo.body,
-            closeButton: true
-        });
-
-    },
-
+ 
     //Use the HTTP to request the data...
     MakeHTTP_PUT_Request() {
 
@@ -311,7 +299,7 @@ const DebugUI = {
 
         // SocketAPI.MasterSocket.WebSocketConnection.send(JSON.stringify(JSONPayload));
         SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
-            console.info('call back is good--',SckData);
+            console.info('call back is good--', SckData);
 
             DebugUI.ShowJSONResult('Socket', JSON.stringify(SckData, null, "\t"));
 
@@ -319,11 +307,6 @@ const DebugUI = {
 
 
     },
- 
-
-
- 
-
     GetEditorJSON() {
 
         try {
@@ -440,16 +423,49 @@ print(response_data)
             console.warn('somebody update something? Did you check git for the latest code? TypeOfCode"' + TypeOfCode + '" not found!');
         } else {
 
-            DebugUI.OpenDialog({
+
+
+
+
+
+
+
+
+
+
+
+            console.info('ok kill it')
+            Metro.dialog.create({
                 title: active_lang.title,
-                body: `
+                content: `
                 <div>Please help us improve this!</div>
-                <pre><code>${active_lang.code.replace(/\n/g, '<br>')}</code></pre>
+                
+                <textarea rows="4 cols="10" style="width:100%;height:100%" id="ExampleCodeDisplay">${active_lang.code}</textarea>
                 <br>
                 <b><i>${active_lang.help}</i></b>
-                `
+                `,
+                actions: [
+                    {
+                        caption: "Copy to Clipboard",
+                        cls: "js-dialog-close",
+                        onclick: function () {
+                            UIHelper.CopyToClipboard('ExampleCodeDisplay');
+                            // const tblBody = document.getElementById('HistoryLoggerTable');
+                            // tblBody.innerHTML = "";
+                        }
+                    },
+                    {
+                        caption: "Close",
+                        cls: "js-dialog-close",
+                        onclick: function () {
+                            console.info("History was not deleted!");
+                        }
+                    }
+                ]
+
             });
 
+ 
 
         }//End if right type of code...
     },
@@ -569,10 +585,10 @@ window.onload = function () {
             srcSocketAPI.innerHTML = filecontents.body;
             document.body.appendChild(srcSocketAPI);
 
-             /*
-                Overwrite the events to customize it for 
-                this domain and this DEMO!
-            */
+            /*
+               Overwrite the events to customize it for 
+               this domain and this DEMO!
+           */
             SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
                 // const jsonData = JSON.parse(e.data);
                 var displaymsg;
