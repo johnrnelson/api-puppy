@@ -60,7 +60,7 @@ try {
 SERVER.ServiceLogger = require('./ServiceLogger');
 
 
-const ServiceManager = require('./ServiceManager');
+const ServiceManager = require('../APIServices/ServiceManager');
 
 
 /*

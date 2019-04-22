@@ -29,7 +29,10 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
             //Insert dagger here!!!!
             route2Take.ServiceRequest(RequestObj, RequestData, function (ServiceError, ResponseJSON) {
                 if (ServiceError) {
-                    // debugger;
+                    const debuginfo = {
+                        path: finalServicePath
+                    };
+                    debugger;
                 }
                 OnComplete(ServiceError, ResponseJSON);
 

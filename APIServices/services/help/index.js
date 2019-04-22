@@ -15,14 +15,14 @@ const topics = {
 
 
 
-        const examplesFolder = path.resolve(path.join(SERVER.RootFolder, "services", sampleid, 'examples'));
+        const examplesFolder = path.join(SERVER.RootFolder,"/../", "APIServices", "services", sampleid, 'examples');
 
 
         // console.log(examplesFolder);
 
         fs.readdir(examplesFolder, function (err, items) {
             if (err) {
-                // debugger;
+                debugger;
 
                 OnComplete(sampleid + " was not found!", null);
 
@@ -57,15 +57,14 @@ const topics = {
         const sampleid = path.normalize(RequestData.sampleid.replace(/\./g, ''));
 
 
-        const targetService = RequestData["target-service"].replace(/\./g, '');
+        const targetService = path.normalize(RequestData["target-service"].replace(/\./g, '')); 
 
-        const examplesFilePath = path.join(SERVER.RootFolder, "services", targetService, "examples", sampleid + ".json");
-
+        const examplesFilePath = path.join(SERVER.RootFolder,"/../", "APIServices", "services", targetService, 'examples',sampleid + ".json");
 
 
         fs.readFile(examplesFilePath, 'utf8', function (err, data) {
             if (err) {
-                // debugger;
+                debugger;
                 console.log(RequestData);
                 console.log(sampleid);
                 console.log(examplesFilePath);
