@@ -19,10 +19,7 @@
 //Yes.. it's a global!!! 
 global.SERVER = {
     Version: '1.10.22',
-    CERTS: {
-        //Change this for your own domain!
-        path: 'demo.tektology.com'
-    },
+
     Started: new Date(),
     RootFolder: __dirname,
     Defender: require("./defender/shield"),
@@ -187,7 +184,7 @@ const IPC = {
         */
 
         try {
-            var certsFolder = __dirname + "/../CERTS/" + SERVER.CERTS.path;
+            var certsFolder = path.join(__dirname, "/../", "SECRET", "CERTS", SERVER.CERTS.path)
 
             // setup our credentials...
             const credentials = {

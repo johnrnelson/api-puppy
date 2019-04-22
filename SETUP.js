@@ -7,9 +7,9 @@ var fs = require("fs");
 var path = require("path");
 
 const SETUP_PATHS = {
-    CERTS_FOLDER: path.join(__dirname, "CERTS"),
     SECRETS_FOLDER: path.join(__dirname, "SECRET"),
     LOGS_FOLDER: path.join(__dirname, "SECRET", "LOGS"),
+    CERTS_FOLDER: path.join(__dirname, "SECRET", "CERTS"),
 }
 
 /*
@@ -28,7 +28,7 @@ if (!fs.existsSync(SETUP_PATHS.SECRETS_FOLDER)) {
             //Change this for your own domain!
             path: 'demo.tektology.com'
         },
-       
+
     }
     fs.writeFileSync(path.join(SETUP_PATHS.SECRETS_FOLDER, "CONFIG.json"), JSON.stringify(FileData, null, "\t"), { flag: 'w' });
 }
@@ -36,5 +36,5 @@ if (!fs.existsSync(SETUP_PATHS.LOGS_FOLDER)) {
     console.log('Creating the "LOGS" folder in "SECRET"!');
     fs.mkdirSync(SETUP_PATHS.LOGS_FOLDER);
 }
- 
+
 console.log('\r\nOk you are all set up. :-)');
