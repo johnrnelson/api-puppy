@@ -57,50 +57,10 @@ try {
 }
 
 
-
-
-
-const ServiceManager = require('./ServiceManager');
-
-
-
-
-
-
-
-
-
 SERVER.ServiceLogger = require('./ServiceLogger');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+const ServiceManager = require('./ServiceManager');
 
 
 /*
