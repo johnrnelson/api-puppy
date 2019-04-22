@@ -103,15 +103,19 @@ MainTabDisplay .container {
 
 
 
-MainTabDisplay HistoryLoggerTable {
+/* MainTabDisplay#LogTree { */
+MainTabDisplay LogTree {
     position: absolute;
-
     top: 40px;
     bottom: 0;
     left: 0;
-    right: 0;
+    width: 200px;
+    /* background-color: blue; */
+    overflow: auto;
+}
 
-    display: block;
+MainTabDisplay LoggerTable {
+    display: none;
     margin: 0;
     padding: 10px;
     background-color: transparent !important;
@@ -121,6 +125,26 @@ MainTabDisplay HistoryLoggerTable {
     overflow: auto !important;
 }
 
+#LogTree i {
+    color: rgb(14, 14, 212) !important;
+    text-shadow: 1px 1px 1px #dbdbdb;
+    padding-right: 10px;
+}
+
+LoggerTable .LoggerLabel {
+    color: rgb(78, 1, 78);
+    font-size: 18px;
+    text-shadow: 1px 1px 1px #f3f3f3;
+}
+
+LoggerTable table {
+    /* margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100% !important; */
+    /* background-color: blue !important; */
+    color: red;
+}
 
 
 MainTabDisplay .h-menu {
@@ -225,7 +249,7 @@ MainTabDisplay .h-menu li:hover {
 
 }
 
- 
+
 
 
 
@@ -239,7 +263,7 @@ MainTabDisplay .h-menu li:hover {
     background-color: transparent;
     display: inline-block;
     white-space: nowrap;
-    padding-left:5px;
+    padding-left: 5px;
 }
 
 #TabDebugger .DebugToolbar .dropdown-button {
@@ -397,7 +421,7 @@ slightly modified....
     /* width: 100%; */
     background-color: rgb(0, 70, 70);
     color: white;
-    
+
     cursor: default;
 
     border: solid 1px silver;

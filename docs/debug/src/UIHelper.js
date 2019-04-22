@@ -210,8 +210,8 @@ window.UIHelper = {
     },
 
     Logger: {
-        Clear() {
 
+        Clear() {
             Metro.dialog.create({
                 title: "Clear the history?",
                 content: "<div>Are you sure you want to do this?</div>",
@@ -220,8 +220,28 @@ window.UIHelper = {
                         caption: "Agree",
                         cls: "js-dialog-close alert",
                         onclick: function () {
-                            const tblBody = document.getElementById('HistoryLoggerTable');
-                            tblBody.innerHTML = "";
+                            const loggerTables = document.getElementsByTagName('LoggerTable');
+
+                            // debugger;
+                            for (let index = 0; index < loggerTables.length; index++) {
+                                const lgEl = loggerTables[index];
+
+                                const haslog = lgEl.getAttribute('haslog');
+                                if (haslog) {
+                                    console.info('Clear ID:' + lgEl.id, haslog);
+                                    const tbl = lgEl.querySelector('tbody');
+                                    if(!tbl){
+                                        debugger;
+                                    }
+                                    tbl.innerHTML = "";
+                                }
+
+
+                            }
+
+
+                            // const tblBody = document.getElementById('HistoryLoggerTable');
+                            // tblBody.innerHTML = "";
                         }
                     },
                     {
@@ -233,16 +253,47 @@ window.UIHelper = {
                     }
                 ]
             });
-
-
         },
-        Add(LogMSG) {
+        SetOption(OptElement) {
+            console.log(OptElement);
+            console.log(OptElement.value);
+            // debugger;
+        },
+        //Just swap between tables...
+        SetListType(ListElement) {
 
+            const TargetElement = document.getElementById('LGType-' + ListElement);
+
+            if (!TargetElement) {
+                console.warn('No log Target!');
+                return;
+            }
+
+            if (!UIHelper.Logger.ActiveLog) {
+                UIHelper.Logger.ActiveLog = TargetElement;
+            } else { 
+                UIHelper.Logger.ActiveLog.style.display = "none";
+                UIHelper.Logger.ActiveLog = TargetElement;
+            }
+            // console.log('Show Log List-->', ListElement);
+            UIHelper.Logger.ActiveLog.style.display = "block";
+        },
+
+        /*
+            Add a log item...
+        */
+        Add(LogMSG) {
+            /*
+                    Check https://github.com/johnrnelson/api-puppy/blob/master/Notes/LogTypes.md
+            */
 
             try {
+
                 if (!LogMSG.Type) {
                     LogMSG.Type = 0;
+                    debugger;
                 }
+
 
                 function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
                     const newCell = document.createElement('td');
@@ -261,43 +312,19 @@ window.UIHelper = {
                 }
 
                 const displayDT = moment(LogMSG.DT);
-                var dispLogType;
-                if (LogMSG.Type < 0) {
-                    dispLogType = '<i class="fas fa-globe fa-lg"></i>';
-                }
-                if (LogMSG.Type == 0) {
-                    dispLogType = '<i class="fas fa-disk fa-lg"></i>';
-                }
-                if (LogMSG.Type > 0) {
-                    dispLogType = '<i class="fas fa-file fa-lg"></i>';
-                }
-
-                if (LogMSG.Type == 200) {
-                    dispLogType = '<i class="fas fa-globe-americas fa-lg"></i>';
-                }
-
-                if (LogMSG.Type == 411) {
-                    dispLogType = '<i class="fas fa-info-circle fa-lg"></i>';
-                }
-
-                if (LogMSG.Type == 466) {
-                    dispLogType = '<i class="fas fa-share-alt fa-lg"></i>';
-                }
-
-                if (LogMSG.Type == 707) {
-                    dispLogType = '<i class="far fa-eye fa-lg"></i>';
-                }
 
 
-
-                const tblBody = document.getElementById('HistoryLoggerTable');
+                const tblBody = document.getElementById('LGType-' + LogMSG.Type + '-history');
+                if (!tblBody) {
+                    debugger;
+                }
 
                 const tr = document.createElement('tr');
 
                 // debugger;
 
                 // CellBuider(tr, "", "TID Help", "", LogMSG.TID);
-                CellBuider(tr, "", "Type Of Log Item [" + LogMSG.Type + "]", "", dispLogType);
+                // CellBuider(tr, "", "Type Of Log Item [" + LogMSG.Type + "]", "", dispLogType);
                 CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
                 CellBuider(tr, "", "", "", LogMSG.Topic);
                 CellBuider(tr, "", "", "", LogMSG.Source);
@@ -309,10 +336,24 @@ window.UIHelper = {
             }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
     },
     CopyToClipboard(containerid) {
-        
+
 
         var textArea = document.getElementById(containerid);
         // var textArea = document.createElement("textarea");
@@ -333,6 +374,21 @@ window.UIHelper = {
 
     },
 
+    NA(){
+        Metro.dialog.create({
+            title: "This feature is not yet available",
+            content: "<div>Working on fixing whatever you just did! :-)</div>",
+            actions: [
+                {
+                    caption: "OK",
+                    cls: "js-dialog-close alert",
+                    onclick: function () {
+                        
+                    }
+                } 
+            ]
+        });        
+    }
 };
 
 

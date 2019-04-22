@@ -298,7 +298,7 @@ const DebugUI = {
             debugger;
         }
     },
- 
+
     //Use the HTTP to request the data...
     MakeHTTP_PUT_Request() {
 
@@ -471,7 +471,7 @@ print(response_data)
             console.warn('somebody update something? Did you check git for the latest code? TypeOfCode"' + TypeOfCode + '" not found!');
         } else {
 
- 
+
             Metro.dialog.create({
                 title: active_lang.title,
                 content: `
@@ -502,7 +502,7 @@ print(response_data)
 
             });
 
- 
+
 
         }//End if right type of code...
     },
@@ -706,10 +706,18 @@ window.onload = function () {
 
         //Which screen do you want to show first? Are you debugging the debugger? lol
         UIHelper.ShowTab('TabMain');
-        // debugger;
-        UIHelper.ShowTab('TabDebugger');
-        // UIHelper.ShowTab('HistoryLogger');
-        // UIHelper.ShowTab('GitHubLinks');
+
+        //Set default logger view...
+        UIHelper.Logger.SetListType('0');
+
+
+        //If you local host you are most likely debugging.. :-)
+        if (document.location.hostname == "localhost") {
+            // debugger;
+            // UIHelper.ShowTab('TabDebugger');
+            UIHelper.ShowTab('HistoryLogger');
+            // UIHelper.ShowTab('GitHubLinks');
+        }
 
 
     }); //end UIHelper....
@@ -798,26 +806,199 @@ window.onload = function () {
 
 
         <ul class="h-menu">
+
             <li title="Clear the log history"><a href="JavaScript:UIHelper.Logger.Clear()">Clear</a></li>
             <li title="Export to a file"><a href="#">Export</a></li>
         </ul>
 
 
-        <HistoryLoggerTable>
-            <table class="table  striped compact" style="background: transparent;">
-                <thead xxclass="sortable-column">
-                    <tr>
-                        <th width="50px" vertical-align="top">Type</th>
-                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                        <th widht="80%" vertical-align="top">Body</th>
-                    </tr>
-                </thead>
-                <tbody id="HistoryLoggerTable" class="row-hover">
-                </tbody>
-            </table>
-        </HistoryLoggerTable>
+
+
+
+
+
+
+
+
+
+
+
+        <div class="split-container">
+
+
+
+            <div data-role="splitter" class="h-100" data-split-sizes="20, 60" data-min-sizes="160,160"
+                data-max-sizes="340,0" data-gutter-size="8">
+
+                <div class="d-flex flex-justify-left flex-align-left">
+
+
+                    <ul id="LogTree" data-role="treeview">
+                        <li data-caption="Options">
+
+                            <ul>
+                                <li><input type="checkbox" data-role="switch" data-caption="Animations"
+                                        onclick="UIHelper.Logger.SetOption(this)"></li>
+                                <li><input type="checkbox" data-role="switch" data-caption="Filters" disabled checked
+                                        onclick="UIHelper.Logger.SetOption(this)"></li>
+
+
+                                <li data-caption="Remote Options">
+                                    <ul>
+                                        <li onclick="UIHelper.Logger.SetListType('LgOpts')"
+                                            data-icon="<i class='fas fa-cogs fa-fw'></i>&nbsp;"
+                                            data-caption="&nbsp; Preferences" disabled></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+
+                        </li>
+                        <li data-caption="Local Logs">
+
+                            <ul>
+                                <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
+                                    onclick="UIHelper.Logger.SetListType('200')">
+                                </li>
+                                <li data-icon="<i class='fas fa-info-circle fa-fw'></i>"
+                                    data-caption="Basic Information" onclick="UIHelper.Logger.SetListType('411')">
+                                </li>
+                                <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
+                                    onclick="UIHelper.Logger.SetListType('466')">
+                                </li>
+                                <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
+                                    onclick="UIHelper.Logger.SetListType('707')">
+                                </li>
+                                <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors" onclick="UIHelper.Logger.SetListType('0')">
+                                </li>
+                            </ul>
+                        </li>
+                        <li data-caption="Remote Logs" collapsed>
+
+                            <ul>
+                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>" data-caption="PHP Requests" disabled></li>
+                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History" disabled>
+                                </li>
+                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>" data-caption="Generic Errors" disabled></li>
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+                <div class="d-flex flex-justify-left flex-align-left">
+
+
+
+                    <LoggerTable id="LGType-LgOpts" >
+                        <div>
+                            <h3>Logging Options</h3>
+                            <p>
+                                Working on this!  :-)
+                            </p>
+                        </div>
+                    </LoggerTable>
+                    <LoggerTable haslog="true" id="LGType-0" style="display:block">
+                        <div class="LoggerLabel">Generic Errors</div>
+                        <table class="table  striped compact" style="background: transparent;">
+                            <thead>
+                                <tr>
+                                    <!-- <th width="50px" vertical-align="top">Type</th> -->
+                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                    <th widht="100%" vertical-align="top">Body</th>
+                                </tr>
+                            </thead>
+                            <tbody id="LGType-0-history" class="row-hover">
+                            </tbody>
+                        </table>
+                    </LoggerTable>
+                    <LoggerTable haslog="true" id="LGType-200">
+                        <div class="LoggerLabel">HTTP traffice using REST</div>
+                        <table class="table  striped compact" style="background: transparent;">
+                            <thead>
+                                <tr>
+                                    <!-- <th width="50px" vertical-align="top">Type</th> -->
+                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                    <th widht="100%" vertical-align="top">Body</th>
+                                </tr>
+                            </thead>
+                            <tbody id="LGType-200-history" class="row-hover">
+                            </tbody>
+                        </table>
+                    </LoggerTable>
+                    <LoggerTable haslog="true" id="LGType-411">
+                        <div class="LoggerLabel">Basic information</div>
+                        <table class="table  striped compact" style="background: transparent;">
+                            <thead>
+                                <tr>
+                                    <!-- <th width="50px" vertical-align="top">Type -411</th> -->
+                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                    <th widht="100%" vertical-align="top">Body</th>
+                                </tr>
+                            </thead>
+                            <tbody id="LGType-411-history" class="row-hover">
+                            </tbody>
+                        </table>
+                    </LoggerTable>
+                    <LoggerTable haslog="true" id="LGType-466">
+                        <div class="LoggerLabel">Socket Traffic</div>
+                        <table class="table  striped compact" style="background: transparent;">
+                            <thead>
+                                <tr>
+                                    <!-- <th width="50px" vertical-align="top">Type -466</th> -->
+                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                    <th widht="100%" vertical-align="top">Body</th>
+                                </tr>
+                            </thead>
+                            <tbody id="LGType-466-history" class="row-hover">
+                            </tbody>
+                        </table>
+                    </LoggerTable>
+                    <LoggerTable haslog="true" id="LGType-707">
+                        <div class="LoggerLabel">UI updates in the browser</div>
+                        <table class="table  striped compact" style="background: transparent;">
+                            <thead>
+                                <tr>
+                                    <!-- <th width="50px" vertical-align="top">Type -707</th> -->
+                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                    <th widht="100%" vertical-align="top">Body</th>
+                                </tr>
+                            </thead>
+                            <tbody id="LGType-707-history" class="row-hover">
+                            </tbody>
+                        </table>
+                    </LoggerTable>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+
+        <div style="display:none">
+
+            <LogTree>
+
+            </LogTree>
+
+
+        </div>
 
 
     </MainTabDisplay>
@@ -829,7 +1010,7 @@ window.onload = function () {
 
 
         <div class="DebugToolbar" title="URI Endpoint address">
-          
+
             <div class="dropdown-button">
                 <button id="DebugVerbList_BTN" class="button dropdown-toggle"></button>
                 <ul id="DebugVerbList_UL" class="d-menu" data-role="dropdown">

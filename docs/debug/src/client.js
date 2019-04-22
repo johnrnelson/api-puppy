@@ -250,7 +250,7 @@ const DebugUI = {
             debugger;
         }
     },
- 
+
     //Use the HTTP to request the data...
     MakeHTTP_PUT_Request() {
 
@@ -423,7 +423,7 @@ print(response_data)
             console.warn('somebody update something? Did you check git for the latest code? TypeOfCode"' + TypeOfCode + '" not found!');
         } else {
 
- 
+
             Metro.dialog.create({
                 title: active_lang.title,
                 content: `
@@ -454,7 +454,7 @@ print(response_data)
 
             });
 
- 
+
 
         }//End if right type of code...
     },
@@ -658,10 +658,18 @@ window.onload = function () {
 
         //Which screen do you want to show first? Are you debugging the debugger? lol
         UIHelper.ShowTab('TabMain');
-        // debugger;
-        // UIHelper.ShowTab('TabDebugger');
-        UIHelper.ShowTab('HistoryLogger');
-        // UIHelper.ShowTab('GitHubLinks');
+
+        //Set default logger view...
+        UIHelper.Logger.SetListType('0');
+
+
+        //If you local host you are most likely debugging.. :-)
+        if (document.location.hostname == "localhost") {
+            // debugger;
+            // UIHelper.ShowTab('TabDebugger');
+            UIHelper.ShowTab('HistoryLogger');
+            // UIHelper.ShowTab('GitHubLinks');
+        }
 
 
     }); //end UIHelper....
