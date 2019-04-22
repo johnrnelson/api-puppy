@@ -67,6 +67,9 @@ const DebugUI = {
     */
     //Show the server info via HTML in a componet fashion....
     SetSysInfo() {
+
+  
+
         //You will find this on the `debug.html` page...
         const SystemInfo = document.getElementById("SystemInfo");
 
@@ -101,6 +104,7 @@ const DebugUI = {
             debugdata.ServerVersion);
 
         AddInfoElement('Start Date', 'The date the server started', debugdata.ST.toLocaleDateString() + " " + debugdata.ST.toLocaleTimeString());
+
 
 
     },
@@ -492,7 +496,14 @@ print(response_data)
 };
 
 
-
+/*
+    Simple app prefs manager...
+*/
+WebApp.GetHelpFile('AppPrefs.js', function (filecontents) {
+    const AppPrefsScript = document.createElement("script");
+    AppPrefsScript.innerHTML = filecontents.body;
+    document.body.appendChild(AppPrefsScript);
+});
 
 
 /* 
@@ -667,8 +678,9 @@ window.onload = function () {
         if (document.location.hostname == "localhost") {
             // debugger;
             // UIHelper.ShowTab('TabDebugger');
-            UIHelper.ShowTab('HistoryLogger');
+            // UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
+            // UIHelper.ShowTab('TabAppPrefs');
         }
 
 

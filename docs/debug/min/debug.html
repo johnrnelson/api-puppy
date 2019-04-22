@@ -115,6 +115,9 @@ const DebugUI = {
     */
     //Show the server info via HTML in a componet fashion....
     SetSysInfo() {
+
+  
+
         //You will find this on the `debug.html` page...
         const SystemInfo = document.getElementById("SystemInfo");
 
@@ -149,6 +152,7 @@ const DebugUI = {
             debugdata.ServerVersion);
 
         AddInfoElement('Start Date', 'The date the server started', debugdata.ST.toLocaleDateString() + " " + debugdata.ST.toLocaleTimeString());
+
 
 
     },
@@ -540,7 +544,14 @@ print(response_data)
 };
 
 
-
+/*
+    Simple app prefs manager...
+*/
+WebApp.GetHelpFile('AppPrefs.js', function (filecontents) {
+    const AppPrefsScript = document.createElement("script");
+    AppPrefsScript.innerHTML = filecontents.body;
+    document.body.appendChild(AppPrefsScript);
+});
 
 
 /* 
@@ -715,8 +726,9 @@ window.onload = function () {
         if (document.location.hostname == "localhost") {
             // debugger;
             // UIHelper.ShowTab('TabDebugger');
-            UIHelper.ShowTab('HistoryLogger');
+            // UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
+            // UIHelper.ShowTab('TabAppPrefs');
         }
 
 
@@ -752,6 +764,13 @@ window.onload = function () {
                 data-hint-text="GitHub project for the source code"><a
                     href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
                     <span class="fab fa-github"></span></a></li>
+
+<!--                     
+            <li id="TabAppPrefs-BTN" data-role="hint" data-hint-position="right" data-hint-text="Web App Preferences"><a
+                    href="JavaScript:UIHelper.ShowTab('TabAppPrefs')">
+                    <span class="fas fa-cogs"></span></a></li> -->
+
+
         </ul>
 
     </sidemenu>
@@ -814,15 +833,6 @@ window.onload = function () {
 
 
 
-
-
-
-
-
-
-
-
-
         <div class="split-container">
 
 
@@ -869,17 +879,21 @@ window.onload = function () {
                                 <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
                                     onclick="UIHelper.Logger.SetListType('707')">
                                 </li>
-                                <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors" onclick="UIHelper.Logger.SetListType('0')">
+                                <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
+                                    onclick="UIHelper.Logger.SetListType('0')">
                                 </li>
                             </ul>
                         </li>
                         <li data-caption="Remote Logs" collapsed>
 
                             <ul>
-                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>" data-caption="PHP Requests" disabled></li>
-                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History" disabled>
+                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>"
+                                    data-caption="PHP Requests" disabled></li>
+                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-share-alt'></i>"
+                                    data-caption="Socket History" disabled>
                                 </li>
-                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>" data-caption="Generic Errors" disabled></li>
+                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>"
+                                    data-caption="Generic Errors" disabled></li>
                             </ul>
 
                         </li>
@@ -891,11 +905,11 @@ window.onload = function () {
 
 
 
-                    <LoggerTable id="LGType-LgOpts" >
+                    <LoggerTable id="LGType-LgOpts">
                         <div>
                             <h3>Logging Options</h3>
                             <p>
-                                Working on this!  :-)
+                                Working on this! :-)
                             </p>
                         </div>
                     </LoggerTable>
@@ -1082,6 +1096,55 @@ window.onload = function () {
     </MainTabDisplay>
 
 
+    <MainTabDisplay id="TabAppPrefs">
+
+
+        <div style="padding:10px;">
+            <h1>Web Application Preferences</h1>
+
+            <div class="row">
+                <div class="cell-md-6">
+                    <label>API Key</label>
+                    <input type="password" placeholder="Enter your API Key">
+                    <br>
+                    <button onclick="console.info('asdf');">Test API Key</button>
+                </div>
+                <div class="cell-md-6">
+                    <label>Target Server</label>
+
+                    <select data-role="select">
+                        <optgroup label="Local Network">
+                            <option value="localhost" selected="selected">localhost</option>
+                            <option value="0.0.0.0">0.0.0.0</option>
+                        </optgroup>
+                        <optgroup label="Remote Servers">
+                            <option value="demo.tektology.com">demo.tektology.com</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="row">
+                <div class="cell-md-6">
+                    <input type="checkbox" data-role="checkbox" data-caption="Use Headers" checked>
+                    <br>
+                    <div class="WebAppPrefs-Headers">
+                        <input type="text" placeholder="Enter your header information"><br>
+                        <input type="text" placeholder="Enter your header information"><br>
+                    </div>
+                </div>
+                <div class="cell-md-6">
+                    <input type="checkbox" data-role="switch" data-caption="Local Storage" checked>
+                    <br>
+                    <input type="checkbox" data-role="switch" data-caption="Log Changes" checked>
+                </div>
+            </div>
+
+        </div>
+
+    </MainTabDisplay>
     <MainTabDisplay id="TabMain" style="overflow:auto;"></MainTabDisplay>
 </body>
 
