@@ -47,8 +47,13 @@ const path = require('path');
 try {
 
     const APIServerOptions = JSON.parse(fs.readFileSync(path.join(__dirname, "/../", "SECRET", "CONFIG.json"), "utf8"));
-    console.log("APIServerOptions", APIServerOptions);
+    console.log("Setting API Options via the CONFIG File");
     SERVER.CERTS = APIServerOptions.CERTS;
+ 
+
+    SERVER.ServiceLogger = require('./ServiceLogger');
+    SERVER.ServiceLogger.SetOptions(APIServerOptions.Logger);
+
 
 
 } catch (err) {
@@ -56,8 +61,6 @@ try {
     process.exit(1);
 }
 
-
-SERVER.ServiceLogger = require('./ServiceLogger');
 
 
 const ServiceManager = require('../APIServices/ServiceManager');
@@ -286,7 +289,7 @@ window.debugdata = {
 
             //Do not give away the users complete IP address over the internet!  :-)
             const displayAddress = ipAddress.split('.').slice(0, 2).join('.') + "**";
-
+ 
 
             ws.User = {
                 //Using an API key or what???
@@ -296,7 +299,11 @@ window.debugdata = {
                 ProfileID: 0
             }
 
-
+            SERVER.ServiceLogger.WriteLog('Socket', {
+                IP4Address: ipAddress, 
+                Title: 'Connect',
+                Body: 'User connected to socket'
+            });
 
             ws.on('message', function (message) {
                 if (message.length > 1000) {
@@ -306,8 +313,7 @@ window.debugdata = {
                     */
                     SERVER.ServiceLogger.WriteLog('Socket', {
                         IP4Address: ipAddress,
-                        HTTPVERB: 'Socket',
-                        URL: '*',
+                        Title: 'Socket Warning', 
                         Body: 'Message was too long! Length:[' + message.length + ']'
                     });
                     return;
@@ -318,8 +324,7 @@ window.debugdata = {
 
                     SERVER.ServiceLogger.WriteLog('Socket', {
                         IP4Address: ipAddress,
-                        HTTPVERB: 'Socket',
-                        URL: '*',
+                        Title: 'Socket Message', 
                         Body: msgDATA
                     });
 

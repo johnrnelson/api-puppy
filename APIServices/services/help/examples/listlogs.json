@@ -1,6 +1,6 @@
 {
 	"service": "help",
 	"data":{
-		"topic": "test"
+		"topic": "list-log-files"
 	}
 }

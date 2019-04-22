@@ -15,7 +15,7 @@ const topics = {
 
 
 
-        const examplesFolder = path.join(SERVER.RootFolder,"/../", "APIServices", "services", sampleid, 'examples');
+        const examplesFolder = path.join(SERVER.RootFolder, "/../", "APIServices", "services", sampleid, 'examples');
 
 
         // console.log(examplesFolder);
@@ -57,9 +57,9 @@ const topics = {
         const sampleid = path.normalize(RequestData.sampleid.replace(/\./g, ''));
 
 
-        const targetService = path.normalize(RequestData["target-service"].replace(/\./g, '')); 
+        const targetService = path.normalize(RequestData["target-service"].replace(/\./g, ''));
 
-        const examplesFilePath = path.join(SERVER.RootFolder,"/../", "APIServices", "services", targetService, 'examples',sampleid + ".json");
+        const examplesFilePath = path.join(SERVER.RootFolder, "/../", "APIServices", "services", targetService, 'examples', sampleid + ".json");
 
 
         fs.readFile(examplesFilePath, 'utf8', function (err, data) {
@@ -112,6 +112,14 @@ const topics = {
                 });
             }
         });//End reading file...
+    },
+    'list-log-files': function (RequestData, OnComplete) {
+        // debugger;
+        SERVER.ServiceLogger.ListLogs(function (LogList) {
+            OnComplete(null,{
+                logs: LogList
+            });
+        });
     }
 };
 
