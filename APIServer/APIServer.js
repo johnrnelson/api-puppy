@@ -301,11 +301,27 @@ window.debugdata = {
             ws.on('message', function (message) {
                 if (message.length > 1000) {
                     //ignore for now...   
+                    /*
+                          Quick log to see the history of our traffic...
+                    */
+                    SERVER.ServiceLogger.WriteLog('Socket', {
+                        IP4Address: ipAddress,
+                        HTTPVERB: 'Socket',
+                        URL: '*',
+                        Body: 'Message was too long! Length:[' + message.length + ']'
+                    });
                     return;
                 }
                 try {
 
                     const msgDATA = JSON.parse(message);
+
+                    SERVER.ServiceLogger.WriteLog('Socket', {
+                        IP4Address: ipAddress,
+                        HTTPVERB: 'Socket',
+                        URL: '*',
+                        Body: msgDATA
+                    });
 
                     ServiceManager.ServiceRequestWeb(null, msgDATA, function (err, data) {
                         if (err) {
