@@ -5,7 +5,10 @@
 */
 
 const WebApp = {
-    //Quick and easy way to get data from our api...
+    /*
+        Quick and easy way to get data from our api...
+        Ex: WebApp.Fetch
+    */
     Fetch(data = {}) {
         const url = document.URL + '';
 
@@ -43,12 +46,11 @@ const WebApp = {
             }
 
 
-        }) // JSON-string from `response.json()` call
-            .catch(error => {
-                console.warn('Error!');
-                console.error(error);
-                // debugger;
-            });
+        }).catch(error => {
+            console.warn('Error!');
+            console.error(error);
+            // debugger;
+        });
 
     }
 };
@@ -68,7 +70,7 @@ const DebugUI = {
     //Show the server info via HTML in a componet fashion....
     SetSysInfo() {
 
-  
+
 
         //You will find this on the `debug.html` page...
         const SystemInfo = document.getElementById("SystemInfo");
@@ -156,12 +158,11 @@ const DebugUI = {
             }
 
 
-        }) // JSON-string from `response.json()` call
-            .catch(error => {
-                console.warn('Error!');
-                console.error(error);
-                // debugger;
-            });
+        }).catch(error => {
+            console.warn('Error!');
+            console.error(error);
+            // debugger;
+        });
 
     },
     SelectSampleCodeOption(SampleCode) {
@@ -209,11 +210,10 @@ const DebugUI = {
             }
 
 
-        }) // JSON-string from `response.json()` call
-            .catch(error => {
-                console.error(error);
-                debugger;
-            });
+        }).catch(error => {
+            console.error(error);
+            debugger;
+        });
 
 
 
@@ -686,7 +686,7 @@ window.onload = function () {
             UIHelper.ShowTab('TabAppPrefs');
         }
 
- 
+
 
 
 

@@ -11,14 +11,14 @@ const topics = {
 
         //Make sure there is not funky monkey going on with their request!!! 
         const sampleid = path.normalize(RequestData.sampleid.replace(/\./g, ''));
- 
+
 
         const examplesFolder = path.join(SERVER.RootFolder, "/../", "APIServices", "services", sampleid, 'examples');
 
- 
+
         fs.readdir(examplesFolder, function (err, items) {
             if (err) {
-          
+
 
                 OnComplete(null, {
                     err: sampleid + " was not found!"
@@ -117,6 +117,36 @@ const topics = {
                 logs: LogList
             });
         });
+    },
+    'validate-key': function (RequestData, OnComplete) {
+        // debugger;
+        const valKey = RequestData.key;
+
+        if (valKey == "abc123") {
+            //The key in the sample code!!!
+            OnComplete({
+                msg: 'The "abc123" key is reserved for an example!',
+            }, null);            
+        } else {
+
+            const doh = SERVER.KEYS.admin;
+
+
+            if (!valKey) {
+                OnComplete({
+                    msg: 'No key found!',
+                }, null);
+
+            } else {
+
+                OnComplete(null, {
+                    msg: 'Key is valid!!',
+                });
+            }
+
+        }
+
+
     }
 };
 
@@ -139,8 +169,8 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
             const activeTopic = topics[RequestData.topic];
 
             if (!activeTopic) {
-                OnComplete(null,{
-                    msg:'The topic was not found! [' + RequestData.topic + ']'
+                OnComplete(null, {
+                    msg: 'The topic was not found! [' + RequestData.topic + ']'
                 });
 
             } else {

@@ -49,6 +49,8 @@ try {
     const APIServerOptions = JSON.parse(fs.readFileSync(path.join(__dirname, "/../", "SECRET", "CONFIG.json"), "utf8"));
     console.log("Setting API Options via the CONFIG File");
     SERVER.CERTS = APIServerOptions.CERTS;
+    SERVER.KEYS = APIServerOptions.KEYS;
+
  
 
     SERVER.ServiceLogger = require('./ServiceLogger');

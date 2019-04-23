@@ -73,6 +73,98 @@ window.AppRefs = {
 
         }
     },
+    //Test the key before you use it...
+    TestKey(APIKEY) {
+
+        function ValidateKey() {
+
+            if (!APIKEY) {
+                return false;
+            }
+
+            if (typeof (APIKEY) == "string") {
+
+                return true;
+
+            } else {
+                //Not supporting anything other than strings for the moment...
+                return false;
+            }
+        }
+
+
+
+
+
+        if (ValidateKey()) {
+
+            WebApp.Fetch({
+                service: 'help',
+                data: {
+                    topic: 'validate-key',
+                    key: APIKEY
+                }
+            }).then(data => {
+                if (data.err) {
+                    console.warn(data.err);
+                    debugger;
+                } else {
+                    console.log('valid key--',data);
+
+
+                    return;
+
+
+                    Metro.dialog.create({
+                        title: "Valid API Key",
+                        content: "<div>Store API Key and state from server to local storage?</div>",
+                        actions: [
+                            {
+                                caption: "Agree",
+                                cls: "js-dialog-close alert",
+                                onclick: function () {
+
+                                    console.log(APIKEY);
+
+                                    UIHelper.Logger.Add({
+                                        TID: 0,
+                                        Type: 707,
+                                        DT: new Date(),
+                                        Topic: "API Key",
+                                        Source: "Browser",
+                                        Body: "Testing a new API Key!",
+                                    });
+
+                                }
+                            },
+                            {
+                                caption: "Disagree",
+                                cls: "js-dialog-close"
+                            }
+                        ]
+                    });
+
+
+
+
+                }
+
+
+            }).catch(error => {
+                console.warn('Error!');
+                console.error(error);
+                // debugger;
+            });
+
+
+
+
+        } else {
+            alert('fix yo key!  :-)');
+        }
+
+
+    }
 };
 
 if (localStorage) {

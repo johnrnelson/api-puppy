@@ -372,10 +372,10 @@
                     <div class="cell-md-6">
                         <label>API Key</label>
                         <form>
-                            <input type="password" autocomplete="off" placeholder="Enter your API Key">
+                            <input id="APIKeyInput" type="password" autocomplete="off" placeholder="Enter your API Key">
                         </form>
                         <br>
-                        <button class="button" onclick="UIHelper.NA()">Test API Key</button>
+                        <button class="button" onclick="AppRefs.TestKey(document.getElementById('APIKeyInput').value)">Test API Key</button>
                     </div>
                     <div class="cell-md-6">
                         <label>Target Server</label>

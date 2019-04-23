@@ -24,12 +24,24 @@ if (!fs.existsSync(SETUP_PATHS.SECRETS_FOLDER)) {
     console.log('Creating the "SECRET" folder!');
     fs.mkdirSync(SETUP_PATHS.SECRETS_FOLDER);
     const FileData = {
-        CERTS: {
-            //Change this for your own domain!
-            path: 'demo.tektology.com'
-        },
 
-    }
+        "CERTS": {
+            "path": "demo.tektology.com"
+        },
+        "Logger": {
+            "ignore": {
+                "IP4": [
+                    "24.21.146.104"
+                ]
+            }
+        },
+        "KEYS": {
+            "admin": [
+                "abc123"
+            ]
+
+        }
+    };
     fs.writeFileSync(path.join(SETUP_PATHS.SECRETS_FOLDER, "CONFIG.json"), JSON.stringify(FileData, null, "\t"), { flag: 'w' });
 }
 if (!fs.existsSync(SETUP_PATHS.LOGS_FOLDER)) {
