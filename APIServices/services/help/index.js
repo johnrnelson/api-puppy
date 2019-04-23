@@ -18,7 +18,7 @@ const topics = {
  
         fs.readdir(examplesFolder, function (err, items) {
             if (err) {
-                debugger;
+          
 
                 OnComplete(null, {
                     err: sampleid + " was not found!"
@@ -139,7 +139,9 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
             const activeTopic = topics[RequestData.topic];
 
             if (!activeTopic) {
-                OnComplete('Ok now write help about this topic <b>' + RequestData.topic + '<b>! lol', null);
+                OnComplete(null,{
+                    msg:'The topic was not found! [' + RequestData.topic + ']'
+                });
 
             } else {
                 try {
