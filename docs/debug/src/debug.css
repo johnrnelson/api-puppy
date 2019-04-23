@@ -23,9 +23,45 @@ body {
 }
 
 
+smallscreen {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    padding-top: 25px;
+    background-color: black;
+    border: solid 1px silver;
+    /* background: -webkit-radial-gradient(center, ellipse cover, rgb(116, 116, 116) 0%, rgb(0, 0, 0) 50%); */
+    color: red;
+    text-shadow: 1px 1px 1px #444444;    
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+}
 
 
+desktop {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}
 
+
+@media only screen and (max-width: 500px) {
+    desktop {
+        display: none;
+    }
+
+    smallscreen {
+        display: block;
+    }
+}
 
 
 sidemenu {
@@ -127,15 +163,17 @@ MainTabDisplay LoggerTable {
 
 #LogTree i {
     color: rgb(14, 14, 212) !important;
-    
+
     padding-right: 10px;
 }
+
 #LogTree .LgCnt {
     color: rgb(1, 77, 48) !important;
     padding-right: 10px;
     /* text-shadow: 1px 1px 1px #000000; */
     font-weight: bold;
 }
+
 LoggerTable .LoggerLabel {
     color: rgb(78, 1, 78);
     font-size: 18px;

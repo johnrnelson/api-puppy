@@ -747,109 +747,114 @@ window.onload = function () {
 </head>
 
 <body>
-    <sidemenu>
-        <!-- https://metroui.org.ua/menu.html#_h_menu -->
-        <ul class="t-menu open verticle compact">
-            <li id="TabMain-BTN" data-role="hint" data-hint-position="right"
-                data-hint-text="Basic help about the user interface">
-                <a href="JavaScript:UIHelper.ShowTab('TabMain')"><span class="fas fa-home"></span></a>
-            </li>
 
-            <li id="TabDebugger-BTN" data-role="hint" data-hint-position="right"
-                data-hint-text="Interactive debugger to test with">
-                <a href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span class="fas fa-bug"></span></a></li>
+    <desktop>
 
 
+        <sidemenu>
+            <!-- https://metroui.org.ua/menu.html#_h_menu -->
+            <ul class="t-menu open verticle compact">
+                <li id="TabMain-BTN" data-role="hint" data-hint-position="right"
+                    data-hint-text="Basic help about the user interface">
+                    <a href="JavaScript:UIHelper.ShowTab('TabMain')"><span class="fas fa-home"></span></a>
+                </li>
 
-            <li id="HistoryLogger-BTN" data-role="hint" data-hint-position="right"
-                data-hint-text="Simple logger so you don't have to use the console"><a
-                    href="JavaScript:UIHelper.ShowTab('HistoryLogger')"><span class="fas fa-file-code"></span></a></li>
-
-            <li id="GitHubLinks-BTN" data-role="hint" data-hint-position="right"
-                data-hint-text="GitHub project for the source code"><a
-                    href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
-                    <span class="fab fa-github"></span></a></li>
-
-
-            <li id="TabAppPrefs-BTN" data-role="hint" data-hint-position="right" data-hint-text="Web App Preferences"><a
-                    href="JavaScript:UIHelper.ShowTab('TabAppPrefs')">
-                    <span class="fas fa-cogs"></span></a></li>
+                <li id="TabDebugger-BTN" data-role="hint" data-hint-position="right"
+                    data-hint-text="Interactive debugger to test with">
+                    <a href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span class="fas fa-bug"></span></a></li>
 
 
-        </ul>
 
-    </sidemenu>
+                <li id="HistoryLogger-BTN" data-role="hint" data-hint-position="right"
+                    data-hint-text="Simple logger so you don't have to use the console"><a
+                        href="JavaScript:UIHelper.ShowTab('HistoryLogger')"><span class="fas fa-file-code"></span></a>
+                </li>
 
-    <MainTabDisplay id="GitHubLinks">
-        <!-- footer -->
-        <h2>GitHub Project Links</h2>
-
-        <p>
-            Use the links below to get to the source code of the stuff needed to use this project.
-        </p>
-        <br>
-        <div class="HelpText">
+                <li id="GitHubLinks-BTN" data-role="hint" data-hint-position="right"
+                    data-hint-text="GitHub project for the source code"><a
+                        href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
+                        <span class="fab fa-github"></span></a></li>
 
 
-            <div>
-                <a href="https://github.com/johnrnelson/api-puppy" target="_blank">api-puppy Project</a>
-                <br>
-                Actual source code for this project.
+                <li id="TabAppPrefs-BTN" data-role="hint" data-hint-position="right"
+                    data-hint-text="Web App Preferences"><a href="JavaScript:UIHelper.ShowTab('TabAppPrefs')">
+                        <span class="fas fa-cogs"></span></a></li>
+
+
+            </ul>
+
+        </sidemenu>
+
+        <MainTabDisplay id="GitHubLinks">
+            <!-- footer -->
+            <h2>GitHub Project Links</h2>
+
+            <p>
+                Use the links below to get to the source code of the stuff needed to use this project.
+            </p>
+            <br>
+            <div class="HelpText">
+
+
+                <div>
+                    <a href="https://github.com/johnrnelson/api-puppy" target="_blank">api-puppy Project</a>
+                    <br>
+                    Actual source code for this project.
+                </div>
+
+                <div>
+                    <a href="https://api-puppy.johnrnelson.com/" target="_blank">api-puppy Web Site</a>
+                    <br>
+                    This is the documentation, tools, and helpful information about this project.
+                </div>
+                <div>
+                    <a href="https://github.com/ajaxorg/ace" target="_blank">Ace Editor</a>
+                    <br>
+                    The HTML editor used for UI. It's good stuff, you should check it out.
+                </div>
+                <div>
+                    <a href="https://github.com/olton/Metro-UI-CSS" target="_blank">Metro-UI-CSS</a>
+                    <br>
+                    A step up from bootstrap. Nice and easy HTML and CSS to display what we need.
+                </div>
+                <div>
+                    <a href="https://github.com/moment/moment" target="_blank">Moment.js</a>
+                    <br>
+                    Parse, validate, manipulate, and display dates and times in JavaScript.
+                </div>
+
+
             </div>
 
-            <div>
-                <a href="https://api-puppy.johnrnelson.com/" target="_blank">api-puppy Web Site</a>
-                <br>
-                This is the documentation, tools, and helpful information about this project.
-            </div>
-            <div>
-                <a href="https://github.com/ajaxorg/ace" target="_blank">Ace Editor</a>
-                <br>
-                The HTML editor used for UI. It's good stuff, you should check it out.
-            </div>
-            <div>
-                <a href="https://github.com/olton/Metro-UI-CSS" target="_blank">Metro-UI-CSS</a>
-                <br>
-                A step up from bootstrap. Nice and easy HTML and CSS to display what we need.
-            </div>
-            <div>
-                <a href="https://github.com/moment/moment" target="_blank">Moment.js</a>
-                <br>
-                Parse, validate, manipulate, and display dates and times in JavaScript.
-            </div>
+
+        </MainTabDisplay>
 
 
-        </div>
+        <!-- Log the history and help the user know whats up... -->
+        <MainTabDisplay id="HistoryLogger">
 
 
-    </MainTabDisplay>
+            <ul class="h-menu">
 
-
-    <!-- Log the history and help the user know whats up... -->
-    <MainTabDisplay id="HistoryLogger">
-
-
-        <ul class="h-menu">
-
-            <li title="Clear the log history"><a href="JavaScript:UIHelper.Logger.Clear()">Clear</a></li>
-            <li title="Export to a file"><a href="#">Export</a></li>
-        </ul>
+                <li title="Clear the log history"><a href="JavaScript:UIHelper.Logger.Clear()">Clear</a></li>
+                <li title="Export to a file"><a href="#">Export</a></li>
+            </ul>
 
 
 
 
-        <div class="split-container">
+            <div class="split-container">
 
 
 
-            <div data-role="splitter" class="h-100" data-split-sizes="20, 60" data-min-sizes="160,160"
-                data-max-sizes="340,0" data-gutter-size="8">
+                <div data-role="splitter" class="h-100" data-split-sizes="20, 60" data-min-sizes="160,160"
+                    data-max-sizes="340,0" data-gutter-size="8">
 
-                <div class="d-flex flex-justify-left flex-align-left">
+                    <div class="d-flex flex-justify-left flex-align-left">
 
 
-                    <ul id="LogTree" data-role="treeview">
-                        <!-- <li data-caption="Options">
+                        <ul id="LogTree" data-role="treeview">
+                            <!-- <li data-caption="Options">
 
                             <ul>
                                 <li><input type="checkbox" data-role="switch" data-caption="Animations"
@@ -869,279 +874,281 @@ window.onload = function () {
                             </ul>
 
                         </li> -->
-                        <li data-caption="Local Logs">
+                            <li data-caption="Local Logs">
 
-                            <ul>
-                                <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
-                                    onclick="UIHelper.Logger.SetListType('200')">
-                                    <span class="LgCnt" id="LgCnt-200"></span>
-                                </li>
-                                <li data-icon="<i class='fas fa-info-circle fa-fw'></i>"
-                                    data-caption="Basic Information" onclick="UIHelper.Logger.SetListType('411')">
-                                    <span class="LgCnt" id="LgCnt-411"></span>
-                                </li>
-                                <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
-                                    onclick="UIHelper.Logger.SetListType('466')">
-                                    <span class="LgCnt" id="LgCnt-466"></span>
-                                </li>
-                                <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
-                                    onclick="UIHelper.Logger.SetListType('707')">
-                                    <span class="LgCnt" id="LgCnt-707"></span>
-                                </li>
-                                <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
-                                    onclick="UIHelper.Logger.SetListType('0')">
-                                    <span class="LgCnt" id="LgCnt-0"></span>
-                                </li>
-                            </ul>
-                        </li>
-                        <li data-caption="Remote Logs" collapsed>
+                                <ul>
+                                    <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
+                                        onclick="UIHelper.Logger.SetListType('200')">
+                                        <span class="LgCnt" id="LgCnt-200"></span>
+                                    </li>
+                                    <li data-icon="<i class='fas fa-info-circle fa-fw'></i>"
+                                        data-caption="Basic Information" onclick="UIHelper.Logger.SetListType('411')">
+                                        <span class="LgCnt" id="LgCnt-411"></span>
+                                    </li>
+                                    <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
+                                        onclick="UIHelper.Logger.SetListType('466')">
+                                        <span class="LgCnt" id="LgCnt-466"></span>
+                                    </li>
+                                    <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
+                                        onclick="UIHelper.Logger.SetListType('707')">
+                                        <span class="LgCnt" id="LgCnt-707"></span>
+                                    </li>
+                                    <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
+                                        onclick="UIHelper.Logger.SetListType('0')">
+                                        <span class="LgCnt" id="LgCnt-0"></span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li data-caption="Remote Logs" collapsed>
 
-                            <ul>
-                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>"
-                                    data-caption="PHP Requests" disabled></li>
-                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-share-alt'></i>"
-                                    data-caption="Socket History" disabled>
-                                </li>
-                                <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>"
-                                    data-caption="Generic Errors" disabled></li>
-                            </ul>
+                                <ul>
+                                    <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>"
+                                        data-caption="PHP Requests" disabled></li>
+                                    <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-share-alt'></i>"
+                                        data-caption="Socket History" disabled>
+                                    </li>
+                                    <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>"
+                                        data-caption="Generic Errors" disabled></li>
+                                </ul>
 
-                        </li>
+                            </li>
 
-                    </ul>
+                        </ul>
 
-                </div>
-                <div class="d-flex flex-justify-left flex-align-left">
-
-
-
-                    <LoggerTable id="LGType-LgOpts">
-                        <div>
-                            <h3>Logging Options</h3>
-                            <p>
-                                Working on this! :-)
-                            </p>
-                        </div>
-                    </LoggerTable>
-                    <LoggerTable haslog="true" id="LGType-0" style="display:block">
-                        <div class="LoggerLabel">Generic Errors</div>
-                        <table class="table  striped compact" style="background: transparent;">
-                            <thead>
-                                <tr>
-                                    <!-- <th width="50px" vertical-align="top">Type</th> -->
-                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                    <th widht="100%" vertical-align="top">Body</th>
-                                </tr>
-                            </thead>
-                            <tbody id="LGType-0-history" class="row-hover">
-                            </tbody>
-                        </table>
-                    </LoggerTable>
-                    <LoggerTable haslog="true" id="LGType-200">
-                        <div class="LoggerLabel">HTTP traffice using REST</div>
-                        <table class="table  striped compact" style="background: transparent;">
-                            <thead>
-                                <tr>
-                                    <!-- <th width="50px" vertical-align="top">Type</th> -->
-                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                    <th widht="100%" vertical-align="top">Body</th>
-                                </tr>
-                            </thead>
-                            <tbody id="LGType-200-history" class="row-hover">
-                            </tbody>
-                        </table>
-                    </LoggerTable>
-                    <LoggerTable haslog="true" id="LGType-411">
-                        <div class="LoggerLabel">Basic information</div>
-                        <table class="table  striped compact" style="background: transparent;">
-                            <thead>
-                                <tr>
-                                    <!-- <th width="50px" vertical-align="top">Type -411</th> -->
-                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                    <th widht="100%" vertical-align="top">Body</th>
-                                </tr>
-                            </thead>
-                            <tbody id="LGType-411-history" class="row-hover">
-                            </tbody>
-                        </table>
-                    </LoggerTable>
-                    <LoggerTable haslog="true" id="LGType-466">
-                        <div class="LoggerLabel">Socket Traffic</div>
-                        <table class="table  striped compact" style="background: transparent;">
-                            <thead>
-                                <tr>
-                                    <!-- <th width="50px" vertical-align="top">Type -466</th> -->
-                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                    <th widht="100%" vertical-align="top">Body</th>
-                                </tr>
-                            </thead>
-                            <tbody id="LGType-466-history" class="row-hover">
-                            </tbody>
-                        </table>
-                    </LoggerTable>
-                    <LoggerTable haslog="true" id="LGType-707">
-                        <div class="LoggerLabel">UI updates in the browser</div>
-                        <table class="table  striped compact" style="background: transparent;">
-                            <thead>
-                                <tr>
-                                    <!-- <th width="50px" vertical-align="top">Type -707</th> -->
-                                    <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                    <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                    <th widht="100%" vertical-align="top">Body</th>
-                                </tr>
-                            </thead>
-                            <tbody id="LGType-707-history" class="row-hover">
-                            </tbody>
-                        </table>
-                    </LoggerTable>
-                </div>
-            </div>
-
-        </div>
-
-
-
-
-
-
-
-
-        <div style="display:none">
-
-            <LogTree>
-
-            </LogTree>
-
-
-        </div>
-
-
-    </MainTabDisplay>
-
-
-    <!-- Because of the editor, you need to declare this first! -->
-    <MainTabDisplay id="TabDebugger">
-
-
-
-        <div class="DebugToolbar" title="URI Endpoint address">
-
-            <div class="dropdown-button">
-                <button id="DebugVerbList_BTN" class="button dropdown-toggle"></button>
-                <ul id="DebugVerbList_UL" class="d-menu" data-role="dropdown">
-                </ul>
-            </div>
-            <div class="dropdown-button">
-                <button id="DebugSampleList_BTN" class="button dropdown-toggle"></button>
-                <ul id="DebugSampleList_UL" class="d-menu" data-role="dropdown">
-                </ul>
-            </div>
-
-
-
-            <div class="dropdown-button">
-                <button id="Export_BTN" class="button dropdown-toggle">Export</button>
-                <ul id="Export_UL" class="d-menu" data-role="dropdown">
-
-                    <li><a href="#" title="Export sample code for CURL" onclick="DebugUI.ExportCode('curl')">curl</a>
-                    </li>
-                    <li><a href="#" title="Export sample code for JavaScript Browser"
-                            onclick="DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
-                    <li><a href="#" title="Export sample code for JavaScript HTTP Client"
-                            onclick="DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
-                    <li><a href="#" title="Export sample code for pythod 3"
-                            onclick="DebugUI.ExportCode('python 3')">Python 3</a></li>
-                    <li><a class="disabled" href="#" title="Export sample code for C# .Net">C#</a></li>
-                </ul>
-            </div>
-
-
-        </div>
-
-
-
-        <div class="split-container">
-
-
-
-            <div data-role="splitter" class="h-100" data-split-sizes="60, 40" data-min-sizes="60,60"
-                data-gutter-size="8">
-
-                <div class="d-flex flex-justify-center flex-align-center">
-                    <div class="split-header" title="The body of the request in JSON format">
-                        &nbsp;<i class="fas fa-upload" style="color:silver"></i>
-                        &nbsp;Upload JSON
-                        <span id="Date_Uploaded"></span>
-                        <span class="iconbuttons">
-                            <a title="Use HTTP GET for the request" id="api-uri-link" href="#" target="_blank">GET</a>
-                            <a title="Use HTTP PUT for the request"
-                                href="JavaScript:DebugUI.MakeHTTP_PUT_Request();">PUT</a>
-                            <a title="Use the socket for the request"
-                                href="JavaScript:DebugUI.MakeSocketRequest();">SOCKET</a>
-                        </span>
                     </div>
-                    <div id="PayloadEditor" class="ace-editor"></div>
+                    <div class="d-flex flex-justify-left flex-align-left">
+
+
+
+                        <LoggerTable id="LGType-LgOpts">
+                            <div>
+                                <h3>Logging Options</h3>
+                                <p>
+                                    Working on this! :-)
+                                </p>
+                            </div>
+                        </LoggerTable>
+                        <LoggerTable haslog="true" id="LGType-0" style="display:block">
+                            <div class="LoggerLabel">Generic Errors</div>
+                            <table class="table  striped compact" style="background: transparent;">
+                                <thead>
+                                    <tr>
+                                        <!-- <th width="50px" vertical-align="top">Type</th> -->
+                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                        <th widht="100%" vertical-align="top">Body</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="LGType-0-history" class="row-hover">
+                                </tbody>
+                            </table>
+                        </LoggerTable>
+                        <LoggerTable haslog="true" id="LGType-200">
+                            <div class="LoggerLabel">HTTP traffice using REST</div>
+                            <table class="table  striped compact" style="background: transparent;">
+                                <thead>
+                                    <tr>
+                                        <!-- <th width="50px" vertical-align="top">Type</th> -->
+                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                        <th widht="100%" vertical-align="top">Body</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="LGType-200-history" class="row-hover">
+                                </tbody>
+                            </table>
+                        </LoggerTable>
+                        <LoggerTable haslog="true" id="LGType-411">
+                            <div class="LoggerLabel">Basic information</div>
+                            <table class="table  striped compact" style="background: transparent;">
+                                <thead>
+                                    <tr>
+                                        <!-- <th width="50px" vertical-align="top">Type -411</th> -->
+                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                        <th widht="100%" vertical-align="top">Body</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="LGType-411-history" class="row-hover">
+                                </tbody>
+                            </table>
+                        </LoggerTable>
+                        <LoggerTable haslog="true" id="LGType-466">
+                            <div class="LoggerLabel">Socket Traffic</div>
+                            <table class="table  striped compact" style="background: transparent;">
+                                <thead>
+                                    <tr>
+                                        <!-- <th width="50px" vertical-align="top">Type -466</th> -->
+                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                        <th widht="100%" vertical-align="top">Body</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="LGType-466-history" class="row-hover">
+                                </tbody>
+                            </table>
+                        </LoggerTable>
+                        <LoggerTable haslog="true" id="LGType-707">
+                            <div class="LoggerLabel">UI updates in the browser</div>
+                            <table class="table  striped compact" style="background: transparent;">
+                                <thead>
+                                    <tr>
+                                        <!-- <th width="50px" vertical-align="top">Type -707</th> -->
+                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                                        <th widht="100%" vertical-align="top">Body</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="LGType-707-history" class="row-hover">
+                                </tbody>
+                            </table>
+                        </LoggerTable>
+                    </div>
                 </div>
-                <div class="d-flex flex-justify-center flex-align-center">
-                    <div class="split-header" title="The result of the request in JSON format">
-                        &nbsp;<i class="fas fa-download" style="color:silver"></i>&nbsp;Download JSON
-                        from Server <span id="Date_Downloaded"></span></div>
-                    <div id="APIDebugResults" class="APIDebugResults"></div>
-                </div>
+
             </div>
 
 
-        </div>
 
 
-    </MainTabDisplay>
 
 
-    <MainTabDisplay id="TabAppPrefs">
 
 
-        <div style="padding:10px;">
-            <h1>Web Application Preferences</h1>
-            <p>
-                All values are stored locally in the browser, not the server. So if the
-                browser deletes it you will have to reinput the values.
-            </p>
-            <br>
+            <div style="display:none">
 
-            <div class="row">
-                <div class="cell-md-6">
-                    <label>API Key</label>
-                    <input type="password" placeholder="Enter your API Key">
-                    <br>
-                    <button class="button" onclick="UIHelper.NA()">Test API Key</button>
-                </div>
-                <div class="cell-md-6">
-                    <label>Target Server</label>
+                <LogTree>
 
-                    <select data-role="select">
-                        <optgroup label="Local Network">
-                            <option value="localhost" selected="selected">localhost</option>
-                            <option value="0.0.0.0">0.0.0.0</option>
-                        </optgroup>
-                        <optgroup label="Remote Servers">
-                            <option value="demo.tektology.com">demo.tektology.com</option>
-                        </optgroup>
-                    </select>
-                </div>
+                </LogTree>
+
+
             </div>
-            <br>
-            <hr>
-            <br>
-            <!-- <div class="row">
+
+
+        </MainTabDisplay>
+
+
+        <!-- Because of the editor, you need to declare this first! -->
+        <MainTabDisplay id="TabDebugger">
+
+
+
+            <div class="DebugToolbar" title="URI Endpoint address">
+
+                <div class="dropdown-button">
+                    <button id="DebugVerbList_BTN" class="button dropdown-toggle"></button>
+                    <ul id="DebugVerbList_UL" class="d-menu" data-role="dropdown">
+                    </ul>
+                </div>
+                <div class="dropdown-button">
+                    <button id="DebugSampleList_BTN" class="button dropdown-toggle"></button>
+                    <ul id="DebugSampleList_UL" class="d-menu" data-role="dropdown">
+                    </ul>
+                </div>
+
+
+
+                <div class="dropdown-button">
+                    <button id="Export_BTN" class="button dropdown-toggle">Export</button>
+                    <ul id="Export_UL" class="d-menu" data-role="dropdown">
+
+                        <li><a href="#" title="Export sample code for CURL"
+                                onclick="DebugUI.ExportCode('curl')">curl</a>
+                        </li>
+                        <li><a href="#" title="Export sample code for JavaScript Browser"
+                                onclick="DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
+                        <li><a href="#" title="Export sample code for JavaScript HTTP Client"
+                                onclick="DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
+                        <li><a href="#" title="Export sample code for pythod 3"
+                                onclick="DebugUI.ExportCode('python 3')">Python 3</a></li>
+                        <li><a class="disabled" href="#" title="Export sample code for C# .Net">C#</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="split-container">
+
+
+
+                <div data-role="splitter" class="h-100" data-split-sizes="60, 40" data-min-sizes="60,60"
+                    data-gutter-size="8">
+
+                    <div class="d-flex flex-justify-center flex-align-center">
+                        <div class="split-header" title="The body of the request in JSON format">
+                            &nbsp;<i class="fas fa-upload" style="color:silver"></i>
+                            &nbsp;Upload JSON
+                            <span id="Date_Uploaded"></span>
+                            <span class="iconbuttons">
+                                <a title="Use HTTP GET for the request" id="api-uri-link" href="#"
+                                    target="_blank">GET</a>
+                                <a title="Use HTTP PUT for the request"
+                                    href="JavaScript:DebugUI.MakeHTTP_PUT_Request();">PUT</a>
+                                <a title="Use the socket for the request"
+                                    href="JavaScript:DebugUI.MakeSocketRequest();">SOCKET</a>
+                            </span>
+                        </div>
+                        <div id="PayloadEditor" class="ace-editor"></div>
+                    </div>
+                    <div class="d-flex flex-justify-center flex-align-center">
+                        <div class="split-header" title="The result of the request in JSON format">
+                            &nbsp;<i class="fas fa-download" style="color:silver"></i>&nbsp;Download JSON
+                            from Server <span id="Date_Downloaded"></span></div>
+                        <div id="APIDebugResults" class="APIDebugResults"></div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </MainTabDisplay>
+
+
+        <MainTabDisplay id="TabAppPrefs">
+
+
+            <div style="padding:10px;">
+                <h1>Web Application Preferences</h1>
+                <p>
+                    All values are stored locally in the browser, not the server. So if the
+                    browser deletes it you will have to reinput the values.
+                </p>
+                <br>
+
+                <div class="row">
+                    <div class="cell-md-6">
+                        <label>API Key</label>
+                        <input type="password" placeholder="Enter your API Key">
+                        <br>
+                        <button class="button" onclick="UIHelper.NA()">Test API Key</button>
+                    </div>
+                    <div class="cell-md-6">
+                        <label>Target Server</label>
+
+                        <select data-role="select">
+                            <optgroup label="Local Network">
+                                <option value="localhost" selected="selected">localhost</option>
+                                <option value="0.0.0.0">0.0.0.0</option>
+                            </optgroup>
+                            <optgroup label="Remote Servers">
+                                <option value="demo.tektology.com">demo.tektology.com</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <hr>
+                <br>
+                <!-- <div class="row">
 
                 <div class="cell-md-8">
                     Corrrect
@@ -1153,10 +1160,22 @@ window.onload = function () {
                 </div>
             </div> -->
 
-        </div>
+            </div>
 
-    </MainTabDisplay>
-    <MainTabDisplay id="TabMain" style="overflow:auto;"></MainTabDisplay>
+        </MainTabDisplay>
+        <MainTabDisplay id="TabMain" style="overflow:auto;"></MainTabDisplay>
+
+    </desktop>
+
+    <smallscreen>
+        <center>
+
+            <div>
+                THE SCREEN IS TOO SMALL                 
+                TO USE THIS DEMO!
+            </div>
+        </center>
+    </smallscreen>
 </body>
 
 </html>
