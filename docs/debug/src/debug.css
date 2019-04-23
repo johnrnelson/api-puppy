@@ -127,10 +127,15 @@ MainTabDisplay LoggerTable {
 
 #LogTree i {
     color: rgb(14, 14, 212) !important;
-    text-shadow: 1px 1px 1px #dbdbdb;
+    
     padding-right: 10px;
 }
-
+#LogTree .LgCnt {
+    color: rgb(1, 77, 48) !important;
+    padding-right: 10px;
+    /* text-shadow: 1px 1px 1px #000000; */
+    font-weight: bold;
+}
 LoggerTable .LoggerLabel {
     color: rgb(78, 1, 78);
     font-size: 18px;
@@ -146,6 +151,13 @@ LoggerTable table {
     color: red;
 }
 
+
+
+
+
+
+
+/* Main Display */
 
 MainTabDisplay .h-menu {
     background-color: rgb(0, 0, 54);

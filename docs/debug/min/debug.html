@@ -536,7 +536,7 @@ print(response_data)
             Type: 707,
             DT: new Date(),
             Topic: "Display JSON from the server",
-            Source: "Browser",
+            Source: JSONSource,
             Body: "<i>" + JSONText + "</i>",
         });
 
@@ -731,43 +731,10 @@ window.onload = function () {
             // UIHelper.ShowTab('TabAppPrefs');
         }
 
+ 
 
 
 
-
-
-
-
-
-        UIHelper.Logger.Add({
-            TID: 0,
-            Type: 707,
-            DT: new Date(),
-            Topic: "Local Storage",
-            Source: "Browser",
-            Body: "The browser storage has loaded!",
-        });
-
-        UIHelper.Logger.Add({
-            TID: 0,
-            Type: 0,
-            DT: new Date(),
-            Topic: "Local Storage",
-            Source: "Browser",
-            Body: "The browser <b>does hot have<b> local storage!",
-        });
-        
-
-
-
-
-
-
-
-
-
-
-        
 
 
     }); //end UIHelper....
@@ -907,23 +874,23 @@ window.onload = function () {
                             <ul>
                                 <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
                                     onclick="UIHelper.Logger.SetListType('200')">
-                                    <span id="LgCnt-200"></span>
+                                    <span class="LgCnt" id="LgCnt-200"></span>
                                 </li>
                                 <li data-icon="<i class='fas fa-info-circle fa-fw'></i>"
                                     data-caption="Basic Information" onclick="UIHelper.Logger.SetListType('411')">
-                                    <span id="LgCnt-411"></span>
+                                    <span class="LgCnt" id="LgCnt-411"></span>
                                 </li>
                                 <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
                                     onclick="UIHelper.Logger.SetListType('466')">
-                                    <span id="LgCnt-466"></span>
+                                    <span class="LgCnt" id="LgCnt-466"></span>
                                 </li>
                                 <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
                                     onclick="UIHelper.Logger.SetListType('707')">
-                                    <span id="LgCnt-707"></span>
+                                    <span class="LgCnt" id="LgCnt-707"></span>
                                 </li>
                                 <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
                                     onclick="UIHelper.Logger.SetListType('0')">
-                                    <span id="LgCnt-0"></span>
+                                    <span class="LgCnt" id="LgCnt-0"></span>
                                 </li>
                             </ul>
                         </li>

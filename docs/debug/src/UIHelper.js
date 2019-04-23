@@ -228,7 +228,7 @@ window.UIHelper = {
 
                                 const haslog = lgEl.getAttribute('haslog');
                                 if (haslog) {
-                                    
+
                                     const tbl = lgEl.querySelector('tbody');
                                     if (!tbl) {
                                         debugger;
@@ -239,7 +239,7 @@ window.UIHelper = {
 
                                     const TargetElementCount = document.getElementById('LgCnt-' + lgType);
                                     TargetElementCount.TotalCount = 0;
-                                    TargetElementCount.innerHTML = "";
+                                    TargetElementCount.innerHTML = "&nbsp;";
 
                                 }
 
@@ -247,16 +247,20 @@ window.UIHelper = {
                             }
 
 
-                            // const tblBody = document.getElementById('HistoryLoggerTable');
-                            // tblBody.innerHTML = "";
+                            UIHelper.Logger.Add({
+                                TID: 0,
+                                Type: 707,
+                                DT: new Date(),
+                                Topic: "Logger History",
+                                Source: "Browser",
+                                Body: "History was deleted per user request",
+                            });
+
                         }
                     },
                     {
                         caption: "Disagree",
-                        cls: "js-dialog-close",
-                        onclick: function () {
-                            console.info("History was not deleted!");
-                        }
+                        cls: "js-dialog-close"
                     }
                 ]
             });
@@ -298,15 +302,15 @@ window.UIHelper = {
             try {
 
                 if (!LogMSG.Type) {
-                    LogMSG.Type = 0;                  
+                    LogMSG.Type = 0;
                 }
 
                 const TargetElementCount = document.getElementById('LgCnt-' + LogMSG.Type);
                 if (!TargetElementCount.TotalCount) {
                     TargetElementCount.TotalCount = 0;
                 }
-                TargetElementCount.TotalCount ++;
-                TargetElementCount.innerHTML = TargetElementCount.TotalCount;
+                TargetElementCount.TotalCount++;
+                TargetElementCount.innerHTML = "[" + TargetElementCount.TotalCount + "]";
 
                 function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
                     const newCell = document.createElement('td');

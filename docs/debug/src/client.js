@@ -488,7 +488,7 @@ print(response_data)
             Type: 707,
             DT: new Date(),
             Topic: "Display JSON from the server",
-            Source: "Browser",
+            Source: JSONSource,
             Body: "<i>" + JSONText + "</i>",
         });
 
@@ -683,40 +683,7 @@ window.onload = function () {
             // UIHelper.ShowTab('TabAppPrefs');
         }
 
-
-
-
-
-
-
-
-
-        // UIHelper.Logger.Add({
-        //     TID: 0,
-        //     Type: 707,
-        //     DT: new Date(),
-        //     Topic: "Local Storage",
-        //     Source: "Browser",
-        //     Body: "The browser storage has loaded!",
-        // });
-
-        // UIHelper.Logger.Add({
-        //     TID: 0,
-        //     Type: 0,
-        //     DT: new Date(),
-        //     Topic: "Local Storage",
-        //     Source: "Browser",
-        //     Body: "The browser <b>does hot have<b> local storage!",
-        // });
-        
-
-
-
-
-
-
-
-
+ 
 
 
 
