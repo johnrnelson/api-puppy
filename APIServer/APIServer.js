@@ -591,10 +591,7 @@ window.debugdata = {
 
                         }
 
-                        const ServiceErrorInformation = {
-                            msg: "Service Error!",
-                            service: request.RequestData.service
-                        };
+                    
 
 
 
@@ -626,7 +623,7 @@ window.debugdata = {
                                     resultObj[aSingleRequest.reqID] = ResponseJSON;
 
                                     if (ServiceError) {
-                                        resultObj[aSingleRequest.reqID] = ServiceErrorInformation;
+                                        resultObj[aSingleRequest.reqID] = ServiceError;
 
                                     } else {
                                         resultObj[aSingleRequest.reqID] = ResponseJSON;
@@ -645,11 +642,12 @@ window.debugdata = {
                             //By the time you get here.. you want a true web api request...
                             ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                                 if (ServiceError) {
-                                    //Don't leak this!! lol
-                                    // response.SendError(response, ServiceError);
+                                    
+                                    response.SendError(response, ServiceError);
 
                                     //Send the ServiceErrorInformation instead of the bubbled up error!!!
-                                    response.SendError(response, ServiceErrorInformation);
+                                    // response.SendError(response, ServiceErrorInformation);
+                                    
                                 } else {
                                     response.end(JSON.stringify(ResponseJSON));
                                 }

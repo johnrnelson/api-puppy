@@ -24,7 +24,9 @@ const topics = {
             if (err) {
                 debugger;
 
-                OnComplete(sampleid + " was not found!", null);
+                OnComplete(null{
+                    err: sampleid + " was not found!"
+                });
 
             } else {
 
@@ -103,7 +105,6 @@ const topics = {
                 debugger;
                 OnComplete(null, {
                     path: examplesFilePath,
-                    err: err.message,
                     debug: RequestData
                 });
             } else {
@@ -116,7 +117,7 @@ const topics = {
     'list-log-files': function (RequestData, OnComplete) {
         // debugger;
         SERVER.ServiceLogger.ListLogs(function (LogList) {
-            OnComplete(null,{
+            OnComplete(null, {
                 logs: LogList
             });
         });

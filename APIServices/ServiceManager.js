@@ -17,10 +17,11 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
     } else {
 
         var finalServicePath = "";
+        var servicePath = "";
 
         try {
             //Do not allow ".." in the path!!!!
-            const servicePath = RequestData.service.replace(/\./g, '');
+            servicePath = RequestData.service.replace(/\./g, '');
 
             finalServicePath = path.resolve(path.join(__dirname, "services", path.normalize(path.join(servicePath, 'index.js'))));
 
@@ -38,7 +39,11 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
 
             });
         } catch (errinService) {
-            OnComplete(errinService.message, null);
+            OnComplete(null, {
+                err: 'Unable to service this request!',
+                service: servicePath
+
+            });
         }
 
     }

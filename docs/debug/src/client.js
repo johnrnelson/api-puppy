@@ -559,6 +559,9 @@ window.onload = function () {
         //Setup our UI parts...
         DebugUI.FillSideBar();
 
+        //Show our prefs...
+        AppRefs.UI.ShowPrefs();
+
 
         //Setup all of our ace editors...
         UIHelper.Ace.BuildAceControls();
@@ -677,8 +680,8 @@ window.onload = function () {
         //If you local host you are most likely debugging.. :-)
         if (document.location.hostname == "localhost") {
             // debugger;
-            // UIHelper.ShowTab('TabDebugger');
-            UIHelper.ShowTab('HistoryLogger');
+            UIHelper.ShowTab('TabDebugger');
+            // UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
             // UIHelper.ShowTab('TabAppPrefs');
         }

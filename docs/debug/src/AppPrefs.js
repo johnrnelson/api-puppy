@@ -8,10 +8,17 @@ window.AppRefs = {
     UserOptions: {
         UserID: '',
         TargetAPI: {
-            host: '',
-            headers: []
+            url: document.URL ,
+            opts:{
+                favor:'put'
+            }
         }
-    }
+    },
+    UI:{
+        ShowPrefs(){
+            console.info('User--',AppRefs.UserOptions);
+        }
+    },
 };
 
 if (localStorage) {
