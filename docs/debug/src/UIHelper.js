@@ -228,12 +228,19 @@ window.UIHelper = {
 
                                 const haslog = lgEl.getAttribute('haslog');
                                 if (haslog) {
-                                    console.info('Clear ID:' + lgEl.id, haslog);
+                                    
                                     const tbl = lgEl.querySelector('tbody');
-                                    if(!tbl){
+                                    if (!tbl) {
                                         debugger;
                                     }
                                     tbl.innerHTML = "";
+
+                                    const lgType = lgEl.id.replace('LGType-', '');
+
+                                    const TargetElementCount = document.getElementById('LgCnt-' + lgType);
+                                    TargetElementCount.TotalCount = 0;
+                                    TargetElementCount.innerHTML = "";
+
                                 }
 
 
@@ -264,6 +271,7 @@ window.UIHelper = {
 
             const TargetElement = document.getElementById('LGType-' + ListElement);
 
+
             if (!TargetElement) {
                 console.warn('No log Target!');
                 return;
@@ -271,7 +279,7 @@ window.UIHelper = {
 
             if (!UIHelper.Logger.ActiveLog) {
                 UIHelper.Logger.ActiveLog = TargetElement;
-            } else { 
+            } else {
                 UIHelper.Logger.ActiveLog.style.display = "none";
                 UIHelper.Logger.ActiveLog = TargetElement;
             }
@@ -290,10 +298,15 @@ window.UIHelper = {
             try {
 
                 if (!LogMSG.Type) {
-                    LogMSG.Type = 0;
-                    debugger;
+                    LogMSG.Type = 0;                  
                 }
 
+                const TargetElementCount = document.getElementById('LgCnt-' + LogMSG.Type);
+                if (!TargetElementCount.TotalCount) {
+                    TargetElementCount.TotalCount = 0;
+                }
+                TargetElementCount.TotalCount ++;
+                TargetElementCount.innerHTML = TargetElementCount.TotalCount;
 
                 function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
                     const newCell = document.createElement('td');
@@ -374,7 +387,7 @@ window.UIHelper = {
 
     },
 
-    NA(){
+    NA() {
         Metro.dialog.create({
             title: "This feature is not yet available",
             content: "<div>Working on fixing whatever you just did! :-)</div>",
@@ -383,11 +396,11 @@ window.UIHelper = {
                     caption: "OK",
                     cls: "js-dialog-close alert",
                     onclick: function () {
-                        
+
                     }
-                } 
+                }
             ]
-        });        
+        });
     }
 };
 

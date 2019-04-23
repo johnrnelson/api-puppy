@@ -678,10 +678,48 @@ window.onload = function () {
         if (document.location.hostname == "localhost") {
             // debugger;
             // UIHelper.ShowTab('TabDebugger');
-            // UIHelper.ShowTab('HistoryLogger');
+            UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
             // UIHelper.ShowTab('TabAppPrefs');
         }
+
+
+
+
+
+
+
+
+
+        // UIHelper.Logger.Add({
+        //     TID: 0,
+        //     Type: 707,
+        //     DT: new Date(),
+        //     Topic: "Local Storage",
+        //     Source: "Browser",
+        //     Body: "The browser storage has loaded!",
+        // });
+
+        // UIHelper.Logger.Add({
+        //     TID: 0,
+        //     Type: 0,
+        //     DT: new Date(),
+        //     Topic: "Local Storage",
+        //     Source: "Browser",
+        //     Body: "The browser <b>does hot have<b> local storage!",
+        // });
+        
+
+
+
+
+
+
+
+
+
+
+
 
 
     }); //end UIHelper....

@@ -726,10 +726,48 @@ window.onload = function () {
         if (document.location.hostname == "localhost") {
             // debugger;
             // UIHelper.ShowTab('TabDebugger');
-            // UIHelper.ShowTab('HistoryLogger');
+            UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
             // UIHelper.ShowTab('TabAppPrefs');
         }
+
+
+
+
+
+
+
+
+
+        UIHelper.Logger.Add({
+            TID: 0,
+            Type: 707,
+            DT: new Date(),
+            Topic: "Local Storage",
+            Source: "Browser",
+            Body: "The browser storage has loaded!",
+        });
+
+        UIHelper.Logger.Add({
+            TID: 0,
+            Type: 0,
+            DT: new Date(),
+            Topic: "Local Storage",
+            Source: "Browser",
+            Body: "The browser <b>does hot have<b> local storage!",
+        });
+        
+
+
+
+
+
+
+
+
+
+
+        
 
 
     }); //end UIHelper....
@@ -765,10 +803,10 @@ window.onload = function () {
                     href="JavaScript:UIHelper.ShowTab('GitHubLinks')">
                     <span class="fab fa-github"></span></a></li>
 
-<!--                     
+
             <li id="TabAppPrefs-BTN" data-role="hint" data-hint-position="right" data-hint-text="Web App Preferences"><a
                     href="JavaScript:UIHelper.ShowTab('TabAppPrefs')">
-                    <span class="fas fa-cogs"></span></a></li> -->
+                    <span class="fas fa-cogs"></span></a></li>
 
 
         </ul>
@@ -844,7 +882,7 @@ window.onload = function () {
 
 
                     <ul id="LogTree" data-role="treeview">
-                        <li data-caption="Options">
+                        <!-- <li data-caption="Options">
 
                             <ul>
                                 <li><input type="checkbox" data-role="switch" data-caption="Animations"
@@ -863,24 +901,29 @@ window.onload = function () {
 
                             </ul>
 
-                        </li>
+                        </li> -->
                         <li data-caption="Local Logs">
 
                             <ul>
                                 <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
                                     onclick="UIHelper.Logger.SetListType('200')">
+                                    <span id="LgCnt-200"></span>
                                 </li>
                                 <li data-icon="<i class='fas fa-info-circle fa-fw'></i>"
                                     data-caption="Basic Information" onclick="UIHelper.Logger.SetListType('411')">
+                                    <span id="LgCnt-411"></span>
                                 </li>
                                 <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
                                     onclick="UIHelper.Logger.SetListType('466')">
+                                    <span id="LgCnt-466"></span>
                                 </li>
                                 <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
                                     onclick="UIHelper.Logger.SetListType('707')">
+                                    <span id="LgCnt-707"></span>
                                 </li>
                                 <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
                                     onclick="UIHelper.Logger.SetListType('0')">
+                                    <span id="LgCnt-0"></span>
                                 </li>
                             </ul>
                         </li>
@@ -1101,13 +1144,18 @@ window.onload = function () {
 
         <div style="padding:10px;">
             <h1>Web Application Preferences</h1>
+            <p>
+                All values are stored locally in the browser, not the server. So if the
+                browser deletes it you will have to reinput the values.
+            </p>
+            <br>
 
             <div class="row">
                 <div class="cell-md-6">
                     <label>API Key</label>
                     <input type="password" placeholder="Enter your API Key">
                     <br>
-                    <button onclick="console.info('asdf');">Test API Key</button>
+                    <button class="button" onclick="UIHelper.NA()">Test API Key</button>
                 </div>
                 <div class="cell-md-6">
                     <label>Target Server</label>
@@ -1126,21 +1174,17 @@ window.onload = function () {
             <br>
             <hr>
             <br>
-            <div class="row">
-                <div class="cell-md-6">
-                    <input type="checkbox" data-role="checkbox" data-caption="Use Headers" checked>
-                    <br>
-                    <div class="WebAppPrefs-Headers">
-                        <input type="text" placeholder="Enter your header information"><br>
-                        <input type="text" placeholder="Enter your header information"><br>
-                    </div>
+            <!-- <div class="row">
+
+                <div class="cell-md-8">
+                    Corrrect
                 </div>
-                <div class="cell-md-6">
+                <div class="cell-md-2">
                     <input type="checkbox" data-role="switch" data-caption="Local Storage" checked>
                     <br>
                     <input type="checkbox" data-role="switch" data-caption="Log Changes" checked>
                 </div>
-            </div>
+            </div> -->
 
         </div>
 

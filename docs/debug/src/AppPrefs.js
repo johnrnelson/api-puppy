@@ -19,6 +19,10 @@ if (localStorage) {
     if (UserOptions) {
         window.AppRefs.UserOptions = UserOptions;
     }
+
+    console.info('App options have loaded....');
+
+} else {
+    console.Warn('No Local Storage!');
 }
 
-console.info('App options have loaded....');
