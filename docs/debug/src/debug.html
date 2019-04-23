@@ -317,7 +317,7 @@
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
 
         </MainTabDisplay>
@@ -417,7 +417,9 @@
                 <div class="row">
                     <div class="cell-md-6">
                         <label>API Key</label>
-                        <input type="password" placeholder="Enter your API Key">
+                        <form>
+                            <input type="password" autocomplete="off" placeholder="Enter your API Key">
+                        </form>
                         <br>
                         <button class="button" onclick="UIHelper.NA()">Test API Key</button>
                     </div>
@@ -435,7 +437,18 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="row">
+                    <div class="cell-md-6">
+                        Testing Options
+                    </div>
+                    <div class="cell-md-6">
+
+                        <button class="button" onclick="AppRefs.UI.ClearPrefs()">Clear Local Storage</button>
+                    </div>
+                </div>
                 <br>
+
                 <hr>
                 <br>
                 <!-- <div class="row">
@@ -457,11 +470,15 @@
 
     </desktop>
 
+    <!-- 
+        Simple way to let the user know the screen is too small
+        Check the debug.css for the media query styles...
+     -->
     <smallscreen>
         <center>
 
             <div>
-                THE SCREEN IS TOO SMALL                 
+                THE SCREEN IS TOO SMALL
                 TO USE THIS DEMO!
             </div>
         </center>
