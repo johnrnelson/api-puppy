@@ -18,7 +18,7 @@
 
 //Yes.. it's a global!!! 
 global.SERVER = {
-    Version: '1.10.26',
+    Version: '1.10.27',
 
     Started: new Date(),
     RootFolder: __dirname,
