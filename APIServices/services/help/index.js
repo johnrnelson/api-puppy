@@ -11,20 +11,16 @@ const topics = {
 
         //Make sure there is not funky monkey going on with their request!!! 
         const sampleid = path.normalize(RequestData.sampleid.replace(/\./g, ''));
-
-
-
+ 
 
         const examplesFolder = path.join(SERVER.RootFolder, "/../", "APIServices", "services", sampleid, 'examples');
 
-
-        // console.log(examplesFolder);
-
+ 
         fs.readdir(examplesFolder, function (err, items) {
             if (err) {
                 debugger;
 
-                OnComplete(null{
+                OnComplete(null, {
                     err: sampleid + " was not found!"
                 });
 
