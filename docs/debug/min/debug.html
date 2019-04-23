@@ -788,17 +788,13 @@ window.onload = function () {
 
         </sidemenu>
 
-        <MainTabDisplay id="GitHubLinks">
-            <!-- footer -->
-            <h2>GitHub Project Links</h2>
-
+        <MainTabDisplay id="GitHubLinks">        
+            <h1>GitHub Project Links</h1>
             <p>
                 Use the links below to get to the source code of the stuff needed to use this project.
             </p>
             <br>
             <div class="HelpText">
-
-
                 <div>
                     <a href="https://github.com/johnrnelson/api-puppy" target="_blank">api-puppy Project</a>
                     <br>
@@ -828,55 +824,20 @@ window.onload = function () {
 
 
             </div>
-
-
         </MainTabDisplay>
 
 
         <!-- Log the history and help the user know whats up... -->
         <MainTabDisplay id="HistoryLogger">
-
-
             <ul class="h-menu">
-
                 <li title="Clear the log history"><a href="JavaScript:UIHelper.Logger.Clear()">Clear</a></li>
                 <li title="Export to a file"><a href="#">Export</a></li>
             </ul>
-
-
-
-
             <div class="split-container">
-
-
-
                 <div data-role="splitter" class="h-100" data-split-sizes="20, 60" data-min-sizes="160,160"
                     data-max-sizes="340,0" data-gutter-size="8">
-
                     <div class="d-flex flex-justify-left flex-align-left">
-
-
-                        <ul id="LogTree" data-role="treeview">
-                            <!-- <li data-caption="Options">
-
-                            <ul>
-                                <li><input type="checkbox" data-role="switch" data-caption="Animations"
-                                        onclick="UIHelper.Logger.SetOption(this)"></li>
-                                <li><input type="checkbox" data-role="switch" data-caption="Filters" disabled checked
-                                        onclick="UIHelper.Logger.SetOption(this)"></li>
-
-
-                                <li data-caption="Remote Options">
-                                    <ul>
-                                        <li onclick="UIHelper.Logger.SetListType('LgOpts')"
-                                            data-icon="<i class='fas fa-cogs fa-fw'></i>&nbsp;"
-                                            data-caption="&nbsp; Preferences" disabled></li>
-                                    </ul>
-                                </li>
-
-                            </ul>
-
-                        </li> -->
+                        <ul id="LogTree" data-role="treeview">                            
                             <li data-caption="Local Logs">
 
                                 <ul>
@@ -913,11 +874,8 @@ window.onload = function () {
                                     <li onclick="UIHelper.NA()" data-icon="<i class='fas fa-file'></i>"
                                         data-caption="Generic Errors" disabled></li>
                                 </ul>
-
                             </li>
-
                         </ul>
-
                     </div>
                     <div class="d-flex flex-justify-left flex-align-left">
 
@@ -935,8 +893,7 @@ window.onload = function () {
                             <div class="LoggerLabel">Generic Errors</div>
                             <table class="table  striped compact" style="background: transparent;">
                                 <thead>
-                                    <tr>
-                                        <!-- <th width="50px" vertical-align="top">Type</th> -->
+                                    <tr> 
                                         <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Topic</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Source</th>
@@ -951,8 +908,7 @@ window.onload = function () {
                             <div class="LoggerLabel">HTTP traffice using REST</div>
                             <table class="table  striped compact" style="background: transparent;">
                                 <thead>
-                                    <tr>
-                                        <!-- <th width="50px" vertical-align="top">Type</th> -->
+                                    <tr> 
                                         <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Topic</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Source</th>
@@ -967,8 +923,7 @@ window.onload = function () {
                             <div class="LoggerLabel">Basic information</div>
                             <table class="table  striped compact" style="background: transparent;">
                                 <thead>
-                                    <tr>
-                                        <!-- <th width="50px" vertical-align="top">Type -411</th> -->
+                                    <tr> 
                                         <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Topic</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Source</th>
@@ -983,8 +938,7 @@ window.onload = function () {
                             <div class="LoggerLabel">Socket Traffic</div>
                             <table class="table  striped compact" style="background: transparent;">
                                 <thead>
-                                    <tr>
-                                        <!-- <th width="50px" vertical-align="top">Type -466</th> -->
+                                    <tr>                                        
                                         <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Topic</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Source</th>
@@ -999,8 +953,7 @@ window.onload = function () {
                             <div class="LoggerLabel">UI updates in the browser</div>
                             <table class="table  striped compact" style="background: transparent;">
                                 <thead>
-                                    <tr>
-                                        <!-- <th width="50px" vertical-align="top">Type -707</th> -->
+                                    <tr> 
                                         <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Topic</th>
                                         <th width="20%" vertical-align="top" nowrap="true">Source</th>
@@ -1101,6 +1054,7 @@ window.onload = function () {
 
 
         <MainTabDisplay id="TabAppPrefs">
+ 
 
 
             <div style="padding:10px;">
@@ -1135,18 +1089,25 @@ window.onload = function () {
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="cell-md-6">
-                        Testing Options
-                    </div>
-                    <div class="cell-md-6">
+                <hr />
 
+                <div class="row">
+                    <div class="cell-md-10">
+                        <p>
+                            Use this to clear the browser local storage. 
+                        </p>
+                        <p>
+                            Remember that user settings are kept there so you 
+                            will have to put your preferences back in.
+                        </p>
+                    </div>
+                    <div class="cell-md-2">
                         <button class="button" onclick="AppRefs.UI.ClearPrefs()">Clear Local Storage</button>
                     </div>
                 </div>
                 <br>
 
-                <hr>
+                <hr />
                 <br>
                 <!-- <div class="row">
 
