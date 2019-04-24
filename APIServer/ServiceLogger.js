@@ -37,6 +37,7 @@ exports.SetOptions = SetOptions;
 */
 function WriteLog(LogType, LogEntry) {
     const LogDate = new Date();
+    const fileLogDate = LogDate.getFullYear() + "-" + (LogDate.getMonth() + 1) + "-" + LogDate.getDate()
 
     var targetLogFileName = "";
 
@@ -46,7 +47,7 @@ function WriteLog(LogType, LogEntry) {
     } else {
         for (let index = 0; index < LoggerConfig.ignore.IP4.length; index++) {
             const IP4Address = LoggerConfig.ignore.IP4[index];
-            if (IP4Address == LogEntry.IP4Address) {              
+            if (IP4Address == LogEntry.IP4Address) {
                 return;
             }
         }
@@ -56,10 +57,10 @@ function WriteLog(LogType, LogEntry) {
 
 
     if (LogType) {
-        targetLogFileName = LoggerConfig.Folder + '/LT-' + LogType + '-' + LogDate.toLocaleDateString().split('/').reverse().join("-") + '.log'
+        targetLogFileName = LoggerConfig.Folder + '/LT-' + LogType + '-' + fileLogDate+ '.log'
 
     } else {
-        targetLogFileName = LoggerConfig.Folder + '/DefaultLog-' + LogDate.toLocaleDateString().split('/').reverse().join("-") + '.log';
+        targetLogFileName = LoggerConfig.Folder + '/DefaultLog-' + fileLogDate+ '.log';
 
     }
 
