@@ -3,6 +3,166 @@
 */
 
 window.UIHelper = {
+
+    /*
+        Manage the application preferences in the UI...
+    */
+    AppPrefs:{
+
+        ShowPrefs() {
+            console.info('TODO -->', 'Display AppRefs-->', AppRefs);
+        },
+        ClearPrefs() {
+    
+    
+            Metro.dialog.create({
+                title: "Clear the local storage?",
+                content: "<div>Are you sure you want to do this?</div>",
+                actions: [
+                    {
+                        caption: "Agree",
+                        cls: "js-dialog-close alert",
+                        onclick: function () {
+                            try {
+                                localStorage.clear();
+                                UIHelper.Logger.Add({
+                                    TID: 0,
+                                    Type: 707,
+                                    DT: new Date(),
+                                    Topic: "Local Storage",
+                                    Source: "Browser",
+                                    Body: "The local storage has been cleared!",
+                                });
+                            } catch (errLocalStorage) {
+                                UIHelper.Logger.Add({
+                                    TID: 0,
+                                    Type: 0,
+                                    DT: new Date(),
+                                    Topic: "Local Storage",
+                                    Source: "Browser",
+                                    Body: errLocalStorage.message
+                                });
+                            }
+    
+    
+                        }
+                    },
+                    {
+                        caption: "Disagree",
+                        cls: "js-dialog-close"
+                    }
+                ]
+            });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        },
+    
+        //Test the key before you use it...
+        TestKey(APIKEY) {
+    
+            function ValidateKey() {
+    
+                if (!APIKEY) {
+                    return false;
+                }
+    
+                if (typeof (APIKEY) == "string") {
+    
+                    return true;
+    
+                } else {
+                    //Not supporting anything other than strings for the moment...
+                    return false;
+                }
+            }
+    
+    
+    
+    
+    
+            if (ValidateKey()) {
+    
+                WebApp.Fetch({
+                    service: 'help',
+                    data: {
+                        topic: 'validate-key',
+                        key: APIKEY
+                    }
+                }).then(data => {
+                    if (data.err) {
+                        console.warn(data.err);
+                        debugger;
+                    } else {
+                        console.log('valid key--', data);
+    
+    
+                        return;
+    
+    
+                        Metro.dialog.create({
+                            title: "Valid API Key",
+                            content: "<div>Store API Key and state from server to local storage?</div>",
+                            actions: [
+                                {
+                                    caption: "Agree",
+                                    cls: "js-dialog-close alert",
+                                    onclick: function () {
+    
+                                        console.log(APIKEY);
+    
+                                        UIHelper.Logger.Add({
+                                            TID: 0,
+                                            Type: 707,
+                                            DT: new Date(),
+                                            Topic: "API Key",
+                                            Source: "Browser",
+                                            Body: "Testing a new API Key!",
+                                        });
+    
+                                    }
+                                },
+                                {
+                                    caption: "Disagree",
+                                    cls: "js-dialog-close"
+                                }
+                            ]
+                        });
+    
+    
+    
+    
+                    }
+    
+    
+                }).catch(error => {
+                    console.warn('Error!');
+                    console.error(error);
+                    // debugger;
+                });
+    
+    
+    
+    
+            } else {
+                alert('fix yo key!  :-)');
+            }
+    
+    
+        }        
+    },
+
+ 
+    
     QueryStringBuilder(JSONData) {
 
         //Simple function to serialize the json into array for query string...
@@ -209,166 +369,7 @@ window.UIHelper = {
 
     },
 
-    Logger: {
 
-        Clear() {
-            Metro.dialog.create({
-                title: "Clear the history?",
-                content: "<div>Are you sure you want to do this?</div>",
-                actions: [
-                    {
-                        caption: "Agree",
-                        cls: "js-dialog-close alert",
-                        onclick: function () {
-                            const loggerTables = document.getElementsByTagName('LoggerTable');
-
-                            // debugger;
-                            for (let index = 0; index < loggerTables.length; index++) {
-                                const lgEl = loggerTables[index];
-
-                                const haslog = lgEl.getAttribute('haslog');
-                                if (haslog) {
-
-                                    const tbl = lgEl.querySelector('tbody');
-                                    if (!tbl) {
-                                        debugger;
-                                    }
-                                    tbl.innerHTML = "";
-
-                                    const lgType = lgEl.id.replace('LGType-', '');
-
-                                    const TargetElementCount = document.getElementById('LgCnt-' + lgType);
-                                    TargetElementCount.TotalCount = 0;
-                                    TargetElementCount.innerHTML = "&nbsp;";
-
-                                }
-
-
-                            }
-
-
-                            UIHelper.Logger.Add({
-                                TID: 0,
-                                Type: 707,
-                                DT: new Date(),
-                                Topic: "Logger History",
-                                Source: "Browser",
-                                Body: "History was deleted per user request",
-                            });
-
-                        }
-                    },
-                    {
-                        caption: "Disagree",
-                        cls: "js-dialog-close"
-                    }
-                ]
-            });
-        },
-        SetOption(OptElement) {
-            console.log(OptElement);
-            console.log(OptElement.value);
-            // debugger;
-        },
-        //Just swap between tables...
-        SetListType(ListElement) {
-
-            const TargetElement = document.getElementById('LGType-' + ListElement);
-
-
-            if (!TargetElement) {
-                console.warn('No log Target!');
-                return;
-            }
-
-            if (!UIHelper.Logger.ActiveLog) {
-                UIHelper.Logger.ActiveLog = TargetElement;
-            } else {
-                UIHelper.Logger.ActiveLog.style.display = "none";
-                UIHelper.Logger.ActiveLog = TargetElement;
-            }
-            // console.log('Show Log List-->', ListElement);
-            UIHelper.Logger.ActiveLog.style.display = "block";
-        },
-
-        /*
-            Add a log item...
-        */
-        Add(LogMSG) {
-            /*
-                    Check https://github.com/johnrnelson/api-puppy/blob/master/Notes/LogTypes.md
-            */
-
-            try {
-
-                if (!LogMSG.Type) {
-                    LogMSG.Type = 0;
-                }
-
-                const TargetElementCount = document.getElementById('LgCnt-' + LogMSG.Type);
-                if (!TargetElementCount.TotalCount) {
-                    TargetElementCount.TotalCount = 0;
-                }
-                TargetElementCount.TotalCount++;
-                TargetElementCount.innerHTML = "[" + TargetElementCount.TotalCount + "]";
-
-                function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
-                    const newCell = document.createElement('td');
-                    newCell.title = Title;
-                    newCell.className = ClassName;
-                    newCell.innerHTML = HTMLValue;
-                    newCell.vAlign = "top";
-                    newCell.align = "left";
-
-                    HostRow.appendChild(newCell)
-                    // return newCell
-                }
-
-                if (!LogMSG.DT) {
-                    LogMSG.DT = new Date()
-                }
-
-                const displayDT = moment(LogMSG.DT);
-
-
-                const tblBody = document.getElementById('LGType-' + LogMSG.Type + '-history');
-                if (!tblBody) {
-                    debugger;
-                }
-
-                const tr = document.createElement('tr');
-
-                // debugger;
-
-                // CellBuider(tr, "", "TID Help", "", LogMSG.TID);
-                // CellBuider(tr, "", "Type Of Log Item [" + LogMSG.Type + "]", "", dispLogType);
-                CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
-                CellBuider(tr, "", "", "", LogMSG.Topic);
-                CellBuider(tr, "", "", "", LogMSG.Source);
-                CellBuider(tr, "", "", "", LogMSG.Body);
-
-                tblBody.appendChild(tr);
-            } catch (errAddLogItem) {
-                alert('Error adding to the log!!!\r\n' + errAddLogItem.message);
-            }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        }
-    },
     CopyToClipboard(containerid) {
 
 

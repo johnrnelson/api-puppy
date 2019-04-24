@@ -1,0 +1,5 @@
+{
+	"service": "logger",
+	"action": "log-code-fetch",
+	"logfile": "DefaultLog-2019-4-24.log"
+}

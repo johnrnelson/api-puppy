@@ -1,4 +1,7 @@
 {
+    "logger": {        
+        "notes": "Simple logger service to see whats up on the server."
+    },    
     "time": {        
         "notes": "Simple time service to help sync your clients."
     },    

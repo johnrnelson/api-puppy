@@ -57,17 +57,25 @@ function WriteLog(LogType, LogEntry) {
 
 
     if (LogType) {
-        targetLogFileName = LoggerConfig.Folder + '/LT-' + LogType + '-' + fileLogDate+ '.log'
+        targetLogFileName = LoggerConfig.Folder + '/LT-' + LogType + '-' + fileLogDate + '.log'
 
     } else {
-        targetLogFileName = LoggerConfig.Folder + '/DefaultLog-' + fileLogDate+ '.log';
+        targetLogFileName = LoggerConfig.Folder + '/DefaultLog-' + fileLogDate + '.log';
 
     }
+    var ip4Addy = LogEntry.IP4Address;
+
+    delete LogEntry["IP4Address"];
+
+    var LogDataItem = {
+        dt: LogDate.toISOString(),
+        Topic: LogType,
+        IP4Address: ip4Addy,
+        data: LogEntry
+    };
 
 
-    LogEntry.dt = LogDate.toISOString();
-
-    const logEntryText = JSON.stringify(LogEntry);
+    const logEntryText = JSON.stringify(LogDataItem);
 
     //Add to our logger file whats up...
     fs.appendFile(targetLogFileName, logEntryText + '\r\n', function (err) {
@@ -80,12 +88,32 @@ exports.WriteLog = WriteLog;
 /*
     Uh oh! We really gonna do this? :smiley:
 */
-function ReadLog(LogType) {
-    //It might be a very big file!!!
-    //Add to our logger file whats up...
+function ReadLog(LogType, OnComplete) {
 
+    /* 
+        Make sure there is not funky monkey going on with their request!!! 
+
+        This means all files must go in the "LoggerConfig.Folder" folder!!!!
+    */
+
+    const filepath = path.basename(LogType);
+    const examplesFilePath = path.join(LoggerConfig.Folder, filepath);
+
+
+
+    fs.readFile(examplesFilePath, 'utf8', function (err, data) {
+        if (err) {
+            // debugger;
+            OnComplete({
+                logfile: filepath,
+                msg: "Error reading log file."
+            }, null);
+        } else {
+            OnComplete(null, data);
+        }
+    });//End reading file...
 }
-
+exports.ReadLog = ReadLog;
 /*
     What are all the log files we have right now?
 */

@@ -52,8 +52,43 @@ const WebApp = {
             // debugger;
         });
 
+    },
+
+    //Your local app preferences...
+    AppRefs: {
+        APIKEY: '',
+        UserOptions: {
+            UserID: '',
+            TargetAPI: {
+                url: document.URL,
+                opts: {
+                    favor: 'put'
+                }
+            }
+        },
     }
 };
+
+if (localStorage) {
+    const UserOptionsText = localStorage.getItem('UserOptions');
+
+    if (UserOptionsText) {
+        console.info('Reloading App options....');
+        WebApp.AppRefs.UserOptions = JSON.parse(UserOptionsText);
+    } else {
+        console.info('Storing (local) App options....');
+        localStorage.setItem("UserOptions", JSON.stringify(WebApp.AppRefs.UserOptions));
+    }
+
+} else {
+    alert('No Local Storage!');    
+}
+
+
+
+
+
+
 
 
 
@@ -244,8 +279,8 @@ const DebugUI = {
 
             }
 
-            //Use the default and set the edtor....
-            DebugUI.SelectServiceOption('help');
+            //Use the default and set the edtor....            
+            DebugUI.SelectServiceOption('logger');
 
 
 
@@ -272,7 +307,7 @@ const DebugUI = {
                     const resultJSONText = JSON.stringify(data, null, "\t");
                     DebugUI.ShowJSONResult('HTTP', resultJSONText);
 
-                    UIHelper.Logger.Add({
+                    HistoryLogger.Logger.Add({
                         TID: 0,
                         Type: 200,
                         DT: new Date(),
@@ -483,7 +518,7 @@ print(response_data)
 
         UIHelper.Ace.AceDisplayRsults.resize();
 
-        UIHelper.Logger.Add({
+        HistoryLogger.Logger.Add({
             TID: 0,
             Type: 707,
             DT: new Date(),
@@ -499,10 +534,10 @@ print(response_data)
 /*
     Simple app prefs manager...
 */
-WebApp.GetHelpFile('AppPrefs.js', function (filecontents) {
-    const AppPrefsScript = document.createElement("script");
-    AppPrefsScript.innerHTML = filecontents.body;
-    document.body.appendChild(AppPrefsScript);
+WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
+    const srcHistoryLogger = document.createElement("script");
+    srcHistoryLogger.innerHTML = filecontents.body;
+    document.head.appendChild(srcHistoryLogger); 
 });
 
 
@@ -516,7 +551,7 @@ WebApp.GetHelpFile('debug.css', function (filecontents) {
     const CSSFile = document.createElement("style");
     CSSFile.type = "text/css";
     CSSFile.innerHTML = filecontents.body;
-    document.body.appendChild(CSSFile);
+    document.head.appendChild(CSSFile);
 });
 
 
@@ -543,7 +578,7 @@ window.onload = function () {
         // debugger;
         window.eval(filecontents.body);
 
-        UIHelper.Logger.Add({
+        HistoryLogger.Logger.Add({
             TID: 0,
             Type: 707,
             DT: new Date(),
@@ -558,11 +593,7 @@ window.onload = function () {
 
         //Setup our UI parts...
         DebugUI.FillSideBar();
-
-        //Show our prefs...
-        AppRefs.UI.ShowPrefs();
-
-
+ 
         //Setup all of our ace editors...
         UIHelper.Ace.BuildAceControls();
 
@@ -586,7 +617,7 @@ window.onload = function () {
         WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
             const srcSocketAPI = document.createElement("script");
             srcSocketAPI.innerHTML = filecontents.body;
-            document.body.appendChild(srcSocketAPI);
+            document.head.appendChild(srcSocketAPI);
 
             /*
                Overwrite the events to customize it for 
@@ -608,7 +639,7 @@ window.onload = function () {
 
 
 
-                UIHelper.Logger.Add({
+                HistoryLogger.Logger.Add({
                     Type: 466,
                     TID: 505,
                     DT: new Date(),
@@ -628,7 +659,7 @@ window.onload = function () {
             //Once connected...
             SocketAPI.MasterSocket.Events.onopen = function () {
 
-                UIHelper.Logger.Add({
+                HistoryLogger.Logger.Add({
                     Type: 411,
                     TID: 0,
                     DT: new Date(),
@@ -640,7 +671,7 @@ window.onload = function () {
 
             //When disconected...
             SocketAPI.MasterSocket.Events.onclose = function () {
-                UIHelper.Logger.Add({
+                HistoryLogger.Logger.Add({
                     Type: 411,
                     TID: 0,
                     DT: new Date(),
@@ -659,7 +690,7 @@ window.onload = function () {
 
 
 
-        UIHelper.Logger.Add({
+        HistoryLogger.Logger.Add({
             TID: 0,
             Type: 707,
             DT: new Date(),
@@ -674,16 +705,16 @@ window.onload = function () {
         UIHelper.ShowTab('TabMain');
 
         //Set default logger view...
-        UIHelper.Logger.SetListType('0');
+        HistoryLogger.Logger.SetListType('0');
 
 
         //If you local host you are most likely debugging.. :-)
         if (document.location.hostname == "localhost") {
             // debugger;
             // UIHelper.ShowTab('TabDebugger');
-            // UIHelper.ShowTab('HistoryLogger');
+            UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
-            UIHelper.ShowTab('TabAppPrefs');
+            // UIHelper.ShowTab('TabAppPrefs');
         }
 
 

@@ -30,12 +30,19 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
             //Insert dagger here!!!!
             route2Take.ServiceRequest(RequestObj, RequestData, function (ServiceError, ResponseJSON) {
                 if (ServiceError) {
+                    const checkThisLater = finalServicePath;
                     const debuginfo = {
-                        path: finalServicePath
+                        err: {
+                            fnl:finalServicePath,
+                            path: servicePath,
+                            source: ServiceError
+                        }
                     };
                     // debugger;
+                    OnComplete(ServiceError, null);
+                } else {
+                    OnComplete(null, ResponseJSON);
                 }
-                OnComplete(ServiceError, ResponseJSON);
 
             });
         } catch (errinService) {

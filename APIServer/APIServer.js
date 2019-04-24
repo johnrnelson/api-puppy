@@ -12,7 +12,8 @@
 
     The only NPM at this time is "ws" @ https://github.com/websockets/ws 
 
-
+    This file is large and is targeted to be broken up into modules, 
+    so after node 12 it will be at the top of the list.
 */
 
 
@@ -51,7 +52,7 @@ try {
     SERVER.CERTS = APIServerOptions.CERTS;
     SERVER.KEYS = APIServerOptions.KEYS;
 
- 
+
 
     SERVER.ServiceLogger = require('./ServiceLogger');
     SERVER.ServiceLogger.SetOptions(APIServerOptions.Logger);
@@ -266,7 +267,10 @@ window.debugdata = {
                 err: ErrorInformation
             }));
         } else {
-            ResponseObject.end(JSON.stringify(ErrorInformation));
+            const errObj = {
+                err:ErrorInformation
+            };
+            ResponseObject.end(JSON.stringify(errObj));
         }
     },
 
@@ -291,7 +295,7 @@ window.debugdata = {
 
             //Do not give away the users complete IP address over the internet!  :-)
             const displayAddress = ipAddress.split('.').slice(0, 2).join('.') + "**";
- 
+
 
             ws.User = {
                 //Using an API key or what???
@@ -302,7 +306,7 @@ window.debugdata = {
             }
 
             SERVER.ServiceLogger.WriteLog('Socket', {
-                IP4Address: ipAddress, 
+                IP4Address: ipAddress,
                 Title: 'Connect',
                 Body: 'User connected to socket'
             });
@@ -315,7 +319,7 @@ window.debugdata = {
                     */
                     SERVER.ServiceLogger.WriteLog('Socket', {
                         IP4Address: ipAddress,
-                        Title: 'Socket Warning', 
+                        Title: 'Socket Warning',
                         Body: 'Message was too long! Length:[' + message.length + ']'
                     });
                     return;
@@ -326,7 +330,7 @@ window.debugdata = {
 
                     SERVER.ServiceLogger.WriteLog('Socket', {
                         IP4Address: ipAddress,
-                        Title: 'Socket Message', 
+                        Title: 'Socket Message',
                         Body: msgDATA
                     });
 
@@ -498,9 +502,9 @@ window.debugdata = {
 
 
 
-                    /*
-                          Quick log to see the history of our traffic...
-                    */
+                    // /*
+                    //       Quick log to see the history of our traffic...
+                    // */
                     SERVER.ServiceLogger.WriteLog(0, {
                         IP4Address: request.connection.remoteAddress,
                         HTTPVERB: request.method,
@@ -593,7 +597,7 @@ window.debugdata = {
 
                         }
 
-                    
+
 
 
 
@@ -644,12 +648,12 @@ window.debugdata = {
                             //By the time you get here.. you want a true web api request...
                             ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                                 if (ServiceError) {
-                                    
+
                                     response.SendError(response, ServiceError);
 
                                     //Send the ServiceErrorInformation instead of the bubbled up error!!!
                                     // response.SendError(response, ServiceErrorInformation);
-                                    
+
                                 } else {
                                     response.end(JSON.stringify(ResponseJSON));
                                 }
@@ -686,6 +690,18 @@ window.debugdata = {
                 });
             }
             catch (errPUT) {
+
+                /*
+                      Quick log to see the history of our traffic...
+                */
+                SERVER.ServiceLogger.WriteLog("WebErrors", {
+                    IP4Address: request.connection.remoteAddress,
+                    
+                    HTTPVERB: request.method,
+                    URL: request.url,
+                    Body: body
+                });
+
                 //Some bad juju happend so we just pass it off to our generic error handler...
                 response.SendError(response, {
                     err: errPUT.message
