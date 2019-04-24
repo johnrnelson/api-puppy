@@ -185,56 +185,66 @@ window.HistoryLogger = {
 
             tbl.innerHTML = `
                 <tr>
-                    <td colspan="4">
-                        <h3>Loading!</h3>
+                    <td colspan="4">    
+                    <br>
+                    <br>
+                    <center>                
+                        <h3>Loading Remote Log File</h3>
+                        <i class="fas fa-spinner fa-spin fa-4x"></i>
+                    </center>
+                    <br>
+                    <br>
                     </td>
                 </tr>
             
             `;
 
+            setTimeout(() => {
 
 
-            WebApp.Fetch({
-                "service": "logger",
-                "action": "log-file-fetch",
-                "logfile": finalLogFileName + ".log"
-            }).then(data => {
-                // debugger;
-                if (data.err) {
-                    console.warn(data.err);
-                    tbl.innerHTML = "";
-                } else {
-                    tbl.innerHTML = "";
-                
-                    if (!data.logs.length) {
-                        console.info('Req File-->', finalLogFileName);
-                        return;
-                    }
-                    for (let index = 0; index < data.logs.length; index++) {
-                        const logItem = data.logs[index];
-                        const tableRow = document.createElement('tr');
 
-                        const displayDT = moment(logItem.dt);
+                WebApp.Fetch({
+                    "service": "logger",
+                    "action": "log-file-fetch",
+                    "logfile": finalLogFileName + ".log"
+                }).then(data => {
+                    // debugger;
+                    if (data.err) {
+                        console.warn(data.err);
+                        tbl.innerHTML = "";
+                    } else {
+                        tbl.innerHTML = "";
 
-                        tableRow.innerHTML = `
+                        if (!data.logs.length) {
+                            console.info('Req File-->', finalLogFileName);
+                            return;
+                        }
+                        for (let index = 0; index < data.logs.length; index++) {
+                            const logItem = data.logs[index];
+                            const tableRow = document.createElement('tr');
+
+                            const displayDT = moment(logItem.dt);
+                            // debugger;
+
+                            tableRow.innerHTML = `
                             <td title="${displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a")}">${displayDT.format("h:mm:ss a")}</td>
-                            <td>FIX ME</td>
-                            <td>${logItem.IP4}</td>
+                            <td>${logItem.Topic}</td>
+                            <td>${logItem.IP4Address}</td>
                             <td>${JSON.stringify(logItem.data)}</td>
                         `;
 
-                        tbl.appendChild(tableRow);
+                            tbl.appendChild(tableRow);
+                        }
+
                     }
-
-                }
-            }).catch(error => {              
-                console.warn('Error!');
-                console.error(error);
-                debugger;
-            });
+                }).catch(error => {
+                    console.warn('Error!');
+                    console.error(error);
+                    debugger;
+                });
 
 
-
+            }, 20);
 
 
         }

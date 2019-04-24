@@ -268,7 +268,7 @@ window.debugdata = {
             }));
         } else {
             const errObj = {
-                err:ErrorInformation
+                err: ErrorInformation
             };
             ResponseObject.end(JSON.stringify(errObj));
         }
@@ -502,15 +502,15 @@ window.debugdata = {
 
 
 
-                    // /*
-                    //       Quick log to see the history of our traffic...
-                    // */
-                    SERVER.ServiceLogger.WriteLog(0, {
-                        IP4Address: request.connection.remoteAddress,
-                        HTTPVERB: request.method,
-                        URL: request.url,
-                        Body: body
-                    });
+                    // // /*
+                    // //       Quick log to see the history of our traffic...
+                    // // */
+                    // SERVER.ServiceLogger.WriteLog(0, {
+                    //     IP4Address: request.connection.remoteAddress,
+                    //     HTTPVERB: request.method,
+                    //     URL: request.url,
+                    //     Body: body
+                    // });
 
 
 
@@ -569,7 +569,16 @@ window.debugdata = {
                         }
 
                     } catch (QStoJSON) {
-                        console.log(QStoJSON);
+
+                        SERVER.ServiceLogger.WriteLog("WebErrors", {
+                            IP4Address: request.connection.remoteAddress,
+                            Topic: request.method,
+                            Body: {
+                                qryData: request.QueryData,
+                                err: QStoJSON.message
+                            }
+                        });
+                        // console.log(QStoJSON);
                         debugger;
                     }
 
@@ -670,19 +679,34 @@ window.debugdata = {
                         */
                         const DebugInformation = {
                             URL: request.url,
-                            err: errEndReq,
+                            err: errEndReq.message,
                             body: body
                         };
-                        console.log(DebugInformation);
-                        debugger;
+                        // console.log(DebugInformation);
+                        // debugger;
+
+
+                        SERVER.ServiceLogger.WriteLog("WebErrors", {
+                            IP4Address: request.connection.remoteAddress,
+                            Topic: request.method,
+                            Body: DebugInformation
+                        });
+
+
 
                         //Give the client some idea of what went wrong...
                         var resp = {
                             msg: 'Error in request!',
-                            err: errEndReq.message
+                            err: 'Please send us a message about what went wrong.'
                         };
 
                         response.end(JSON.stringify(resp));
+
+
+
+
+
+
                     }//End catching an error...
 
 
@@ -691,12 +715,13 @@ window.debugdata = {
             }
             catch (errPUT) {
 
+                debugger;
                 /*
                       Quick log to see the history of our traffic...
                 */
                 SERVER.ServiceLogger.WriteLog("WebErrors", {
                     IP4Address: request.connection.remoteAddress,
-                    
+
                     HTTPVERB: request.method,
                     URL: request.url,
                     Body: body
@@ -731,16 +756,9 @@ function CompileDebugFiles(OnComplete) {
     var debugHTML = fs.readFileSync(path2debug + "src/debug.html", 'utf8');
     const clientjs = fs.readFileSync(path2debug + "src/client.js", 'utf8');
 
-
-
     debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
-
-
     fs.writeFileSync(path2debug + 'min/debug.html', debugHTML, { flag: 'w' });
-
     OnComplete(null, 'Client HTML ready for requests...');
-
-
 }
 
 
