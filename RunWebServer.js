@@ -2,6 +2,13 @@
 
 "use strict";
 
+/*
+    This script is for setting up the web server and making 
+    sure all preferences and options are loaded.
+
+    Use the "SERVER" global variable sparingly but don't 
+    be afraid to use it. :-)
+*/
 
 
 const fs = require('fs');
@@ -9,14 +16,33 @@ const path = require('path');
 
 
 
-//Yes.. it's a global!!! 
+/*
+    Yes.. it's a global!!! 
+
+    Change the info you need below for your own server. 
+*/
+
 global.SERVER = {
-    Version: '1.10.28',
+    ProjectInfo:{
+        Title:'api-puppy Demo',
+        Version: '1.10.30',
+    },
+    Network: {
+        /* 
+            Selected port because 80 and 443 are normally used for webby stuff. 
+            See (https://github.com/johnrnelson/api-puppy/blob/master/Notes/Server/iptables.md)
+            for more info on how to setup iptables to the other ports...
+        */
+        PORT_HTTP: 9080,
+        PORT_HTTPS: 9443,
 
-    Started: new Date(),
+        // IPADDRESS: '127.0.0.1',  // Localhost is a safe play!    
+
+        // This binds us to any NIC on the server. Becareful with this!!!
+        IPADDRESS: '0.0.0.0',
+    },
+ 
     RootFolder: path.join(__dirname, "APIServer"),
-    Defender: require("./APIServer/defender/shield"),
-
 
     /* 
         This is used in our services to act as a database.
@@ -27,6 +53,36 @@ global.SERVER = {
         fruit: ['apples', 'pears', 'peaches']
     }
 };
+
+
+
+
+//Load up our defender...
+SERVER.Defender = require("./APIServer/defender/shield");
+SERVER.Started = new Date();
+
+
+//Get our server options...
+(function () {
+    try {
+
+        const APIServerOptions = JSON.parse(fs.readFileSync(path.join(__dirname, "SECRET", "CONFIG.json"), "utf8"));
+        console.log("Setting API Options via the CONFIG File");
+        SERVER.CERTS = APIServerOptions.CERTS;
+        SERVER.KEYS = APIServerOptions.KEYS;
+
+        SERVER.ServiceLogger = require('./APIServer/ServiceLogger');
+        SERVER.ServiceLogger.SetOptions(APIServerOptions.Logger);
+
+
+
+    } catch (err) {
+        console.log('Please fix your CONFIG.json file in the "SERCRET" folder!');
+        process.exit(1);
+    }
+})();
+
+
 
 
 /*
@@ -43,9 +99,8 @@ global.SERVER = {
     const clientjs = fs.readFileSync(path2debug + "src/client.js", 'utf8');
 
     debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
-    fs.writeFileSync(path2debug + 'min/debug.html', debugHTML, { flag: 'w' });    
+    fs.writeFileSync(path2debug + 'min/debug.html', debugHTML, { flag: 'w' });
 })();
-
 
 
 const APIServer = require('./APIServer/APIServer');

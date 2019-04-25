@@ -26,27 +26,6 @@ const fs = require('fs');
 const path = require('path');
 
 
-try {
-
-    const APIServerOptions = JSON.parse(fs.readFileSync(path.join(__dirname, "/../", "SECRET", "CONFIG.json"), "utf8"));
-    console.log("Setting API Options via the CONFIG File");
-    SERVER.CERTS = APIServerOptions.CERTS;
-    SERVER.KEYS = APIServerOptions.KEYS;
-
-
-
-    SERVER.ServiceLogger = require('./ServiceLogger');
-    SERVER.ServiceLogger.SetOptions(APIServerOptions.Logger);
-
-
-
-} catch (err) {
-    console.log('Please fix your CONFIG.json file in the "SERCRET" folder!');
-    process.exit(1);
-}
-
-
-
 const ServiceManager = require('../APIServices/ServiceManager');
 
 
@@ -54,11 +33,11 @@ const ServiceManager = require('../APIServices/ServiceManager');
     Basic TCP/IP server that will route requests for us...
 */
 const IPC = {
-    // Selected port because 80 and 443 are normally used for webby stuff. 
-    PORT_HTTP: 9080,
-    PORT_HTTPS: 9443,
-    // IPADDRESS: '127.0.0.1',  // Localhost is a safe play!    
-    IPADDRESS: '0.0.0.0',       // This binds us to any NIC on the server. Becareful with this!!!
+    // // Selected port because 80 and 443 are normally used for webby stuff. 
+    // PORT_HTTP: 9080,
+    // PORT_HTTPS: 9443,
+    // // IPADDRESS: '127.0.0.1',  // Localhost is a safe play!    
+    // IPADDRESS: '0.0.0.0',       // This binds us to any NIC on the server. Becareful with this!!!
 
     /*
         Create a basic HTTP/HTTPS server and service it's requests. Nothing fancy needed here. 
@@ -116,8 +95,8 @@ const IPC = {
 
 
         //Lets start our server..
-        httpServer.listen(IPC.PORT_HTTP, IPC.IPADDRESS, function () {
-            console.log("Web Server Ready : http://" + IPC.IPADDRESS + ":" + IPC.PORT_HTTP);
+        httpServer.listen(SERVER.Network.PORT_HTTP, SERVER.Network.IPADDRESS, function () {
+            console.log("Web Server Ready : http://" + SERVER.Network.IPADDRESS + ":" + SERVER.Network.PORT_HTTP);
             IPC.StartDate = new Date();
 
         });
@@ -148,8 +127,8 @@ const IPC = {
 
 
             //Lets start our server..
-            httpsServer.listen(IPC.PORT_HTTPS, IPC.IPADDRESS, function () {
-                console.log("SSL Web Server Ready : https://" + IPC.IPADDRESS + ":" + IPC.PORT_HTTPS);
+            httpsServer.listen(SERVER.Network.PORT_HTTPS, SERVER.Network.IPADDRESS, function () {
+                console.log("SSL Web Server Ready : https://" + SERVER.Network.IPADDRESS + ":" + SERVER.Network.PORT_HTTPS);
                 IPC.StartDate = new Date();
             });
 
@@ -208,6 +187,7 @@ const IPC = {
                         //  *** SEND THE END RESPONSE!!!!
                         const debugdata = `
 window.debugdata = {
+    ProjectInfo:${JSON.stringify(SERVER.ProjectInfo)},
     UserInfo:${JSON.stringify(request.User)},
     NodeVersion:"${process.version}",
     ServerVersion:"${SERVER.Version}",

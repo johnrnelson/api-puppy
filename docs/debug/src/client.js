@@ -10,7 +10,7 @@ const WebApp = {
         Ex: WebApp.Fetch
     */
     Fetch(data = {}) {
-        const url = document.URL + ''; 
+        const url = document.URL + '';
 
         return fetch(url, {
             method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -138,8 +138,7 @@ const DebugUI = {
         AddInfoElement('Node Version', 'The version of node on this server',
             debugdata.NodeVersion);
 
-        AddInfoElement('Server Version', 'The version of the APIServer.js file.',
-            debugdata.ServerVersion);
+        AddInfoElement('Server Version', 'The version of the APIServer.js file.', debugdata.ProjectInfo.Version);
 
         AddInfoElement('Start Date', 'The date the server started', debugdata.ST.toLocaleDateString() + " " + debugdata.ST.toLocaleTimeString());
 
@@ -724,7 +723,7 @@ window.onload = function () {
         }
 
 
-        document.title = "api-puppy Demo";
+        document.title = debugdata.ProjectInfo.Title;
 
 
 

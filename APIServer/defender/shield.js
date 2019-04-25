@@ -1,5 +1,8 @@
 /*
     Provide a basic shield for our API from the bad people who want to abuse it. 
+
+
+    ** WHAT ABOUT THE KEYS!!!! ***
 */
 const fs = require('fs');
 
