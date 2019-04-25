@@ -225,11 +225,13 @@ window.HistoryLogger = {
 
                             const displayDT = moment(logItem.dt);
                             // debugger;
+                            // https://ipapi.co/50.50.50.54/
+                            const ShowIPLoc = "https://ipapi.co/" + logItem.IP4Address + "/";
 
                             tableRow.innerHTML = `
                             <td title="${displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a")}">${displayDT.format("h:mm:ss a")}</td>
                             <td>${logItem.Topic}</td>
-                            <td>${logItem.IP4Address}</td>
+                            <td><a href="${ShowIPLoc}" target="_blank">${logItem.IP4Address}</a></td>
                             <td>${JSON.stringify(logItem.data)}</td>
                         `;
 
