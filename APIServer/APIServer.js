@@ -32,13 +32,7 @@ const ServiceManager = require('../APIServices/ServiceManager');
 /*
     Basic TCP/IP server that will route requests for us...
 */
-const IPC = {
-    // // Selected port because 80 and 443 are normally used for webby stuff. 
-    // PORT_HTTP: 9080,
-    // PORT_HTTPS: 9443,
-    // // IPADDRESS: '127.0.0.1',  // Localhost is a safe play!    
-    // IPADDRESS: '0.0.0.0',       // This binds us to any NIC on the server. Becareful with this!!!
-
+const IPC = { 
     /*
         Create a basic HTTP/HTTPS server and service it's requests. Nothing fancy needed here. 
 
@@ -706,7 +700,10 @@ window.debugdata = {
 
 
  
-
+/*
+    Simple stub while this file is being broken down
+    into smaller modules... maybe... lol  :-)
+*/
 function StartServer() {
  
  
