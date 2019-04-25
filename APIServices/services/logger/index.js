@@ -12,7 +12,6 @@ const LoggerActions = {
         const fs = require('fs');
 
 
-
         SERVER.ServiceLogger.ReadLog(RequestData.logfile, function (ReadError, LogData) {
 
             if (ReadError) {
@@ -25,21 +24,27 @@ const LoggerActions = {
                         msg: 'Unable to get the contents of that log file.'
                     }, null);
                 } else {
-
-
-
                     const linesOfData = LogData.split('\r\n');
-                    const LogDataFilter = [];
+                    var LogDataFilter = [];
 
-                    // console.log(RequestObj.User.RemoteIP);
 
                     for (let index = 0; index < linesOfData.length; index++) {
                         const aLine = linesOfData[index];
                         if (aLine) {
                             const datLine = JSON.parse(aLine);
-                            if (datLine.IP4Address == RequestObj.User.RemoteIP) {
+
+
+                            if (RequestObj.User.SecurityLevel < 1) {
+
+                                if (datLine.IP4Address == RequestObj.User.RemoteIP) {
+                                    LogDataFilter.push(datLine);
+                                }
+
+                            } else {
                                 LogDataFilter.push(datLine);
                             }
+
+ 
                         }
                     }
 
@@ -55,10 +60,12 @@ const LoggerActions = {
     },
     'list-log-files': function (RequestObj, RequestData, OnComplete) {
         // debugger;
+
         SERVER.ServiceLogger.ListLogs(function (LogList) {
             OnComplete(null, {
                 logs: LogList
             });
+
         });
     }
 };

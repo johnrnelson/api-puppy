@@ -1,5 +1,5 @@
 {
 	"service": "logger",
 	"action": "log-file-fetch",
-	"logfile": "LT-Socket-2019-4-24.log"
+	"logfile": "LT-Socket-2019-4-25.log"
 }

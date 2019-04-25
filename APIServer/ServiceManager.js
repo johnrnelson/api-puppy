@@ -12,8 +12,15 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
     const path = require('path');
 
 
-    //Check the api key...
+    //If this is a stateless connection, check the api key!!!!
     if (RequestObj.User.Type == "HTTP") {
+        //Check the api key...
+        if (RequestData.APIKEY) {
+            // console.log('CHECK--', RequestObj.User, RequestData.APIKEY);
+            if (SERVER.Defender.CheckAPIKey(RequestData.APIKEY)) {
+                RequestObj.User.SecurityLevel = 100;
+            }
+        }
 
     }
 
@@ -52,6 +59,22 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
 
             });
         } catch (errinService) {
+
+
+            /*
+                A major error in the service has happened so 
+                send a quick message to our logger before 
+                we update the user....
+            */
+            SERVER.ServiceLogger.WriteLog("WebErrors", {
+                IP4Address: RequestObj.User.RemoteIP,
+                Topic: RequestObj.method,
+                Body: RequestData
+            });
+
+
+
+
             OnComplete(null, {
                 err: 'Unable to service this request!',
                 service: servicePath

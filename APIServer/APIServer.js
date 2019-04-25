@@ -431,9 +431,7 @@ window.debugdata = {
         SERVER.Defender.CheckRequest(request, function (CheckRequestError) {
 
             if (CheckRequestError) {
-                response.SendError(response, {
-                    err: CheckRequestError
-                });
+                response.SendError(response, CheckRequestError);
                 // debugger;
                 return;
             }
