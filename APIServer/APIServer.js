@@ -26,7 +26,7 @@ const fs = require('fs');
 const path = require('path');
 
 
-const ServiceManager = require('../APIServices/ServiceManager');
+const ServiceManager = require('./ServiceManager');
 
 
 /*

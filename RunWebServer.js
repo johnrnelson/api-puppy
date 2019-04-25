@@ -42,8 +42,16 @@ global.SERVER = {
         IPADDRESS: '0.0.0.0',
     },
  
+    /*
+        Kind of confusing, but the root folder is actually the "APIServer" folder...
+    */
     RootFolder: path.join(__dirname, "APIServer"),
 
+    /*
+        Where are your services located?
+    */
+    ServicesFolder:path.join(__dirname, "APIServices"),
+    
     /* 
         This is used in our services to act as a database.
         Of course it gets blown away every time the service
@@ -59,6 +67,8 @@ global.SERVER = {
 
 //Load up our defender...
 SERVER.Defender = require("./APIServer/defender/shield");
+
+//The born date of this process...
 SERVER.Started = new Date();
 
 
@@ -104,4 +114,4 @@ SERVER.Started = new Date();
 
 
 const APIServer = require('./APIServer/APIServer');
-APIServer.StartServer()
+APIServer.StartServer();

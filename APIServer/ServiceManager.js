@@ -29,7 +29,7 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
             //Do not allow ".." in the path!!!!
             servicePath = RequestData.service.replace(/\./g, '');
 
-            finalServicePath = path.resolve(path.join(__dirname, "services", path.normalize(path.join(servicePath, 'index.js'))));
+            finalServicePath = path.resolve(path.join(SERVER.ServicesFolder, "services", path.normalize(path.join(servicePath, 'index.js'))));
 
             const route2Take = require(finalServicePath);
 
