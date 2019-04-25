@@ -21,8 +21,7 @@ Now run the SETUP if this is your first time.
  
 You are ready to run the API Server. 
 
-    cd APIServer
-    node APIServer.js
+    node RunWebServer.js
 
 The console will give you the port number or the default is 
 [Local Host](http://localhost:9080) or whatever you set it to in the 
