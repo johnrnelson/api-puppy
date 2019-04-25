@@ -12,6 +12,12 @@ const WebApp = {
     Fetch(data = {}) {
         const url = document.URL + '';
 
+        // console.info('Add key to Data->',WebApp.AppPrefs.UserOptions.APIKEY);
+        
+        //Allways add the APIKEY to outbound requests to the server...
+        data.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
+
+
         return fetch(url, {
             method: "PUT", // *GET, POST, PUT, DELETE, etc.
             mode: "cors", // no-cors, cors, *same-origin
@@ -297,9 +303,6 @@ const DebugUI = {
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
 
-
-        // console.info('Add key to Data->',WebApp.AppPrefs.UserOptions.APIKEY);
-        JSONPayload.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
 
 
 
