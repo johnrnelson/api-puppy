@@ -5,6 +5,8 @@
         0   Normal
         500 Error!
 
+    ** At some point you should put in a better storage than local files!        
+
 */
 const fs = require('fs');
 const path = require('path');
