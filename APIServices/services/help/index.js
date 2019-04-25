@@ -129,10 +129,9 @@ const topics = {
             }, null);            
         } else {
 
-            const doh = SERVER.KEYS.admin;
+            const isvalid = SERVER.Defender.CheckAPIKey(valKey);
 
-
-            if (!valKey) {
+            if (!isvalid) {
                 OnComplete({
                     msg: 'No key found!',
                 }, null);

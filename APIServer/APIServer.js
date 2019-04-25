@@ -302,7 +302,8 @@ window.debugdata = {
                 RemoteIP: ipAddress,
                 ClientAgent: "WebSocket",
                 SecurityLevel: 0,
-                ProfileID: 0
+                ProfileID: 0,
+                Type: "Socket"
             }
 
             SERVER.ServiceLogger.WriteLog('Socket', {
@@ -334,7 +335,7 @@ window.debugdata = {
                         Body: msgDATA
                     });
 
-                    ServiceManager.ServiceRequestWeb(null, msgDATA, function (err, data) {
+                    ServiceManager.ServiceRequestWeb(ws, msgDATA, function (err, data) {
                         if (err) {
                             console.log(err);
                             ws.send(JSON.stringify({
@@ -452,7 +453,8 @@ window.debugdata = {
             ClientAgent: request.headers["user-agent"],
             URL: request.url,
             SecurityLevel: 0,
-            ProfileID: 0
+            ProfileID: 0,
+            Type: "HTTP"
         };
 
 

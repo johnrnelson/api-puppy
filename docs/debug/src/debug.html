@@ -359,12 +359,12 @@
                 <div class="row">
                     <div class="cell-md-6">
                         <label>API Key</label>
-                        <form>
+                        <!-- <form > -->
                             <input id="APIKeyInput" type="password" autocomplete="off" placeholder="Enter your API Key">
-                        </form>
+                        <!-- </form> -->
                         <br>
                         <button class="button"
-                            onclick="AppRefs.TestKey(document.getElementById('APIKeyInput').value)">Test API
+                            onclick="UIHelper.AppPrefs.TestKey(document.getElementById('APIKeyInput').value)">Test API
                             Key</button>
                     </div>
                     <div class="cell-md-6">

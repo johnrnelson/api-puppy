@@ -7,14 +7,21 @@ window.UIHelper = {
     /*
         Manage the application preferences in the UI...
     */
-    AppPrefs:{
+    AppPrefs: {
 
         ShowPrefs() {
-            console.info('TODO -->', 'Display AppRefs-->', AppRefs);
+            // console.info('TODO -->', 'Display AppRefs-->', AppRefs);
+            // WebApp.AppPrefs.UserOptions.APIKEY
+
+            const inputCtrl = document.getElementById("APIKeyInput");
+
+            inputCtrl.value = WebApp.AppPrefs.UserOptions.APIKEY;
+
+            
         },
         ClearPrefs() {
-    
-    
+
+
             Metro.dialog.create({
                 title: "Clear the local storage?",
                 content: "<div>Are you sure you want to do this?</div>",
@@ -43,8 +50,8 @@ window.UIHelper = {
                                     Body: errLocalStorage.message
                                 });
                             }
-    
-    
+
+
                         }
                     },
                     {
@@ -53,45 +60,45 @@ window.UIHelper = {
                     }
                 ]
             });
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
+
+
+
         },
-    
+
         //Test the key before you use it...
         TestKey(APIKEY) {
-    
+
             function ValidateKey() {
-    
+
                 if (!APIKEY) {
                     return false;
                 }
-    
+
                 if (typeof (APIKEY) == "string") {
-    
+
                     return true;
-    
+
                 } else {
                     //Not supporting anything other than strings for the moment...
                     return false;
                 }
             }
-    
-    
-    
-    
-    
+
+
+
+
+
             if (ValidateKey()) {
-    
+
                 WebApp.Fetch({
                     service: 'help',
                     data: {
@@ -100,15 +107,15 @@ window.UIHelper = {
                     }
                 }).then(data => {
                     if (data.err) {
-                        console.warn(data.err);
-                        debugger;
+                        console.warn(data.err.msg);
+
+
+
                     } else {
                         console.log('valid key--', data);
-    
-    
-                        return;
-    
-    
+
+
+
                         Metro.dialog.create({
                             title: "Valid API Key",
                             content: "<div>Store API Key and state from server to local storage?</div>",
@@ -117,18 +124,13 @@ window.UIHelper = {
                                     caption: "Agree",
                                     cls: "js-dialog-close alert",
                                     onclick: function () {
-    
+
                                         console.log(APIKEY);
-    
-                                        UIHelper.Logger.Add({
-                                            TID: 0,
-                                            Type: 707,
-                                            DT: new Date(),
-                                            Topic: "API Key",
-                                            Source: "Browser",
-                                            Body: "Testing a new API Key!",
-                                        });
-    
+                                        WebApp.AppPrefs.UserOptions.APIKEY = APIKEY;
+
+                                        localStorage.setItem('UserOptions', JSON.stringify(WebApp.AppPrefs.UserOptions));
+
+
                                     }
                                 },
                                 {
@@ -137,32 +139,32 @@ window.UIHelper = {
                                 }
                             ]
                         });
-    
-    
-    
-    
+
+
+
+
                     }
-    
-    
+
+
                 }).catch(error => {
                     console.warn('Error!');
                     console.error(error);
                     // debugger;
                 });
-    
-    
-    
-    
+
+
+
+
             } else {
                 alert('fix yo key!  :-)');
             }
-    
-    
-        }        
+
+
+        }
     },
 
- 
-    
+
+
     QueryStringBuilder(JSONData) {
 
         //Simple function to serialize the json into array for query string...

@@ -11,6 +11,12 @@
 function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
     const path = require('path');
 
+
+    //Check the api key...
+    if (RequestObj.User.Type == "HTTP") {
+
+    }
+
     // We need at least a service name to work with...
     if (!RequestData.service) {
         OnComplete('No service defined! ', null);
@@ -33,7 +39,7 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
                     const checkThisLater = finalServicePath;
                     const debuginfo = {
                         err: {
-                            fnl:finalServicePath,
+                            fnl: finalServicePath,
                             path: servicePath,
                             source: ServiceError
                         }

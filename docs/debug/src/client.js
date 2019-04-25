@@ -10,7 +10,7 @@ const WebApp = {
         Ex: WebApp.Fetch
     */
     Fetch(data = {}) {
-        const url = document.URL + '';
+        const url = document.URL + ''; 
 
         return fetch(url, {
             method: "PUT", // *GET, POST, PUT, DELETE, etc.
@@ -55,9 +55,9 @@ const WebApp = {
     },
 
     //Your local app preferences...
-    AppRefs: {
-        APIKEY: '',
+    AppPrefs: {
         UserOptions: {
+            APIKEY: '',
             UserID: '',
             TargetAPI: {
                 url: document.URL,
@@ -69,19 +69,20 @@ const WebApp = {
     }
 };
 
+
 if (localStorage) {
     const UserOptionsText = localStorage.getItem('UserOptions');
 
     if (UserOptionsText) {
         console.info('Reloading App options....');
-        WebApp.AppRefs.UserOptions = JSON.parse(UserOptionsText);
+        WebApp.AppPrefs.UserOptions = JSON.parse(UserOptionsText);
     } else {
         console.info('Storing (local) App options....');
-        localStorage.setItem("UserOptions", JSON.stringify(WebApp.AppRefs.UserOptions));
+        localStorage.setItem("UserOptions", JSON.stringify(WebApp.AppPrefs.UserOptions));
     }
 
 } else {
-    alert('No Local Storage!');    
+    alert('No Local Storage!');
 }
 
 
@@ -297,6 +298,9 @@ const DebugUI = {
         //Get our contents from the editor...
         const JSONPayload = DebugUI.GetEditorJSON();
 
+
+        // console.info('Add key to Data->',WebApp.AppPrefs.UserOptions.APIKEY);
+        JSONPayload.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
 
 
 
@@ -537,7 +541,7 @@ print(response_data)
 WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
     const srcHistoryLogger = document.createElement("script");
     srcHistoryLogger.innerHTML = filecontents.body;
-    document.head.appendChild(srcHistoryLogger); 
+    document.head.appendChild(srcHistoryLogger);
 });
 
 
@@ -593,9 +597,11 @@ window.onload = function () {
 
         //Setup our UI parts...
         DebugUI.FillSideBar();
- 
+
         //Setup all of our ace editors...
         UIHelper.Ace.BuildAceControls();
+
+        UIHelper.AppPrefs.ShowPrefs();
 
 
         /*
@@ -711,10 +717,10 @@ window.onload = function () {
         //If you local host you are most likely debugging.. :-)
         if (document.location.hostname == "localhost") {
             // debugger;
-            // UIHelper.ShowTab('TabDebugger');
+            UIHelper.ShowTab('TabDebugger');
             // UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
-            UIHelper.ShowTab('TabAppPrefs');
+            // UIHelper.ShowTab('TabAppPrefs');
         }
 
 

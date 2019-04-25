@@ -51,7 +51,6 @@ function CheckRequest(RequsetObject, OnChecked) {
         });
 
     } else {
- 
 
         //We are cleared for take off!  :-)
         OnChecked(null);
@@ -60,3 +59,22 @@ function CheckRequest(RequsetObject, OnChecked) {
 }
 
 exports.CheckRequest = CheckRequest;
+
+/*
+    A very simple way to check the api key. 
+    Since this is just a demo, we only have
+    a few so this should do fine...
+*/
+function CheckAPIKey(Key2Check){
+    const serverkeys = SERVER.KEYS.admin;
+
+    for (let index = 0; index < serverkeys.length; index++) {
+        const srvKey = serverkeys[index];
+        if(Key2Check == serverkeys[index]){
+            return true;
+        }                
+    }
+    return false;
+
+}
+exports.CheckAPIKey=CheckAPIKey;
