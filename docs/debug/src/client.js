@@ -724,7 +724,7 @@ window.onload = function () {
         }
 
 
-
+        document.title = "api-puppy Demo";
 
 
 

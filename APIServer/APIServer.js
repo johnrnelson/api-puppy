@@ -17,25 +17,6 @@
 */
 
 
-//Yes.. it's a global!!! 
-global.SERVER = {
-    Version: '1.10.28',
-
-    Started: new Date(),
-    RootFolder: __dirname,
-    Defender: require("./defender/shield"),
-
-
-    /* 
-        This is used in our services to act as a database.
-        Of course it gets blown away every time the service
-        starts but thats ok because we are JUST A DEMO!!!  :-)
-    */
-    IN_MEM_DB: {
-        fruit: ['apples', 'pears', 'peaches']
-    }
-};
-
 
 /*
     We will need access to the disk, so load up the libraries 
@@ -744,39 +725,12 @@ window.debugdata = {
 };
 
 
-/*
-    Save time by just compiling the debug files.. You can always make this a 
-    task or use grunt or whatever ya like... :-)
+ 
 
-    Use the sync since we won't bother starting up the http servers untill
-    we have the right debug html.. 
-*/
-function CompileDebugFiles(OnComplete) {
+function StartServer() {
+ 
+ 
+    IPC.Start();
 
-    const path2debug = __dirname + "/../docs/debug/";
-
-    var debugHTML = fs.readFileSync(path2debug + "src/debug.html", 'utf8');
-    const clientjs = fs.readFileSync(path2debug + "src/client.js", 'utf8');
-
-    debugHTML = debugHTML.replace('/* SERVER REPLACES SCRIPTS */', clientjs);
-    fs.writeFileSync(path2debug + 'min/debug.html', debugHTML, { flag: 'w' });
-    OnComplete(null, 'Client HTML ready for requests...');
 }
-
-
-/*
-    Compile the debug files to make life simple by staticly serving what you 
-    can and dynamicly adujusting what ya need. :-)   lol
-*/
-CompileDebugFiles(function (err, DebugFileStatus) {
-    if (err) {
-        console.log(err);
-
-    } else {
-        // show if ya want more infomation about whats going on...
-        // console.log(DebugFileStatus);
-
-        //Lets get this party started. :-)
-        IPC.Start();
-    }
-});
+exports.StartServer = StartServer;

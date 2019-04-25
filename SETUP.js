@@ -31,7 +31,7 @@ if (!fs.existsSync(SETUP_PATHS.SECRETS_FOLDER)) {
         "Logger": {
             "ignore": {
                 "IP4": [
-                    "24.21.146.104"
+                    "1.1.1.1"
                 ]
             }
         },
