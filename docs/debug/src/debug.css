@@ -36,7 +36,7 @@ smallscreen {
     border: solid 1px silver;
     /* background: -webkit-radial-gradient(center, ellipse cover, rgb(116, 116, 116) 0%, rgb(0, 0, 0) 50%); */
     color: red;
-    text-shadow: 1px 1px 1px #444444;    
+    text-shadow: 1px 1px 1px #444444;
     font-size: 30px;
     font-family: 'Roboto', sans-serif;
 }
@@ -158,8 +158,8 @@ MainTabDisplay LoggerTable {
     color: black;
     /* height: 100%;
     */
-    width: 100%; 
-  
+    width: 100%;
+
     overflow: auto !important;
 }
 
@@ -374,6 +374,15 @@ MainTabDisplay .h-menu li:hover {
 
 
 /* Main help text classes...  */
+.AppUpdates {
+    color: rgb(28, 5, 90);
+    font-size: 14px;
+    /* font-weight: bold; */
+    /* font-family: 'PT Sans', sans-serif; */
+    border: solid 1px silver;
+    padding: 5px;
+   
+}
 
 .HelpText {
     padding-top: 15px;
