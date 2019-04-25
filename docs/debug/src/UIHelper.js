@@ -164,7 +164,10 @@ window.UIHelper = {
     },
 
 
-
+    /*
+        Take a JSON object and create a natural query string
+        then setup our UI to show the results....
+    */
     QueryStringBuilder(JSONData) {
 
         //Simple function to serialize the json into array for query string...
@@ -234,8 +237,15 @@ window.UIHelper = {
 
     },
     Ace: {
-        AceEditor: null, //Set this in code when you are ready...
-        AceDisplayRsults: null, //Set this in code when you are ready...        
+        //Set this in code when you are ready...
+        AceEditor: null, 
+        //Set this in code when you are ready...        
+        AceDisplayRsults: null, 
+
+        /*
+            This lets you add new items to the drop down on 
+            code complete...
+        */
         SetCompleters(Editor2Complete) {
 
 
@@ -304,8 +314,14 @@ window.UIHelper = {
             return aceEditor;
         },
 
+        /*
+            Build all the ace editors we need to support the basic editing 
+            needs of our UI.  
+            
+            No need to get crazy with this. Most people use a "real" editor
+            like visual stduio code or sublime so just do the basics....
+        */
         BuildAceControls() {
-
 
             UIHelper.Ace.AceEditor = UIHelper.Ace.SetupAceEditorDefaults('PayloadEditor');
             UIHelper.Ace.AceDisplayRsults = UIHelper.Ace.SetupAceEditorDefaults('APIDebugResults');
@@ -318,18 +334,14 @@ window.UIHelper = {
             //Only hook the actual editor!!!!!
             UIHelper.Ace.HookEvents(UIHelper.Ace.AceEditor);
 
-
-
             //Add your own stuff to the drop downs...
             UIHelper.Ace.SetCompleters(UIHelper.Ace.AceEditor);
-
 
             UIHelper.Ace.AceEditor.setOptions({
                 enableBasicAutocompletion: UIHelper.Ace.AceEditor.Completer,
                 enableLiveAutocompletion: true,
                 enableSnippets: true,
             });
-
 
         }
     },
@@ -371,15 +383,13 @@ window.UIHelper = {
 
     },
 
-
+    /*
+        Copy a HTML element's body in to the clipboard..
+    */
     CopyToClipboard(containerid) {
 
 
-        var textArea = document.getElementById(containerid);
-        // var textArea = document.createElement("textarea");
-        // textArea.value = text;
-        // document.body.appendChild(textArea);
-        // textArea.focus();
+        var textArea = document.getElementById(containerid); 
         textArea.select();
 
         try {
@@ -389,11 +399,11 @@ window.UIHelper = {
         } catch (err) {
             console.error('Fallback: Oops, unable to copy', err);
         }
-
-
-
     },
 
+    /*
+        Quick and easy stub to show we are working on stuff...
+    */
     NA() {
         Metro.dialog.create({
             title: "This feature is not yet available",
@@ -410,6 +420,3 @@ window.UIHelper = {
         });
     }
 };
-
-
-
