@@ -2,7 +2,6 @@
 
 "use strict";
 
-
 var fs = require("fs");
 var path = require("path");
 
@@ -49,4 +48,6 @@ if (!fs.existsSync(SETUP_PATHS.LOGS_FOLDER)) {
     fs.mkdirSync(SETUP_PATHS.LOGS_FOLDER);
 }
 
-console.log('\r\nOk you are all set up. :-)');
+console.log('All paths have been created.');
+console.log('Make sure you run "npm update" in this folder to complete the setup process.');
+
