@@ -59,18 +59,7 @@ window.UIHelper = {
                         cls: "js-dialog-close"
                     }
                 ]
-            });
-
-
-
-
-
-
-
-
-
-
-
+            }); 
 
         },
 
