@@ -346,7 +346,8 @@ window.debugdata = {
 
         //ignore this request. We are not a real web server!
         if (request.url == "/robots.txt") {
-            response.end();
+            response.end("User-agent: * \r\n"+
+            "Disallow: /");
             return;
         }
 
