@@ -13,7 +13,7 @@ const WebApp = {
         const url = document.URL + '';
 
         // console.info('Add key to Data->',WebApp.AppPrefs.UserOptions.APIKEY);
-        
+
         //Allways add the APIKEY to outbound requests to the server...
         data.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
 
@@ -112,18 +112,20 @@ const DebugUI = {
     //Show the server info via HTML in a componet fashion....
     SetSysInfo() {
 
-
-
+        
         //You will find this on the `debug.html` page...
         const SystemInfo = document.getElementById("SystemInfo");
 
         //Setup a simple function to add html to our DOM... super simple!!!!!!!!!
         function AddInfoElement(InfoText, InfoTip, ElementData) {
+
             const NewEL = document.createElement('div');
-            NewEL.innerHTML = '<b>' + InfoText + '</b> : ' + ElementData;
+            NewEL.innerHTML = '<span class="SysInfoLabel">' + InfoText + '</span><br>' +
+                '<span class="SysInfoValue">' + ElementData + '</span>';
             NewEL.title = InfoTip;
-            NewEL.className = "FooterSysInfo";
+            NewEL.className = "SysInfoItem";
             SystemInfo.appendChild(NewEL);
+            console.log(NewEL)
         }
 
 
@@ -722,14 +724,11 @@ window.onload = function () {
             // UIHelper.ShowTab('TabDebugger');
             // UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
-            UIHelper.ShowTab('TabAppPrefs');
+            // UIHelper.ShowTab('TabAppPrefs');
         }
 
 
         document.title = debugdata.ProjectInfo.Title;
-
-
-
 
     }); //end UIHelper....
 

@@ -381,7 +381,7 @@ MainTabDisplay .h-menu li:hover {
     /* font-family: 'PT Sans', sans-serif; */
     border: solid 1px silver;
     padding: 5px;
-   
+
 }
 
 .HelpText {
@@ -409,35 +409,45 @@ pre code {
     color: green;
 }
 
+
+
+
 /* 
-FOOTER STYLES!!!!!! 
+
+
+
+
+
+
+SysInfo STYLES!!!!!! 
 */
 
-.footer-row {
-    padding-top: 50px;
-    margin-bottom: 100px;
-    font-family: 'Abel', sans-serif;
-    font-size: 16px;
+.SysInfoItem {
+    padding-top: 5px;
+    /* margin-bottom: 20px; */
+    /* border: solid 1px blue; */
 
 }
 
-.FooterHeading {
+.SysInfoHeading {
+    font-family: 'PT Sans', sans-serif;
     color: green;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: bold;
 }
 
 
-.FooterSysInfo {
-    color: gray;
+.SysInfoItem .SysInfoLabel {
+    color: rgb(36, 17, 88);
     cursor: default;
+    font-size: 18px;
 }
 
-.FooterSysInfo:hover {
-    color: silver !important;
-    cursor: hand;
+.SysInfoItem .SysInfoValue {
+    color: rgb(119, 119, 119);
+    cursor: default;
+    font-size: 14px;
 }
-
 
 
 
