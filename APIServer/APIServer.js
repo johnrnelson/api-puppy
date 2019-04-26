@@ -344,7 +344,18 @@ window.debugdata = {
             return;
         }
 
+        //ignore this request. We are not a real web server!
+        if (request.url == "/robots.txt") {
+            response.end();
+            return;
+        }
 
+
+        //ignore this request. We are not a real web server!
+        if (request.url == "/sitemap.xml") {
+            response.end();
+            return;
+        }
 
 
 
