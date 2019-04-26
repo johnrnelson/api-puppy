@@ -32,7 +32,7 @@ const ServiceManager = require('./ServiceManager');
 /*
     Basic TCP/IP server that will route requests for us...
 */
-const IPC = { 
+const IPC = {
     /*
         Create a basic HTTP/HTTPS server and service it's requests. Nothing fancy needed here. 
 
@@ -346,8 +346,7 @@ window.debugdata = {
 
         //ignore this request. We are not a real web server!
         if (request.url == "/robots.txt") {
-            response.end("User-agent: * \r\n"+
-            "Disallow: /");
+            response.end("User-agent: * \r\n" + "Disallow: /");
             return;
         }
 
@@ -709,14 +708,14 @@ window.debugdata = {
 };
 
 
- 
+
 /*
     Simple stub while this file is being broken down
     into smaller modules... maybe... lol  :-)
 */
 function StartServer() {
- 
- 
+
+
     IPC.Start();
 
 }

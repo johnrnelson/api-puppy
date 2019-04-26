@@ -32,7 +32,7 @@ window.UIHelper = {
                         onclick: function () {
                             try {
                                 localStorage.clear();
-                                UIHelper.Logger.Add({
+                                HistoryLogger.Logger.Add({
                                     TID: 0,
                                     Type: 707,
                                     DT: new Date(),
@@ -41,7 +41,7 @@ window.UIHelper = {
                                     Body: "The local storage has been cleared!",
                                 });
                             } catch (errLocalStorage) {
-                                UIHelper.Logger.Add({
+                                HistoryLogger.Logger.Add({
                                     TID: 0,
                                     Type: 0,
                                     DT: new Date(),
