@@ -112,7 +112,7 @@ const DebugUI = {
     //Show the server info via HTML in a componet fashion....
     SetSysInfo() {
 
-        
+
         //You will find this on the `debug.html` page...
         const SystemInfo = document.getElementById("SystemInfo");
 
@@ -125,15 +125,15 @@ const DebugUI = {
             NewEL.title = InfoTip;
             NewEL.className = "SysInfoItem";
             SystemInfo.appendChild(NewEL);
-            console.log(NewEL)
+            // console.log(NewEL)
         }
 
 
         //The user info for the client to use...
         // console.log(debugdata.UserInfo);
 
-        if (debugdata.UserInfo.isAuthenticated) {
-            AddInfoElement('Security Level', 'Level of permissions on the server', debugdata.UserInfo.SecurityLevel);
+        if (WebApp.AppPrefs.UserOptions.APIKEY.length > 1) {
+            AddInfoElement('Security Level', '', 'Using API Key');
         } else {
             AddInfoElement('Security Status', 'Your current user status from the servers perspective.', 'Not Authenticated');
         }
