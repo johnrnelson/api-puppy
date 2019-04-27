@@ -641,6 +641,8 @@ window.onload = function () {
 
                 DebugUI.SetSysInfo();
 
+                console.log('CHECK THIS-->',WebApp.SysInfo);
+
 
             }
 

@@ -156,7 +156,8 @@ const topics = {
             ProjectInfo: SERVER.ProjectInfo,
             NodeVersion: process.version,
             ServerVersion: SERVER.Version,
-            ST: new Date(SERVER.Started.toLocaleString())
+            ST: new Date(SERVER.Started.toLocaleString()),
+            shame: SERVER.Defender.ShameList
         };
 
 
