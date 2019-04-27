@@ -21,12 +21,10 @@ const path = require('path');
 
     Change the info you need below for your own server. 
 */
-
-
 global.SERVER = {
     ProjectInfo:{
         Title:'api-puppy Demo',
-        Version: '1.10.31',
+        Version: '1.10.33',
     },
     Network: {
         /* 
@@ -116,3 +114,4 @@ SERVER.Started = new Date();
 
 const APIServer = require('./APIServer/APIServer');
 APIServer.StartServer();
+

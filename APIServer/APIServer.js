@@ -160,8 +160,10 @@ const IPC = {
 
 
         /*
+            Notice that it's the MIN version! 
+
             Just read our debug.html file and spit it back out. 
-            
+                                   
             Nice and easy...  :-)
         */
         fs.readFile(__dirname + "/../docs/debug/min/debug.html", "utf8", function (err, debugHTML) {

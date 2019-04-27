@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 
- 
+
 
     <link rel="stylesheet" href="https://api-puppy.johnrnelson.com/metroui/css/metro-all.min.css">
 
@@ -28,8 +28,8 @@
     <link rel="stylesheet" href="https://api-puppy.johnrnelson.com/metroui/css/metro-rtl.min.css">
     <link rel="stylesheet" href="https://api-puppy.johnrnelson.com/metroui/css/metro-icons.min.css">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>    
-    
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
     <script src="https://api-puppy.johnrnelson.com/metroui/js/metro.min.js"></script>
 
 
@@ -38,13 +38,6 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"> </script> <!-- SERVER SIDE -->
-
-
- 
-    <script>
-//SERVER-SIDE-REPLACE!!!
-    </script>
-
 
     <script>
         /*
@@ -863,7 +856,7 @@ window.onload = function () {
             </ul>
 
         </sidemenu>
- 
+
 
         <!-- Log the history and help the user know whats up... -->
         <MainTabDisplay id="HistoryLogger">
@@ -1035,23 +1028,20 @@ window.onload = function () {
 
         <!-- Because of the editor, you need to declare this first! -->
         <MainTabDisplay id="TabDebugger">
+            <div class="DebugToolbar">
 
-
-
-            <div class="DebugToolbar" title="URI Endpoint address">
-
-                <div class="dropdown-button">
+                <div class="dropdown-button" title="Select Verb">
                     <button id="DebugVerbList_BTN" class="button dropdown-toggle"></button>
                     <ul id="DebugVerbList_UL" class="d-menu" data-role="dropdown">
                     </ul>
                 </div>
-                <div class="dropdown-button">
+                <div class="dropdown-button" title="Select Example">
                     <button id="DebugSampleList_BTN" class="button dropdown-toggle"></button>
                     <ul id="DebugSampleList_UL" class="d-menu" data-role="dropdown">
                     </ul>
                 </div>
 
-                <div class="dropdown-button">
+                <div class="dropdown-button" title="Select the target language">
                     <button id="Export_BTN" class="button dropdown-toggle">Export</button>
                     <ul id="Export_UL" class="d-menu" data-role="dropdown">
 
