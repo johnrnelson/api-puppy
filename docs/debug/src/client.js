@@ -130,7 +130,7 @@ const DebugUI = {
 
 
         //The user info for the client to use...
-        // console.log(debugdata.UserInfo);
+
 
         if (WebApp.AppPrefs.UserOptions.APIKEY.length > 1) {
             AddInfoElement('Security Level', '', 'Using API Key');
@@ -141,14 +141,14 @@ const DebugUI = {
 
         AddInfoElement('Access Point', 'The protocal, port, hostname, path, and query string for the current request using for the API',
             '<b>' + window.location.protocol + '</b>//' + window.location.hostname +
-            '<b>' + debugdata.UserInfo.URL + '</b>');
+            '<b>' + window.location.pathname + '</b>');
 
         AddInfoElement('Node Version', 'The version of node on this server',
-            debugdata.NodeVersion);
+            WebApp.SysInfo.NodeVersion);
 
-        AddInfoElement('Server Version', 'The version of the APIServer.js file.', debugdata.ProjectInfo.Version);
+        AddInfoElement('Server Version', 'The version of the APIServer.js file.', WebApp.SysInfo.ProjectInfo.Version);
 
-        AddInfoElement('Start Date', 'The date the server started', debugdata.ST.toLocaleDateString() + " " + debugdata.ST.toLocaleTimeString());
+        AddInfoElement('Start Date', 'The date the server started', WebApp.SysInfo.ST.toLocaleDateString() + " " + WebApp.SysInfo.ST.toLocaleTimeString());
 
 
 
@@ -272,9 +272,9 @@ const DebugUI = {
             const dbSidebar = document.getElementById('debugger-sidbar');
 
 
-            for (var n in debugdata.apidata) {
+            for (var n in WebApp.SysInfo.apidata) {
 
-                const namespaceData = debugdata.apidata[n];
+                const namespaceData = WebApp.SysInfo.apidata[n];
 
                 const optUL = document.createElement('li');
                 optUL.RecordData = namespaceData;
@@ -567,7 +567,10 @@ WebApp.GetHelpFile('debug.css', function (filecontents) {
 WebApp.GetHelpFile('HelpDisplay.html', function (filecontents) {
     document.getElementById("TabMain").innerHTML = filecontents.body;
     //Now show the sys info in the main display...
-    DebugUI.SetSysInfo();
+
+
+
+
 });
 
 
@@ -599,23 +602,58 @@ window.onload = function () {
 
 
 
-        //Setup our UI parts...
-        DebugUI.FillSideBar();
-
-        //Setup all of our ace editors...
-        UIHelper.Ace.BuildAceControls();
-
-        UIHelper.AppPrefs.ShowPrefs();
 
 
-        /*
-            This is only available to the debug client. We 
-            don't put this in normal requests from users... 
-        */
-        console.info(`    
-        Use : "ServerAPI" for easy code to help with testing.
-        Use : "debugdata" in the console for the api data help.    
-            `);
+
+
+        WebApp.Fetch({
+            service: 'help',
+            data: {
+                topic: 'SysInfo'
+            }
+        }).then(data => {
+            if (data.err) {
+                console.warn(data.err.msg);
+                debugger;
+
+
+
+            } else {
+
+                WebApp.SysInfo = data;
+                WebApp.SysInfo.ST = new Date(WebApp.SysInfo.ST);
+
+
+
+                // debugger;
+                WebApp.AppPrefs.Title = WebApp.SysInfo.ProjectInfo.Title;
+
+                document.title = WebApp.AppPrefs.Title;
+
+                //Setup our UI parts...
+                DebugUI.FillSideBar();
+
+                //Setup all of our ace editors...
+                UIHelper.Ace.BuildAceControls();
+
+                UIHelper.AppPrefs.ShowPrefs();
+
+
+                DebugUI.SetSysInfo();
+
+
+            }
+
+
+
+        }).catch(error => {
+            console.warn('Error!');
+            console.error(error);
+            // debugger;
+        });
+
+
+
 
 
         /*
@@ -728,7 +766,6 @@ window.onload = function () {
         }
 
 
-        document.title = debugdata.ProjectInfo.Title;
 
     }); //end UIHelper....
 

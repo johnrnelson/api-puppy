@@ -22,6 +22,7 @@ const path = require('path');
     Change the info you need below for your own server. 
 */
 
+
 global.SERVER = {
     ProjectInfo:{
         Title:'api-puppy Demo',

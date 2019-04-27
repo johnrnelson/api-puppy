@@ -159,55 +159,18 @@ const IPC = {
         });
 
 
-
         /*
-            Sure we are nesting calls.. maybe it looks ugly but its not blocking
-            the main thread which we need to service the api requests other users
-            make on the server...
+            Just read our debug.html file and spit it back out. 
+            
+            Nice and easy...  :-)
         */
         fs.readFile(__dirname + "/../docs/debug/min/debug.html", "utf8", function (err, debugHTML) {
             if (err) {
                 SendError('debug.html');
-
             } else {
-
-                fs.readFile(__dirname + "/../docs/debug/API_HELP.json", "utf8", function (err, API_HELP) {
-                    if (err) {
-                        SendError('API_HELP.json');
-
-                    } else {
-
-
-                        //  *** SEND THE END RESPONSE!!!!
-                        const debugdata = `
-window.debugdata = {
-    ProjectInfo:${JSON.stringify(SERVER.ProjectInfo)},
-    UserInfo:${JSON.stringify(request.User)},
-    NodeVersion:"${process.version}",
-    ServerVersion:"${SERVER.Version}",
-    port:${IPC.PORT},
-    apidata:${API_HELP},
-    ST: new Date('${IPC.StartDate.toLocaleString()}'),
-    QueryData:${JSON.stringify(request.QueryData)}
-
-};
-`;
-
-                        //Our debug HTML is a great way to make sure our stuff works. :-)
-                        debugHTML = debugHTML.replace('//SERVER-SIDE-REPLACE!!!', debugdata);
-
-
-                        response.end(debugHTML);
-                        //  *** SEND THE END RESPONSE!!!! 
-
-                    }
-                });//End API_HELP data...
-
+                response.end(debugHTML);
             }
         });//end debug html....
-
-
-
     },
 
 

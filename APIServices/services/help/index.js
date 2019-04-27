@@ -126,7 +126,7 @@ const topics = {
             //The key in the sample code!!!
             OnComplete({
                 msg: 'The "abc123" key is reserved for an example!',
-            }, null);            
+            }, null);
         } else {
 
             const isvalid = SERVER.Defender.CheckAPIKey(valKey);
@@ -146,7 +146,35 @@ const topics = {
         }
 
 
-    }
+    },
+    'SysInfo': function (RequestData, OnComplete) {
+        // debugger;
+
+        const fs = require('fs');
+
+        var SysInfoData = {
+            ProjectInfo: SERVER.ProjectInfo,
+            NodeVersion: process.version,
+            ServerVersion: SERVER.Version,
+            ST: new Date(SERVER.Started.toLocaleString())
+        };
+
+
+        fs.readFile(SERVER.ServicesFolder + "/API_HELP.json", "utf8", function (err, API_HELP) {
+            if (err) {
+                OnComplete({
+                    msg: 'No API_HELP.json file found!',
+                }, null);
+
+            } else {
+                SysInfoData.apidata = JSON.parse(API_HELP);
+
+                OnComplete(null, SysInfoData);
+            }
+        });
+
+
+    },
 };
 
 
