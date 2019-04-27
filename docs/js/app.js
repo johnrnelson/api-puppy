@@ -85,7 +85,7 @@ const WebApp = {
             this domain and this DEMO!
         */
         SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
-        
+
             var displaymsg;
             if (jsonData.msg) {
                 displaymsg = jsonData.msg;
@@ -116,6 +116,7 @@ const UIHelper = {
 
         const elDisplayServerStatus = elServerStatus.querySelector('#DisplayServerStatus')
         const elDisplayServerDate = elServerStatus.querySelector('#DisplayServerDate');
+        const elDisplayServerVersion = elServerStatus.querySelector('#DisplayServerVersion');
 
 
         elDisplayServerStatus.innerHTML = "Checking...";
@@ -125,18 +126,34 @@ const UIHelper = {
         try {
 
             WebApp.xhr('PUT', 'https://demo.tektology.com/', {
-                "service": "time"
+                service: 'help',
+                data: {
+                    topic: 'SysInfo'
+                }
             }, function (ServerResponse) {
-                
-                const dispServerTime = moment(ServerResponse.dt);
-                const dispServerStarted = moment(ServerResponse.started);
-                
-                elServerStatus.title = " Server Time : " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
-                elDisplayServerDate.innerHTML = dispServerStarted.fromNow();
-                elDisplayServerStatus.innerHTML = `
-                    <span class="fas fa-thumbs-up"></span> It's UP!
-                `;
-                WebApp.OpenSocket();
+
+                try {
+                    ServerResponse.ST = new Date(ServerResponse.ST);
+
+                    const dispServerTime = moment(ServerResponse.ST);
+                    const dispServerStarted = moment(ServerResponse.started);
+
+                    elServerStatus.title = " " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
+                    elDisplayServerDate.innerHTML = dispServerStarted.fromNow();
+                    elDisplayServerStatus.innerHTML = `
+                        <span class="fas fa-thumbs-up"></span> It's UP!
+                    `;
+
+                    elDisplayServerVersion.innerHTML = ServerResponse.ProjectInfo.Version
+
+
+                    WebApp.OpenSocket();
+                } catch (errSrvResponse) {
+                    debugger;
+                    console.warn('Error in Web Page! Please let us know about this. :-)', errSrvResponse.message);
+
+                }
+
 
             }, function (ErrorInfo) {
                 console.warn("Error in request!");
@@ -153,7 +170,7 @@ const UIHelper = {
         }
 
     },
-    ShowSocketStatus(){
+    ShowSocketStatus() {
         const elServerStatus = document.getElementById('SocketStatus');
 
         const elSckTotalUsers = elServerStatus.querySelector('#SckTotalUsers')
@@ -166,7 +183,7 @@ const UIHelper = {
 };
 window.onload = function () {
 
-    UIHelper.ShowServerStatus();  
- 
+    UIHelper.ShowServerStatus();
+
 
 }
