@@ -343,29 +343,29 @@ const IPC = {
 
         // console.log(request.QueryPath, ' --- ', request.method.toUpperCase());
 
+        //We alwasy use JSON for everything.. 
+        response.writeHead(200, {
+            // 'Content-Type': 'application/json',
+            //CSP Policy
+            // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
 
+            //CORB...
+            "Access-Control-Allow-Origin": "*",
+            // GET,PUT,POST,DELETE
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "*"
+            // "Access-Control-Allow-Headers": "Content-Type, Authorization"
+        });
 
         if (request.method.toUpperCase() == "OPTIONS") {
             // console.log(request.headers);
 
 
-            //We alwasy use JSON for everything.. 
-            response.writeHead(200, {
-                'Content-Type': 'application/json',
-                //CSP Policy
-                // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
 
-                //CORB...
-                "Access-Control-Allow-Origin": "*",
-                // GET,PUT,POST,DELETE
-                "Access-Control-Allow-Methods": "*",
-                "Access-Control-Allow-Headers": "*"
-                // "Access-Control-Allow-Headers": "Content-Type, Authorization"
-            });
 
             response.end("");
             return;
-        } 
+        }
 
         //Give the response and easy way out for errors...
         response.SendError = IPC.SendError;
@@ -529,11 +529,7 @@ const IPC = {
                         IPC.ServeDebugAPP(request, response);
                         return;
                     }
-
-                    response.writeHead(200, {
-                        'Content-Type': 'application/json',
-                    });
-
+ 
 
                     try {
 
