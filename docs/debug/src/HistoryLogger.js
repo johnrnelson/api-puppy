@@ -169,6 +169,7 @@ window.HistoryLogger = {
                                 Source: "Browser",
                                 Body: "History was deleted per user request",
                             });
+                            Metro.toast.create("History was deleted per user request", null, null, "info");
 
                         }
                     },

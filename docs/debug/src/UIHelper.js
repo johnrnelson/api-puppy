@@ -32,6 +32,7 @@ window.UIHelper = {
                         onclick: function () {
                             try {
                                 localStorage.clear();
+                                Metro.toast.create("The local storage has been cleared!", null, null, "info");
                                 HistoryLogger.Logger.Add({
                                     TID: 0,
                                     Type: 707,
@@ -41,14 +42,8 @@ window.UIHelper = {
                                     Body: "The local storage has been cleared!",
                                 });
                             } catch (errLocalStorage) {
-                                HistoryLogger.Logger.Add({
-                                    TID: 0,
-                                    Type: 0,
-                                    DT: new Date(),
-                                    Topic: "Local Storage",
-                                    Source: "Browser",
-                                    Body: errLocalStorage.message
-                                });
+                                Metro.toast.create("Error clearing the local storage!", null, null, "info");
+                                 
                             }
 
 
