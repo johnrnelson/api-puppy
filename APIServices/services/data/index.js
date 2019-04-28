@@ -39,7 +39,8 @@ const DataActions = {
 
         SERVER.SocketBroadcast({
             TID: 0,
-            msg: 'Fruit [' + fruit + '] was added!'
+            service: 'data',
+            msg: 'Fruit [' + fruit + '] was deleted!'
         });
     },
     list(fruit, OnComplete) {
