@@ -18,6 +18,7 @@ const DataActions = {
         OnComplete(null, result);
         SERVER.SocketBroadcast({
             TID: 0,
+            service: 'data',
             msg: 'The fruit [' + fruit + '] was added!'
         });
     },

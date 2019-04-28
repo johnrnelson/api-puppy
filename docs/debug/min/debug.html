@@ -387,7 +387,7 @@ const DebugUI = {
         const JSONPayload = DebugUI.GetEditorJSON();
         // console.info(JSONPayload);
 
-        // SocketAPI.MasterSocket.WebSocketConnection.send(JSON.stringify(JSONPayload));
+
         SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
             console.info('call back is good--', SckData);
 
@@ -786,11 +786,30 @@ window.onload = function () {
             document.head.appendChild(srcSocketAPI);
 
             /*
+                When it's not a call back, it's a broadcast from
+                a service. Use this a means to handle those events...                
+            */
+            SocketAPI.MasterSocket.ServiceEvents = {
+                "data": function (SocketData) {
+                    console.info('The Data Service -->>', SocketData.msg);
+                },
+                "APIServer": function (SocketData) {
+                    console.info('APIServer--', SocketData.msg);
+                },
+            };
+
+            /*
                Overwrite the events to customize it for 
                this domain and this DEMO!
            */
             SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
                 // const jsonData = JSON.parse(e.data);
+
+                const srvEvt = SocketAPI.MasterSocket.ServiceEvents[jsonData.service];
+                if (srvEvt) {
+                    srvEvt(jsonData);
+                }
+
                 var displaymsg;
 
                 if (jsonData.msg) {
@@ -804,7 +823,6 @@ window.onload = function () {
                 }
 
 
-
                 HistoryLogger.Logger.Add({
                     Type: 466,
                     TID: 505,
@@ -813,12 +831,6 @@ window.onload = function () {
                     Source: "Socket",
                     Body: displaymsg
                 });
-
-                //Do not display service messages!
-                if (jsonData.TID == 0) {
-                    // console.log('Web Socket Service Mesage:', jsonData);                
-                    return;
-                }
 
             };
 
