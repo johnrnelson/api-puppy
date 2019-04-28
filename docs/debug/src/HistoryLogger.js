@@ -79,8 +79,8 @@ window.HistoryLogger = {
                     for (var x in DateMap) {
                         var dt = new Date(x);
                         const fmtDateMapItem = (dt.getMonth() + 1) + "-" +
-                        dt.getDate() + "-" +
-                        dt.getFullYear();
+                            dt.getDate() + "-" +
+                            dt.getFullYear();
 
                         specDates += fmtDateMapItem + ",";
                     }
@@ -134,8 +134,7 @@ window.HistoryLogger = {
                         cls: "js-dialog-close alert",
                         onclick: function () {
                             const loggerTables = document.getElementsByTagName('LoggerTable');
-
-                            // debugger;
+ 
                             for (let index = 0; index < loggerTables.length; index++) {
                                 const lgEl = loggerTables[index];
 
@@ -151,8 +150,10 @@ window.HistoryLogger = {
                                     const lgType = lgEl.id.replace('LGType-', '');
 
                                     const TargetElementCount = document.getElementById('LgCnt-' + lgType);
-                                    TargetElementCount.TotalCount = 0;
-                                    TargetElementCount.innerHTML = "&nbsp;";
+                                    if (TargetElementCount) {
+                                        TargetElementCount.TotalCount = 0;
+                                        TargetElementCount.innerHTML = "&nbsp;";
+                                    }
 
                                 }
 

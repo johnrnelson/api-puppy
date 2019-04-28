@@ -839,7 +839,7 @@ window.onload = function () {
         if (document.location.hostname == "localhost") {
             // debugger;
             // UIHelper.ShowTab('TabDebugger');
-            // UIHelper.ShowTab('HistoryLogger');
+            UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
             // UIHelper.ShowTab('TabAppPrefs');
         }
