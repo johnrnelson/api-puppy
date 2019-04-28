@@ -157,7 +157,8 @@ const topics = {
             NodeVersion: process.version,
             ServerVersion: SERVER.Version,
             ST: new Date(SERVER.Started.toLocaleString()),
-            shame: SERVER.Defender.ShameList
+            shame: SERVER.Defender.ShameList,
+            SERVERStatistics: SERVER.Statistics
         };
 
 

@@ -104,7 +104,8 @@ function CheckRequest(RequsetObject, OnChecked) {
             Body: '** PHP REQUEST!'
         });
 
-
+        SERVER.Statistics.System.TotalSuccess++;
+        
 
         OnChecked({
             warning: "PHP is not installed! Please don't bother scanning for it.",

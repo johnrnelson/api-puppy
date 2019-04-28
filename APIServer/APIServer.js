@@ -588,6 +588,8 @@ const IPC = {
                             //By the time you get here.. you want a true web api request...
                             ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                                 if (ServiceError) {
+                                    SERVER.Statistics.Services.TotalError++;
+
 
                                     response.SendError(response, ServiceError);
 
@@ -595,6 +597,7 @@ const IPC = {
                                     // response.SendError(response, ServiceErrorInformation);
 
                                 } else {
+                                    SERVER.Statistics.Services.TotalSuccess++;
                                     response.end(JSON.stringify(ResponseJSON));
                                 }
                             });
@@ -623,7 +626,7 @@ const IPC = {
                             Body: DebugInformation
                         });
 
-
+                        SERVER.Statistics.System.TotalError++;
 
                         //Give the client some idea of what went wrong...
                         var resp = {

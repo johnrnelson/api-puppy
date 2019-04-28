@@ -21,9 +21,10 @@ const path = require('path');
 
     Change the info you need below for your own server. 
 */
+
 global.SERVER = {
-    ProjectInfo:{
-        Title:'api-puppy Demo',
+    ProjectInfo: {
+        Title: 'api-puppy Demo',
         Version: '1.10.34',
     },
     Network: {
@@ -40,7 +41,17 @@ global.SERVER = {
         // This binds us to any NIC on the server. Becareful with this!!!
         IPADDRESS: '0.0.0.0',
     },
- 
+    Statistics: {
+        Services: {
+            TotalSuccess: 0,
+            TotalError: 0,
+        },
+        System: {
+            TotalSuccess: 0,
+            TotalError: 0,
+        },        
+    },
+
     /*
         Kind of confusing, but the root folder is actually the "APIServer" folder...
     */
@@ -49,8 +60,8 @@ global.SERVER = {
     /*
         Where are your services located?
     */
-    ServicesFolder:path.join(__dirname, "APIServices"),
-    
+    ServicesFolder: path.join(__dirname, "APIServices"),
+
     /* 
         This is used in our services to act as a database.
         Of course it gets blown away every time the service

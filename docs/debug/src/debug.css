@@ -184,9 +184,10 @@ MainTabDisplay LoggerTable {
     position: absolute;
     top: 40px;
     bottom: 0;
-    left: 250px;
+    left: 245px;
     right: 0;
 
+    /* border: solid 2px blue; */
 
 
     display: none;
@@ -226,7 +227,8 @@ LoggerTable table {
 /* Main Display */
 
 MainTabDisplay .h-menu {
-    background-color: rgb(0, 0, 54);
+    /* background-color: rgb(0, 0, 54); */
+    background-color: rgb(49, 49, 49);
 }
 
 MainTabDisplay .h-menu a {
