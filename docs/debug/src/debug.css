@@ -139,28 +139,31 @@ MainTabDisplay .container {
 
 
 
-/* MainTabDisplay#LogTree { */
-MainTabDisplay LogTree {
-    position: absolute;
-    top: 40px;
-    bottom: 0;
-    left: 0;
-    width: 200px;
+
+
+
+
+/* 
+
+
+Logger 
+
+*/
+
+#HistoryLogger #LoggerCalendar {
     /* background-color: blue; */
-    overflow: auto;
+    border: solid 1px rgb(235, 235, 235);
+    margin: 0;
+    padding: 0;
 }
 
-MainTabDisplay LoggerTable {
-    display: none;
-    margin: 0;
-    padding: 10px;
-    background-color: transparent !important;
-    color: black;
-    /* height: 100%;
-    */
-    width: 100%;
 
-    overflow: auto !important;
+#HistoryLogger #LogTree {
+    position: absolute;
+    top: 365px;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 #LogTree i {
@@ -175,6 +178,29 @@ MainTabDisplay LoggerTable {
     /* text-shadow: 1px 1px 1px #000000; */
     font-weight: bold;
 }
+
+
+MainTabDisplay LoggerTable {
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    left: 250px;
+    right: 0;
+
+
+
+    display: none;
+    margin: 0;
+    padding: 10px;
+    background-color: transparent !important;
+    color: black;
+    /* height: 100%;
+    */
+    /* width: 100%; */
+
+    overflow: auto !important;
+}
+
 
 LoggerTable .LoggerLabel {
     color: rgb(78, 1, 78);

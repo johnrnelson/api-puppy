@@ -3,6 +3,125 @@ History Logger
 */
 
 window.HistoryLogger = {
+    Calendar: {
+        /*
+            The only way to dynamicly set the props of the calendar is 
+            by adding the HTML on our own. The JS functions don't
+            seem to work...   :-(
+        */
+        AddControl() {
+
+            const el = document.getElementById('LoggerCalendarPanel');
+
+
+
+            WebApp.Fetch({
+                "service": "logger",
+                "action": "list-log-files"
+            }).then(data => {
+                if (data.err) {
+                    console.warn(data.err);
+                    debugger;
+                } else {
+                    const DateMap = {};
+
+
+                    if (!data.logs.length) {
+                        console.warn('NO LOG Files!');
+                        return;
+                    }
+                    for (let index = 0; index < data.logs.length; index++) {
+                        var logItem = data.logs[index];
+                        // debugger;
+                        logItem = logItem.replace('.log', '');
+
+                        var fileParts = logItem.split('-');
+
+                        var dateparts = fileParts[fileParts.length - 3] + "/" +
+                            fileParts[fileParts.length - 2] + "/" +
+                            fileParts[fileParts.length - 1];
+
+                        //done with date parts now..
+                        fileParts.splice(fileParts.length - 3, 3);
+                        // console.log(fileParts);                        
+
+                        var newDate = new Date(dateparts);
+                        if (!DateMap[newDate]) {
+                            DateMap[newDate] = {
+                                logs: []
+                            };
+                        } else {
+                            DateMap[newDate].logs.push(fileParts.join('-'));
+                        }
+
+
+
+
+                    }
+
+
+                    const todayDate = new Date();
+                    const minDate = todayDate.addDays(-30);
+                    const maxDate = todayDate.addDays(1);
+
+                    // console.log(DateMap);
+                    // debugger;
+
+                    const minDateFMT = (minDate.getMonth() + 1) + "-" +
+                        minDate.getDate() + "-" +
+                        minDate.getFullYear();
+
+                    const maxDateFMT = (maxDate.getMonth() + 1) + "-" +
+                        maxDate.getDate() + "-" +
+                        maxDate.getFullYear();
+
+                    var specDates = "";
+                    for (var x in DateMap) {
+                        var dt = new Date(x);
+                        const fmtDateMapItem = (dt.getMonth() + 1) + "-" +
+                        dt.getDate() + "-" +
+                        dt.getFullYear();
+
+                        specDates += fmtDateMapItem + ",";
+                    }
+
+
+                    const calendarHTML = `
+
+                    <div id="LoggerCalendar"  
+                        data-min-date="${minDateFMT}"
+                        data-max-date="${maxDateFMT}"
+                        data-special="${specDates}" 
+                        data-on-day-click="HistoryLogger.Calendar.ChangeLoggerDay"
+                        data-role="calendar" class="compact" 
+                        data-buttons="today" data-preset="4-28-2019"></div>
+                    <br>
+        
+                    `;
+                    el.innerHTML = calendarHTML;
+
+
+                }
+            }).catch(error => {
+                console.warn('Error!');
+                console.error(error);
+                debugger;
+            });
+
+
+
+        },
+        ChangeLoggerDay(sel, day, el) {
+            console.log(arguments);
+            var calendar = $('#LoggerCalendar').data('calendar');
+
+            // var curDate = calendar.getSelected();
+            var curDate = new Date(sel[0]);
+            console.log('change to', curDate);
+
+
+        },
+    },
     Logger: {
 
         Clear() {
@@ -163,13 +282,16 @@ window.HistoryLogger = {
 
         },
         FetchRemoteByType(RemoteLogFile) {
-
             HistoryLogger.Logger.SetListType('serverlogs');
-            const LogDate = new Date();
-            const fileLogDate = "-" + LogDate.getFullYear() + "-" + (LogDate.getMonth() + 1) + "-" + LogDate.getDate()
 
-            // debugger;
-            // console.info('fetch type', RemoteLogFile);
+
+
+            var calendar = $('#LoggerCalendar').data('calendar');
+
+            var LogDate = new Date(calendar.getSelected()[0]);
+
+            // const LogDate = new Date();
+            const fileLogDate = "-" + LogDate.getFullYear() + "-" + (LogDate.getMonth() + 1) + "-" + LogDate.getDate()
 
             var finalLogFileName = "";
 
@@ -249,6 +371,8 @@ window.HistoryLogger = {
             }, 20);
 
 
-        }
+        },
+
     },
+
 };

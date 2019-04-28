@@ -546,6 +546,9 @@ WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
     const srcHistoryLogger = document.createElement("script");
     srcHistoryLogger.innerHTML = filecontents.body;
     document.head.appendChild(srcHistoryLogger);
+
+    HistoryLogger.Calendar.AddControl();
+
 });
 
 
@@ -575,6 +578,7 @@ WebApp.GetHelpFile('HelpDisplay.html', function (filecontents) {
 
 
 
+
 /*
     After page has loaded, you can be sure that everything you need
     is already loaded and ready to go...
@@ -597,7 +601,6 @@ window.onload = function () {
             Source: "Browser",
             Body: "The JavaScript UI helper has been loaded and we ready to go!",
         });
-
 
 
 
@@ -641,7 +644,7 @@ window.onload = function () {
 
                 DebugUI.SetSysInfo();
 
-                console.log('CHECK THIS-->',WebApp.SysInfo);
+                // console.log('CHECK THIS-->',WebApp.SysInfo);
 
 
             }
@@ -762,7 +765,7 @@ window.onload = function () {
         if (document.location.hostname == "localhost") {
             // debugger;
             // UIHelper.ShowTab('TabDebugger');
-            // UIHelper.ShowTab('HistoryLogger');
+            UIHelper.ShowTab('HistoryLogger');
             // UIHelper.ShowTab('GitHubLinks');
             // UIHelper.ShowTab('TabAppPrefs');
         }

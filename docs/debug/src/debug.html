@@ -92,163 +92,217 @@
                 <li title="Clear the log history"><a href="JavaScript:HistoryLogger.Logger.Clear()">Clear</a></li>
                 <li title="Export to a file"><a href="JavaScript:UIHelper.NA()">Export</a></li>
             </ul>
+
+ 
+
+
+
+            <div id="LoggerCalendarPanel">
+
+            </div>
+
+
+
+
+
+
+
+            <ul id="LogTree" data-role="treeview">
+                <li data-caption="Local Logs">
+                    <ul>
+                        <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
+                            onclick="HistoryLogger.Logger.SetListType('200')">
+                            <span class="LgCnt" id="LgCnt-200"></span>
+                        </li>
+                        <li data-icon="<i class='fas fa-info-circle fa-fw'></i>" data-caption="Basic Information"
+                            onclick="HistoryLogger.Logger.SetListType('411')">
+                            <span class="LgCnt" id="LgCnt-411"></span>
+                        </li>
+                        <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
+                            onclick="HistoryLogger.Logger.SetListType('466')">
+                            <span class="LgCnt" id="LgCnt-466"></span>
+                        </li>
+                        <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
+                            onclick="HistoryLogger.Logger.SetListType('707')">
+                            <span class="LgCnt" id="LgCnt-707"></span>
+                        </li>
+                        <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
+                            onclick="HistoryLogger.Logger.SetListType('0')">
+                            <span class="LgCnt" id="LgCnt-0"></span>
+                        </li>
+                    </ul>
+                </li>
+                <li data-caption="Remote Logs" collapsed>
+
+                    <ul>
+                        <li onclick="HistoryLogger.Logger.FetchRemoteByType('php')"
+                            data-icon="<i class='fas fa-file'></i>" data-caption="PHP Requests" disabled>
+                        </li>
+                        <li onclick="HistoryLogger.Logger.FetchRemoteByType('Socket')"
+                            data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History" disabled>
+                        </li>
+                        <li onclick="HistoryLogger.Logger.FetchRemoteByType('WebErrors')"
+                            data-icon="<i class='fas fa-file'></i>" data-caption="Web Errors" disabled>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+            <LoggerTable id="LGType-LgOpts">
+                <div>
+                    <h3>Logging Options</h3>
+                    <p>
+                        Working on this! :-)
+                    </p>
+                </div>
+            </LoggerTable>
+
+
+            <LoggerTable haslog="true" id="LGType-0" style="display:block">
+                <div class="LoggerLabel">Generic Errors</div>
+                <table class="table  striped compact" style="background: transparent;">
+                    <thead>
+                        <tr>
+                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                            <th widht="100%" vertical-align="top">Body</th>
+                        </tr>
+                    </thead>
+                    <tbody id="LGType-0-history" class="row-hover">
+                    </tbody>
+                </table>
+            </LoggerTable>
+            <LoggerTable haslog="true" id="LGType-serverlogs">
+                <div class="LoggerLabel">Server Logs</div>
+                <table class="table  striped compact" style="background: transparent;">
+                    <thead>
+                        <tr>
+                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                            <th widht="100%" vertical-align="top">Body</th>
+                        </tr>
+                    </thead>
+                    <tbody id="LGType-serverlogs-history" class="row-hover">
+                    </tbody>
+                </table>
+            </LoggerTable>
+
+            <LoggerTable haslog="true" id="LGType-200">
+                <div class="LoggerLabel">HTTP traffice using REST</div>
+                <table class="table  striped compact" style="background: transparent;">
+                    <thead>
+                        <tr>
+                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                            <th widht="100%" vertical-align="top">Body</th>
+                        </tr>
+                    </thead>
+                    <tbody id="LGType-200-history" class="row-hover">
+                    </tbody>
+                </table>
+            </LoggerTable>
+            <LoggerTable haslog="true" id="LGType-411">
+                <div class="LoggerLabel">Basic information</div>
+                <table class="table  striped compact" style="background: transparent;">
+                    <thead>
+                        <tr>
+                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                            <th widht="100%" vertical-align="top">Body</th>
+                        </tr>
+                    </thead>
+                    <tbody id="LGType-411-history" class="row-hover">
+                    </tbody>
+                </table>
+            </LoggerTable>
+            <LoggerTable haslog="true" id="LGType-466">
+                <div class="LoggerLabel">Socket Traffic</div>
+                <table class="table  striped compact" style="background: transparent;">
+                    <thead>
+                        <tr>
+                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                            <th widht="100%" vertical-align="top">Body</th>
+                        </tr>
+                    </thead>
+                    <tbody id="LGType-466-history" class="row-hover">
+                    </tbody>
+                </table>
+            </LoggerTable>
+            <LoggerTable haslog="true" id="LGType-707">
+                <div class="LoggerLabel">UI updates in the browser</div>
+                <table class="table  striped compact" style="background: transparent;">
+                    <thead>
+                        <tr>
+                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
+                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
+                            <th widht="100%" vertical-align="top">Body</th>
+                        </tr>
+                    </thead>
+                    <tbody id="LGType-707-history" class="row-hover">
+                    </tbody>
+                </table>
+            </LoggerTable>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!-- 
+
             <div class="split-container">
                 <div data-role="splitter" class="h-100" data-split-sizes="20, 60" data-min-sizes="160,160"
                     data-max-sizes="340,0" data-gutter-size="8">
                     <div class="d-flex flex-justify-left flex-align-left">
-                        <ul id="LogTree" data-role="treeview">
-                            <li data-caption="Local Logs">
 
-                                <ul>
-                                    <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
-                                        onclick="HistoryLogger.Logger.SetListType('200')">
-                                        <span class="LgCnt" id="LgCnt-200"></span>
-                                    </li>
-                                    <li data-icon="<i class='fas fa-info-circle fa-fw'></i>"
-                                        data-caption="Basic Information"
-                                        onclick="HistoryLogger.Logger.SetListType('411')">
-                                        <span class="LgCnt" id="LgCnt-411"></span>
-                                    </li>
-                                    <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
-                                        onclick="HistoryLogger.Logger.SetListType('466')">
-                                        <span class="LgCnt" id="LgCnt-466"></span>
-                                    </li>
-                                    <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
-                                        onclick="HistoryLogger.Logger.SetListType('707')">
-                                        <span class="LgCnt" id="LgCnt-707"></span>
-                                    </li>
-                                    <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
-                                        onclick="HistoryLogger.Logger.SetListType('0')">
-                                        <span class="LgCnt" id="LgCnt-0"></span>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li data-caption="Remote Logs" collapsed>
+                        xxxxxxx
 
-                                <ul>
-                                    <li onclick="HistoryLogger.Logger.FetchRemoteByType('php')"
-                                        data-icon="<i class='fas fa-file'></i>" data-caption="PHP Requests" disabled>
-                                    </li>
-                                    <li onclick="HistoryLogger.Logger.FetchRemoteByType('Socket')"
-                                        data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
-                                        disabled>
-                                    </li>
-                                    <li onclick="HistoryLogger.Logger.FetchRemoteByType('WebErrors')"
-                                        data-icon="<i class='fas fa-file'></i>" data-caption="Web Errors" disabled>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
+
+
                     </div>
                     <div class="d-flex flex-justify-left flex-align-left">
 
+                        llllll
 
 
-                        <LoggerTable id="LGType-LgOpts">
-                            <div>
-                                <h3>Logging Options</h3>
-                                <p>
-                                    Working on this! :-)
-                                </p>
-                            </div>
-                        </LoggerTable>
 
-
-                        <LoggerTable haslog="true" id="LGType-0" style="display:block">
-                            <div class="LoggerLabel">Generic Errors</div>
-                            <table class="table  striped compact" style="background: transparent;">
-                                <thead>
-                                    <tr>
-                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                        <th widht="100%" vertical-align="top">Body</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="LGType-0-history" class="row-hover">
-                                </tbody>
-                            </table>
-                        </LoggerTable>
-                        <LoggerTable haslog="true" id="LGType-serverlogs">
-                            <div class="LoggerLabel">Server Logs</div>
-                            <table class="table  striped compact" style="background: transparent;">
-                                <thead>
-                                    <tr>
-                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                        <th widht="100%" vertical-align="top">Body</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="LGType-serverlogs-history" class="row-hover">
-                                </tbody>
-                            </table>
-                        </LoggerTable>
-
-                        <LoggerTable haslog="true" id="LGType-200">
-                            <div class="LoggerLabel">HTTP traffice using REST</div>
-                            <table class="table  striped compact" style="background: transparent;">
-                                <thead>
-                                    <tr>
-                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                        <th widht="100%" vertical-align="top">Body</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="LGType-200-history" class="row-hover">
-                                </tbody>
-                            </table>
-                        </LoggerTable>
-                        <LoggerTable haslog="true" id="LGType-411">
-                            <div class="LoggerLabel">Basic information</div>
-                            <table class="table  striped compact" style="background: transparent;">
-                                <thead>
-                                    <tr>
-                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                        <th widht="100%" vertical-align="top">Body</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="LGType-411-history" class="row-hover">
-                                </tbody>
-                            </table>
-                        </LoggerTable>
-                        <LoggerTable haslog="true" id="LGType-466">
-                            <div class="LoggerLabel">Socket Traffic</div>
-                            <table class="table  striped compact" style="background: transparent;">
-                                <thead>
-                                    <tr>
-                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                        <th widht="100%" vertical-align="top">Body</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="LGType-466-history" class="row-hover">
-                                </tbody>
-                            </table>
-                        </LoggerTable>
-                        <LoggerTable haslog="true" id="LGType-707">
-                            <div class="LoggerLabel">UI updates in the browser</div>
-                            <table class="table  striped compact" style="background: transparent;">
-                                <thead>
-                                    <tr>
-                                        <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                                        <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                                        <th widht="100%" vertical-align="top">Body</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="LGType-707-history" class="row-hover">
-                                </tbody>
-                            </table>
-                        </LoggerTable>
                     </div>
                 </div>
 
-            </div>
+            </div> -->
 
 
         </MainTabDisplay>

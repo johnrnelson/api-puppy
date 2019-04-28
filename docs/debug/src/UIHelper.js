@@ -17,7 +17,7 @@ window.UIHelper = {
 
             inputCtrl.value = WebApp.AppPrefs.UserOptions.APIKEY;
 
-            
+
         },
         ClearPrefs() {
 
@@ -59,7 +59,7 @@ window.UIHelper = {
                         cls: "js-dialog-close"
                     }
                 ]
-            }); 
+            });
 
         },
 
@@ -227,9 +227,9 @@ window.UIHelper = {
     },
     Ace: {
         //Set this in code when you are ready...
-        AceEditor: null, 
+        AceEditor: null,
         //Set this in code when you are ready...        
-        AceDisplayRsults: null, 
+        AceDisplayRsults: null,
 
         /*
             This lets you add new items to the drop down on 
@@ -378,7 +378,7 @@ window.UIHelper = {
     CopyToClipboard(containerid) {
 
 
-        var textArea = document.getElementById(containerid); 
+        var textArea = document.getElementById(containerid);
         textArea.select();
 
         try {
@@ -389,6 +389,7 @@ window.UIHelper = {
             console.error('Fallback: Oops, unable to copy', err);
         }
     },
+
 
     /*
         Quick and easy stub to show we are working on stuff...
