@@ -78,14 +78,16 @@ function CheckPHP(URL) {
     
     Lets see how this goes. lol :-)
 */
-function CheckRequest(RequsetObject, OnChecked) {
+function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
 
     /*
         Make sure it's not PHP!
     */
     if (CheckPHP(RequsetObject.url)) {
 
-
+        ResponseObject.writeHead(302, {
+            'Location': 'http://localhost'
+        });
 
 
         IPData.Add(RequsetObject.connection.remoteAddress, {

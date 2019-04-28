@@ -399,7 +399,7 @@ const IPC = {
 
 
 
-
+        
 
 
 
@@ -408,12 +408,10 @@ const IPC = {
             Use our little defender module to check the request
             and make sure we can do the work they want us to do.
         */
-        SERVER.Defender.CheckRequest(request, function (CheckRequestError) {
+        SERVER.Defender.CheckRequest(request,response, function (CheckRequestError) {
 
             if (CheckRequestError) {
-                // response.writeHead(302, {
-                //     'Content-Type': 'application/json',
-                // });
+             
                 response.SendError(response, CheckRequestError);
                 // debugger;
                 return;
