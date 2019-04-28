@@ -664,10 +664,10 @@ window.onload = function () {
 
 
 
-                    var MONTHS = ['HTTP/S',   'System'];
+                    var MONTHS = ['HTTP/S', 'System'];
                     var color = Chart.helpers.color;
                     var barChartData = {
-                        labels: ['HTTP/S',   'System'],
+                        labels: ['HTTP/S', 'System'],
                         datasets: [{
                             label: 'Errors',
                             backgroundColor: color(chartColors.red).alpha(0.5).rgbString(),
@@ -675,7 +675,7 @@ window.onload = function () {
                             borderWidth: 1,
                             data: [
                                 (-1) * WebApp.SysInfo.SERVERStatistics.Services.TotalError,
-                                (-1) * WebApp.SysInfo.SERVERStatistics.System.TotalError                                
+                                (-1) * WebApp.SysInfo.SERVERStatistics.System.TotalError
                             ]
                         }, {
                             label: 'Success',
@@ -685,7 +685,7 @@ window.onload = function () {
                             data: [
                                 WebApp.SysInfo.SERVERStatistics.Services.TotalSuccess,
                                 WebApp.SysInfo.SERVERStatistics.System.TotalSuccess
-                                
+
                             ]
                         }]
 
