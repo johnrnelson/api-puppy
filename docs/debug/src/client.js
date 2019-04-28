@@ -288,7 +288,7 @@ const DebugUI = {
             }
 
             //Use the default and set the edtor....            
-            DebugUI.SelectServiceOption('logger');
+            DebugUI.SelectServiceOption('time');
 
 
 
