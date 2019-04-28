@@ -571,9 +571,6 @@ WebApp.GetHelpFile('HelpDisplay.html', function (filecontents) {
     document.getElementById("TabMain").innerHTML = filecontents.body;
     //Now show the sys info in the main display...
 
-
-
-
 });
 
 
@@ -758,7 +755,7 @@ window.onload = function () {
         UIHelper.ShowTab('TabMain');
 
         //Set default logger view...
-        HistoryLogger.Logger.SetListType('0');
+        HistoryLogger.Logger.SetListType('411');
 
 
         //If you local host you are most likely debugging.. :-)

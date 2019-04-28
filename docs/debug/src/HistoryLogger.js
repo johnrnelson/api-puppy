@@ -112,12 +112,12 @@ window.HistoryLogger = {
 
         },
         ChangeLoggerDay(sel, day, el) {
-            console.log(arguments);
-            var calendar = $('#LoggerCalendar').data('calendar');
+            // console.log(arguments);
+            // var calendar = $('#LoggerCalendar').data('calendar');
 
-            // var curDate = calendar.getSelected();
-            var curDate = new Date(sel[0]);
-            console.log('change to', curDate);
+            // // var curDate = calendar.getSelected();
+            // var curDate = new Date(sel[0]);
+            // console.log('change to', curDate);
 
 
         },
