@@ -643,12 +643,6 @@ window.onload = function () {
         });
 
 
-
-
-
-
-
-
         WebApp.Fetch({
             service: 'help',
             data: {
@@ -764,12 +758,7 @@ window.onload = function () {
 
 
 
-        }).catch(error => {
-            console.warn('Error!');
-            console.error(error);
-            // debugger;
         });
-
 
 
 
@@ -791,10 +780,10 @@ window.onload = function () {
             */
             SocketAPI.MasterSocket.ServiceEvents = {
                 "data": function (SocketData) {
-                    console.info('The Data Service -->>', SocketData.msg);
+                    Metro.toast.create(SocketData.msg, null, null, "info");
                 },
                 "APIServer": function (SocketData) {
-                    console.info('APIServer--', SocketData.msg);
+                    Metro.toast.create(SocketData.msg, null, null, "info");
                 },
             };
 
@@ -849,6 +838,9 @@ window.onload = function () {
 
             //When disconected...
             SocketAPI.MasterSocket.Events.onclose = function () {
+                
+                Metro.toast.create('Socket has disconnected', null, null, "alert");                        
+
                 HistoryLogger.Logger.Add({
                     Type: 411,
                     TID: 0,

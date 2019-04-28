@@ -11,11 +11,11 @@ const fs = require('fs');
     Simple database of IPs that we need to worry about...
 
 */
-const IPData = {
+const BadActorsIP = {
     // TotalCount:0,
     Find(IP4Address2Find) {
-        for (let index = 0; index < IPData.__AllAddys.length; index++) {
-            const ipRec = IPData.__AllAddys[index];
+        for (let index = 0; index < BadActorsIP.__AllAddys.length; index++) {
+            const ipRec = BadActorsIP.__AllAddys[index];
             if (ipRec.IP4Address == IP4Address2Find) {
                 return {
                     index: index,
@@ -26,7 +26,7 @@ const IPData = {
         return false;
     },
     Add(IP4Address2Add, MetaData) {
-        const fndRec = IPData.Find(IP4Address2Add);
+        const fndRec = BadActorsIP.Find(IP4Address2Add);
 
         if (fndRec) {
             fndRec.data.requests.push(MetaData);
@@ -36,14 +36,14 @@ const IPData = {
             }
 
         } else {
-            IPData.__AllAddys.push({
+            BadActorsIP.__AllAddys.push({
                 IP4Address: IP4Address2Add,
                 requests: [MetaData]
             });
 
             //Just keep the last 25 IP addresses...
-            if (IPData.__AllAddys.length > 25) {
-                IPData.__AllAddys.shift();
+            if (BadActorsIP.__AllAddys.length > 25) {
+                BadActorsIP.__AllAddys.shift();
             }
         }
 
@@ -54,7 +54,7 @@ const IPData = {
 };
 
 //Export just the IP address for the API services...
-exports.ShameList = IPData.__AllAddys;
+exports.ShameList = BadActorsIP.__AllAddys;
 
 
 
@@ -90,7 +90,7 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
         });
 
 
-        IPData.Add(RequsetObject.connection.remoteAddress, {
+        BadActorsIP.Add(RequsetObject.connection.remoteAddress, {
             HTTPVERB: RequsetObject.method,
             URL: RequsetObject.url,
         });

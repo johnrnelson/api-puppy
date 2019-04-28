@@ -395,12 +395,7 @@ const IPC = {
 
         // Use this only when you need to!!!
         // console.log('Serving User:',request.User);
-
-
-
-
-        
-
+ 
 
 
 
@@ -435,22 +430,7 @@ const IPC = {
 
 
                 request.on('end', function () {
-
-
-
-                    // // /*
-                    // //       Quick log to see the history of our traffic...
-                    // // */
-                    // SERVER.ServiceLogger.WriteLog(0, {
-                    //     IP4Address: request.connection.remoteAddress,
-                    //     HTTPVERB: request.method,
-                    //     URL: request.url,
-                    //     Body: body
-                    // });
-
-
-
-
+ 
 
                     /*
                         Now work with the body of the request. 
