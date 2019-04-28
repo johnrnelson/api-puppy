@@ -411,6 +411,9 @@ const IPC = {
         SERVER.Defender.CheckRequest(request, function (CheckRequestError) {
 
             if (CheckRequestError) {
+                // response.writeHead(302, {
+                //     'Content-Type': 'application/json',
+                // });
                 response.SendError(response, CheckRequestError);
                 // debugger;
                 return;
@@ -526,7 +529,7 @@ const IPC = {
                         IPC.ServeDebugAPP(request, response);
                         return;
                     }
-                    
+
                     response.writeHead(200, {
                         'Content-Type': 'application/json',
                     });
