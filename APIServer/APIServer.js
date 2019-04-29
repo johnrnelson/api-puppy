@@ -48,7 +48,7 @@ const IPC = {
         console.log('\r\nStart Web Servers using version:' + global.SERVER.Version + ' on ' + SERVER.Started.toLocaleString());
 
 
-        
+
         SERVER.SocketBroadcast = function (MSG, Options) {
             if (Options) {
 
@@ -70,6 +70,9 @@ const IPC = {
                 SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(MSG);
+                    }else{
+                        //Can't send to this client so it's not part of our total...
+                        WebSocketServer.TotalConnectionAttempts--;
                     }
                 });
             }
@@ -207,11 +210,11 @@ const IPC = {
         WebSocketServer.on('connection', function connection(ws, req) {
 
             const ipAddress = req.connection.remoteAddress;
-            var totalConnectionAttempts = 0;
+            WebSocketServer.TotalConnectionAttempts = 0;
 
             WebSocketServer.clients.forEach(function each(client) {
                 // console.log('Client.ID: ' + client);
-                totalConnectionAttempts++;
+                WebSocketServer.TotalConnectionAttempts++;
             });
 
             //Do not give away the users complete IP address over the internet!  :-)
@@ -288,7 +291,7 @@ const IPC = {
                 TID: 0, //System message   
                 service: 'APIServer',
                 msg: "Welcome new tester from :" + displayAddress + ". Total Connections [" +
-                    totalConnectionAttempts + "]"
+                WebSocketServer.TotalConnectionAttempts + "]"
             });
 
 
