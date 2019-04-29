@@ -177,9 +177,8 @@ const UIHelper = {
 
         const elSckTotalUsers = elServerStatus.querySelector('#SckTotalUsers')
         const elSckLastUser = elServerStatus.querySelector('#SckLastUser');
-        debugger;
- 
-        elSckTotalUsers.innerHTML = "N/A";
+  
+        elSckTotalUsers.innerHTML = "&nbsp;" + WebApp.SysInfo.Sockets.Total;
         elSckLastUser.innerHTML = "N/A";
     }
 };
