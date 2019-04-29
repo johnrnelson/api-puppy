@@ -25,7 +25,7 @@ const path = require('path');
 global.SERVER = {
     ProjectInfo: {
         Title: 'api-puppy Demo',
-        Version: '1.10.3956',
+        Version: '1.10.3958',
     },
     Network: {
         /* 
