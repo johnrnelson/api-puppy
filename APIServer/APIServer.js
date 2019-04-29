@@ -59,13 +59,12 @@ const IPC = {
             if (typeof (MSG) != "string") {
                 MSG = JSON.stringify(MSG);
             }
+            WebSocketServer.TotalConnectionAttempts = 0;
             if (SERVER.WebSocketHTTP) {
                 SERVER.WebSocketHTTP.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(MSG);
-                    } else {
-                        //Can't send to this client so it's not part of our total...
-                        WebSocketServer.TotalConnectionAttempts--;
+                        WebSocketServer.TotalConnectionAttempts++;
                     }
                 });
             }
@@ -73,9 +72,7 @@ const IPC = {
                 SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(MSG);
-                    } else {
-                        //Can't send to this client so it's not part of our total...
-                        WebSocketServer.TotalConnectionAttempts--;
+                        WebSocketServer.TotalConnectionAttempts++;
                     }
                 });
             }
