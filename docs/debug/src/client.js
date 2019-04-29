@@ -92,31 +92,6 @@ if (localStorage) {
 }
 
 
-
-
-/*
-    Simple app prefs manager...
-*/
-WebApp.GetHelpFile('DebuggerUI.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);    
-});
-
-
-
-
-/*
-    Simple app prefs manager...
-*/
-WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);  
-    HistoryLogger.Calendar.AddControl();
-});
-
-
 /* 
     Go grab our styles using the API to show an example of
     another way to use it. Of course you don't want to 
@@ -129,6 +104,31 @@ WebApp.GetHelpFile('debug.css', function (filecontents) {
     CSSFile.innerHTML = filecontents.body;
     document.head.appendChild(CSSFile);
 });
+
+
+/*
+    Load our debugger ui supporting javascript...
+*/
+WebApp.GetHelpFile('DebuggerUI.js', function (filecontents) {
+    const srcScript = document.createElement("script");
+    srcScript.innerHTML = filecontents.body;
+    document.head.appendChild(srcScript);
+});
+
+
+
+
+/*
+    History Logger UI supporting javascript...
+*/
+WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
+    const srcScript = document.createElement("script");
+    srcScript.innerHTML = filecontents.body;
+    document.head.appendChild(srcScript);
+    HistoryLogger.Calendar.AddControl();
+});
+
+
 
 
 //Stuff our help display since it's so big and the least dynamic.. :-)
@@ -261,18 +261,9 @@ window.onload = function () {
                     // **********
                 })();
 
+            }//end if no error...
 
-
-
-
-
-
-
-            }
-
-
-
-        });
+        });//end SysInfo call....
 
 
 
@@ -352,8 +343,8 @@ window.onload = function () {
 
             //When disconected...
             SocketAPI.MasterSocket.Events.onclose = function () {
-                
-                Metro.toast.create('Socket has disconnected', null, null, "alert");                        
+
+                Metro.toast.create('Socket has disconnected', null, null, "alert");
 
                 HistoryLogger.Logger.Add({
                     Type: 411,
@@ -398,10 +389,6 @@ window.onload = function () {
             // UIHelper.ShowTab('GitHubLinks');
             // UIHelper.ShowTab('TabAppPrefs');
         }
-
-
-
-
 
 
     }); //end UIHelper....
