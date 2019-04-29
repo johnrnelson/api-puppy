@@ -102,7 +102,7 @@ WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
     document.head.appendChild(CSSFile);
 });
 
-WebApp.GetHelpFile('debug.css', function (filecontents) {
+WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
     const CSSFile = document.createElement("style");
     CSSFile.type = "text/css";
     CSSFile.innerHTML = filecontents.body;
