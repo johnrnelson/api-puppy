@@ -21,3 +21,4 @@ Use this like tags to track basic changes...
 <br>:exclamation:       - Important Fixes!
 <br>:question:          - Maybe not so stable
 <br>:eyes:              - UI Changes
+<br>:heavy_check_mark:  - Ready for push to server. 

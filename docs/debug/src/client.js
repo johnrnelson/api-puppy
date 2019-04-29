@@ -195,7 +195,7 @@ window.onload = function () {
                 // console.log('CHECK THIS-->',WebApp.SysInfo);
 
 
-
+                //Add our chart
                 (function () {
 
                     // **********
