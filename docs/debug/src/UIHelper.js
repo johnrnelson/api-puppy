@@ -2,7 +2,32 @@
     Easy functions to help us deal with the ever growing UI... :-)
 */
 
+
+
+
+
+
 window.UIHelper = {
+    // ********************************************************************
+    /*
+    Quick and easy stub to show we are working on stuff...
+    */
+    NA() {
+        Metro.dialog.create({
+            title: "This feature is not yet available",
+            content: "<div>Working on fixing whatever you just did! :-)</div>",
+            actions: [
+                {
+                    caption: "OK",
+                    cls: "js-dialog-close alert",
+                    onclick: function () {
+
+                    }
+                }
+            ]
+        });
+    },
+    // ********************************************************************
 
     /*
         Manage the application preferences in the UI...
@@ -43,7 +68,7 @@ window.UIHelper = {
                                 });
                             } catch (errLocalStorage) {
                                 Metro.toast.create("Error clearing the local storage!", null, null, "info");
-                                 
+
                             }
 
 
@@ -386,26 +411,120 @@ window.UIHelper = {
     },
 
 
-    /*
-        Quick and easy stub to show we are working on stuff...
-    */
-    NA() {
-        Metro.dialog.create({
-            title: "This feature is not yet available",
-            content: "<div>Working on fixing whatever you just did! :-)</div>",
-            actions: [
-                {
-                    caption: "OK",
-                    cls: "js-dialog-close alert",
-                    onclick: function () {
 
-                    }
-                }
-            ]
-        });
-    }
+
+
+
+
+
+
+
+
+    //Show the server info via HTML in a componet fashion....
+    SetSysInfo() {
+
+
+        //You will find this on the `debug.html` page...
+        const SystemInfo = document.getElementById("SystemInfo");
+
+        //Setup a simple function to add html to our DOM... super simple!!!!!!!!!
+        function AddInfoElement(InfoText, InfoTip, ElementData) {
+
+            const NewEL = document.createElement('div');
+            NewEL.innerHTML = '<span class="SysInfoLabel">' + InfoText + '</span><br>' +
+                '<span class="SysInfoValue">' + ElementData + '</span>';
+            NewEL.title = InfoTip;
+            NewEL.className = "SysInfoItem";
+            SystemInfo.appendChild(NewEL);
+            // console.log(NewEL)
+        }
+
+
+        //The user info for the client to use...
+
+
+        if (WebApp.AppPrefs.UserOptions.APIKEY.length > 1) {
+            AddInfoElement('Security Level', '', 'Using API Key');
+        } else {
+            AddInfoElement('Security Status', 'Your current user status from the servers perspective.', 'Not Authenticated');
+        }
+
+
+        AddInfoElement('Access Point', 'The protocal, port, hostname, path, and query string for the current request using for the API',
+            '<b>' + window.location.protocol + '</b>//' + window.location.hostname +
+            '<b>' + window.location.pathname + '</b>');
+
+        AddInfoElement('Node Version', 'The version of node on this server',
+            WebApp.SysInfo.NodeVersion);
+
+        AddInfoElement('Server Version', 'The version of the APIServer.js file.', WebApp.SysInfo.ProjectInfo.Version);
+
+        AddInfoElement('Start Date', 'The date the server started', WebApp.SysInfo.ST.toLocaleDateString() + " " + WebApp.SysInfo.ST.toLocaleTimeString());
+
+
+
+    },
+
+
+
+
+
+    //Fill the side bar with options we can use in our debugger...
+    FillSideBar() {
+        try {
+
+
+            const DebugVerbList_UL = document.getElementById("DebugVerbList_UL");
+            DebugVerbList_UL.innerHTML = "";
+
+            const dbSidebar = document.getElementById('debugger-sidbar');
+
+
+            for (var n in WebApp.SysInfo.apidata) {
+
+                const namespaceData = WebApp.SysInfo.apidata[n];
+
+                const optUL = document.createElement('li');
+                optUL.RecordData = namespaceData;
+                optUL.ServiceName = n;
+                optUL.onclick = function () {
+                    DebugUI.SelectServiceOption(this.ServiceName);
+                };
+                optUL.innerHTML = '<li><a href="#">' + n + '</a></li>';
+                DebugVerbList_UL.appendChild(optUL);
+
+            }
+
+            //Use the default and set the edtor....            
+            DebugUI.SelectServiceOption('time');
+
+
+
+        } catch (errFillSideBar) {
+            console.warn(errFillSideBar);
+            debugger;
+        }
+    },
+
+
+    // ********************************************************************
+    // ********************************************************************
+
+
 };
 
- 
-    
- 
+
+
+
+
+
+
+
+HistoryLogger.Logger.Add({
+    TID: 0,
+    Type: 707,
+    DT: new Date(),
+    Topic: "UI Help",
+    Source: "Browser",
+    Body: "The JavaScript UI helper has been loaded and we ready to go!",
+});

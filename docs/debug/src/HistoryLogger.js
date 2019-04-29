@@ -134,7 +134,7 @@ window.HistoryLogger = {
                         cls: "js-dialog-close alert",
                         onclick: function () {
                             const loggerTables = document.getElementsByTagName('LoggerTable');
- 
+
                             for (let index = 0; index < loggerTables.length; index++) {
                                 const lgEl = loggerTables[index];
 
@@ -378,3 +378,8 @@ window.HistoryLogger = {
     },
 
 };
+
+
+
+//Set default logger view...
+HistoryLogger.Logger.SetListType('411');
