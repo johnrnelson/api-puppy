@@ -84,7 +84,7 @@
 
         <!-- Log the history and help the user know whats up... -->
         <MainTabDisplay id="HistoryLogger"></MainTabDisplay>
- 
+
 
         <!-- Because of the editor, you need to declare this first! -->
         <MainTabDisplay id="TabDebugger">
@@ -133,12 +133,13 @@
                             &nbsp;Upload JSON
                             <span id="Date_Uploaded"></span>
                             <span class="iconbuttons">
-                                <a title="Use HTTP GET for the request" id="api-uri-link" href="#"
-                                    target="_blank">GET</a>
+
                                 <a title="Use HTTP PUT for the request"
                                     href="JavaScript:WebApp.DebugUI.MakeHTTP_PUT_Request();">PUT</a>
                                 <a title="Use the socket for the request"
                                     href="JavaScript:WebApp.DebugUI.MakeSocketRequest();">SOCKET</a>
+                                <a title="Use HTTP GET for the request" id="api-uri-link" href="#"
+                                    target="_blank">GET</a>
                             </span>
                         </div>
                         <div id="PayloadEditor" class="ace-editor"></div>
