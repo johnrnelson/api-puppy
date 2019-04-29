@@ -186,5 +186,4 @@ const UIHelper = {
 window.onload = function () {
 
     UIHelper.ShowServerStatus();
-
 }
