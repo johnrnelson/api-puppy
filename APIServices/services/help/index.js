@@ -154,6 +154,13 @@ const topics = {
         /// get socket users....
 
         const fs = require('fs');
+        var TotalSocks = 0;
+
+        SERVER.WebSocketHTTP.clients.forEach(function each(client) {
+            TotalSocks ++; 
+            console.log('counting--',TotalSocks);
+        });
+
 
         var SysInfoData = {
             ProjectInfo: SERVER.ProjectInfo,
@@ -164,7 +171,7 @@ const topics = {
             SERVERStatistics: SERVER.Statistics,
             Sockets: {
                 ok: 1,
-                Total: SERVER.WebSocketHTTP.clients.size
+                Total: TotalSocks
             }
         };
 
