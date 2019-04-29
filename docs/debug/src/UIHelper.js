@@ -58,7 +58,7 @@ window.UIHelper = {
                             try {
                                 localStorage.clear();
                                 Metro.toast.create("The local storage has been cleared!", null, null, "info");
-                                HistoryLogger.Logger.Add({
+                                WebApp.HistoryLogger.Logger.Add({
                                     TID: 0,
                                     Type: 707,
                                     DT: new Date(),
@@ -406,7 +406,7 @@ window.UIHelper = {
 
 
 
-HistoryLogger.Logger.Add({
+WebApp.HistoryLogger.Logger.Add({
     TID: 0,
     Type: 707,
     DT: new Date(),
@@ -529,7 +529,7 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
         }
 
 
-        HistoryLogger.Logger.Add({
+        WebApp.HistoryLogger.Logger.Add({
             Type: 466,
             TID: 505,
             DT: new Date(),
@@ -543,7 +543,7 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
     //Once connected...
     SocketAPI.MasterSocket.Events.onopen = function () {
 
-        HistoryLogger.Logger.Add({
+        WebApp.HistoryLogger.Logger.Add({
             Type: 411,
             TID: 0,
             DT: new Date(),
@@ -558,7 +558,7 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
 
         Metro.toast.create('Socket has disconnected', null, null, "alert");
 
-        HistoryLogger.Logger.Add({
+        WebApp.HistoryLogger.Logger.Add({
             Type: 411,
             TID: 0,
             DT: new Date(),

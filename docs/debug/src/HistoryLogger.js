@@ -2,7 +2,7 @@
 History Logger
 */
 
-window.HistoryLogger = {
+WebApp.HistoryLogger = {
     Calendar: {
         /*
             The only way to dynamicly set the props of the calendar is 
@@ -92,7 +92,7 @@ window.HistoryLogger = {
                         data-min-date="${minDateFMT}"
                         data-max-date="${maxDateFMT}"
                         data-special="${specDates}" 
-                        data-on-day-click="HistoryLogger.Calendar.ChangeLoggerDay"
+                        data-on-day-click="WebApp.HistoryLogger.Calendar.ChangeLoggerDay"
                         data-role="calendar" class="compact" 
                         data-buttons="today" data-preset="4-28-2019"></div>
                     <br>
@@ -161,7 +161,7 @@ window.HistoryLogger = {
                             }
 
 
-                            HistoryLogger.Logger.Add({
+                            WebApp.HistoryLogger.Logger.Add({
                                 TID: 0,
                                 Type: 707,
                                 DT: new Date(),
@@ -196,14 +196,14 @@ window.HistoryLogger = {
                 return;
             }
 
-            if (!HistoryLogger.Logger.ActiveLog) {
-                HistoryLogger.Logger.ActiveLog = TargetElement;
+            if (!WebApp.HistoryLogger.Logger.ActiveLog) {
+                WebApp.HistoryLogger.Logger.ActiveLog = TargetElement;
             } else {
-                HistoryLogger.Logger.ActiveLog.style.display = "none";
-                HistoryLogger.Logger.ActiveLog = TargetElement;
+                WebApp.HistoryLogger.Logger.ActiveLog.style.display = "none";
+                WebApp.HistoryLogger.Logger.ActiveLog = TargetElement;
             }
             // console.log('Show Log List-->', ListElement);
-            HistoryLogger.Logger.ActiveLog.style.display = "block";
+            WebApp.HistoryLogger.Logger.ActiveLog.style.display = "block";
         },
 
         /*
@@ -284,7 +284,7 @@ window.HistoryLogger = {
 
         },
         FetchRemoteByType(RemoteLogFile) {
-            HistoryLogger.Logger.SetListType('serverlogs');
+            WebApp.HistoryLogger.Logger.SetListType('serverlogs');
 
 
 
@@ -382,5 +382,5 @@ window.HistoryLogger = {
 
 
 //Set default logger view...
-HistoryLogger.Logger.SetListType('411');
-HistoryLogger.Calendar.AddControl();
+WebApp.HistoryLogger.Logger.SetListType('411');
+WebApp.HistoryLogger.Calendar.AddControl();

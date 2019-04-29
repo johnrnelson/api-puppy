@@ -5,7 +5,7 @@
 
 
             <ul class="h-menu">
-                    <li title="Clear the log history"><a href="JavaScript:HistoryLogger.Logger.Clear()">Clear</a></li>
+                    <li title="Clear the log history"><a href="JavaScript:WebApp.HistoryLogger.Logger.Clear()">Clear</a></li>
                     <li title="Export to a file"><a href="JavaScript:UIHelper.NA()">Export</a></li>
                 </ul>
     
@@ -27,23 +27,23 @@
                     <li data-caption="Local Logs">
                         <ul>
                             <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
-                                onclick="HistoryLogger.Logger.SetListType('200')">
+                                onclick="WebApp.HistoryLogger.Logger.SetListType('200')">
                                 <span class="LgCnt" id="LgCnt-200"></span>
                             </li>
                             <li data-icon="<i class='fas fa-info-circle fa-fw'></i>" data-caption="Basic Information"
-                                onclick="HistoryLogger.Logger.SetListType('411')">
+                                onclick="WebApp.HistoryLogger.Logger.SetListType('411')">
                                 <span class="LgCnt" id="LgCnt-411"></span>
                             </li>
                             <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
-                                onclick="HistoryLogger.Logger.SetListType('466')">
+                                onclick="WebApp.HistoryLogger.Logger.SetListType('466')">
                                 <span class="LgCnt" id="LgCnt-466"></span>
                             </li>
                             <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
-                                onclick="HistoryLogger.Logger.SetListType('707')">
+                                onclick="WebApp.HistoryLogger.Logger.SetListType('707')">
                                 <span class="LgCnt" id="LgCnt-707"></span>
                             </li>
                             <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
-                                onclick="HistoryLogger.Logger.SetListType('0')">
+                                onclick="WebApp.HistoryLogger.Logger.SetListType('0')">
                                 <span class="LgCnt" id="LgCnt-0"></span>
                             </li>
                         </ul>
@@ -51,13 +51,13 @@
                     <li data-caption="Remote Logs" collapsed>
     
                         <ul>
-                            <li onclick="HistoryLogger.Logger.FetchRemoteByType('php')"
+                            <li onclick="WebApp.HistoryLogger.Logger.FetchRemoteByType('php')"
                                 data-icon="<i class='fas fa-file'></i>" data-caption="PHP Requests" disabled>
                             </li>
-                            <li onclick="HistoryLogger.Logger.FetchRemoteByType('Socket')"
+                            <li onclick="WebApp.HistoryLogger.Logger.FetchRemoteByType('Socket')"
                                 data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History" disabled>
                             </li>
-                            <li onclick="HistoryLogger.Logger.FetchRemoteByType('WebErrors')"
+                            <li onclick="WebApp.HistoryLogger.Logger.FetchRemoteByType('WebErrors')"
                                 data-icon="<i class='fas fa-file'></i>" data-caption="Web Errors" disabled>
                             </li>
                         </ul>

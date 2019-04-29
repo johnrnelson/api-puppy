@@ -108,6 +108,10 @@ WebApp.GetHelpFile('HistoryLogger.css', function (filecontents) {
     CSSFile.innerHTML = filecontents.body;
     document.head.appendChild(CSSFile);
 });
+
+
+
+
 //Stuff history logger..... :-)
 WebApp.GetHelpFile('HistoryLogger.html', function (filecontents) {
     document.getElementById("HistoryLogger").innerHTML = filecontents.body;
@@ -173,7 +177,7 @@ window.onload = function () {
         window.eval(filecontents.body);
 
 
-        HistoryLogger.Logger.Add({
+        WebApp.HistoryLogger.Logger.Add({
             TID: 0,
             Type: 707,
             DT: new Date(),
