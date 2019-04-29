@@ -381,7 +381,8 @@ window.UIHelper = {
         AddInfoElement('Node Version', 'The version of node on this server',
             WebApp.SysInfo.NodeVersion);
 
-        AddInfoElement('Server Version', 'The version of the APIServer.js file.', WebApp.SysInfo.ProjectInfo.Version);
+        AddInfoElement('Server Version', 'The version of the APIServer.js file.',
+            WebApp.SysInfo.ProjectInfo.Version + ' ' + WebApp.SysInfo.ProjectInfo.VersionName);
 
         AddInfoElement('Start Date', 'The date the server started', WebApp.SysInfo.ST.toLocaleDateString() + " " + WebApp.SysInfo.ST.toLocaleTimeString());
 
@@ -555,7 +556,7 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
 
     //When disconected...
     SocketAPI.MasterSocket.Events.onclose = function () {
- 
+
 
         Metro.dialog.create({
             title: "Reconnect to the socket?",
@@ -565,7 +566,7 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
                     caption: "Reconnect Socket",
                     cls: "js-dialog-close info",
                     onclick: function () {
-                        
+
                         SocketAPI.MasterSocket.Connnect();
                     }
                 },
@@ -573,10 +574,10 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
                     caption: "Refresh Browser",
                     cls: "js-dialog-close alert",
                     onclick: function () {
-                        
-                        window.location=window.location;
+
+                        window.location = window.location;
                     }
-                },                
+                },
                 {
                     caption: "Ignore",
                     cls: "js-dialog-close"

@@ -131,7 +131,7 @@ const UIHelper = {
                     topic: 'SysInfo'
                 }
             }, function (ServerResponse) {
- 
+
                 WebApp.SysInfo = ServerResponse;
 
                 try {
@@ -145,9 +145,10 @@ const UIHelper = {
                     elDisplayServerStatus.innerHTML = `
                         <span class="fas fa-thumbs-up"></span> It's UP!
                     `;
+ 
+                    elDisplayServerVersion.innerHTML = WebApp.SysInfo.ProjectInfo.Version +
+                        " " + WebApp.SysInfo.ProjectInfo.VersionName;
 
-                    elDisplayServerVersion.innerHTML = WebApp.SysInfo.ProjectInfo.Version
-  
 
                     WebApp.OpenSocket();
                 } catch (errSrvResponse) {
@@ -177,7 +178,7 @@ const UIHelper = {
 
         const elSckTotalUsers = elServerStatus.querySelector('#SckTotalUsers')
         const elSckLastUser = elServerStatus.querySelector('#SckLastUser');
-  
+
         elSckTotalUsers.innerHTML = "&nbsp;" + WebApp.SysInfo.Sockets.Total;
         elSckLastUser.innerHTML = "N/A";
     }
