@@ -185,5 +185,4 @@ window.onload = function () {
 
     UIHelper.ShowServerStatus();
 
-
 }
