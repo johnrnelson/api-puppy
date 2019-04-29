@@ -156,11 +156,12 @@ const topics = {
         /// get socket users....
 
         const fs = require('fs');
-        var TotalSocks = SERVER.WebSocketHTTP.TotalConnectionAttempts;
+        var TotalSocks = SERVER.WebSocketHTTP.TotalConnectionAttempts+SERVER.WebSocketHTTPS.TotalConnectionAttempts;
+        
 
-        if (!TotalSocks) {
-            TotalSocks = "N/A";
-        }
+        // if (!TotalSocks) {
+        //     TotalSocks = "N/A";
+        // }
 
         var SysInfoData = {
             ProjectInfo: SERVER.ProjectInfo,

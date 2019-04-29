@@ -59,20 +59,23 @@ const IPC = {
             if (typeof (MSG) != "string") {
                 MSG = JSON.stringify(MSG);
             }
-            WebSocketServer.TotalConnectionAttempts = 0;
+            
+            
+            
+
             if (SERVER.WebSocketHTTP) {
                 SERVER.WebSocketHTTP.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(MSG);
-                        WebSocketServer.TotalConnectionAttempts++;
+                        SERVER.WebSocketHTTP.TotalConnectionAttempts++;
                     }
                 });
             }
             if (SERVER.WebSocketHTTPS) {
                 SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);
-                        WebSocketServer.TotalConnectionAttempts++;
+                        client.send(MSG);                        
+                        SERVER.WebSocketHTTPS.TotalConnectionAttempts++;
                     }
                 });
             }
@@ -213,6 +216,7 @@ const IPC = {
 
             const ipAddress = req.connection.remoteAddress;
 
+            WebSocketServer.TotalConnectionAttempts = 0;
 
             WebSocketServer.clients.forEach(function each(client) {
                 // console.log('Client.ID: ' + client);
