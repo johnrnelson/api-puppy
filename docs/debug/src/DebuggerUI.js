@@ -4,6 +4,82 @@
 WebApp.DebugUI = {
 
 
+    /*
+        Take a JSON object and create a natural query string
+        then setup our UI to show the results....
+    */
+    QueryStringBuilder(JSONData) {
+
+        //Simple function to serialize the json into array for query string...
+        function DigestQS(Prefix, QSObject, QSArray) {
+
+            // debugger;
+
+            for (var o in QSObject) {
+                if (typeof (QSObject[o]) == "object") {
+                    if (Prefix) {
+                        DigestQS(Prefix + o, QSObject[o], QSArray);
+                    } else {
+                        DigestQS(o + ".", QSObject[o], QSArray);
+                    }
+
+                } else {
+                    if (QSObject[o] != "") {
+                        if (Prefix) {
+                            QSArray.push(Prefix + o + "=" + QSObject[o]);
+                        } else {
+                            QSArray.push(o + "=" + QSObject[o]);
+
+                        }
+
+                    }
+
+                }
+
+
+            }
+        }
+
+        try {
+            if (typeof (JSONData) == "string") {
+                if (JSONData.length == 0) {
+                    WebApp.DebugUI.SetTargetURI("**EMPTY**");
+                    return;
+                }
+                JSONData = JSON.parse(JSONData);;
+            }
+
+
+            if (JSONData.service) {
+
+                var selectedService = JSONData.service;
+                delete JSONData["service"];
+
+                const basicOptions = [];
+
+
+                DigestQS("", JSONData, basicOptions);
+
+
+                // if (basicOptions.length) {
+                // }
+                WebApp.DebugUI.SetTargetURI('/' + selectedService + '?' + basicOptions.join('&'));
+
+            } else {
+                WebApp.DebugUI.SetTargetURI("**ERROR**");
+
+            }
+
+        } catch (errBadJSON) {
+            // console.warn('Error In JSON!', errBadJSON);
+            WebApp.DebugUI.SetTargetURI("** bad json **");
+        }
+
+    },
+
+
+
+
     //Fill the side bar with options we can use in our debugger...
     FillVerbList() {
         try {
@@ -155,9 +231,9 @@ WebApp.DebugUI = {
                 .then(data => {
 
                     // debugger;
-                    
+
                     const resultJSONText = JSON.stringify(data, null, "\t");
-                    
+
                     // Metro.toast.create('Web request finished', null, null, "info");
 
                     WebApp.DebugUI.ShowJSONResult('HTTP', resultJSONText);

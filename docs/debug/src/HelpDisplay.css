@@ -13,6 +13,8 @@ body {
     -ms-user-select: none;
     user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    /* font-weight: bold; */
+    /* font-family: 'PT Sans', sans-serif; */    
 }
 
 
@@ -136,8 +138,7 @@ MainTabDisplay .container {
 .AppUpdates {
     color: rgb(28, 5, 90);
     font-size: 14px;
-    /* font-weight: bold; */
-    /* font-family: 'PT Sans', sans-serif; */
+
     border: solid 1px silver;
     padding: 5px;
 

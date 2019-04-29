@@ -91,11 +91,6 @@ TopNavxxxxxxx {
 
 
 #TabDebugger .DebugToolbar {
-    /* position: absolute;
-    top: 0;
-    height: 88px;
-    right: 0; */
-
     /* background-color: rgb(236, 236, 236); */
     background-color: transparent;
     display: inline-block;

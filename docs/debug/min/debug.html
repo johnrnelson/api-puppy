@@ -53,7 +53,7 @@ const WebApp = {
     */
     Fetch(data = {}) {
         const url = document.URL + '';
- 
+
         //Allways add the APIKEY to outbound requests to the server...
         data.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
 
@@ -145,18 +145,26 @@ WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
     document.head.appendChild(CSSFile);
 });
 
-WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
-    const CSSFile = document.createElement("style");
-    CSSFile.type = "text/css";
-    CSSFile.innerHTML = filecontents.body;
-    document.head.appendChild(CSSFile);
-});
 WebApp.GetHelpFile('HistoryLogger.css', function (filecontents) {
     const CSSFile = document.createElement("style");
     CSSFile.type = "text/css";
     CSSFile.innerHTML = filecontents.body;
     document.head.appendChild(CSSFile);
 });
+//Stuff history logger..... :-)
+WebApp.GetHelpFile('HistoryLogger.html', function (filecontents) {
+    document.getElementById("HistoryLogger").innerHTML = filecontents.body;
+    //Now show the sys info in the main display...
+});
+
+
+WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
+    const CSSFile = document.createElement("style");
+    CSSFile.type = "text/css";
+    CSSFile.innerHTML = filecontents.body;
+    document.head.appendChild(CSSFile);
+});
+
 /*
     Load our debugger ui supporting javascript...
 */
@@ -176,7 +184,7 @@ WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
     const srcScript = document.createElement("script");
     srcScript.innerHTML = filecontents.body;
     document.head.appendChild(srcScript);
- 
+
 });
 
 
@@ -186,7 +194,7 @@ WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
 WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
     const srcScript = document.createElement("script");
     srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript); 
+    document.head.appendChild(srcScript);
 });
 
 
@@ -206,7 +214,7 @@ window.onload = function () {
 
         // debugger;
         window.eval(filecontents.body);
- 
+
 
         HistoryLogger.Logger.Add({
             TID: 0,
@@ -281,224 +289,42 @@ window.onload = function () {
 
         <!-- Log the history and help the user know whats up... -->
         <MainTabDisplay id="HistoryLogger">
-            <ul class="h-menu">
-                <li title="Clear the log history"><a href="JavaScript:HistoryLogger.Logger.Clear()">Clear</a></li>
-                <li title="Export to a file"><a href="JavaScript:UIHelper.NA()">Export</a></li>
-            </ul>
 
+ 
 
-
-
-
-            <div id="LoggerCalendarPanel">
-                <!-- The calendar control will be added in the js script. -->
-            </div>
-
-
-
-
-
-
-
-            <ul id="LogTree" data-role="treeview">
-                <li data-caption="Local Logs">
-                    <ul>
-                        <li data-icon="<i class='fas fa-globe-americas fa-fw'></i>" data-caption="HTTP REST"
-                            onclick="HistoryLogger.Logger.SetListType('200')">
-                            <span class="LgCnt" id="LgCnt-200"></span>
-                        </li>
-                        <li data-icon="<i class='fas fa-info-circle fa-fw'></i>" data-caption="Basic Information"
-                            onclick="HistoryLogger.Logger.SetListType('411')">
-                            <span class="LgCnt" id="LgCnt-411"></span>
-                        </li>
-                        <li data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History"
-                            onclick="HistoryLogger.Logger.SetListType('466')">
-                            <span class="LgCnt" id="LgCnt-466"></span>
-                        </li>
-                        <li data-icon="<i class='fas fa-eye'></i>" data-caption="UI Updates"
-                            onclick="HistoryLogger.Logger.SetListType('707')">
-                            <span class="LgCnt" id="LgCnt-707"></span>
-                        </li>
-                        <li data-icon="<i class='fas fa-info'></i>" data-caption="Generic Errors"
-                            onclick="HistoryLogger.Logger.SetListType('0')">
-                            <span class="LgCnt" id="LgCnt-0"></span>
-                        </li>
-                    </ul>
-                </li>
-                <li data-caption="Remote Logs" collapsed>
-
-                    <ul>
-                        <li onclick="HistoryLogger.Logger.FetchRemoteByType('php')"
-                            data-icon="<i class='fas fa-file'></i>" data-caption="PHP Requests" disabled>
-                        </li>
-                        <li onclick="HistoryLogger.Logger.FetchRemoteByType('Socket')"
-                            data-icon="<i class='fas fa-share-alt'></i>" data-caption="Socket History" disabled>
-                        </li>
-                        <li onclick="HistoryLogger.Logger.FetchRemoteByType('WebErrors')"
-                            data-icon="<i class='fas fa-file'></i>" data-caption="Web Errors" disabled>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-
-
-
-
-
-
-
-
-
-
-
-
-            <LoggerTable id="LGType-LgOpts">
-                <div>
-                    <h3>Logging Options</h3>
-                    <p>
-                        Working on this! :-)
-                    </p>
-                </div>
-            </LoggerTable>
-
-
-            <LoggerTable haslog="true" id="LGType-0">
-                <div class="LoggerLabel">Generic Errors</div>
-                <table class="table  striped compact" style="background: transparent;">
-                    <thead>
-                        <tr>
-                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                            <th widht="100%" vertical-align="top">Body</th>
-                        </tr>
-                    </thead>
-                    <tbody id="LGType-0-history" class="row-hover">
-                    </tbody>
-                </table>
-            </LoggerTable>
-            <LoggerTable haslog="true" id="LGType-serverlogs">
-                <div class="LoggerLabel">Server Logs</div>
-                <table class="table  striped compact" style="background: transparent;">
-                    <thead>
-                        <tr>
-                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                            <th widht="100%" vertical-align="top">Body</th>
-                        </tr>
-                    </thead>
-                    <tbody id="LGType-serverlogs-history" class="row-hover">
-                    </tbody>
-                </table>
-            </LoggerTable>
-
-            <LoggerTable haslog="true" id="LGType-200">
-                <div class="LoggerLabel">HTTP traffice using REST</div>
-                <table class="table  striped compact" style="background: transparent;">
-                    <thead>
-                        <tr>
-                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                            <th widht="100%" vertical-align="top">Body</th>
-                        </tr>
-                    </thead>
-                    <tbody id="LGType-200-history" class="row-hover">
-                    </tbody>
-                </table>
-            </LoggerTable>
-            <LoggerTable haslog="true" id="LGType-411">
-                <div class="LoggerLabel">Basic information</div>
-                <table class="table  striped compact" style="background: transparent;">
-                    <thead>
-                        <tr>
-                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                            <th widht="100%" vertical-align="top">Body</th>
-                        </tr>
-                    </thead>
-                    <tbody id="LGType-411-history" class="row-hover">
-                    </tbody>
-                </table>
-            </LoggerTable>
-            <LoggerTable haslog="true" id="LGType-466">
-                <div class="LoggerLabel">Socket Traffic</div>
-                <table class="table  striped compact" style="background: transparent;">
-                    <thead>
-                        <tr>
-                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                            <th widht="100%" vertical-align="top">Body</th>
-                        </tr>
-                    </thead>
-                    <tbody id="LGType-466-history" class="row-hover">
-                    </tbody>
-                </table>
-            </LoggerTable>
-            <LoggerTable haslog="true" id="LGType-707">
-                <div class="LoggerLabel">UI updates in the browser</div>
-                <table class="table  striped compact" style="background: transparent;">
-                    <thead>
-                        <tr>
-                            <th width="120px" vertical-align="top" nowrap="true">Date/Time</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Topic</th>
-                            <th width="20%" vertical-align="top" nowrap="true">Source</th>
-                            <th widht="100%" vertical-align="top">Body</th>
-                        </tr>
-                    </thead>
-                    <tbody id="LGType-707-history" class="row-hover">
-                    </tbody>
-                </table>
-            </LoggerTable>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            <!-- 
-
-            <div class="split-container">
-                <div data-role="splitter" class="h-100" data-split-sizes="20, 60" data-min-sizes="160,160"
-                    data-max-sizes="340,0" data-gutter-size="8">
-                    <div class="d-flex flex-justify-left flex-align-left">
-
-                        xxxxxxx
-
-
-
-                    </div>
-                    <div class="d-flex flex-justify-left flex-align-left">
-
-                        llllll
-
-
-
-                    </div>
-                </div>
-
-            </div> -->
 
 
         </MainTabDisplay>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         <!-- Because of the editor, you need to declare this first! -->

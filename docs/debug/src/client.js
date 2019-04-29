@@ -10,7 +10,7 @@ const WebApp = {
     */
     Fetch(data = {}) {
         const url = document.URL + '';
- 
+
         //Allways add the APIKEY to outbound requests to the server...
         data.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
 
@@ -102,18 +102,26 @@ WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
     document.head.appendChild(CSSFile);
 });
 
-WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
-    const CSSFile = document.createElement("style");
-    CSSFile.type = "text/css";
-    CSSFile.innerHTML = filecontents.body;
-    document.head.appendChild(CSSFile);
-});
 WebApp.GetHelpFile('HistoryLogger.css', function (filecontents) {
     const CSSFile = document.createElement("style");
     CSSFile.type = "text/css";
     CSSFile.innerHTML = filecontents.body;
     document.head.appendChild(CSSFile);
 });
+//Stuff history logger..... :-)
+WebApp.GetHelpFile('HistoryLogger.html', function (filecontents) {
+    document.getElementById("HistoryLogger").innerHTML = filecontents.body;
+    //Now show the sys info in the main display...
+});
+
+
+WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
+    const CSSFile = document.createElement("style");
+    CSSFile.type = "text/css";
+    CSSFile.innerHTML = filecontents.body;
+    document.head.appendChild(CSSFile);
+});
+
 /*
     Load our debugger ui supporting javascript...
 */
@@ -133,7 +141,7 @@ WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
     const srcScript = document.createElement("script");
     srcScript.innerHTML = filecontents.body;
     document.head.appendChild(srcScript);
- 
+
 });
 
 
@@ -143,7 +151,7 @@ WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
 WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
     const srcScript = document.createElement("script");
     srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript); 
+    document.head.appendChild(srcScript);
 });
 
 
@@ -163,7 +171,7 @@ window.onload = function () {
 
         // debugger;
         window.eval(filecontents.body);
- 
+
 
         HistoryLogger.Logger.Add({
             TID: 0,
