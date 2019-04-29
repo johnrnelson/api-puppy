@@ -217,12 +217,7 @@ const IPC = {
             const ipAddress = req.connection.remoteAddress;
 
             WebSocketServer.TotalConnectionAttempts = 0;
-
-            WebSocketServer.clients.forEach(function each(client) {
-                // console.log('Client.ID: ' + client);
-                WebSocketServer.TotalConnectionAttempts++;
-            });
-
+ 
             //Do not give away the users complete IP address over the internet!  :-)
             const displayAddress = ipAddress.split('.').slice(0, 2).join('.') + "**";
 
