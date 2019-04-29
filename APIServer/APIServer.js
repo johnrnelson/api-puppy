@@ -63,6 +63,9 @@ const IPC = {
                 SERVER.WebSocketHTTP.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(MSG);
+                    } else {
+                        //Can't send to this client so it's not part of our total...
+                        WebSocketServer.TotalConnectionAttempts--;
                     }
                 });
             }
