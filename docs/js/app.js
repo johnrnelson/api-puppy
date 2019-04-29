@@ -131,8 +131,7 @@ const UIHelper = {
                     topic: 'SysInfo'
                 }
             }, function (ServerResponse) {
-
-                debugger;
+ 
                 WebApp.SysInfo = ServerResponse;
 
                 try {
@@ -178,7 +177,7 @@ const UIHelper = {
 
         const elSckTotalUsers = elServerStatus.querySelector('#SckTotalUsers')
         const elSckLastUser = elServerStatus.querySelector('#SckLastUser');
-
+        debugger;
  
         elSckTotalUsers.innerHTML = "N/A";
         elSckLastUser.innerHTML = "N/A";
