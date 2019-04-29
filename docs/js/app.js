@@ -132,11 +132,14 @@ const UIHelper = {
                 }
             }, function (ServerResponse) {
 
-                try {
-                    ServerResponse.ST = new Date(ServerResponse.ST);
+                debugger;
+                WebApp.SysInfo = ServerResponse;
 
-                    const dispServerTime = moment(ServerResponse.ST);
-                    const dispServerStarted = moment(ServerResponse.started);
+                try {
+                    WebApp.SysInfo.ST = new Date(WebApp.SysInfo.ST);
+
+                    const dispServerTime = moment(WebApp.SysInfo.ST);
+                    const dispServerStarted = moment(WebApp.SysInfo.started);
 
                     elServerStatus.title = " " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
                     elDisplayServerDate.innerHTML = dispServerStarted.fromNow();
@@ -144,8 +147,8 @@ const UIHelper = {
                         <span class="fas fa-thumbs-up"></span> It's UP!
                     `;
 
-                    elDisplayServerVersion.innerHTML = ServerResponse.ProjectInfo.Version
-
+                    elDisplayServerVersion.innerHTML = WebApp.SysInfo.ProjectInfo.Version
+  
 
                     WebApp.OpenSocket();
                 } catch (errSrvResponse) {
@@ -176,7 +179,7 @@ const UIHelper = {
         const elSckTotalUsers = elServerStatus.querySelector('#SckTotalUsers')
         const elSckLastUser = elServerStatus.querySelector('#SckLastUser');
 
-
+ 
         elSckTotalUsers.innerHTML = "N/A";
         elSckLastUser.innerHTML = "N/A";
     }

@@ -150,6 +150,9 @@ const topics = {
     'SysInfo': function (RequestData, OnComplete) {
         // debugger;
 
+
+        /// get socket users....
+
         const fs = require('fs');
 
         var SysInfoData = {
@@ -158,7 +161,11 @@ const topics = {
             ServerVersion: SERVER.Version,
             ST: new Date(SERVER.Started.toLocaleString()),
             shame: SERVER.Defender.ShameList,
-            SERVERStatistics: SERVER.Statistics
+            SERVERStatistics: SERVER.Statistics,
+            Sockets: {
+                ok: 1,
+                Total: SERVER.WebSocketHTTP.clients.size
+            }
         };
 
 
