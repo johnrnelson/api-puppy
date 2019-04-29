@@ -102,51 +102,10 @@ WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
     document.head.appendChild(CSSFile);
 });
 
-WebApp.GetHelpFile('HistoryLogger.css', function (filecontents) {
-    const CSSFile = document.createElement("style");
-    CSSFile.type = "text/css";
-    CSSFile.innerHTML = filecontents.body;
-    document.head.appendChild(CSSFile);
-});
 
 
 
 
-//Stuff history logger..... :-)
-WebApp.GetHelpFile('HistoryLogger.html', function (filecontents) {
-    document.getElementById("HistoryLogger").innerHTML = filecontents.body;
-    //Now show the sys info in the main display...
-});
-
-
-WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
-    const CSSFile = document.createElement("style");
-    CSSFile.type = "text/css";
-    CSSFile.innerHTML = filecontents.body;
-    document.head.appendChild(CSSFile);
-});
-
-/*
-    Load our debugger ui supporting javascript...
-*/
-WebApp.GetHelpFile('DebuggerUI.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);
-});
-
-
-
-
-/*
-    History Logger UI supporting javascript...
-*/
-WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);
-
-});
 
 
 /*
@@ -159,6 +118,23 @@ WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
 });
 
 
+/*
+    Load our debugger ui supporting javascript...
+*/
+WebApp.GetHelpFile('DebuggerUI.js', function (filecontents) {
+    const srcScript = document.createElement("script");
+    srcScript.innerHTML = filecontents.body;
+    document.head.appendChild(srcScript);
+
+
+    WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
+        const CSSFile = document.createElement("style");
+        CSSFile.type = "text/css";
+        CSSFile.innerHTML = filecontents.body;
+        document.head.appendChild(CSSFile);
+    });
+
+});
 
 
 
@@ -171,36 +147,94 @@ window.onload = function () {
     /* 
         Extra Helper code...
     */
-    WebApp.GetHelpFile('UIHelper.js', function (filecontents) {
-
-        // debugger;
-        window.eval(filecontents.body);
+    WebApp.GetHelpFile('UIHelper.js', function (UIHelperJSCode) {
 
 
-        WebApp.HistoryLogger.Logger.Add({
-            TID: 0,
-            Type: 707,
-            DT: new Date(),
-            Topic: "UI Status",
-            Source: "Browser",
-            Body: "The browser UI should be loaded and ready to go!",
+
+        //Stuff history logger..... :-)
+        WebApp.GetHelpFile('HistoryLogger.html', function (HistoryLoggerHTML) {
+
+            document.getElementById("HistoryLogger").innerHTML = HistoryLoggerHTML.body;
+
+            WebApp.GetHelpFile('HistoryLogger.css', function (HistoryLoggerCSS) {
+                const CSSFile = document.createElement("style");
+                CSSFile.type = "text/css";
+                CSSFile.innerHTML = HistoryLoggerCSS.body;
+                document.head.appendChild(CSSFile);
+            });
+
+            //Now show the sys info in the main display...
+            /*
+                History Logger UI supporting javascript...
+            */
+            WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
+                const srcScript = document.createElement("script");
+                srcScript.innerHTML = filecontents.body;
+                document.head.appendChild(srcScript);
+
+                // debugger;
+                window.eval(UIHelperJSCode.body);
+
+
+                WebApp.HistoryLogger.Logger.Add({
+                    TID: 0,
+                    Type: 707,
+                    DT: new Date(),
+                    Topic: "UI Status",
+                    Source: "Browser",
+                    Body: "The browser UI should be loaded and ready to go!",
+                });
+
+
+
+                //Which screen do you want to show first? Are you debugging the debugger? lol
+                UIHelper.ShowTab('TabMain');
+
+
+
+                //If you local host you are most likely debugging.. :-)
+                if (document.location.hostname == "localhost") {
+                    // debugger;
+                    // UIHelper.ShowTab('TabDebugger');
+                    // UIHelper.ShowTab('HistoryLogger');
+                    // UIHelper.ShowTab('GitHubLinks');
+                    // UIHelper.ShowTab('TabAppPrefs');
+                }
+
+
+
+
+
+
+
+
+
+            });
+
         });
 
 
 
-        //Which screen do you want to show first? Are you debugging the debugger? lol
-        UIHelper.ShowTab('TabMain');
 
 
 
-        //If you local host you are most likely debugging.. :-)
-        if (document.location.hostname == "localhost") {
-            // debugger;
-            // UIHelper.ShowTab('TabDebugger');
-            // UIHelper.ShowTab('HistoryLogger');
-            // UIHelper.ShowTab('GitHubLinks');
-            // UIHelper.ShowTab('TabAppPrefs');
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }); //end UIHelper....

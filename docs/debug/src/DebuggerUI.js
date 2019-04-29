@@ -238,7 +238,7 @@ WebApp.DebugUI = {
 
                     WebApp.DebugUI.ShowJSONResult('HTTP', resultJSONText);
 
-                    HistoryLogger.Logger.Add({
+                    WebApp.HistoryLogger.Logger.Add({
                         TID: 0,
                         Type: 200,
                         DT: new Date(),
@@ -442,7 +442,7 @@ print(response_data)
 
         UIHelper.Ace.AceDisplayRsults.resize();
 
-        HistoryLogger.Logger.Add({
+        WebApp.HistoryLogger.Logger.Add({
             TID: 0,
             Type: 707,
             DT: new Date(),

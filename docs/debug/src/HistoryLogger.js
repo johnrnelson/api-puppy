@@ -92,7 +92,7 @@ WebApp.HistoryLogger = {
                         data-min-date="${minDateFMT}"
                         data-max-date="${maxDateFMT}"
                         data-special="${specDates}" 
-                        data-on-day-click="WebApp.HistoryLogger.Calendar.ChangeLoggerDay"
+                        xxxdata-on-day-click="WebApp.HistoryLogger.Calendar.ChangeLoggerDay"
                         data-role="calendar" class="compact" 
                         data-buttons="today" data-preset="4-28-2019"></div>
                     <br>
