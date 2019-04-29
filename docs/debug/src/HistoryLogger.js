@@ -297,6 +297,10 @@ WebApp.HistoryLogger = {
 
             var finalLogFileName = "";
 
+
+            var ServerLogDisplayDate = document.getElementById('ServerLogDisplayDate');
+            ServerLogDisplayDate.innerHTML = LogDate.toLocaleDateString() ;;
+
             if (RemoteLogFile == "DefaultLog") {
                 finalLogFileName = RemoteLogFile + fileLogDate;
             } else {
