@@ -370,15 +370,15 @@ window.UIHelper = {
 
         if (!UIHelper.ActiveTab) {
             UIHelper.ActiveTab = TabElement;
-            UIHelper.ActiveTabButton = BTNElement; 
+            UIHelper.ActiveTabButton = BTNElement;
             UIHelper.ActiveTabButton.classList.add("selected-maintab");
         } else {
             UIHelper.ActiveTab.style.display = "none";
             UIHelper.ActiveTab.style.display = "none";
-            UIHelper.ActiveTab = TabElement; 
-            UIHelper.ActiveTabButton.classList.remove("selected-maintab"); 
+            UIHelper.ActiveTab = TabElement;
+            UIHelper.ActiveTabButton.classList.remove("selected-maintab");
 
-            UIHelper.ActiveTabButton = BTNElement; 
+            UIHelper.ActiveTabButton = BTNElement;
             UIHelper.ActiveTabButton.classList.add("selected-maintab");
         }
 
@@ -535,72 +535,7 @@ WebApp.Fetch({
 
         // console.log('CHECK THIS-->',WebApp.SysInfo);
 
-
-        //Add our chart
-        (function () {
-
-            // **********
-
-
-
-            const chartColors = {
-                red: 'rgb(255, 99, 132)',
-                orange: 'rgb(255, 159, 64)',
-                yellow: 'rgb(255, 205, 86)',
-                green: 'rgb(75, 192, 192)',
-                blue: 'rgb(54, 162, 235)',
-                purple: 'rgb(153, 102, 255)',
-                grey: 'rgb(201, 203, 207)'
-            };
-
-
-
-
-            var MONTHS = ['HTTP/S', 'System'];
-            var color = Chart.helpers.color;
-            var barChartData = {
-                labels: ['HTTP/S', 'System'],
-                datasets: [{
-                    label: 'Errors',
-                    backgroundColor: color(chartColors.red).alpha(0.5).rgbString(),
-                    borderColor: chartColors.red,
-                    borderWidth: 1,
-                    data: [
-                        (-1) * WebApp.SysInfo.SERVERStatistics.Services.TotalError,
-                        (-1) * WebApp.SysInfo.SERVERStatistics.System.TotalError
-                    ]
-                }, {
-                    label: 'Success',
-                    backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                    borderColor: chartColors.blue,
-                    borderWidth: 1,
-                    data: [
-                        WebApp.SysInfo.SERVERStatistics.Services.TotalSuccess,
-                        WebApp.SysInfo.SERVERStatistics.System.TotalSuccess
-
-                    ]
-                }]
-
-            };
-
-            var ctx = document.getElementById('canvas').getContext('2d');
-            window.myBar = new Chart(ctx, {
-                type: 'bar',
-                data: barChartData,
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'top',
-                    },
-                    title: {
-                        display: true,
-                        text: 'API Success/Error Rates'
-                    }
-                }
-            });
-
-            // **********
-        })();
+        WebApp.HelpDisplay.AddErrorsChart();
 
     }//end if no error...
 
@@ -615,96 +550,96 @@ WebApp.Fetch({
 
 
 
-        /*
-            Use the help service to get the Socket API code. 
-            It's just another way to use the API and shows
-            how you can do this own a seperate domain and 
-            still get the updates...
-        */
-       WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
-        const srcSocketAPI = document.createElement("script");
-        srcSocketAPI.innerHTML = filecontents.body;
-        document.head.appendChild(srcSocketAPI);
+/*
+    Use the help service to get the Socket API code. 
+    It's just another way to use the API and shows
+    how you can do this own a seperate domain and 
+    still get the updates...
+*/
+WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
+    const srcSocketAPI = document.createElement("script");
+    srcSocketAPI.innerHTML = filecontents.body;
+    document.head.appendChild(srcSocketAPI);
 
-        /*
-            When it's not a call back, it's a broadcast from
-            a service. Use this a means to handle those events...                
-        */
-        SocketAPI.MasterSocket.ServiceEvents = {
-            "data": function (SocketData) {
-                Metro.toast.create(SocketData.msg, null, null, "info");
-            },
-            "APIServer": function (SocketData) {
-                Metro.toast.create(SocketData.msg, null, null, "info");
-            },
-        };
+    /*
+        When it's not a call back, it's a broadcast from
+        a service. Use this a means to handle those events...                
+    */
+    SocketAPI.MasterSocket.ServiceEvents = {
+        "data": function (SocketData) {
+            Metro.toast.create(SocketData.msg, null, null, "info");
+        },
+        "APIServer": function (SocketData) {
+            Metro.toast.create(SocketData.msg, null, null, "info");
+        },
+    };
 
-        /*
-           Overwrite the events to customize it for 
-           this domain and this DEMO!
-       */
-        SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
-            // const jsonData = JSON.parse(e.data);
+    /*
+       Overwrite the events to customize it for 
+       this domain and this DEMO!
+   */
+    SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
+        // const jsonData = JSON.parse(e.data);
 
-            const srvEvt = SocketAPI.MasterSocket.ServiceEvents[jsonData.service];
-            if (srvEvt) {
-                srvEvt(jsonData);
-            }
+        const srvEvt = SocketAPI.MasterSocket.ServiceEvents[jsonData.service];
+        if (srvEvt) {
+            srvEvt(jsonData);
+        }
 
-            var displaymsg;
+        var displaymsg;
 
-            if (jsonData.msg) {
-                displaymsg = jsonData.msg;
-            } else {
-                displaymsg = jsonData;
-            }
+        if (jsonData.msg) {
+            displaymsg = jsonData.msg;
+        } else {
+            displaymsg = jsonData;
+        }
 
-            if (!displaymsg) {
-                debugger;
-            }
+        if (!displaymsg) {
+            debugger;
+        }
 
 
-            HistoryLogger.Logger.Add({
-                Type: 466,
-                TID: 505,
-                DT: new Date(),
-                Topic: "Socket Traffic",
-                Source: "Socket",
-                Body: displaymsg
-            });
+        HistoryLogger.Logger.Add({
+            Type: 466,
+            TID: 505,
+            DT: new Date(),
+            Topic: "Socket Traffic",
+            Source: "Socket",
+            Body: displaymsg
+        });
 
-        };
+    };
 
-        //Once connected...
-        SocketAPI.MasterSocket.Events.onopen = function () {
+    //Once connected...
+    SocketAPI.MasterSocket.Events.onopen = function () {
 
-            HistoryLogger.Logger.Add({
-                Type: 411,
-                TID: 0,
-                DT: new Date(),
-                Topic: "Socket Connected!",
-                Source: "Browser",
-                Body: "The web socket is connected and ready to go!",
-            });
-        };
+        HistoryLogger.Logger.Add({
+            Type: 411,
+            TID: 0,
+            DT: new Date(),
+            Topic: "Socket Connected!",
+            Source: "Browser",
+            Body: "The web socket is connected and ready to go!",
+        });
+    };
 
-        //When disconected...
-        SocketAPI.MasterSocket.Events.onclose = function () {
+    //When disconected...
+    SocketAPI.MasterSocket.Events.onclose = function () {
 
-            Metro.toast.create('Socket has disconnected', null, null, "alert");
+        Metro.toast.create('Socket has disconnected', null, null, "alert");
 
-            HistoryLogger.Logger.Add({
-                Type: 411,
-                TID: 0,
-                DT: new Date(),
-                Topic: "Socket Closed!",
-                Source: "Browser",
-                Body: "The web socket has disconnected!",
-            });
+        HistoryLogger.Logger.Add({
+            Type: 411,
+            TID: 0,
+            DT: new Date(),
+            Topic: "Socket Closed!",
+            Source: "Browser",
+            Body: "The web socket has disconnected!",
+        });
 
-            console.info('ask to re-connect...');
-        };
+        console.info('ask to re-connect...');
+    };
 
-        //After events are rewired, connect the socket...
-        SocketAPI.MasterSocket.Connnect();
-    });
+    //After events are rewired, connect the socket...
+    SocketAPI.MasterSocket.Connnect();
+});

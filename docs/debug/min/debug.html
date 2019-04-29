@@ -42,9 +42,8 @@
 
     <script>
         /*
-    Simple wrapper to test the API using the browser.
-
-    Adding in whatever you can to help the user actually use the API!
+    WebApp is the main namespace used so add your own
+    modules to this one to prevent collision.
 */
 
 const WebApp = {
@@ -54,9 +53,7 @@ const WebApp = {
     */
     Fetch(data = {}) {
         const url = document.URL + '';
-
-        // console.info('Add key to Data->',WebApp.AppPrefs.UserOptions.APIKEY);
-
+ 
         //Allways add the APIKEY to outbound requests to the server...
         data.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
 
@@ -172,14 +169,15 @@ WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
 });
 
 
-
-
-//Stuff our help display since it's so big and the least dynamic.. :-)
-WebApp.GetHelpFile('HelpDisplay.html', function (filecontents) {
-    document.getElementById("TabMain").innerHTML = filecontents.body;
-    //Now show the sys info in the main display...
-
+/*
+    Help Display UI supporting javascript...
+*/
+WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
+    const srcScript = document.createElement("script");
+    srcScript.innerHTML = filecontents.body;
+    document.head.appendChild(srcScript); 
 });
+
 
 
 
