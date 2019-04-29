@@ -93,7 +93,7 @@ const WebApp = {
                 displaymsg = jsonData;
             }
 
-            console.log('Web Socket Service Mesage:', jsonData);
+            // console.log('Web Socket Service Mesage:', jsonData);
 
             UIHelper.ShowSocketStatus();
 
