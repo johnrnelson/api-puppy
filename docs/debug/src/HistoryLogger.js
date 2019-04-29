@@ -383,3 +383,4 @@ window.HistoryLogger = {
 
 //Set default logger view...
 HistoryLogger.Logger.SetListType('411');
+HistoryLogger.Calendar.AddControl();

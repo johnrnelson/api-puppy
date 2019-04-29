@@ -135,31 +135,6 @@ if (localStorage) {
 }
 
 
-
-
-/*
-    Simple app prefs manager...
-*/
-WebApp.GetHelpFile('DebuggerUI.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);    
-});
-
-
-
-
-/*
-    Simple app prefs manager...
-*/
-WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);  
-    HistoryLogger.Calendar.AddControl();
-});
-
-
 /* 
     Go grab our styles using the API to show an example of
     another way to use it. Of course you don't want to 
@@ -172,6 +147,31 @@ WebApp.GetHelpFile('debug.css', function (filecontents) {
     CSSFile.innerHTML = filecontents.body;
     document.head.appendChild(CSSFile);
 });
+
+
+/*
+    Load our debugger ui supporting javascript...
+*/
+WebApp.GetHelpFile('DebuggerUI.js', function (filecontents) {
+    const srcScript = document.createElement("script");
+    srcScript.innerHTML = filecontents.body;
+    document.head.appendChild(srcScript);
+});
+
+
+
+
+/*
+    History Logger UI supporting javascript...
+*/
+WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
+    const srcScript = document.createElement("script");
+    srcScript.innerHTML = filecontents.body;
+    document.head.appendChild(srcScript);
+ 
+});
+
+
 
 
 //Stuff our help display since it's so big and the least dynamic.. :-)
@@ -197,225 +197,7 @@ window.onload = function () {
 
         // debugger;
         window.eval(filecontents.body);
-
-
-
-        WebApp.Fetch({
-            service: 'help',
-            data: {
-                topic: 'SysInfo'
-            }
-        }).then(data => {
-            if (data.err) {
-                console.warn(data.err.msg);
-                debugger;
-
-
-
-            } else {
-
-                WebApp.SysInfo = data;
-                WebApp.SysInfo.ST = new Date(WebApp.SysInfo.ST);
-
-
-
-                // debugger;
-                WebApp.AppPrefs.Title = WebApp.SysInfo.ProjectInfo.Title;
-
-                document.title = WebApp.AppPrefs.Title;
-
-                //Setup our UI parts...
-                UIHelper.FillSideBar();
-
-                //Setup all of our ace editors...
-                UIHelper.Ace.BuildAceControls();
-
-                UIHelper.AppPrefs.ShowPrefs();
-
-
-                UIHelper.SetSysInfo();
-
-                // console.log('CHECK THIS-->',WebApp.SysInfo);
-
-
-
-                (function () {
-
-                    // **********
-
-
-
-                    const chartColors = {
-                        red: 'rgb(255, 99, 132)',
-                        orange: 'rgb(255, 159, 64)',
-                        yellow: 'rgb(255, 205, 86)',
-                        green: 'rgb(75, 192, 192)',
-                        blue: 'rgb(54, 162, 235)',
-                        purple: 'rgb(153, 102, 255)',
-                        grey: 'rgb(201, 203, 207)'
-                    };
-
-
-
-
-                    var MONTHS = ['HTTP/S', 'System'];
-                    var color = Chart.helpers.color;
-                    var barChartData = {
-                        labels: ['HTTP/S', 'System'],
-                        datasets: [{
-                            label: 'Errors',
-                            backgroundColor: color(chartColors.red).alpha(0.5).rgbString(),
-                            borderColor: chartColors.red,
-                            borderWidth: 1,
-                            data: [
-                                (-1) * WebApp.SysInfo.SERVERStatistics.Services.TotalError,
-                                (-1) * WebApp.SysInfo.SERVERStatistics.System.TotalError
-                            ]
-                        }, {
-                            label: 'Success',
-                            backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                            borderColor: chartColors.blue,
-                            borderWidth: 1,
-                            data: [
-                                WebApp.SysInfo.SERVERStatistics.Services.TotalSuccess,
-                                WebApp.SysInfo.SERVERStatistics.System.TotalSuccess
-
-                            ]
-                        }]
-
-                    };
-
-                    var ctx = document.getElementById('canvas').getContext('2d');
-                    window.myBar = new Chart(ctx, {
-                        type: 'bar',
-                        data: barChartData,
-                        options: {
-                            responsive: true,
-                            legend: {
-                                position: 'top',
-                            },
-                            title: {
-                                display: true,
-                                text: 'API Success/Error Rates'
-                            }
-                        }
-                    });
-
-                    // **********
-                })();
-
-
-
-
-
-
-
-
-            }
-
-
-
-        });
-
-
-
-
-        /*
-            Use the help service to get the Socket API code. 
-            It's just another way to use the API and shows
-            how you can do this own a seperate domain and 
-            still get the updates...
-        */
-        WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
-            const srcSocketAPI = document.createElement("script");
-            srcSocketAPI.innerHTML = filecontents.body;
-            document.head.appendChild(srcSocketAPI);
-
-            /*
-                When it's not a call back, it's a broadcast from
-                a service. Use this a means to handle those events...                
-            */
-            SocketAPI.MasterSocket.ServiceEvents = {
-                "data": function (SocketData) {
-                    Metro.toast.create(SocketData.msg, null, null, "info");
-                },
-                "APIServer": function (SocketData) {
-                    Metro.toast.create(SocketData.msg, null, null, "info");
-                },
-            };
-
-            /*
-               Overwrite the events to customize it for 
-               this domain and this DEMO!
-           */
-            SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
-                // const jsonData = JSON.parse(e.data);
-
-                const srvEvt = SocketAPI.MasterSocket.ServiceEvents[jsonData.service];
-                if (srvEvt) {
-                    srvEvt(jsonData);
-                }
-
-                var displaymsg;
-
-                if (jsonData.msg) {
-                    displaymsg = jsonData.msg;
-                } else {
-                    displaymsg = jsonData;
-                }
-
-                if (!displaymsg) {
-                    debugger;
-                }
-
-
-                HistoryLogger.Logger.Add({
-                    Type: 466,
-                    TID: 505,
-                    DT: new Date(),
-                    Topic: "Socket Traffic",
-                    Source: "Socket",
-                    Body: displaymsg
-                });
-
-            };
-
-            //Once connected...
-            SocketAPI.MasterSocket.Events.onopen = function () {
-
-                HistoryLogger.Logger.Add({
-                    Type: 411,
-                    TID: 0,
-                    DT: new Date(),
-                    Topic: "Socket Connected!",
-                    Source: "Browser",
-                    Body: "The web socket is connected and ready to go!",
-                });
-            };
-
-            //When disconected...
-            SocketAPI.MasterSocket.Events.onclose = function () {
-                
-                Metro.toast.create('Socket has disconnected', null, null, "alert");                        
-
-                HistoryLogger.Logger.Add({
-                    Type: 411,
-                    TID: 0,
-                    DT: new Date(),
-                    Topic: "Socket Closed!",
-                    Source: "Browser",
-                    Body: "The web socket has disconnected!",
-                });
-
-                console.info('ask to re-connect...');
-            };
-
-            //After events are rewired, connect the socket...
-            SocketAPI.MasterSocket.Connnect();
-        });
-
-
-
+ 
 
         HistoryLogger.Logger.Add({
             TID: 0,
@@ -441,10 +223,6 @@ window.onload = function () {
             // UIHelper.ShowTab('GitHubLinks');
             // UIHelper.ShowTab('TabAppPrefs');
         }
-
-
-
-
 
 
     }); //end UIHelper....
@@ -738,14 +516,14 @@ window.onload = function () {
                     <ul id="Export_UL" class="d-menu" data-role="dropdown">
 
                         <li><a href="#" title="Export sample code for CURL"
-                                onclick="DebugUI.ExportCode('curl')">curl</a>
+                                onclick="WebApp.DebugUI.ExportCode('curl')">curl</a>
                         </li>
                         <li><a href="#" title="Export sample code for JavaScript Browser"
-                                onclick="DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
+                                onclick="WebApp.DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
                         <li><a href="#" title="Export sample code for JavaScript HTTP Client"
-                                onclick="DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
+                                onclick="WebApp.DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
                         <li><a href="#" title="Export sample code for pythod 3"
-                                onclick="DebugUI.ExportCode('python 3')">Python 3</a></li>
+                                onclick="WebApp.DebugUI.ExportCode('python 3')">Python 3</a></li>
                         <li><a class="disabled" href="#" title="Export sample code for C# .Net">C#</a></li>
                     </ul>
                 </div>
@@ -768,9 +546,9 @@ window.onload = function () {
                                 <a title="Use HTTP GET for the request" id="api-uri-link" href="#"
                                     target="_blank">GET</a>
                                 <a title="Use HTTP PUT for the request"
-                                    href="JavaScript:DebugUI.MakeHTTP_PUT_Request();">PUT</a>
+                                    href="JavaScript:WebApp.DebugUI.MakeHTTP_PUT_Request();">PUT</a>
                                 <a title="Use the socket for the request"
-                                    href="JavaScript:DebugUI.MakeSocketRequest();">SOCKET</a>
+                                    href="JavaScript:WebApp.DebugUI.MakeSocketRequest();">SOCKET</a>
                             </span>
                         </div>
                         <div id="PayloadEditor" class="ace-editor"></div>

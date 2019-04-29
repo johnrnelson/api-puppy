@@ -329,14 +329,14 @@
                     <ul id="Export_UL" class="d-menu" data-role="dropdown">
 
                         <li><a href="#" title="Export sample code for CURL"
-                                onclick="DebugUI.ExportCode('curl')">curl</a>
+                                onclick="WebApp.DebugUI.ExportCode('curl')">curl</a>
                         </li>
                         <li><a href="#" title="Export sample code for JavaScript Browser"
-                                onclick="DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
+                                onclick="WebApp.DebugUI.ExportCode('javascript-fetch')">JavaScript</a></li>
                         <li><a href="#" title="Export sample code for JavaScript HTTP Client"
-                                onclick="DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
+                                onclick="WebApp.DebugUI.ExportCode('javascript-http-request')">NodeJS</a></li>
                         <li><a href="#" title="Export sample code for pythod 3"
-                                onclick="DebugUI.ExportCode('python 3')">Python 3</a></li>
+                                onclick="WebApp.DebugUI.ExportCode('python 3')">Python 3</a></li>
                         <li><a class="disabled" href="#" title="Export sample code for C# .Net">C#</a></li>
                     </ul>
                 </div>
@@ -359,9 +359,9 @@
                                 <a title="Use HTTP GET for the request" id="api-uri-link" href="#"
                                     target="_blank">GET</a>
                                 <a title="Use HTTP PUT for the request"
-                                    href="JavaScript:DebugUI.MakeHTTP_PUT_Request();">PUT</a>
+                                    href="JavaScript:WebApp.DebugUI.MakeHTTP_PUT_Request();">PUT</a>
                                 <a title="Use the socket for the request"
-                                    href="JavaScript:DebugUI.MakeSocketRequest();">SOCKET</a>
+                                    href="JavaScript:WebApp.DebugUI.MakeSocketRequest();">SOCKET</a>
                             </span>
                         </div>
                         <div id="PayloadEditor" class="ace-editor"></div>

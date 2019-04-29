@@ -1,12 +1,44 @@
-// DebuggerUI
-
-
 /*
-    Wrap up what ya want to make dealing with the UI as easy 
-    as possible...
+    This handles the debugger UI panel. 
 */
-const DebugUI = {
- 
+WebApp.DebugUI = {
+
+
+    //Fill the side bar with options we can use in our debugger...
+    FillSideBar() {
+        try {
+
+
+            const DebugVerbList_UL = document.getElementById("DebugVerbList_UL");
+            DebugVerbList_UL.innerHTML = "";
+
+            const dbSidebar = document.getElementById('debugger-sidbar');
+
+
+            for (var n in WebApp.SysInfo.apidata) {
+
+                const namespaceData = WebApp.SysInfo.apidata[n];
+
+                const optUL = document.createElement('li');
+                optUL.RecordData = namespaceData;
+                optUL.ServiceName = n;
+                optUL.onclick = function () {
+                    WebApp.DebugUI.SelectServiceOption(this.ServiceName);
+                };
+                optUL.innerHTML = '<li><a href="#">' + n + '</a></li>';
+                DebugVerbList_UL.appendChild(optUL);
+
+            }
+
+
+
+
+        } catch (errFillSideBar) {
+            console.warn(errFillSideBar);
+            debugger;
+        }
+    },
+
 
 
     SelectServiceOption(ServiceName) {
@@ -15,8 +47,7 @@ const DebugUI = {
         const DebugVerbList_BTN = document.getElementById("DebugVerbList_BTN");
 
         const DebugSampleList_UL = document.getElementById("DebugSampleList_UL");
-
-        // const SelOpt = this.selectedOptions[0];
+ 
 
         //Quick clear the old stuff...
         DebugSampleList_UL.innerHTML = "";
@@ -42,14 +73,14 @@ const DebugUI = {
 
                 //Set Default...
                 if (index == 0) {
-                    DebugUI.SelectSampleCodeOption(sample);
+                    WebApp.DebugUI.SelectSampleCodeOption(sample);
                 }
 
 
                 const optUL = document.createElement('li');
                 optUL.SampleName = sample;
                 optUL.onclick = function () {
-                    DebugUI.SelectSampleCodeOption(this.SampleName);
+                    WebApp.DebugUI.SelectSampleCodeOption(this.SampleName);
                 };
                 optUL.innerHTML = '<li><a href="#">' + sample + '</a></li>';
                 DebugSampleList_UL.appendChild(optUL);
@@ -123,7 +154,7 @@ const DebugUI = {
 
         // debugger;
         //Get our contents from the editor...
-        const JSONPayload = DebugUI.GetEditorJSON();
+        const JSONPayload = WebApp.DebugUI.GetEditorJSON();
 
 
 
@@ -133,7 +164,7 @@ const DebugUI = {
                 .then(data => {
 
                     const resultJSONText = JSON.stringify(data, null, "\t");
-                    DebugUI.ShowJSONResult('HTTP', resultJSONText);
+                    WebApp.DebugUI.ShowJSONResult('HTTP', resultJSONText);
 
                     HistoryLogger.Logger.Add({
                         TID: 0,
@@ -161,14 +192,14 @@ const DebugUI = {
         displayDateUP.innerHTML = "@" + new Date().toLocaleTimeString();
 
         //Get our contents from the editor...
-        const JSONPayload = DebugUI.GetEditorJSON();
+        const JSONPayload = WebApp.DebugUI.GetEditorJSON();
         // console.info(JSONPayload);
 
 
         SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
             console.info('call back is good--', SckData);
 
-            DebugUI.ShowJSONResult('Socket', JSON.stringify(SckData, null, "\t"));
+            WebApp.DebugUI.ShowJSONResult('Socket', JSON.stringify(SckData, null, "\t"));
 
         });
 
@@ -205,7 +236,7 @@ const DebugUI = {
 
 
         //Get our contents from the editor...
-        const JSONPayload = DebugUI.GetEditorJSON();
+        const JSONPayload = WebApp.DebugUI.GetEditorJSON();
 
         /*
             Define the languages supported and how to help...
@@ -357,3 +388,5 @@ print(response_data)
 
     }
 };
+
+
