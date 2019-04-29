@@ -133,24 +133,6 @@ if (localStorage) {
 }
 
 
-/* 
-    Go grab our styles using the API to show an example of
-    another way to use it. Of course you don't want to 
-    actually get your CSS files this way, but it's yet
-    another example of how to use a web API...
-*/
-WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
-    const CSSFile = document.createElement("style");
-    CSSFile.type = "text/css";
-    CSSFile.innerHTML = filecontents.body;
-    document.head.appendChild(CSSFile);
-});
-
-
-
-
-
-
 
 /*
     Help Display UI supporting javascript...
@@ -159,6 +141,14 @@ WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
     const srcScript = document.createElement("script");
     srcScript.innerHTML = filecontents.body;
     document.head.appendChild(srcScript);
+
+    WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
+        const CSSFile = document.createElement("style");
+        CSSFile.type = "text/css";
+        CSSFile.innerHTML = filecontents.body;
+        document.head.appendChild(CSSFile);
+    });
+
 });
 
 
