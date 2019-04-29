@@ -6,104 +6,9 @@
 
 */
 
-body {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
 
 
-smallscreen {
-    display: none;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-    padding-top: 25px;
-    background-color: black;
-    border: solid 1px silver;
-    /* background: -webkit-radial-gradient(center, ellipse cover, rgb(116, 116, 116) 0%, rgb(0, 0, 0) 50%); */
-    color: red;
-    text-shadow: 1px 1px 1px #444444;
-    font-size: 30px;
-    font-family: 'Roboto', sans-serif;
-}
-
-
-desktop {
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: hidden;
-}
-
-
-@media only screen and (max-width: 500px) {
-    desktop {
-        display: none;
-    }
-
-    smallscreen {
-        display: block;
-    }
-}
-
-
-sidemenu {
-    background-color: rgb(70, 70, 70);
-    color: blue;
-
-    display: block;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    /* right: 0 */
-    width: 40px;
-    border: solid 1px rgb(141, 141, 141);
-}
-
-sidemenu .t-menu {
-    background-color: transparent;
-}
-
-sidemenu li {
-    color: white !important;
-    text-shadow: 1px 1px 1px #6e6e6e;
-}
-
-sidemenu li:hover {
-    color: rgb(200, 192, 235) !important;
-}
-
-sidemenu .selected-maintab {
-    color: white;
-    background-color: black;
-    margin: 0;
-    padding: 0;
-}
-
-
-
-
-
-TopNav {
+TopNavxxxxxxx {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -111,31 +16,6 @@ TopNav {
     right: 0
 }
 
-MainTabDisplay {
-    display: none;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 40px;
-    right: 0;
-}
-
-MainTabDisplay#GitHubLinks {
-    margin: 15px;
-    padding: 10px;
-    overflow: auto;
-}
-
-MainTabDisplay .container {
-    margin: 10px;
-    padding: 10px;
-    /*     
-    margin-left: 10px;
-    padding-left: 10px;
-    margin-right: 0;
-    padding-right: 0; */
-}
 
 
 
@@ -143,101 +23,6 @@ MainTabDisplay .container {
 
 
 
-/* 
-
-
-Logger 
-
-*/
-
-#HistoryLogger #LoggerCalendar {
-    /* background-color: blue; */
-    border: solid 1px rgb(235, 235, 235);
-    margin: 0;
-    padding: 0;
-}
-
-
-#HistoryLogger #LogTree {
-    position: absolute;
-    top: 365px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-}
-
-#LogTree i {
-    color: rgb(14, 14, 212) !important;
-
-    padding-right: 10px;
-}
-
-#LogTree .LgCnt {
-    color: rgb(1, 77, 48) !important;
-    padding-right: 10px;
-    /* text-shadow: 1px 1px 1px #000000; */
-    font-weight: bold;
-}
-
-
-MainTabDisplay LoggerTable {
-    position: absolute;
-    top: 40px;
-    bottom: 0;
-    left: 245px;
-    right: 0;
-
-    /* border: solid 2px blue; */
-
-
-    display: none;
-    margin: 0;
-    padding: 10px;
-    background-color: transparent !important;
-    color: black;
-    /* height: 100%;
-    */
-    /* width: 100%; */
-
-    overflow: auto !important;
-}
-
-
-LoggerTable .LoggerLabel {
-    color: rgb(78, 1, 78);
-    font-size: 18px;
-    text-shadow: 1px 1px 1px #f3f3f3;
-}
-
-LoggerTable table {
-    /* margin: 0;
-    padding: 0;
-    height: 100% !important; */
-    /* background-color: blue !important; */
-    width: 100%;
-    color: red;
-}
-
-
-
-
-
-
-
-/* Main Display */
-
-MainTabDisplay .h-menu {
-    /* background-color: rgb(0, 0, 54); */
-    background-color: rgb(49, 49, 49);
-}
-
-MainTabDisplay .h-menu a {
-    color: white;
-}
-
-MainTabDisplay .h-menu li:hover {
-    color: gold;
-}
 
 
 /* 
@@ -277,35 +62,7 @@ MainTabDisplay .h-menu li:hover {
     overflow: auto;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 #TabDebugger {
     background-color: rgb(49, 49, 49);
@@ -397,93 +154,6 @@ MainTabDisplay .h-menu li:hover {
     text-shadow: 1px 1px 1px #ffffff;
     background: -webkit-radial-gradient(center, ellipse cover, #F5F5F5 0%, rgb(194, 194, 194) 100%);
 }
-
-
-
-
-/* Main help text classes...  */
-.AppUpdates {
-    color: rgb(28, 5, 90);
-    font-size: 14px;
-    /* font-weight: bold; */
-    /* font-family: 'PT Sans', sans-serif; */
-    border: solid 1px silver;
-    padding: 5px;
-
-}
-
-.HelpText {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    color: rgb(94, 94, 94);
-    font-size: 16px;
-    font-family: 'PT Sans', sans-serif;
-}
-
-pre {
-    margin: 5px;
-    padding: 25px;
-    background-color: rgb(238, 238, 238);
-    height: 80%;
-    overflow: auto;
-}
-
-pre code {
-    white-space: nowrap !important;
-}
-
-.buttonclick {
-    cursor: pointer;
-    color: green;
-}
-
-
-
-
-/* 
-
-
-
-
-
-
-SysInfo STYLES!!!!!! 
-*/
-
-.SysInfoItem {
-    padding-top: 5px;
-    /* margin-bottom: 20px; */
-    /* border: solid 1px blue; */
-
-}
-
-.SysInfoHeading {
-    font-family: 'PT Sans', sans-serif;
-    color: green;
-    font-size: 22px;
-    font-weight: bold;
-}
-
-
-.SysInfoItem .SysInfoLabel {
-    color: rgb(36, 17, 88);
-    cursor: default;
-    font-size: 18px;
-}
-
-.SysInfoItem .SysInfoValue {
-    color: rgb(119, 119, 119);
-    cursor: default;
-    font-size: 14px;
-}
-
-
-
-
-
-
-
-
 
 
 

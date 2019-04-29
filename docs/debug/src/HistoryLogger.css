@@ -1,0 +1,78 @@
+
+/* 
+
+
+Logger 
+
+*/
+
+#HistoryLogger #LoggerCalendar {
+    /* background-color: blue; */
+    border: solid 1px rgb(235, 235, 235);
+    margin: 0;
+    padding: 0;
+}
+
+
+#HistoryLogger #LogTree {
+    position: absolute;
+    top: 365px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#LogTree i {
+    color: rgb(14, 14, 212) !important;
+
+    padding-right: 10px;
+}
+
+#LogTree .LgCnt {
+    color: rgb(1, 77, 48) !important;
+    padding-right: 10px;
+    /* text-shadow: 1px 1px 1px #000000; */
+    font-weight: bold;
+}
+
+
+MainTabDisplay LoggerTable {
+    position: absolute;
+    top: 40px;
+    bottom: 0;
+    left: 245px;
+    right: 0;
+
+    /* border: solid 2px blue; */
+
+
+    display: none;
+    margin: 0;
+    padding: 10px;
+    background-color: transparent !important;
+    color: black;
+    /* height: 100%;
+    */
+    /* width: 100%; */
+
+    overflow: auto !important;
+}
+
+
+LoggerTable .LoggerLabel {
+    color: rgb(78, 1, 78);
+    font-size: 18px;
+    text-shadow: 1px 1px 1px #f3f3f3;
+}
+
+LoggerTable table {
+    /* margin: 0;
+    padding: 0;
+    height: 100% !important; */
+    /* background-color: blue !important; */
+    width: 100%;
+    color: red;
+}
+
+
+

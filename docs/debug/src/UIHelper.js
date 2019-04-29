@@ -525,7 +525,7 @@ WebApp.Fetch({
 
 
         //Setup our UI parts...
-        WebApp.DebugUI.FillSideBar();
+        WebApp.DebugUI.FillVerbList();
 
         //Use the default and set the edtor....            
         WebApp.DebugUI.SelectServiceOption('time');

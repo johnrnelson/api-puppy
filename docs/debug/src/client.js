@@ -95,14 +95,25 @@ if (localStorage) {
     actually get your CSS files this way, but it's yet
     another example of how to use a web API...
 */
-WebApp.GetHelpFile('debug.css', function (filecontents) {
+WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
     const CSSFile = document.createElement("style");
     CSSFile.type = "text/css";
     CSSFile.innerHTML = filecontents.body;
     document.head.appendChild(CSSFile);
 });
 
-
+WebApp.GetHelpFile('debug.css', function (filecontents) {
+    const CSSFile = document.createElement("style");
+    CSSFile.type = "text/css";
+    CSSFile.innerHTML = filecontents.body;
+    document.head.appendChild(CSSFile);
+});
+WebApp.GetHelpFile('HistoryLogger.css', function (filecontents) {
+    const CSSFile = document.createElement("style");
+    CSSFile.type = "text/css";
+    CSSFile.innerHTML = filecontents.body;
+    document.head.appendChild(CSSFile);
+});
 /*
     Load our debugger ui supporting javascript...
 */

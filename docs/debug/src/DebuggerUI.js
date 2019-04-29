@@ -5,15 +5,12 @@ WebApp.DebugUI = {
 
 
     //Fill the side bar with options we can use in our debugger...
-    FillSideBar() {
+    FillVerbList() {
         try {
 
 
             const DebugVerbList_UL = document.getElementById("DebugVerbList_UL");
             DebugVerbList_UL.innerHTML = "";
-
-            const dbSidebar = document.getElementById('debugger-sidbar');
-
 
             for (var n in WebApp.SysInfo.apidata) {
 
@@ -30,9 +27,6 @@ WebApp.DebugUI = {
 
             }
 
-
-
-
         } catch (errFillSideBar) {
             console.warn(errFillSideBar);
             debugger;
@@ -47,7 +41,7 @@ WebApp.DebugUI = {
         const DebugVerbList_BTN = document.getElementById("DebugVerbList_BTN");
 
         const DebugSampleList_UL = document.getElementById("DebugSampleList_UL");
- 
+
 
         //Quick clear the old stuff...
         DebugSampleList_UL.innerHTML = "";
@@ -156,14 +150,16 @@ WebApp.DebugUI = {
         //Get our contents from the editor...
         const JSONPayload = WebApp.DebugUI.GetEditorJSON();
 
-
-
-
         if (JSONPayload) {
             WebApp.Fetch(JSONPayload)
                 .then(data => {
 
+                    // debugger;
+                    
                     const resultJSONText = JSON.stringify(data, null, "\t");
+                    
+                    // Metro.toast.create('Web request finished', null, null, "info");
+
                     WebApp.DebugUI.ShowJSONResult('HTTP', resultJSONText);
 
                     HistoryLogger.Logger.Add({
@@ -177,7 +173,7 @@ WebApp.DebugUI = {
 
                 }) // JSON-string from `response.json()` call
                 .catch(error => {
-                    console.warn('Error in running the debug!');
+                    Metro.toast.create('Error in running the debug!', null, null, "alert");
                     console.error(error);
                     // debugger;
                 });
@@ -193,17 +189,12 @@ WebApp.DebugUI = {
 
         //Get our contents from the editor...
         const JSONPayload = WebApp.DebugUI.GetEditorJSON();
-        // console.info(JSONPayload);
-
 
         SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
-            console.info('call back is good--', SckData);
-
+            //Remove the TID before showing it to the user...
+            delete SckData["TID"];
             WebApp.DebugUI.ShowJSONResult('Socket', JSON.stringify(SckData, null, "\t"));
-
         });
-
-
     },
     GetEditorJSON() {
 
@@ -337,8 +328,6 @@ print(response_data)
                         cls: "js-dialog-close",
                         onclick: function () {
                             UIHelper.CopyToClipboard('ExampleCodeDisplay');
-                            // const tblBody = document.getElementById('HistoryLoggerTable');
-                            // tblBody.innerHTML = "";
                         }
                     },
                     {
