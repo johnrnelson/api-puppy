@@ -70,7 +70,7 @@ const IPC = {
                 SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(MSG);
-                    }else{
+                    } else {
                         //Can't send to this client so it's not part of our total...
                         WebSocketServer.TotalConnectionAttempts--;
                     }
@@ -206,11 +206,13 @@ const IPC = {
 
         const WebSocketServer = new WebSocket.Server({ server: WebServer });
 
+        //Default to zero.. DOH!!!
+        WebSocketServer.TotalConnectionAttempts = 0;
 
         WebSocketServer.on('connection', function connection(ws, req) {
 
             const ipAddress = req.connection.remoteAddress;
-            WebSocketServer.TotalConnectionAttempts = 0;
+
 
             WebSocketServer.clients.forEach(function each(client) {
                 // console.log('Client.ID: ' + client);
@@ -291,7 +293,7 @@ const IPC = {
                 TID: 0, //System message   
                 service: 'APIServer',
                 msg: "Welcome new tester from :" + displayAddress + ". Total Connections [" +
-                WebSocketServer.TotalConnectionAttempts + "]"
+                    WebSocketServer.TotalConnectionAttempts + "]"
             });
 
 
@@ -399,7 +401,7 @@ const IPC = {
 
         // Use this only when you need to!!!
         // console.log('Serving User:',request.User);
- 
+
 
 
 
@@ -407,10 +409,10 @@ const IPC = {
             Use our little defender module to check the request
             and make sure we can do the work they want us to do.
         */
-        SERVER.Defender.CheckRequest(request,response, function (CheckRequestError) {
+        SERVER.Defender.CheckRequest(request, response, function (CheckRequestError) {
 
             if (CheckRequestError) {
-             
+
                 response.SendError(response, CheckRequestError);
                 // debugger;
                 return;
@@ -434,7 +436,7 @@ const IPC = {
 
 
                 request.on('end', function () {
- 
+
 
                     /*
                         Now work with the body of the request. 
@@ -511,7 +513,7 @@ const IPC = {
                         IPC.ServeDebugAPP(request, response);
                         return;
                     }
- 
+
 
                     try {
 
