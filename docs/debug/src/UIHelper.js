@@ -555,6 +555,39 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
 
     //When disconected...
     SocketAPI.MasterSocket.Events.onclose = function () {
+ 
+
+        Metro.dialog.create({
+            title: "Reconnect to the socket?",
+            content: "<div>If the socket died, it's best to just refresh, but you can try to just reconnect or ignore and just use REST.</div>",
+            actions: [
+                {
+                    caption: "Reconnect Socket",
+                    cls: "js-dialog-close info",
+                    onclick: function () {
+                        
+                        SocketAPI.MasterSocket.Connnect();
+                    }
+                },
+                {
+                    caption: "Refresh Browser",
+                    cls: "js-dialog-close alert",
+                    onclick: function () {
+                        
+                        window.location=window.location;
+                    }
+                },                
+                {
+                    caption: "Ignore",
+                    cls: "js-dialog-close"
+                }
+            ]
+        });
+
+
+
+
+
 
         Metro.toast.create('Socket has disconnected', null, null, "alert");
 

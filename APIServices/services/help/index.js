@@ -158,11 +158,7 @@ const topics = {
         const fs = require('fs');
         var TotalSocks = SERVER.WebSocketHTTP.TotalConnectionAttempts+SERVER.WebSocketHTTPS.TotalConnectionAttempts;
         
-
-        // if (!TotalSocks) {
-        //     TotalSocks = "N/A";
-        // }
-
+ 
         var SysInfoData = {
             ProjectInfo: SERVER.ProjectInfo,
             NodeVersion: process.version,
