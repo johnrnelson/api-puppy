@@ -79,12 +79,12 @@ const WebApp = {
     },
     OpenSocket() {
 
-        SocketAPI.MasterSocket.URL = "wss://demo.tektology.com";
+        WebApp.SocketAPI.MasterSocket.URL = "wss://demo.tektology.com";
         /*
             Overwrite the events to customize it for 
             this domain and this DEMO!
         */
-        SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
+        WebApp.SocketAPI.MasterSocket.Events.onmessage = function (jsonData) {
 
             var displaymsg;
             if (jsonData.msg) {
@@ -100,13 +100,13 @@ const WebApp = {
         };
 
         //Once connected...
-        SocketAPI.MasterSocket.Events.onopen = function () {
+        WebApp.SocketAPI.MasterSocket.Events.onopen = function () {
 
             console.log('Socket is open');
         };
 
         //After events are rewired, connect the socket...
-        SocketAPI.MasterSocket.Connnect();
+        WebApp.SocketAPI.MasterSocket.Connnect();
     }
 };
 const UIHelper = {
