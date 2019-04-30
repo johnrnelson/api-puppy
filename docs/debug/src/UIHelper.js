@@ -312,6 +312,43 @@ window.UIHelper = {
             UIHelper.ActiveTabButton.classList.add("selected-maintab");
         }
 
+        // debugger;
+        if (Tab2Show == "TabDebugger") {
+
+            if (!WebApp.DebugUI) {
+
+
+                /*
+                    Load our debugger ui supporting javascript...
+                */
+                WebApp.GetHelpFile('DebuggerUI.js', function (filecontents) {
+                    const srcScript = document.createElement("script");
+                    srcScript.innerHTML = filecontents.body;
+                    document.head.appendChild(srcScript);
+
+
+                    WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
+                        const CSSFile = document.createElement("style");
+                        CSSFile.type = "text/css";
+                        CSSFile.innerHTML = filecontents.body;
+                        document.head.appendChild(CSSFile);
+                    });
+
+
+
+                    //Setup our UI parts...
+                    WebApp.DebugUI.FillVerbList();
+
+                    //Use the default and set the edtor....            
+                    WebApp.DebugUI.SelectServiceOption('time');
+
+
+                });
+
+            }
+
+
+        }
         UIHelper.ActiveTab.style.display = "block";
 
     },
@@ -454,12 +491,6 @@ WebApp.Fetch({
 
         UIHelper.AppPrefs.ShowPrefs();
 
-
-        //Setup our UI parts...
-        WebApp.DebugUI.FillVerbList();
-
-        //Use the default and set the edtor....            
-        WebApp.DebugUI.SelectServiceOption('time');
 
 
         UIHelper.SetSysInfo();

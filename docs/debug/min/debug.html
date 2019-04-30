@@ -152,24 +152,6 @@ WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
 });
 
 
-/*
-    Load our debugger ui supporting javascript...
-*/
-WebApp.GetHelpFile('DebuggerUI.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);
-
-
-    WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
-        const CSSFile = document.createElement("style");
-        CSSFile.type = "text/css";
-        CSSFile.innerHTML = filecontents.body;
-        document.head.appendChild(CSSFile);
-    });
-
-});
-
 
 
 /*
