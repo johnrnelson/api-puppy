@@ -59,9 +59,9 @@ const IPC = {
             if (typeof (MSG) != "string") {
                 MSG = JSON.stringify(MSG);
             }
-            
-            
-            
+
+
+
 
             if (SERVER.WebSocketHTTP) {
                 SERVER.WebSocketHTTP.clients.forEach(function each(client) {
@@ -74,7 +74,7 @@ const IPC = {
             if (SERVER.WebSocketHTTPS) {
                 SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);                        
+                        client.send(MSG);
                         SERVER.WebSocketHTTPS.TotalConnectionAttempts++;
                     }
                 });
@@ -217,7 +217,7 @@ const IPC = {
             const ipAddress = req.connection.remoteAddress;
 
             WebSocketServer.TotalConnectionAttempts = 0;
- 
+
             //Do not give away the users complete IP address over the internet!  :-)
             const displayAddress = ipAddress.split('.').slice(0, 2).join('.') + "**";
 
@@ -363,14 +363,19 @@ const IPC = {
         });
 
         if (request.method.toUpperCase() == "OPTIONS") {
-            // console.log(request.headers);
-
-
-
-
+            // console.log(request.headers); 
             response.end("");
             return;
         }
+
+
+
+        //only send debug UI on emtpy request...
+        if ((request.url == "/") && (request.method.toUpperCase() == "GET")) {
+            IPC.ServeDebugAPP(request, response);
+            return;
+        }
+
 
         //Give the response and easy way out for errors...
         response.SendError = IPC.SendError;
@@ -506,12 +511,6 @@ const IPC = {
 
 
 
-
-                    //only send debug UI on emtpy request...
-                    if ((request.url == "/") && (!request.RequestData.service)) {
-                        IPC.ServeDebugAPP(request, response);
-                        return;
-                    }
 
 
                     try {

@@ -312,11 +312,11 @@ window.UIHelper = {
             UIHelper.ActiveTabButton.classList.add("selected-maintab");
         }
 
-        // debugger;
+        // Only load the debugger tool if they want to use it. 
         if (Tab2Show == "TabDebugger") {
 
+            //Have I alredy loaded this?
             if (!WebApp.DebugUI) {
-
 
                 /*
                     Load our debugger ui supporting javascript...
@@ -345,20 +345,18 @@ window.UIHelper = {
                     //Use the default and set the edtor....            
                     WebApp.DebugUI.SelectServiceOption('time');
 
-                        
-                    UIHelper.ActiveTab.style.display = "block";    
+
+                    UIHelper.ActiveTab.style.display = "block";
 
 
                 });
 
-            }else{
-                UIHelper.ActiveTab.style.display = "block"; 
+            } else {
+                UIHelper.ActiveTab.style.display = "block";
             }
 
-
-        } else{
-            UIHelper.ActiveTab.style.display = "block";            
-
+        } else {
+            UIHelper.ActiveTab.style.display = "block";
         }
     },
 
