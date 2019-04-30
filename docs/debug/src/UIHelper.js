@@ -501,8 +501,8 @@ WebApp.Fetch({
 
         // console.log('CHECK THIS-->',WebApp.SysInfo);
 
-        WebApp.HelpDisplay.AddErrorsChart();
-        WebApp.HelpDisplay.AddServicesStatChart();
+        WebApp.AppCharts.AddErrorsChart();
+        WebApp.AppCharts.AddServicesStatChart();
 
     }//end if no error...
 
@@ -673,4 +673,5 @@ if (document.location.hostname == "localhost") {
     // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
     // UIHelper.ShowTab('TabAppPrefs');
+    UIHelper.ShowTab('AppCharts');
 }

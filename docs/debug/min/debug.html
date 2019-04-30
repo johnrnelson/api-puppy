@@ -151,6 +151,12 @@ WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
 
 });
 
+//Supporting chart code...
+WebApp.GetHelpFile('AppCharts.js', function (filecontents) {
+    const srcScript = document.createElement("script");
+    srcScript.innerHTML = filecontents.body;
+    document.head.appendChild(srcScript);
+});
 
 
 
@@ -286,10 +292,26 @@ window.onload = function () {
                         <span class="fas fa-cogs"></span></a></li>
 
 
+                <li id="AppCharts-BTN" data-role="hint" data-hint-position="right" data-hint-text="Performance Charts">
+                    <a href="JavaScript:UIHelper.ShowTab('AppCharts')">
+                        <span class="fas fa-chart-bar"></span></a></li>
 
             </ul>
 
         </sidemenu>
+
+
+        <!-- Log the history and help the user know whats up... -->
+        <MainTabDisplay id="AppCharts" style="overflow: auto;">
+
+
+        </MainTabDisplay>
+
+
+
+
+
+
 
 
         <!-- Log the history and help the user know whats up... -->

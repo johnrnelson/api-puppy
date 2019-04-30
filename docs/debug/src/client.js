@@ -107,6 +107,12 @@ WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
 
 });
 
+//Supporting chart code...
+WebApp.GetHelpFile('AppCharts.js', function (filecontents) {
+    const srcScript = document.createElement("script");
+    srcScript.innerHTML = filecontents.body;
+    document.head.appendChild(srcScript);
+});
 
 
 
