@@ -502,6 +502,7 @@ WebApp.Fetch({
         // console.log('CHECK THIS-->',WebApp.SysInfo);
 
         WebApp.HelpDisplay.AddErrorsChart();
+        WebApp.HelpDisplay.AddServicesStatChart();
 
     }//end if no error...
 

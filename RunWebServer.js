@@ -25,7 +25,7 @@ const path = require('path');
 global.SERVER = {
     ProjectInfo: {
         Title: 'api-puppy Demo',
-        Version: '1.10.4.6',
+        Version: '1.10.4.7',
         VersionName: 'Dull-Green'
     },
     Network: {
@@ -48,6 +48,20 @@ global.SERVER = {
             TotalError: 0,
             StatMap: {
                 //This gets added to by each service...
+
+                //REMOVE AFTER TESTING!!!!!!
+                "help":{
+                    Success:5,
+                    Errors:5
+                },
+                "data":{
+                    Success:5,
+                    Errors:10
+                },
+                "logger":{
+                    Success:33,
+                    Errors:3
+                }                                
             },
             AddSiteMapItem(MapName, ItemName) {
                 if (!SERVER.Statistics.Services.StatMap[MapName]) {
