@@ -94,34 +94,7 @@ WebApp.HelpDisplay = {
         var color = Chart.helpers.color;
 
 
-
-
-        var barChartData = {
-            labels: ['HTTP/S', 'System'],
-            datasets: [{
-                label: 'Errors',
-                backgroundColor: color(chartColors.red).alpha(0.5).rgbString(),
-                borderColor: chartColors.red,
-                borderWidth: 1,
-                data: [
-                    // (-1) * WebApp.SysInfo.SERVERStatistics.Services.TotalError,
-                    // (-1) * WebApp.SysInfo.SERVERStatistics.System.TotalError
-                ]
-            }, {
-                label: 'Success',
-                backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-                borderColor: chartColors.blue,
-                borderWidth: 1,
-                data: [
-                    // WebApp.SysInfo.SERVERStatistics.Services.TotalSuccess,
-                    // WebApp.SysInfo.SERVERStatistics.System.TotalSuccess
-
-                ]
-            }]
-
-        };
-
-
+ 
   
         const SuccessSets = {
 
@@ -163,17 +136,7 @@ WebApp.HelpDisplay = {
             }
             ErrorSets.data.push(mItem.Errors);
             SuccessSets.data.push(mItem.Success);
-            // srvChartData.labels.push(m);
-            // srvChartData.datasets.push({
-            //     label: m,
-            //     backgroundColor: color(chartColors.red).alpha(0.5).rgbString(),
-            //     borderColor: chartColors.red,
-            //     borderWidth: 1,
-            //     data: [
-            //         (-1) * mItem.Errors,
-            //         mItem.Success
-            //     ]
-            // });
+         
 
         }
 
