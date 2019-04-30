@@ -1,10 +1,11 @@
 /*
-    Simple SocketAPI code to handle the events form the socket...
+    Simple WebApp.SocketAPI code to handle the events form the socket...
 */
 
 
 
-const SocketAPI = {
+// const SWebApp.SocketAPI = {
+WebApp.SocketAPI = {
     MasterSocket: {
         URL: false,
         //Make sure you overwrite the events in your own script!
@@ -22,10 +23,10 @@ const SocketAPI = {
                 console.info('WebSocket has closed!');
             }
         },
-        MsgQue:{
-            __AllMsgs:{},
-            Add(TID,CallBackFunction){
-                SocketAPI.MasterSocket.MsgQue.__AllMsgs[TID] = CallBackFunction;
+        MsgQue: {
+            __AllMsgs: {},
+            Add(TID, CallBackFunction) {
+                WebApp.SocketAPI.MasterSocket.MsgQue.__AllMsgs[TID] = CallBackFunction;
             }
         },
         /**
@@ -34,22 +35,22 @@ const SocketAPI = {
         Connnect() {
             //
 
-            if (!SocketAPI.MasterSocket.URL) {
+            if (!WebApp.SocketAPI.MasterSocket.URL) {
 
                 if (document.location.protocol == "https:") {
-                    SocketAPI.MasterSocket.URL = 'wss://' + document.location.hostname + ":" + document.location.port;
+                    WebApp.SocketAPI.MasterSocket.URL = 'wss://' + document.location.hostname + ":" + document.location.port;
                 } else {
-                    SocketAPI.MasterSocket.URL = 'ws://' + document.location.hostname + ":" + document.location.port;
+                    WebApp.SocketAPI.MasterSocket.URL = 'ws://' + document.location.hostname + ":" + document.location.port;
                 }
 
             }
-            SocketAPI.MasterSocket.WebSocketConnection = new WebSocket(SocketAPI.MasterSocket.URL);
+            WebApp.SocketAPI.MasterSocket.WebSocketConnection = new WebSocket(WebApp.SocketAPI.MasterSocket.URL);
 
 
 
 
 
-            SocketAPI.MasterSocket.WebSocketConnection.SendData = function (JSONData, OnResult) {
+            WebApp.SocketAPI.MasterSocket.WebSocketConnection.SendData = function (JSONData, OnResult) {
                 if (typeof (JSONData) == "string") {
                     JSONData = JSON.parse(JSONData);
                 }
@@ -59,10 +60,10 @@ const SocketAPI = {
 
                 if (OnResult) {
                     //
-                    SocketAPI.MasterSocket.MsgQue.Add(JSONData.TID,OnResult);
+                    WebApp.SocketAPI.MasterSocket.MsgQue.Add(JSONData.TID, OnResult);
                 }
 
-                SocketAPI.MasterSocket.WebSocketConnection.send(JSON.stringify(JSONData));
+                WebApp.SocketAPI.MasterSocket.WebSocketConnection.send(JSON.stringify(JSONData));
 
 
             };
@@ -74,30 +75,30 @@ const SocketAPI = {
             /*
                 Wire up the events...
             */
-            SocketAPI.MasterSocket.WebSocketConnection.onclose = function (evt) {
-                SocketAPI.MasterSocket.Events.onclose(evt);
+            WebApp.SocketAPI.MasterSocket.WebSocketConnection.onclose = function (evt) {
+                WebApp.SocketAPI.MasterSocket.Events.onclose(evt);
             };
-            SocketAPI.MasterSocket.WebSocketConnection.onerror = error => {
-                SocketAPI.MasterSocket.Events.onmessage(error);
+            WebApp.SocketAPI.MasterSocket.WebSocketConnection.onerror = error => {
+                WebApp.SocketAPI.MasterSocket.Events.onmessage(error);
             };
-            SocketAPI.MasterSocket.WebSocketConnection.onmessage = e => {
+            WebApp.SocketAPI.MasterSocket.WebSocketConnection.onmessage = e => {
                 /*
                     Make sure you use TID to setup the call backs...
                 */
                 const jsonData = JSON.parse(e.data);
-                if(jsonData.TID){
+                if (jsonData.TID) {
                     //Make the call back...
-                    SocketAPI.MasterSocket.MsgQue.__AllMsgs[jsonData.TID](jsonData);
+                    WebApp.SocketAPI.MasterSocket.MsgQue.__AllMsgs[jsonData.TID](jsonData);
 
                     //Delete it from the que since we are done with it...
-                    delete SocketAPI.MasterSocket.MsgQue.__AllMsgs[jsonData.TID];
-                }else{
+                    delete WebApp.SocketAPI.MasterSocket.MsgQue.__AllMsgs[jsonData.TID];
+                } else {
                     //No TID then it's not a call back so just process the message...
-                    SocketAPI.MasterSocket.Events.onmessage(jsonData);
+                    WebApp.SocketAPI.MasterSocket.Events.onmessage(jsonData);
                 }
             };
-            SocketAPI.MasterSocket.WebSocketConnection.onopen = () => {
-                SocketAPI.MasterSocket.Events.onopen();
+            WebApp.SocketAPI.MasterSocket.WebSocketConnection.onopen = () => {
+                WebApp.SocketAPI.MasterSocket.Events.onopen();
             };
 
 
@@ -108,4 +109,3 @@ const SocketAPI = {
 };
 
 
- 

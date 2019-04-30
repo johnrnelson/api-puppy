@@ -150,6 +150,8 @@ window.onload = function () {
 
             document.getElementById("HistoryLogger").innerHTML = HistoryLoggerHTML.body;
 
+
+            
             WebApp.GetHelpFile('HistoryLogger.css', function (HistoryLoggerCSS) {
                 const CSSFile = document.createElement("style");
                 CSSFile.type = "text/css";

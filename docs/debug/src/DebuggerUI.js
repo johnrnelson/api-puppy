@@ -263,7 +263,7 @@ WebApp.DebugUI = {
         //Get our contents from the editor...
         const JSONPayload = WebApp.DebugUI.GetEditorJSON();
 
-        SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
+        WebApp.SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
             //Remove the TID before showing it to the user...
             delete SckData["TID"];
             WebApp.DebugUI.ShowJSONResult('Socket', JSON.stringify(SckData, null, "\t"));
