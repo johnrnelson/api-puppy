@@ -336,6 +336,9 @@ window.UIHelper = {
 
 
 
+                    //Setup all of our ace editors...
+                    UIHelper.Ace.BuildAceControls();
+
                     //Setup our UI parts...
                     WebApp.DebugUI.FillVerbList();
 
@@ -485,9 +488,6 @@ WebApp.Fetch({
         document.title = WebApp.AppPrefs.Title;
 
 
-
-        //Setup all of our ace editors...
-        UIHelper.Ace.BuildAceControls();
 
         UIHelper.AppPrefs.ShowPrefs();
 

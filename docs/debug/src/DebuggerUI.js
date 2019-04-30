@@ -78,8 +78,6 @@ WebApp.DebugUI = {
     },
 
 
-
-
     //Fill the side bar with options we can use in our debugger...
     FillVerbList() {
         try {
@@ -109,8 +107,7 @@ WebApp.DebugUI = {
         }
     },
 
-
-
+     
     SelectServiceOption(ServiceName) {
 
 
