@@ -50,18 +50,18 @@ global.SERVER = {
                 //This gets added to by each service...
 
                 //REMOVE AFTER TESTING!!!!!!
-                "help":{
-                    Success:5,
-                    Errors:5
+                "help": {
+                    Success: 0,
+                    Errors: 0
                 },
-                "data":{
-                    Success:5,
-                    Errors:10
+                "data": {
+                    Success: 0,
+                    Errors: 0
                 },
-                "logger":{
-                    Success:33,
-                    Errors:3
-                }                                
+                "logger": {
+                    Success: 0,
+                    Errors: 0
+                }
             },
             AddSiteMapItem(MapName, ItemName) {
                 if (!SERVER.Statistics.Services.StatMap[MapName]) {
