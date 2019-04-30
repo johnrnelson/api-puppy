@@ -76,7 +76,7 @@ const topics = {
                     debug: RequestData
                 });
             } else {
-                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
+                // SERVER.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, {
                     msg: "Have fun with this code!",
                     code: JSON.parse(data),
@@ -109,7 +109,7 @@ const topics = {
                     debug: RequestData
                 });
             } else {
-                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
+                // SERVER.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, {
                     body: data,
                 });
@@ -182,6 +182,7 @@ const topics = {
 
         fs.readFile(SERVER.ServicesFolder + "/API_HELP.json", "utf8", function (err, API_HELP) {
             if (err) {
+                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
                 OnComplete({
                     msg: 'No API_HELP.json file found!',
                 }, null);
@@ -190,7 +191,7 @@ const topics = {
             } else {
                 SysInfoData.apidata = JSON.parse(API_HELP);
                 
-
+                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, SysInfoData);
             }
         });
