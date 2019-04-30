@@ -607,7 +607,7 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
 
 
         Metro.dialog.create({
-            title: "Reconnect to the socket?",
+            title: "The websocket has closed!",
             content: "<div>If the socket died, it's best to just refresh, but you can try to just reconnect or ignore and just use REST.</div>",
             actions: [
                 {
