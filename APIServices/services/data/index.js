@@ -86,16 +86,16 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                 }
 
                 var fruit = RequestData.fruit.replace(/[\W_]+/g, "");
+                SERVER.Statistics.Services.AddSiteMapItem("data","Success");
                 task(fruit, OnComplete);
-                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
             }
         } catch (errOnAction) {
             debugger;
             const result = {
                 err: 'Error in Action! ',
             };
-            OnComplete(null, result);            
             SERVER.Statistics.Services.AddSiteMapItem("data","Errors");
+            OnComplete(null, result);            
         }
 
     } else {
