@@ -345,15 +345,21 @@ window.UIHelper = {
                     //Use the default and set the edtor....            
                     WebApp.DebugUI.SelectServiceOption('time');
 
+                        
+                    UIHelper.ActiveTab.style.display = "block";    
+
 
                 });
 
+            }else{
+                UIHelper.ActiveTab.style.display = "block"; 
             }
 
 
-        }
-        UIHelper.ActiveTab.style.display = "block";
+        } else{
+            UIHelper.ActiveTab.style.display = "block";            
 
+        }
     },
 
     /*
@@ -505,6 +511,32 @@ WebApp.Fetch({
 
 
 
+
+
+WebApp.HistoryLogger.Logger.Add({
+    TID: 0,
+    Type: 707,
+    DT: new Date(),
+    Topic: "UI Status",
+    Source: "Browser",
+    Body: "The browser UI should be loaded and ready to go!",
+});
+
+
+
+//Which screen do you want to show first? Are you debugging the debugger? lol
+UIHelper.ShowTab('TabMain');
+
+
+
+//If you local host you are most likely debugging.. :-)
+if (document.location.hostname == "localhost") {
+    // debugger;
+    // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('HistoryLogger');
+    // UIHelper.ShowTab('GitHubLinks');
+    // UIHelper.ShowTab('TabAppPrefs');
+}
 
 
 
