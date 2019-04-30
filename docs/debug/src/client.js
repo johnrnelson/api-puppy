@@ -173,29 +173,7 @@ window.onload = function () {
 
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
     }); //end UIHelper....
 
