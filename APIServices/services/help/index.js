@@ -68,6 +68,7 @@ const topics = {
                 console.log(RequestData);
                 console.log(sampleid);
                 console.log(examplesFilePath);
+                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
 
                 OnComplete(null, {
                     err: 'Unable to get that file!',
@@ -75,6 +76,7 @@ const topics = {
                     debug: RequestData
                 });
             } else {
+                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, {
                     msg: "Have fun with this code!",
                     code: JSON.parse(data),
@@ -101,11 +103,13 @@ const topics = {
         fs.readFile(examplesFilePath, 'utf8', function (err, data) {
             if (err) {
                 debugger;
+                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
                 OnComplete(null, {
                     path: examplesFilePath,
                     debug: RequestData
                 });
             } else {
+                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, {
                     body: data,
                 });
@@ -115,6 +119,7 @@ const topics = {
     'list-log-files': function (RequestData, OnComplete) {
         // debugger;
         SERVER.ServiceLogger.ListLogs(function (LogList) {
+
             OnComplete(null, {
                 logs: LogList
             });
@@ -134,12 +139,13 @@ const topics = {
             const isvalid = SERVER.Defender.CheckAPIKey(valKey);
 
             if (!isvalid) {
+                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
                 OnComplete({
                     msg: 'No key found!',
                 }, null);
 
             } else {
-
+                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, {
                     msg: 'Key is valid!!',
                 });
@@ -226,7 +232,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                 try {
 
                     activeTopic(RequestData, OnComplete);
-                    SERVER.Statistics.Services.AddSiteMapItem("help","Success");
+                    
                     
                                         
 
