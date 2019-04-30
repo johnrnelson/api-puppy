@@ -196,10 +196,12 @@ SysInfo STYLES!!!!!!
     color: rgb(36, 17, 88);
     cursor: default;
     font-size: 18px;
+    
 }
 
 .SysInfoItem .SysInfoValue {
     color: rgb(119, 119, 119);
     cursor: default;
     font-size: 14px;
+    font-family: 'Roboto', sans-serif;
 }

@@ -56,6 +56,13 @@ const WebApp = {
         });
 
     },
+    LoadCSSLink(HREF2CSS) {
+        const elLink = document.createElement("link");
+        elLink.rel = "stylesheet";
+        elLink.type = "text/css";
+        elLink.href = HREF2CSS;
+        document.head.appendChild(elLink);
+    },
 
     //Your local app preferences...
     AppPrefs: {
@@ -114,6 +121,15 @@ WebApp.GetHelpFile('AppCharts.js', function (filecontents) {
     document.head.appendChild(srcScript);
 });
 
+
+
+//Lazy load the google fonts We don't need to wait for them...
+
+WebApp.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
+WebApp.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
+WebApp.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
+
+ 
 
 
 /*
