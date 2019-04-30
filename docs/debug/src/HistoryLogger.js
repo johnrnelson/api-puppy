@@ -59,13 +59,20 @@ WebApp.HistoryLogger = {
 
                     }
 
-
-                    const todayDate = new Date();
-                    const minDate = todayDate.addDays(-30);
-                    const maxDate = todayDate.addDays(1);
-
                     // console.log(DateMap);
-                    // debugger;
+ 
+                    const todayDate = new Date();
+
+                    const minDate = new Date().addDays(-30);
+                    const maxDate = new Date().addDays(1);
+              
+
+
+
+                    const todayDateFMT = (todayDate.getMonth() + 1) + "-" +
+                        todayDate.getDate() + "-" +
+                        todayDate.getFullYear();
+
 
                     const minDateFMT = (minDate.getMonth() + 1) + "-" +
                         minDate.getDate() + "-" +
@@ -94,7 +101,7 @@ WebApp.HistoryLogger = {
                         data-special="${specDates}" 
                         xxxdata-on-day-click="WebApp.HistoryLogger.Calendar.ChangeLoggerDay"
                         data-role="calendar" class="compact" 
-                        data-buttons="today" data-preset="4-28-2019"></div>
+                        data-buttons="today" data-preset="${todayDateFMT}"></div>
                     <br>
         
                     `;
@@ -286,11 +293,11 @@ WebApp.HistoryLogger = {
         FetchRemoteByType(RemoteLogFile) {
             WebApp.HistoryLogger.Logger.SetListType('serverlogs');
 
-
-
+ 
             var calendar = $('#LoggerCalendar').data('calendar');
 
             var LogDate = new Date(calendar.getSelected()[0]);
+
 
             // const LogDate = new Date();
             const fileLogDate = "-" + LogDate.getFullYear() + "-" + (LogDate.getMonth() + 1) + "-" + LogDate.getDate()
@@ -299,7 +306,7 @@ WebApp.HistoryLogger = {
 
 
             var ServerLogDisplayDate = document.getElementById('ServerLogDisplayDate');
-            ServerLogDisplayDate.innerHTML = LogDate.toLocaleDateString() ;;
+            ServerLogDisplayDate.innerHTML = LogDate.toLocaleDateString();;
 
             if (RemoteLogFile == "DefaultLog") {
                 finalLogFileName = RemoteLogFile + fileLogDate;
