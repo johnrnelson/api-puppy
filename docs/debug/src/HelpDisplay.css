@@ -91,7 +91,7 @@ MainTabDisplay .h-menu li:hover {
     color: gold;
 }
 
- 
+
 MainTabDisplay .container {
     margin: 10px;
     padding: 10px;
@@ -102,18 +102,49 @@ MainTabDisplay .container {
     padding-right: 0; */
 }
 
-/* Main help text classes...  */
+
+
+
+
+/* 
+
+
+
+
+Main update app classes...  
+*/
 .AppUpdates {
-    color: rgb(28, 5, 90);
-    font-size: 14px;
-
-    border: solid 1px silver;
+    /* border: solid 1px blue; */
     padding: 5px;
+}
 
+.AppUpdates .panel {
+    border: solid 1px rgb(221, 221, 221);
+    /* border: none !important; */
+
+
+    margin-bottom: 8px;
+}
+
+.AppUpdates .panel-title {
+    color: rgb(28, 5, 90);
+    font-size: 18px;
+}
+
+.AppUpdates .panel-content {
+    border: none !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: gray;
+    margin-left: 50px;
+    font-size: 16px;
 }
 
 
 
+/* 
+Generic help text 
+*/
 .HelpText {
     padding-top: 15px;
     padding-bottom: 15px;
@@ -172,4 +203,3 @@ SysInfo STYLES!!!!!!
     cursor: default;
     font-size: 14px;
 }
-
