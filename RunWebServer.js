@@ -46,6 +46,23 @@ global.SERVER = {
         Services: {
             TotalSuccess: 0,
             TotalError: 0,
+            StatMap: {
+                //This gets added to by each service...
+            },
+            AddSiteMapItem(MapName, ItemName) {
+                if (!SERVER.Statistics.Services.StatMap[MapName]) {
+                    SERVER.Statistics.Services.StatMap[MapName] = {};
+                }
+                const mapItem = SERVER.Statistics.Services.StatMap[MapName];
+
+                if (!mapItem[ItemName]) {
+                    mapItem[ItemName] = 1;
+                } else {
+                    mapItem[ItemName]++;
+                }
+
+
+            }
         },
         System: {
             TotalSuccess: 0,

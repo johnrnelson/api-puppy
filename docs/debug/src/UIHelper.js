@@ -522,20 +522,6 @@ WebApp.HistoryLogger.Logger.Add({
 
 
 
-//Which screen do you want to show first? Are you debugging the debugger? lol
-UIHelper.ShowTab('TabMain');
-
-
-
-//If you local host you are most likely debugging.. :-)
-if (document.location.hostname == "localhost") {
-    // debugger;
-    // UIHelper.ShowTab('TabDebugger');
-    UIHelper.ShowTab('HistoryLogger');
-    // UIHelper.ShowTab('GitHubLinks');
-    // UIHelper.ShowTab('TabAppPrefs');
-}
-
 
 
 
@@ -668,3 +654,22 @@ WebApp.GetHelpFile('SocketAPI.js', function (filecontents) {
     //After events are rewired, connect the socket...
     SocketAPI.MasterSocket.Connnect();
 });
+
+
+
+
+
+
+//Which screen do you want to show first? Are you debugging the debugger? lol
+UIHelper.ShowTab('TabMain');
+
+
+
+//If you local host you are most likely debugging.. :-)
+if (document.location.hostname == "localhost") {
+    // debugger;
+    // UIHelper.ShowTab('TabDebugger');
+    // UIHelper.ShowTab('HistoryLogger');
+    // UIHelper.ShowTab('GitHubLinks');
+    // UIHelper.ShowTab('TabAppPrefs');
+}

@@ -83,6 +83,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
         if (!RequestData.action) {
             OnComplete('Please supply a action!', null);
+            SERVER.Statistics.Services.AddSiteMapItem("logger","Errors");
         } else {
             const requestedAction = LoggerActions[RequestData.action];
 
@@ -94,15 +95,18 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
             } else {
                 try {
                     requestedAction(RequestObj, RequestData, OnComplete);
+                    SERVER.Statistics.Services.AddSiteMapItem("logger","Success");
 
                 } catch (topicError) {
                     OnComplete('Error in Logger Service!', null);
+                    SERVER.Statistics.Services.AddSiteMapItem("logger","Errors");
                 }
             }
         }
     }
     catch (errorService) {
         OnComplete(errorService.message, null);
+        SERVER.Statistics.Services.AddSiteMapItem("logger","Errors");
     }
 
 }

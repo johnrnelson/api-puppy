@@ -76,6 +76,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                     err: 'Action was not found! ' + RequestData.action,
                 };
                 OnComplete(null, result);
+                SERVER.Statistics.Services.AddSiteMapItem("data","Errors");
             } else {
                 if (!RequestData.fruit) {
                     OnComplete(null, {
@@ -86,9 +87,15 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
                 var fruit = RequestData.fruit.replace(/[\W_]+/g, "");
                 task(fruit, OnComplete);
+                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
             }
         } catch (errOnAction) {
             debugger;
+            const result = {
+                err: 'Error in Action! ',
+            };
+            OnComplete(null, result);            
+            SERVER.Statistics.Services.AddSiteMapItem("data","Errors");
         }
 
     } else {
@@ -104,6 +111,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
 
         OnComplete(null, result);
+        SERVER.Statistics.Services.AddSiteMapItem("data","Errors");
     }
 
 

@@ -153,12 +153,13 @@ const topics = {
         // debugger;
 
 
+
         /// get socket users....
 
         const fs = require('fs');
-        var TotalSocks = SERVER.WebSocketHTTP.TotalConnectionAttempts+SERVER.WebSocketHTTPS.TotalConnectionAttempts;
-        
- 
+        var TotalSocks = SERVER.WebSocketHTTP.TotalConnectionAttempts + SERVER.WebSocketHTTPS.TotalConnectionAttempts;
+
+
         var SysInfoData = {
             ProjectInfo: SERVER.ProjectInfo,
             NodeVersion: process.version,
@@ -167,7 +168,7 @@ const topics = {
             shame: SERVER.Defender.ShameList,
             SERVERStatistics: SERVER.Statistics,
             Sockets: {
-                ok: 1,
+                msg: 'working on this!',
                 Total: TotalSocks
             }
         };
@@ -179,8 +180,10 @@ const topics = {
                     msg: 'No API_HELP.json file found!',
                 }, null);
 
+                
             } else {
                 SysInfoData.apidata = JSON.parse(API_HELP);
+                
 
                 OnComplete(null, SysInfoData);
             }
@@ -197,6 +200,10 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
     var RequestData = RequestData.data;
 
+ 
+
+
+
     try {
 
         if (!RequestData) {
@@ -205,6 +212,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
         if (!RequestData.topic) {
             OnComplete('Please supply a topic!', null);
+            SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
         } else {
             const activeTopic = topics[RequestData.topic];
 
@@ -212,19 +220,26 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                 OnComplete(null, {
                     msg: 'The topic was not found! [' + RequestData.topic + ']'
                 });
+                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
 
             } else {
                 try {
+
                     activeTopic(RequestData, OnComplete);
+                    SERVER.Statistics.Services.AddSiteMapItem("help","Success");
+                    
+                                        
 
                 } catch (topicError) {
-                    OnComplete('Error in topic!', null);
+                    OnComplete('Error in topic!', null);                    
+                    SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
                 }
             }
         }
     }
     catch (errorService) {
         OnComplete(errorService.message, null);
+        SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
     }
 }
 exports.ServiceRequest = ServiceRequest;
