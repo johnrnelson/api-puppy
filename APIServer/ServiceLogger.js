@@ -12,24 +12,24 @@ const fs = require('fs');
 const path = require('path');
 
 
-//Put your own stuff int he config file! This is just for testing and debugging...
-var LoggerConfig = {
-    Folder: ErrorLogPath = path.join(__dirname, '/../', 'SECRET', "LOGS"),
-    ignore: {
-        IP4: [
-            "127.0.0.1"
-        ]
-    }
-};
+
+// var SERVER.LoggerConfig = {
+//     Folder: ErrorLogPath = path.join(__dirname, '/../', 'SECRET', "LOGS"),
+//     ignore: {
+//         IP4: [
+//             "127.0.0.1"
+//         ]
+//     }
+// }; 
 
 
 //Set the options you want by json..
 function SetOptions(LoggerOpts) {
     if (LoggerOpts.Folder) {
-        LoggerConfig.Folder = LoggerOpts.Folder;
+        SERVER.LoggerConfig.Folder = LoggerOpts.Folder;
     }
     if (LoggerOpts.ignore) {
-        LoggerConfig.ignore = LoggerOpts.ignore;
+        SERVER.LoggerConfig.ignore = LoggerOpts.ignore;
     }
 }
 exports.SetOptions = SetOptions;
@@ -47,8 +47,8 @@ function WriteLog(LogType, LogEntry) {
         console.log('Log Entry has no IP4 Address!');
         debugger;
     } else {
-        for (let index = 0; index < LoggerConfig.ignore.IP4.length; index++) {
-            const IP4Address = LoggerConfig.ignore.IP4[index];
+        for (let index = 0; index < SERVER.LoggerConfig.ignore.IP4.length; index++) {
+            const IP4Address = SERVER.LoggerConfig.ignore.IP4[index];
             if (IP4Address == LogEntry.IP4Address) {
                 return;
             }
@@ -59,10 +59,10 @@ function WriteLog(LogType, LogEntry) {
 
 
     if (LogType) {
-        targetLogFileName = LoggerConfig.Folder + '/LT-' + LogType + '-' + fileLogDate + '.log'
+        targetLogFileName = SERVER.LoggerConfig.Folder + '/LT-' + LogType + '-' + fileLogDate + '.log'
 
     } else {
-        targetLogFileName = LoggerConfig.Folder + '/DefaultLog-' + fileLogDate + '.log';
+        targetLogFileName = SERVER.LoggerConfig.Folder + '/DefaultLog-' + fileLogDate + '.log';
 
     }
     var ip4Addy = LogEntry.IP4Address;
@@ -95,11 +95,11 @@ function ReadLog(LogType, OnComplete) {
     /* 
         Make sure there is not funky monkey going on with their request!!! 
 
-        This means all files must go in the "LoggerConfig.Folder" folder!!!!
+        This means all files must go in the "SERVER.LoggerConfig.Folder" folder!!!!
     */
 
     const filepath = path.basename(LogType);
-    const examplesFilePath = path.join(LoggerConfig.Folder, filepath);
+    const examplesFilePath = path.join(SERVER.LoggerConfig.Folder, filepath);
 
 
 
@@ -120,7 +120,7 @@ exports.ReadLog = ReadLog;
     What are all the log files we have right now?
 */
 function ListLogs(OnList) {
-    fs.readdir(LoggerConfig.Folder, function (err, items) {
+    fs.readdir(SERVER.LoggerConfig.Folder, function (err, items) {
         if (err) {
             debugger;
             OnList();

@@ -41,7 +41,25 @@ global.SERVER = {
 
         // This binds us to any NIC on the server. Becareful with this!!!
         IPADDRESS: '0.0.0.0',
+        
+    
     },
+    SECRET: path.join(__dirname, 'SECRET'),
+
+    //Put your own stuff int he config file! This is just for testing and debugging...
+    LoggerConfig: {
+        Folder: path.join(__dirname, 'SECRET', "LOGS"),
+        ignore: {
+            IP4: [
+                "127.0.0.1"
+            ]
+        }
+    },
+
+
+
+
+
     Statistics: {
         Services: {
             TotalSuccess: 0,
@@ -83,6 +101,13 @@ global.SERVER = {
             TotalError: 0,
         },
     },
+
+
+
+
+
+
+
 
     /*
         Kind of confusing, but the root folder is actually the "APIServer" folder...

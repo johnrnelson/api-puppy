@@ -111,7 +111,8 @@ const IPC = {
         */
 
         try {
-            var certsFolder = path.join(__dirname, "/../", "SECRET", "CERTS", SERVER.CERTS.path)
+            
+            var certsFolder = path.join(SERVER.SECRET, "CERTS", SERVER.CERTS.path)
 
             // setup our credentials...
             const credentials = {
