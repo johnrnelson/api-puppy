@@ -96,7 +96,7 @@ WebApp.DebugUI = {
                 optUL.onclick = function () {
                     WebApp.DebugUI.SelectServiceOption(this.ServiceName);
                 };
-                optUL.innerHTML = '<li><a href="#">' + n + '</a></li>';
+                optUL.innerHTML = '<li><a href="JavaScript:">' + n + '</a></li>';
                 DebugVerbList_UL.appendChild(optUL);
 
             }
@@ -149,7 +149,7 @@ WebApp.DebugUI = {
                 optUL.onclick = function () {
                     WebApp.DebugUI.SelectSampleCodeOption(this.SampleName);
                 };
-                optUL.innerHTML = '<li><a href="#">' + sample + '</a></li>';
+                optUL.innerHTML = '<li><a href="JavaScript:">' + sample + '</a></li>';
                 DebugSampleList_UL.appendChild(optUL);
             }
 
