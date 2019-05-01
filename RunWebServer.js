@@ -109,15 +109,16 @@ var MySERVER = {
 
 
     /*
-        Kind of confusing, but the root folder is actually the "APIServer" folder...
+        Kind of confusing, but the root folder is actually the 
+        "APIServer" folder. Thats the "root" of where the 
+        files live and left over from old code. :-)
     */
     RootFolder: path.join(__dirname, "APIServer"),
 
     /*
         Where are your services located?
     */
-    ServicesFolder: path.join(__dirname, "APIServices"),
-
+    ServicesFolder: path.join(__dirname, "APIServices"),    
     /* 
         This is used in our services to act as a database.
         Of course it gets blown away every time the service

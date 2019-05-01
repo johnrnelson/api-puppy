@@ -1,5 +1,9 @@
 /*
-    PREP for packaging!
+
+    Main script for this project. 
+
+    Use the RunWebServer is just testing or 
+    debugging...
 */
 
 const fs = require('fs');
