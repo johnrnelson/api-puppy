@@ -1,10 +1,6 @@
 # API Server
-This provides the API and it's HTML UI for the debug helper.
+This provides the API functions and it's HTML UI for the debug helper.
 
-Use `APIServer/debug/API_HELP.json` file to edit the list of services for the HTML client.
- 
+ServiceLogger just addes JSON to a flat file.
 
-Use PM2 or something like that on a production server. :-)
-
-`ServiceLogger` and `ServiceManager` are the important files here.
-
+ServiceManager ties in all the services using JSON. 
