@@ -18,8 +18,7 @@ function GetVer(OnVer) {
         }
         else {
             try {
-
-                debugger;
+ 
                 // console.log(fileContents);
                 const JSONDATA = JSON.parse(fileContents);
 
@@ -57,8 +56,7 @@ function CheckInGit(OnCheckIn) {
     var ProdVersionInfo = "Compiled for Production - Version:" + JSON.stringify(ThisReleaseVersion) + "\r\n";
     var cmdCommit = 'git -C "' + path2Project + '" commit -a -m "Updating for new version:' + ThisReleaseVersion + '" ';
 
-    debugger;
-    return
+     
     child_process_exec(cmdCommit, (error, stdout, stderr) => {
         if (stdout) {
             console.log(stdout);
