@@ -1,1 +1,1 @@
-{"name":"api-puppy","version":"1.10.6","description":"The api-puppy project","repository":"git@github.com:johnrnelson/api-puppy.git","keywords":["node","http","api"],"author":"John Nelson <me@johnrnelson.com> (www.johnrnelson.com)","dependencies":{"eslint":"^5.16.0","ws":"^6.2.1"}}
+{"name":"api-puppy","version":"1.10.7","description":"The api-puppy project","repository":"git@github.com:johnrnelson/api-puppy.git","keywords":["node","http","api"],"author":"John Nelson <me@johnrnelson.com> (www.johnrnelson.com)","dependencies":{"eslint":"^5.16.0","ws":"^6.2.1"}}
