@@ -310,7 +310,7 @@ WebApp.DebugUI = {
 
                 return {
                     title: 'Command line "curl"',
-                    code: `curl --request GET --data '${JSON.stringify(JSONPayload)}' ${window.location.href}`,
+                    code: `curl --request PUT --data '${JSON.stringify(JSONPayload)}' ${window.location.href}`,
                     help: 'Check out the man page for curl for more information.',
                 }
             },
