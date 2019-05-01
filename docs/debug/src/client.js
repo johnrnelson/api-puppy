@@ -100,10 +100,8 @@ if (localStorage) {
 /*
     Help Display UI supporting javascript...
 */
-WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);
+WebApp.GetHelpFile('HelpDisplay.js', function (HelpDisplayCode) {
+    window.eval(HelpDisplayCode.body); 
 
     WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
         const CSSFile = document.createElement("style");
@@ -115,10 +113,8 @@ WebApp.GetHelpFile('HelpDisplay.js', function (filecontents) {
 });
 
 //Supporting chart code...
-WebApp.GetHelpFile('AppCharts.js', function (filecontents) {
-    const srcScript = document.createElement("script");
-    srcScript.innerHTML = filecontents.body;
-    document.head.appendChild(srcScript);
+WebApp.GetHelpFile('AppCharts.js', function (AppChartsCode) {
+    window.eval(AppChartsCode.body); 
 });
 
 
@@ -163,10 +159,8 @@ window.onload = function () {
             /*
                 History Logger UI supporting javascript...
             */
-            WebApp.GetHelpFile('HistoryLogger.js', function (filecontents) {
-                const srcScript = document.createElement("script");
-                srcScript.innerHTML = filecontents.body;
-                document.head.appendChild(srcScript);
+            WebApp.GetHelpFile('HistoryLogger.js', function (HistoryLoggerCode) {
+                window.eval(HistoryLoggerCode.body);
 
                 // debugger;
                 window.eval(UIHelperJSCode.body);
