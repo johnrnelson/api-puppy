@@ -49,40 +49,6 @@ const IPC = {
 
 
 
-        SERVER.SocketBroadcast = function (MSG, Options) {
-            if (Options) {
-
-                if (Option.Exclude) {
-
-                }
-            }
-            if (typeof (MSG) != "string") {
-                MSG = JSON.stringify(MSG);
-            }
-
-
-
-
-            if (SERVER.WebSocketHTTP) {
-                SERVER.WebSocketHTTP.clients.forEach(function each(client) {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);
-                        SERVER.WebSocketHTTP.TotalConnectionAttempts++;
-                    }
-                });
-            }
-            if (SERVER.WebSocketHTTPS) {
-                SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);
-                        SERVER.WebSocketHTTPS.TotalConnectionAttempts++;
-                    }
-                });
-            }
-
-        };
-
-
         var httpServer = http.createServer(function (requset, response) {
             IPC.ServiceWeb(requset, response);
         });
@@ -111,7 +77,7 @@ const IPC = {
         */
 
         try {
-            
+
             var certsFolder = path.join(SERVER.SECRET, "CERTS", SERVER.CERTS.path)
 
             // setup our credentials...
@@ -142,6 +108,46 @@ const IPC = {
             console.log('Error reading cert files.\r\n');
             console.log(errCerts.message);
         }
+
+
+
+
+        /*
+            This is the master broadcast function. It uses 
+            both web server sockets (HTTP/s) unless 
+            exluded..
+        */
+        SERVER.SocketBroadcast = function (MSG, Options) {
+            if (Options) {
+
+                if (Option.Exclude) {
+                    //Not using yet?
+                }
+            }
+            if (typeof (MSG) != "string") {
+                MSG = JSON.stringify(MSG);
+            }
+
+
+            if (SERVER.WebSocketHTTP) {
+                SERVER.WebSocketHTTP.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(MSG);
+                        SERVER.WebSocketHTTP.TotalConnectionAttempts++;
+                    }
+                });
+            }
+            if (SERVER.WebSocketHTTPS) {
+                SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(MSG);
+                        SERVER.WebSocketHTTPS.TotalConnectionAttempts++;
+                    }
+                });
+            }
+
+        };
+
 
     },
 
