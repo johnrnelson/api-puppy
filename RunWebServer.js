@@ -25,7 +25,7 @@ const path = require('path');
 global.SERVER = {
     ProjectInfo: {
         Title: 'api-puppy Demo',
-        Version: '1.10.4.19',
+        Version: '1.10.4.20',
         VersionName: 'Cozy-Inn'
     },
     Network: {
@@ -46,7 +46,7 @@ global.SERVER = {
     },
     SECRET: path.join(__dirname, 'SECRET'),
 
-    //Put your own stuff int he config file! This is just for testing and debugging...
+    //Setup the folder we want to log to...
     LoggerConfig: {
         Folder: path.join(__dirname, 'SECRET', "LOGS"),
         ignore: {
@@ -56,10 +56,7 @@ global.SERVER = {
         }
     },
 
-
-
-
-
+    //Basic counters for our api services...
     Statistics: {
         Services: {
             TotalSuccess: 0,
