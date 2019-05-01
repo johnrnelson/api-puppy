@@ -15,6 +15,8 @@ const fs = require('fs');
 const path = require('path');
 const api_puppy = require('./index');
 
+
+
 const package_data = JSON.parse(fs.readFileSync("./package.json", 'utf8'));
 
 
@@ -25,8 +27,8 @@ const package_data = JSON.parse(fs.readFileSync("./package.json", 'utf8'));
 */
 
 
-global.SERVER = {
- 
+var MySERVER = {
+
     ProjectInfo: {
         Title: 'api-puppy Demo',
         Version: package_data.version,
@@ -103,7 +105,7 @@ global.SERVER = {
         },
     },
 
- 
+
 
 
     /*
@@ -125,14 +127,11 @@ global.SERVER = {
         fruit: ['apples', 'pears', 'peaches']
     }
 };
- 
 
 
-api_puppy({
-    MyOptions: 4
-});
-
-
-
+/*
+    Call the puppy with your server configs...
+*/
+api_puppy(MySERVER);
 
 

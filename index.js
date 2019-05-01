@@ -7,8 +7,9 @@ const path = require('path');
 
 
 module.exports = function (ConfigOptoins) {
-    
 
+
+    global.SERVER = ConfigOptoins;
 
     //Load up our defender...
     SERVER.Defender = require("./APIServer/defender/shield");
@@ -52,7 +53,7 @@ module.exports = function (ConfigOptoins) {
         we have the right debug html.. 
     */
     (function () {
-     
+
         const path2debug = __dirname + "/docs/debug/";
 
         var debugHTML = fs.readFileSync(path2debug + "src/debug.html", 'utf8');
