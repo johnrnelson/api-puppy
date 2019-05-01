@@ -78,13 +78,16 @@
             left: 0;
             right: 0;
             overflow: hidden;
-            padding-top: 25px;
-            background-color: black;
+            padding-top: 55px;
+            padding-left: 15px;
+            padding-right: 15px;
             border: solid 1px silver;
-            /* background: -webkit-radial-gradient(center, ellipse cover, rgb(116, 116, 116) 0%, rgb(0, 0, 0) 50%); */
-            color: red;
-            text-shadow: 1px 1px 1px #444444;
-            font-size: 30px;
+            /* background-color: black; */
+            background: -webkit-radial-gradient(center, ellipse cover, rgb(194, 193, 193) 0%, rgb(146, 146, 146) 100%);
+            color: rgb(124, 15, 15);
+            text-shadow: 1px 1px 1px #310101;
+            font-size: 35px;
+            font-weight: bold;
             font-family: 'Roboto', sans-serif;
         }
     </style>
@@ -101,42 +104,23 @@
                 <li id="TabMain-BTN" title="Basic help about the user interface">
                     <a href="JavaScript:UIHelper.ShowTab('TabMain')"><span class="fas fa-home"></span></a>
                 </li>
-
                 <li id="TabDebugger-BTN" title="Interactive debugger to test with">
                     <a href="JavaScript:UIHelper.ShowTab('TabDebugger')"><span class="fas fa-bug"></span></a></li>
-
-
-
                 <li id="HistoryLogger-BTN" title="Simple logger so you don't have to use the console"><a
                         href="JavaScript:UIHelper.ShowTab('HistoryLogger')"><span class="fas fa-file-code"></span></a>
                 </li>
-
-
                 <li id="TabAppPrefs-BTN" title="Web App Preferences"><a
                         href="JavaScript:UIHelper.ShowTab('TabAppPrefs')">
                         <span class="fas fa-cogs"></span></a></li>
-
-
                 <li id="AppCharts-BTN" data-hint-text="Performance Charts">
                     <a href="JavaScript:UIHelper.ShowTab('AppCharts')">
                         <span class="fas fa-chart-bar"></span></a></li>
-
             </ul>
-
         </sidemenu>
 
 
         <!-- Log the history and help the user know whats up... -->
-        <MainTabDisplay id="AppCharts" style="overflow: auto;">
-
-
-        </MainTabDisplay>
-
-
-
-
-
-
+        <MainTabDisplay id="AppCharts" style="overflow: auto;"></MainTabDisplay>
 
 
         <!-- Log the history and help the user know whats up... -->
@@ -177,8 +161,6 @@
 
             </div>
 
-
-
             <div class="split-container">
 
                 <div data-role="splitter" class="h-100" data-split-sizes="60, 40" data-min-sizes="60,60"
@@ -211,8 +193,6 @@
 
 
             </div>
-
-
         </MainTabDisplay>
 
 
@@ -286,6 +266,8 @@
             </div>
 
         </MainTabDisplay>
+
+
         <MainTabDisplay id="TabMain" style="overflow:auto;"></MainTabDisplay>
 
     </desktop>
@@ -297,10 +279,9 @@
     <smallscreen>
         <center>
 
-            <div>
-                THE SCREEN IS TOO SMALL
-                TO USE THIS DEMO!
-            </div>
+            THE SCREEN IS TOO SMALL
+            TO USE THIS DEMO!
+
         </center>
     </smallscreen>
 </body>
