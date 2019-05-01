@@ -22,11 +22,15 @@ const path = require('path');
     Change the info you need below for your own server. 
 */
 
+
+var package_data = JSON.parse(fs.readFileSync("./package.json", 'utf8'));
+
+
 global.SERVER = {
     ProjectInfo: {
         Title: 'api-puppy Demo',
-        Version: '1.10.4.20',
-        VersionName: 'Cozy-Inn'
+        Version: package_data.version,
+        VersionName: 'Ver-Crazy'
     },
     Network: {
         /* 
@@ -41,8 +45,8 @@ global.SERVER = {
 
         // This binds us to any NIC on the server. Becareful with this!!!
         IPADDRESS: '0.0.0.0',
-        
-    
+
+
     },
     SECRET: path.join(__dirname, 'SECRET'),
 

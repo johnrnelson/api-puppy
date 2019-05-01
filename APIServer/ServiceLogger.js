@@ -11,17 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 
-
-
-// var SERVER.LoggerConfig = {
-//     Folder: ErrorLogPath = path.join(__dirname, '/../', 'SECRET', "LOGS"),
-//     ignore: {
-//         IP4: [
-//             "127.0.0.1"
-//         ]
-//     }
-// }; 
-
+ 
 
 //Set the options you want by json..
 function SetOptions(LoggerOpts) {
