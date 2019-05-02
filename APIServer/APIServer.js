@@ -213,8 +213,7 @@ const IPC = {
         } 
         reqPath = path.normalize(reqPath);
         reqPath = path.resolve(reqPath);
-        console.log(reqPath);
-
+   
         fs.readFile(SERVER.ServicesHTMLDocs + reqPath, "utf8", function (err, debugHTML) {
          
          
