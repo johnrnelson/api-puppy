@@ -85,38 +85,7 @@ const topics = {
         });//End reading file...
     },
 
-    //get the actual sample file...
-    'xxx___debug-code-fetch': function (RequestData, OnComplete) {
 
-        const fs = require('fs');
-        const path = require('path');
-
-        /* 
-            Make sure there is not funky monkey going on with their request!!! 
-
-            This means all files must go in the debug/src folder!!!!
-        */
-        const filepath = path.basename(RequestData.filepath);
-
-        const examplesFilePath = path.join(SERVER.RootFolder, "/../", "docs", "debug", "src", filepath);
-
-
-        fs.readFile(examplesFilePath, 'utf8', function (err, data) {
-            if (err) {
-                debugger;
-                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
-                OnComplete(null, {
-                    path: examplesFilePath,
-                    debug: RequestData
-                });
-            } else {
-                // SERVER.Statistics.Services.AddSiteMapItem("help","Success");
-                OnComplete(null, {
-                    body: data,
-                });
-            }
-        });//End reading file...
-    },
     'list-log-files': function (RequestData, OnComplete) {
         // debugger;
         SERVER.ServiceLogger.ListLogs(function (LogList) {

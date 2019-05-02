@@ -1,13 +1,16 @@
 <!-- HelpDisplay -->
 
 
+ 
+
 <div class="container">
+
 
     <div class="page-header">
         <h1>api-puppy Demo</h1>
     </div>
     <p>
-        This is actually the API. Seriously! 
+        This is actually the API. Seriously!
     </p>
 
     <br>
@@ -54,7 +57,7 @@
                 <br>
 
                 <div class="AppUpdates">
-                    <div data-role="panel" data-title-icon="<i class='fas fa-check-circle'></i>"
+                    <div style="background-color:transparent;" data-role="panel" data-title-icon="<i class='fas fa-check-circle'></i>"
                         data-title-caption="Added charts and panels" data-collapsible="true">
                         <p>
                             Added <a href="https://www.chartjs.org/" target="_blank">Charts JS</a>
@@ -63,6 +66,14 @@
                         <p>
                             You will need to refresh to see new data. It's not polling or wired
                             into the socket.. yet! :-)
+                        </p>
+                        <p>
+                            New stats are being added but until there is a chart for it, use
+                            the console in the browser.
+                            <br><br>
+                            Check out <span
+                                style="color:purple;">WebApp.SysInfo.SERVERStatistics.Services.StatMap</span>
+                            in the console.
                         </p>
                     </div>
                     <div data-title-icon="<i class='fas fa-check-circle'></i>" data-role="panel"
@@ -87,11 +98,14 @@
                             So far so good. Tested seperate "services" folder
                             and all works as expected.
                         </p>
+                        <p>
+                            It's still not stable enough to use as an NPM.
+                        </p>
 
                     </div>
 
                     <p>
-                        As always, check the <a href="https://api-puppy.johnrnelson.com/">GitHub Repo</a> for 
+                        As always, check the <a href="https://api-puppy.johnrnelson.com/">GitHub Repo</a> for
                         the lastest changes.
                     </p>
 

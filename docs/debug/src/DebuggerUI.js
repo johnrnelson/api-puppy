@@ -233,7 +233,7 @@ WebApp.DebugUI = {
 
                     // Metro.toast.create('Web request finished', null, null, "info");
 
-                    WebApp.DebugUI.ShowJSONResult('HTTP', resultJSONText);
+                    WebApp.DebugUI.ShowJSONResult('REST', resultJSONText);
 
                     WebApp.HistoryLogger.Logger.Add({
                         TID: 0,

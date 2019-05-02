@@ -194,43 +194,82 @@ const IPC = {
         /*
             http://localhost:9080/?/../../../../../../../../debug/src/AppCharts.html
             http://localhost:9080/?/../../../debug/src/HistoryLogger.css
+            http://localhost:9080/?/debug/docs/imgs/beagle-puppy-2.jpeg
         */
-        const url = require('url');
 
-        const contentType = request.headers.accept.split(',')[0];
 
-   
-        var reqPath = request.url.substring(2,request.url.length);
+        var reqPath = request.url.substring(2, request.url.length);
 
-        if(!reqPath){
+
+        if (!reqPath) {
             response.writeHead(200, {
-                // "Content-Type": "text/html"
-                "Content-Type": contentType
+                "Content-Type": "text/html"
             });
-    
             response.end("No path to load.");
             return;
-        } 
+        }
+
         reqPath = path.normalize(reqPath);
         reqPath = path.resolve(reqPath);
-   
-        fs.readFile(SERVER.ServicesHTMLDocs + reqPath, "utf8", function (err, debugHTML) {
-         
-         
-            if (err) {
-                response.writeHead(404, {
-                    // "Content-Type": "text/html"
+
+
+        const fileExtension = path.extname(reqPath);
+
+        var contentType = "text/html";
+
+        if (fileExtension == ".jpeg") {
+            contentType = "image/jpeg";
+            // debugger;
+            try {
+                var s = fs.createReadStream(SERVER.ServicesHTMLDocs + reqPath);
+                response.writeHead(200, {
+
                     "Content-Type": contentType
                 });
-        
+                s.on('error', function () { 
+                    response.statusCode = 404;
+                    response.end('Not found');
+                });
+                s.on('open', function () {
+
+                    s.pipe(response);
+                });
+            } catch (errStreamFile) {
+                console.log(errStreamFile);
+                debugger;
+
+            }
+
+            return;
+        }
+
+
+        if (fileExtension == ".js") {
+            contentType = "text/javascript";
+        }
+
+        if (fileExtension == ".css") {
+            contentType = "text/css";
+        }
+        fs.readFile(SERVER.ServicesHTMLDocs + reqPath, function (err, DocFileContents) {
+
+
+            if (err) {
+                response.writeHead(404, {
+                    "Content-Type": contentType
+                });
+
                 response.end("ERROR!");
             } else {
                 response.writeHead(200, {
-                    // "Content-Type": "text/html"
+
                     "Content-Type": contentType
                 });
-        
-                response.end(debugHTML);
+
+                // response.end(debugHTML);
+                response.end(DocFileContents, 'binary');
+
+
             }
         });//end debug html....        
 
@@ -314,13 +353,18 @@ const IPC = {
                     });
 
                     ServiceManager.ServiceRequestWeb(ws, msgDATA, function (err, data) {
+                        if (!msgDATA.service) {
+                            msgDATA.service = "Not Available";
+                        }
                         if (err) {
-                            console.log(err);
+                            SERVER.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketError");
                             ws.send(JSON.stringify({
                                 err: 'Socket request to servce was invalid!',
                                 msg: msgDATA
                             }));
                         } else {
+
+                            SERVER.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketSuccess");
                             //Add back the TID...
                             data.TID = msgDATA.TID;
                             ws.send(JSON.stringify(data));
@@ -433,8 +477,12 @@ const IPC = {
 
         //only send debug UI on emtpy request...
         if ((request.url.substring(0, 2) == "/?" && (request.method.toUpperCase() == "GET"))) {
- 
-            IPC.ServeStaticFile(request, response);
+            try {
+                IPC.ServeStaticFile(request, response);
+            } catch (errStaticFile) {
+                console.log(errStaticFile);
+                debugger;
+            }
 
             return;
         }
@@ -640,7 +688,7 @@ const IPC = {
                             ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                                 if (ServiceError) {
                                     SERVER.Statistics.Services.TotalError++;
-
+                                    SERVER.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
 
                                     response.SendError(response, ServiceError);
 
@@ -649,6 +697,7 @@ const IPC = {
 
                                 } else {
                                     SERVER.Statistics.Services.TotalSuccess++;
+                                    SERVER.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTSuccess");
                                     response.end(JSON.stringify(ResponseJSON));
                                 }
                             });
