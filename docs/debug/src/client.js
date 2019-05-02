@@ -99,28 +99,7 @@ if (localStorage) {
     alert('No Local Storage!');
 }
 
-
-
-/*
-    Help Display UI supporting javascript...
-*/
-WebApp.GetHelpFile('HelpDisplay.js', function (HelpDisplayCode) {
-    window.eval(HelpDisplayCode.body);
-
-    WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
-        const CSSFile = document.createElement("style");
-        CSSFile.type = "text/css";
-        CSSFile.innerHTML = filecontents.body;
-        document.head.appendChild(CSSFile);
-    });
-
-});
-
-//Supporting chart code...
-WebApp.GetHelpFile('AppCharts.js', function (AppChartsCode) {
-    window.eval(AppChartsCode.body);
-});
-
+ 
 
 
 //Lazy load the google fonts We don't need to wait for them...
@@ -151,13 +130,7 @@ window.onload = function () {
             document.getElementById("HistoryLogger").innerHTML = HistoryLoggerHTML.body;
 
 
-
-            WebApp.GetHelpFile('HistoryLogger.css', function (HistoryLoggerCSS) {
-                const CSSFile = document.createElement("style");
-                CSSFile.type = "text/css";
-                CSSFile.innerHTML = HistoryLoggerCSS.body;
-                document.head.appendChild(CSSFile);
-            });
+ 
 
             //Now show the sys info in the main display...
             /*

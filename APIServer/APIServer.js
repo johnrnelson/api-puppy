@@ -189,6 +189,53 @@ const IPC = {
         });//end debug html....
     },
 
+    // Serve up our static files from the docs...
+    ServeStaticFile(request, response) {
+        /*
+            http://localhost:9080/?/../../../../../../../../debug/src/AppCharts.html
+            http://localhost:9080/?/../../../debug/src/HistoryLogger.css
+        */
+        const url = require('url');
+
+        const contentType = request.headers.accept.split(',')[0];
+
+   
+        var reqPath = request.url.substring(2,request.url.length);
+
+        if(!reqPath){
+            response.writeHead(200, {
+                // "Content-Type": "text/html"
+                "Content-Type": contentType
+            });
+    
+            response.end("No path to load.");
+            return;
+        } 
+        reqPath = path.normalize(reqPath);
+        reqPath = path.resolve(reqPath);
+        console.log(reqPath);
+
+        fs.readFile(SERVER.ServicesHTMLDocs + reqPath, "utf8", function (err, debugHTML) {
+         
+         
+            if (err) {
+                response.writeHead(404, {
+                    // "Content-Type": "text/html"
+                    "Content-Type": contentType
+                });
+        
+                response.end("ERROR!");
+            } else {
+                response.writeHead(200, {
+                    // "Content-Type": "text/html"
+                    "Content-Type": contentType
+                });
+        
+                response.end(debugHTML);
+            }
+        });//end debug html....        
+
+    },
 
     /*
         Generic error information that any service can call to for dumping
@@ -383,6 +430,15 @@ const IPC = {
             return;
         }
 
+
+
+        //only send debug UI on emtpy request...
+        if ((request.url.substring(0, 2) == "/?" && (request.method.toUpperCase() == "GET"))) {
+ 
+            IPC.ServeStaticFile(request, response);
+
+            return;
+        }
 
         //Give the response and easy way out for errors...
         response.SendError = IPC.SendError;

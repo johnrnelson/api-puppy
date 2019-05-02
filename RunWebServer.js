@@ -119,6 +119,7 @@ var MySERVER = {
         Where are your services located?
     */
     ServicesFolder: path.join(__dirname, "APIServices"),    
+    ServicesHTMLDocs: path.join(__dirname, "docs"),    
     
     /* 
         This is used in our services to act as a database.

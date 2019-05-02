@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://api-puppy.johnrnelson.com/metroui/css/metro-rtl.min.css">
     <link rel="stylesheet" href="https://api-puppy.johnrnelson.com/metroui/css/metro-icons.min.css">
 
+
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <script src="https://api-puppy.johnrnelson.com/metroui/js/metro.min.js"></script>
@@ -35,6 +36,8 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"> </script>
+
+
 
     <!-- Must be loaded last! -->
     <script>
@@ -139,28 +142,7 @@ if (localStorage) {
     alert('No Local Storage!');
 }
 
-
-
-/*
-    Help Display UI supporting javascript...
-*/
-WebApp.GetHelpFile('HelpDisplay.js', function (HelpDisplayCode) {
-    window.eval(HelpDisplayCode.body);
-
-    WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
-        const CSSFile = document.createElement("style");
-        CSSFile.type = "text/css";
-        CSSFile.innerHTML = filecontents.body;
-        document.head.appendChild(CSSFile);
-    });
-
-});
-
-//Supporting chart code...
-WebApp.GetHelpFile('AppCharts.js', function (AppChartsCode) {
-    window.eval(AppChartsCode.body);
-});
-
+ 
 
 
 //Lazy load the google fonts We don't need to wait for them...
@@ -191,13 +173,7 @@ window.onload = function () {
             document.getElementById("HistoryLogger").innerHTML = HistoryLoggerHTML.body;
 
 
-
-            WebApp.GetHelpFile('HistoryLogger.css', function (HistoryLoggerCSS) {
-                const CSSFile = document.createElement("style");
-                CSSFile.type = "text/css";
-                CSSFile.innerHTML = HistoryLoggerCSS.body;
-                document.head.appendChild(CSSFile);
-            });
+ 
 
             //Now show the sys info in the main display...
             /*
@@ -220,6 +196,17 @@ window.onload = function () {
 };
 
     </script>
+
+
+    <!-- Call back to UI for some static files... -->
+    <link rel="stylesheet" href="/?/debug/src/HistoryLogger.css">
+ 
+    <script src="/?/debug/src/AppCharts.js"> </script>
+    <script src="/?/debug/src/HelpDisplay.js"> </script>
+    <link rel="stylesheet" href="/?/debug/src/HelpDisplay.css">
+
+
+
     <style>
         /* The below styles must be put in place before the tags are rendered... */
         body {
@@ -378,7 +365,7 @@ window.onload = function () {
         </MainTabDisplay>
 
         <MainTabDisplay id="TabAppPrefs"></MainTabDisplay>
-        
+
         <MainTabDisplay id="TabMain" style="overflow:auto;"></MainTabDisplay>
 
     </desktop>
