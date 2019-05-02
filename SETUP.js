@@ -2,6 +2,17 @@
 
 "use strict";
 
+
+
+/*
+    Use this script if you are running this project on it's own and not
+    as an NPM!
+
+    It's just going to check to make sure you have the basic folders needed
+    and a sample config file.
+*/
+
+
 var fs = require("fs");
 var path = require("path");
 
@@ -10,10 +21,6 @@ const SETUP_PATHS = {
     LOGS_FOLDER: path.join(__dirname, "SECRET", "LOGS"),
     CERTS_FOLDER: path.join(__dirname, "SECRET", "CERTS"),
 }
-
-/*
-    Do they have the folder?
-*/
 
 if (!fs.existsSync(SETUP_PATHS.CERTS_FOLDER)) {
     console.log('Creating the "CERTS" folder!');

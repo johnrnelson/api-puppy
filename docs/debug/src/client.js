@@ -74,7 +74,14 @@ const WebApp = {
                 opts: {
                     favor: 'put'
                 }
+            },
+            UI: {
+                UseToast: true,
+            },
+            Socket: {
+                Ignore: false
             }
+
         },
     }
 };
@@ -86,10 +93,7 @@ if (localStorage) {
     if (UserOptionsText) {
         console.info('Reloading App options....');
         WebApp.AppPrefs.UserOptions = JSON.parse(UserOptionsText);
-    } else {
-        console.info('Storing (local) App options....');
-        localStorage.setItem("UserOptions", JSON.stringify(WebApp.AppPrefs.UserOptions));
-    }
+    }  
 
 } else {
     alert('No Local Storage!');
@@ -101,7 +105,7 @@ if (localStorage) {
     Help Display UI supporting javascript...
 */
 WebApp.GetHelpFile('HelpDisplay.js', function (HelpDisplayCode) {
-    window.eval(HelpDisplayCode.body); 
+    window.eval(HelpDisplayCode.body);
 
     WebApp.GetHelpFile('HelpDisplay.css', function (filecontents) {
         const CSSFile = document.createElement("style");
@@ -114,7 +118,7 @@ WebApp.GetHelpFile('HelpDisplay.js', function (HelpDisplayCode) {
 
 //Supporting chart code...
 WebApp.GetHelpFile('AppCharts.js', function (AppChartsCode) {
-    window.eval(AppChartsCode.body); 
+    window.eval(AppChartsCode.body);
 });
 
 
@@ -125,7 +129,7 @@ WebApp.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
 WebApp.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
 WebApp.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
 
- 
+
 
 
 /*
@@ -147,7 +151,7 @@ window.onload = function () {
             document.getElementById("HistoryLogger").innerHTML = HistoryLoggerHTML.body;
 
 
-            
+
             WebApp.GetHelpFile('HistoryLogger.css', function (HistoryLoggerCSS) {
                 const CSSFile = document.createElement("style");
                 CSSFile.type = "text/css";
@@ -169,7 +173,7 @@ window.onload = function () {
 
         });
 
- 
+
 
     }); //end UIHelper....
 

@@ -41,6 +41,7 @@
         /* SERVER REPLACES SCRIPTS */
     </script>
     <style>
+        /* The below styles must be put in place before the tags are rendered... */
         body {
             position: absolute;
             top: 0;
@@ -109,12 +110,13 @@
                 <li id="HistoryLogger-BTN" title="Simple logger so you don't have to use the console"><a
                         href="JavaScript:UIHelper.ShowTab('HistoryLogger')"><span class="fas fa-file-code"></span></a>
                 </li>
-                <li id="TabAppPrefs-BTN" title="Web App Preferences"><a
-                        href="JavaScript:UIHelper.ShowTab('TabAppPrefs')">
-                        <span class="fas fa-cogs"></span></a></li>
                 <li id="AppCharts-BTN" data-hint-text="Performance Charts">
                     <a href="JavaScript:UIHelper.ShowTab('AppCharts')">
                         <span class="fas fa-chart-bar"></span></a></li>
+                <li id="TabAppPrefs-BTN" title="Web App Preferences"><a
+                        href="JavaScript:UIHelper.ShowTab('TabAppPrefs')">
+                        <span class="fas fa-cogs"></span></a></li>
+
             </ul>
         </sidemenu>
 
@@ -195,79 +197,8 @@
             </div>
         </MainTabDisplay>
 
-
-        <MainTabDisplay id="TabAppPrefs">
-            <div style="padding:10px;">
-                <h1>Web Application Preferences</h1>
-                <p>
-                    All values are stored locally in the browser, not the server. So if the
-                    browser deletes it you will have to reinput the values.
-                </p>
-                <br>
-
-                <div class="row">
-                    <div class="cell-md-6">
-                        <label>API Key</label>
-                        <!-- <form > -->
-                        <input id="APIKeyInput" type="password" autocomplete="off" placeholder="Enter your API Key">
-                        <!-- </form> -->
-                        <br>
-                        <button class="button"
-                            onclick="UIHelper.AppPrefs.TestKey(document.getElementById('APIKeyInput').value)">Test API
-                            Key</button>
-                    </div>
-                    <div class="cell-md-6">
-                        <label>Target Server</label>
-
-                        <select data-role="select">
-                            <optgroup label="Local Network">
-                                <option value="localhost" selected="selected">localhost</option>
-                                <option value="0.0.0.0">0.0.0.0</option>
-                            </optgroup>
-                            <optgroup label="Remote Servers">
-                                <option value="demo.tektology.com">demo.tektology.com</option>
-                            </optgroup>
-                        </select>
-                    </div>
-                </div>
-
-                <hr />
-
-                <div class="row">
-                    <div class="cell-md-10">
-                        <p>
-                            Use this to clear the browser local storage.
-                        </p>
-                        <p>
-                            Remember that user settings are kept there so you
-                            will have to put your preferences back in.
-                        </p>
-                    </div>
-                    <div class="cell-md-2">
-                        <button class="button" onclick="UIHelper.AppPrefs.ClearPrefs()">Clear Local Storage</button>
-                    </div>
-                </div>
-                <br>
-
-                <hr />
-                <br>
-                <!-- <div class="row">
-
-                <div class="cell-md-8">
-                    Corrrect
-                </div>
-                <div class="cell-md-2">
-                    <input type="checkbox" data-role="switch" data-caption="Local Storage" checked>
-                    <br>
-                    <input type="checkbox" data-role="switch" data-caption="Log Changes" checked>
-                </div>
-            </div> -->
-
-            </div>
-
-        </MainTabDisplay>
-
-
+        <MainTabDisplay id="TabAppPrefs"></MainTabDisplay>
+        
         <MainTabDisplay id="TabMain" style="overflow:auto;"></MainTabDisplay>
 
     </desktop>

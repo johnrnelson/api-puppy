@@ -1,0 +1,73 @@
+<div style="padding:10px;">
+    <h1>Web Application Preferences</h1>
+    <p>
+        All values are stored locally in the browser, not the server. So if the
+        browser deletes it you will have to reinput the values.
+    </p>
+    <br>
+
+    <div class="row">
+        <div class="cell-md-6">
+            <label>API Key</label>
+            <!-- <form > -->
+            <input id="APIKeyInput" type="password" autocomplete="off" placeholder="Enter your API Key">
+            <!-- </form> -->
+            <br>
+            <button class="button"
+                onclick="WebApp.AppPrefsManager.TestKey(document.getElementById('APIKeyInput').value)">Test API
+                Key</button>
+        </div>
+        <div class="cell-md-6">
+            <label>Target Server</label>
+
+            <select data-role="select">
+                <optgroup label="Local Network">
+                    <option value="localhost" selected="selected">localhost</option>
+                    <option value="0.0.0.0">0.0.0.0</option>
+                </optgroup>
+                <optgroup label="Remote Servers">
+                    <option value="demo.tektology.com">demo.tektology.com</option>
+                </optgroup>
+            </select>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="cell-md-10">
+            <p>
+                Use this to clear the browser local storage.
+            </p>
+            <p>
+                Remember that user settings are kept there so you
+                will have to put your preferences back in.
+            </p>
+        </div>
+        <div class="cell-md-2">
+            <button class="button" onclick="WebApp.AppPrefsManager.ClearPrefs()">Clear Local Storage</button>
+        </div>
+    </div>
+    <br>
+
+    <hr />
+    <br>
+
+
+    <!-- 
+    <div class="row">
+        <div class="cell-md-6">
+            
+            Still working on this...
+
+        </div>
+        <div class="cell-md-6">
+                <input type="checkbox" data-role="switch" data-caption="Ignore Socket Broadcasts" checked>
+                <br>
+                <input type="checkbox" data-role="switch" data-caption="Ignore Toasts" checked>
+        </div>
+
+    </div>
+  -->
+
+</div>
