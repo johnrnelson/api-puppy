@@ -60,12 +60,12 @@ WebApp.HistoryLogger = {
                     }
 
                     // console.log(DateMap);
- 
+
                     const todayDate = new Date();
 
                     const minDate = new Date().addDays(-30);
                     const maxDate = new Date().addDays(1);
-              
+
 
 
 
@@ -223,6 +223,19 @@ WebApp.HistoryLogger = {
 
             try {
 
+                const tblBody = document.getElementById('LGType-' + LogMSG.Type + '-history');
+                if (!tblBody) {
+                    debugger;
+                    setTimeout(function () {
+                        WebApp.HistoryLogger.Add(LogMSG);
+                        debugger;
+                    }, 5300);
+
+                    return;
+
+                }
+
+
                 if (!LogMSG.Type) {
                     LogMSG.Type = 0;
                 }
@@ -253,10 +266,7 @@ WebApp.HistoryLogger = {
                 const displayDT = moment(LogMSG.DT);
 
 
-                const tblBody = document.getElementById('LGType-' + LogMSG.Type + '-history');
-                if (!tblBody) {
-                    debugger;
-                }
+
 
                 const tr = document.createElement('tr');
 
@@ -278,22 +288,11 @@ WebApp.HistoryLogger = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
         },
         FetchRemoteByType(RemoteLogFile) {
             WebApp.HistoryLogger.Logger.SetListType('serverlogs');
 
- 
+
             var calendar = $('#LoggerCalendar').data('calendar');
 
             var LogDate = new Date(calendar.getSelected()[0]);

@@ -172,7 +172,7 @@ window.UIHelper = {
 
         // Only load the debugger tool if they want to use it. 
         if (Tab2Show == "TabDebugger") {
-
+ 
             //Have I alredy loaded this?
             if (!WebApp.DebugUI) {
 
@@ -180,14 +180,14 @@ window.UIHelper = {
                     Load our debugger ui supporting javascript...
                 */
                 WebApp.GetHelpFile('DebuggerUI.js', function (DebuggerUICode) {
-                    const srcScript = document.createElement("script");
-                    window.eval(DebuggerUICode.body);
+
+                    window.eval(DebuggerUICode);          
 
 
                     WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
                         const CSSFile = document.createElement("style");
                         CSSFile.type = "text/css";
-                        CSSFile.innerHTML = filecontents.body;
+                        CSSFile.innerHTML = filecontents;
                         document.head.appendChild(CSSFile);
                     });
 
@@ -352,7 +352,7 @@ WebApp.Fetch({
 
         //Supporting chart code...
         WebApp.GetHelpFile('AppPrefs.js', function (AppPrefsCode) {
-            window.eval(AppPrefsCode.body);
+            window.eval(AppPrefsCode);
             WebApp.AppPrefsManager.ShowPrefs();
         });
 
@@ -397,9 +397,9 @@ WebApp.HistoryLogger.Logger.Add({
     still get the updates...
 */
 WebApp.GetHelpFile('SocketAPI.js', function (SocketAPICode) {
-    window.eval(SocketAPICode.body);
+    window.eval(SocketAPICode);
     WebApp.GetHelpFile('SocketClient.js', function (SocketClientCode) {
-        window.eval(SocketClientCode.body);
+        window.eval(SocketClientCode);
     });
 });
 

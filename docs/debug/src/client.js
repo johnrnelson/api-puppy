@@ -32,28 +32,101 @@ const WebApp = {
         }).then(response => response.json()); // parses JSON response into native Javascript objects 
 
     },
+    xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
+
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 4) {
+                if (this.responseText.length) {
+                    OnData(null, this.responseText);
+
+
+                } else {
+                    OnData({
+                        err: 'xhr empty data!',
+                        v: VERB,
+                        r: ROUTE,
+                        s: SENDMSG
+                    }, null);
+
+                }
+            }
+
+
+            // if (this.readyState == 4 && this.status == 200) {
+            //     try {
+            //         OnData(this.responseText);
+            //     } catch (badJSON) {
+            //         OnData(this.responseText);
+            //     }
+            // }
+        };
+        xhttp.onerror = function () {
+            if (!OnError) {
+                console.warn('Error XHR:' + VERB + ':' + ROUTE + ' ST:' + xhttp.status);
+                debugger;
+            } else {
+                OnError({
+                    VERB: VERB,
+                    ROUTE: ROUTE,
+                });
+            }
+            console.log("** An error occurred during the transaction");
+        };
+
+        xhttp.open(VERB, ROUTE, true);
+
+        // CORS stuff...       
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
+
+        try {
+            //Trying to trap the network errors?
+            xhttp.send(JSON.stringify(SENDMSG));
+
+        } catch (e) {
+            debugger;
+            console.log('gesh');
+        }
+    },
     GetHelpFile(FilePath, OnFetch) {
         // WebApp.GetHelpFile('',function(){});
+  
 
-        WebApp.Fetch({
-            service: 'help',
-            data: {
-                topic: 'debug-code-fetch',
-                filepath: FilePath
-            }
-        }).then(data => {
-            if (data.err) {
-                console.warn(data.err);
+        WebApp.xhr('get', '/?/debug/src/' + FilePath, '', function (err, data) {
+         
+            if (err) {
+                console.warn('Unable to get the help file', FilePath, err);
             } else {
                 OnFetch(data);
             }
 
-
-        }).catch(error => {
-            console.warn('Error!');
-            console.error(error);
-            // debugger;
+        }, function (errorObj) {
+            console.warn('Error Get Help File', errorObj);
+            debugger;
         });
+     
+        // WebApp.Fetch({
+        //     service: 'help',
+        //     data: {
+        //         topic: 'debug-code-fetch',
+        //         filepath: FilePath
+        //     }
+        // }).then(data => {
+        //     if (data.err) {
+        //         console.warn(data.err);
+        //     } else {
+           
+        //         OnFetch(data.body);
+        //     }
+        // }).catch(error => {
+        //     console.warn('Error!');
+        //     console.error(error);
+        //     // debugger;
+        // });
 
     },
     LoadCSSLink(HREF2CSS) {
@@ -93,13 +166,13 @@ if (localStorage) {
     if (UserOptionsText) {
         console.info('Reloading App options....');
         WebApp.AppPrefs.UserOptions = JSON.parse(UserOptionsText);
-    }  
+    }
 
 } else {
     alert('No Local Storage!');
 }
 
- 
+
 
 
 //Lazy load the google fonts We don't need to wait for them...
@@ -122,25 +195,25 @@ window.onload = function () {
     */
     WebApp.GetHelpFile('UIHelper.js', function (UIHelperJSCode) {
 
-
+ 
 
         //Make sure you load the logger first so we can report errors quicky! 
         WebApp.GetHelpFile('HistoryLogger.html', function (HistoryLoggerHTML) {
 
-            document.getElementById("HistoryLogger").innerHTML = HistoryLoggerHTML.body;
+            document.getElementById("HistoryLogger").innerHTML = HistoryLoggerHTML;
 
 
- 
+
 
             //Now show the sys info in the main display...
             /*
                 History Logger UI supporting javascript...
             */
             WebApp.GetHelpFile('HistoryLogger.js', function (HistoryLoggerCode) {
-                window.eval(HistoryLoggerCode.body);
+                window.eval(HistoryLoggerCode);
 
                 // debugger;
-                window.eval(UIHelperJSCode.body);
+                window.eval(UIHelperJSCode);
 
             });
 

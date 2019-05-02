@@ -1,6 +1,6 @@
 //Stuff our help display since it's so big and the least dynamic.. :-)
 WebApp.GetHelpFile('AppCharts.html', function (filecontents) {
-    document.getElementById("AppCharts").innerHTML = filecontents.body;
+    document.getElementById("AppCharts").innerHTML = filecontents;
     //Now show the sys info in the main display...
 });
 WebApp.AppCharts = {

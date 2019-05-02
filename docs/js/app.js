@@ -15,7 +15,7 @@ const WebApp = {
 
         xhttp.onreadystatechange = function () {
 
-            if (this.readyState == 3) {
+            if (this.readyState == 4) {
                 if (this.responseText.length) {
                     try {
                         const srvData = JSON.parse(this.responseText);

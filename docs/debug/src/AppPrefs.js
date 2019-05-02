@@ -9,7 +9,7 @@ WebApp.AppPrefsManager = {
 
         WebApp.GetHelpFile('AppPrefs.html', function (AppPrefsHTML) {
 
-            document.getElementById("TabAppPrefs").innerHTML = AppPrefsHTML.body;
+            document.getElementById("TabAppPrefs").innerHTML = AppPrefsHTML;
 
             console.info('TODO -->', 'Display AppRefs-->', WebApp.AppPrefs.UserOptions);
             
