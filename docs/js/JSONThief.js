@@ -180,12 +180,12 @@ JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:
 
 
 
-if ("debug"=="deubyes"){
+if ("debug"=="debug"){
     //  http://demo.tektology.com/?/debug/src/HistoryLogger.css
-    JSONTheif.LoadCSSLink("http://localhost:9080/?/css/JSONThief.css");
-}else{
-
     JSONTheif.LoadCSSLink("http://demo.tektology.com/?/css/JSONThief.css");
+}else{
+    JSONTheif.LoadCSSLink("http://localhost:9080/?/css/JSONThief.css");
+
 }
 
 
