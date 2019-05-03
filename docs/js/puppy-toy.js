@@ -81,6 +81,31 @@ window.JSONTheif = {
     UI: {
         //This is our main hosting element...
         HostElement: null,
+        AddResultRow(HTMLElement) {
+
+            console.info('add',HTMLElement);
+            // debugger;
+            const ResultSearchBody = JSONTheif.UI.HostElement.querySelector('ResultsSearch tbody');
+            
+            // ResultSearchBody.innerHTML = "grrr"+RowData;
+
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+            <tr>
+                <td>
+                    <DisplayText>N/A</DisplayText>                                    
+                </td>            
+                <td>
+                    <DisplayText>N/A</DisplayText>                                    
+                </td>
+                <td>
+                    <DisplayText>${HTMLElement.innerText}</DisplayText>                                    
+                </td>
+            </tr>            
+            `;
+            ResultSearchBody.appendChild(newRow);
+
+        },
         Build() {
             function StuffHTML() {
 
@@ -105,19 +130,23 @@ window.JSONTheif = {
 
                     <ResultsSearch>
                         <table>
-                            <tr>
-                                <td>
-                                    <DisplayText>
-                                    Working on this!
-                                    </DisplayText>                                    
-                                </td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <td width="20px">Options</td>                          
+                                    <td width="30px">Tage Name</td>                           
+                                    <td width="100%">Text Value</td>
+                                <tr>                                                        
+                            <thead>
+                            <tbody>                         
+                            </tbody>
                         </table>
                     </ResultsSearch>    
                 </JSONThiefDisplay> 
                 `;
                 JSONTheif.UI.HostElement.innerHTML = HTML;
             }
+
+
             JSONTheif.UI.HostElement = document.body.appendChild(document.createElement('JSONThiefDisplay'));
 
             StuffHTML();
@@ -145,19 +174,21 @@ window.JSONTheif = {
                 const TotalTags = JSONTheif.UI.HostElement.querySelector('stvalue#TotalTags');
                 const TotalJSONOBjects = JSONTheif.UI.HostElement.querySelector('stvalue#TotalJSONOBjects');
 
-                const ResultSearch = JSONTheif.UI.HostElement.querySelector('stvalue#ResultsSearch');
-                // const ResultTable = ResultSearch.querySelector('table');
-                // ResultTable.innerHTML = "";
 
                 TotalTags.innerHTML = "" + qryTags.length + "";
                 TotalJSONOBjects.innerHTML = "N/A";
 
+                for (let index = 0; index < qryTags.length; index++) {
+                    const qryElement = qryTags[index];
+                    JSONTheif.UI.AddResultRow(qryElement);                   
+                    
+                }
             });
 
 
-            setTimeout(() => {
-                qryTextValue.focus();
-            }, 50);
+            // setTimeout(() => {
+            //     qryTextValue.focus();
+            // }, 50);
 
 
 
@@ -178,16 +209,16 @@ JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
 JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
 JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
 
- 
+
 if ((document.location.hostname == "127.0.0.1") ||
     (document.location.hostname == "localhost") ||
     (document.location.hostname == "0.0.0.0")) {
     console.info('Loading CSS from local!');
 
-    JSONTheif.LoadCSSLink("http://localhost:9080/?/css/JSONThief.css");
+    JSONTheif.LoadCSSLink("http://localhost:9080/?/css/puppy-toy.css");
 } else {
     console.info('Loading CSS from "demo.tektology.com"!');
-    JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/JSONThief.css");
+    JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/puppy-toy.css");
 
 
 }
