@@ -1,4 +1,43 @@
+JSONThieMenu {
+    z-index: 5000;
+    position: fixed;
+    display: block;
+    top: 15px;
+    /* bottom: 15px; */
+    /* left: 15px; */
+    right: 35px;
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
+    border: solid 2px black;
+    font-size: 16px;
+    font-family: 'Abel', sans-serif;
+    cursor: default;
+    overflow: hand;
+    text-align: center;
+    opacity: 0.5;
+    color: white;
+    background-color: black;
+    text-shadow: 1px 1px 1px rgb(253, 253, 253);
+}
+
+JSONThieMenu i {
+    color: white;
+}
+
+JSONThieMenu i:hover {
+    color: gray;
+    text-shadow: 1px 1px 1px black;
+}
+
+
+
+
+
+/* The main display */
+
 JSONThiefDisplay {
+
     z-index: 5000;
     position: fixed;
     display: block;
@@ -13,14 +52,48 @@ JSONThiefDisplay {
     font-family: 'Abel', sans-serif;
     cursor: default;
 
-    overflow:hidden;
+    overflow: hidden;
 }
 
+
+
+JSONThiefDisplay sidebaropts {
+    display: block;
+    /* border: solid 1px gold; */
+    white-space: normal;
+    width: 30px;
+    /* height: 100%; */
+    bottom: 0;
+    text-align: center;
+    padding: 2px;
+}
+
+JSONThiefDisplay sidebaropts icon {
+    display: block;
+    font-size: 20px;
+    width: 33px;
+    color: silver;
+    border: solid 1px transparent;
+}
+
+JSONThiefDisplay sidebaropts icon:hover {
+    color: white;
+    /* background-color: white; */
+    border: solid 1px rgb(119, 119, 119);
+}
+
+
+
+/* 
+
+The qry box!
+
+*/
 JSONThiefDisplay qrybox {
     display: block;
     position: absolute;
     top: 0;
-    left: 0;
+    left: 38px;
     right: 0;
 
     border: solid 2px rgb(158, 158, 158);
@@ -76,7 +149,9 @@ JSONThiefDisplay ResultStats {
     top: 31px;
     height: 20px;
     bottom: 0;
-    left: 0;
+    left: 38px;
+    /* width:100%; */
+
     right: 0;
     color: white;
 
@@ -124,7 +199,7 @@ JSONThiefDisplay ResultsSearch {
     position: absolute;
     top: 55px;
     bottom: 0;
-    left: 0;
+    left: 38px;
     right: 0;
 
     /* border: solid 2px gold; */
@@ -155,6 +230,7 @@ JSONThiefDisplay ResultsSearch table tbody tr td i {
     color: white;
     text-shadow: 1px 1px 1px #3b3b3b;
 }
+
 JSONThiefDisplay ResultsSearch table tbody tr td i:hover {
     color: gold;
     text-shadow: 1px 1px 1px #ececec;

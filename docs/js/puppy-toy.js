@@ -135,6 +135,7 @@ window.JSONTheif = {
     UI: {
         //This is our main hosting element...
         HostElement: null,
+        HostElementMenu: null,
         AddResultRow(HTMLElement) {
 
             console.info('add', HTMLElement);
@@ -163,10 +164,46 @@ window.JSONTheif = {
 
         },
         Build() {
-            function StuffHTML() {
+
+
+            //Build the Menu...
+            (function () {
+                var hostElMenu = document.body.appendChild(document.createElement('JSONThieMenu'));
+                hostElMenu.innerHTML = `
+                  <i class="fas fa-upload fa-2x"></i>
+                `;
+                hostElMenu.onclick = function (evt, others) {
+                    JSONTheif.UI.HostElement.style.display = "block";
+                    this.style.display = "none";
+                };
+
+                JSONTheif.UI.HostElementMenu = hostElMenu;
+
+                console.warn('hide menu for debug');
+                hostElMenu.style.display = "none";
+            })();
+
+
+            var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
+
+            console.warn('show host elfor debug');
+            // hostEl.style.display = "none";
+
+            JSONTheif.UI.HostElement = hostEl;
+
+
+
+
+            (function () {
+
 
                 const HTML = `                
                 <JSONThiefDisplay>
+                    <sidebaropts>
+                        <icon class="fas fa-info-circle" id="info"></icon> 
+                        <icon class="fas fa-search" id="search"></icon> 
+                        <icon class="fas fa-cogs" id="options"></icon> 
+                    </sidebaropts>
                     <qrybox>
                         <span class="label">Search:</span>
                         <span class="spantext"> 
@@ -200,12 +237,27 @@ window.JSONTheif = {
                 </JSONThiefDisplay> 
                 `;
                 JSONTheif.UI.HostElement.innerHTML = HTML;
-            }
+
+                var el_info = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#info');
+                el_info.onclick = function(){
+                    console.log('CLicked:',this.id);
+                };
+                var el_search = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#search');
+                el_search.onclick = function(){
+                    console.log('CLicked:',this.id);
+                };
+                var el_options = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#options');
+                el_options.onclick = function(){
+                    console.log('CLicked:',this.id);
+                };
+              
+
+            })();
 
 
-            JSONTheif.UI.HostElement = document.body.appendChild(document.createElement('JSONThiefDisplay'));
 
-            StuffHTML();
+
+
 
 
             const qryTextValue = JSONTheif.UI.HostElement.querySelector('#qryTextValue');
@@ -261,16 +313,16 @@ window.JSONTheif = {
         var cssLinks = document.head.querySelectorAll('link');
         JSONTheif.FontAwesome = false;
 
-        
+
         for (let index = 0; index < cssLinks.length; index++) {
             const docCSS = cssLinks[index];
-            if (docCSS.href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"){
+            if (docCSS.href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css") {
                 JSONTheif.FontAwesome = true;
                 break;
-            }            
+            }
         }
-        
-        if(!JSONTheif.FontAwesome){
+
+        if (!JSONTheif.FontAwesome) {
             JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
             JSONTheif.FontAwesome = true;
         }
