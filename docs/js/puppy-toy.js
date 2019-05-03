@@ -1,18 +1,72 @@
 /*
 */
 
-// (function () {
-
-//     const elLink = document.createElement("link");
-//     elLink.rel = "stylesheet";
-//     elLink.type = "text/css";
-//     elLink.href = "http://localhost:9080/?/css/JSONThief.css";
-//     document.head.appendChild(elLink);;
-// })();
 
 
 window.JSONTheif = {
     DocumentJSON: [],
+    xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
+
+        var xhttp = new XMLHttpRequest();
+
+
+        xhttp.onreadystatechange = function () {
+
+            if (this.readyState == 4 && this.status == 200) {
+                if (this.responseText.length) {
+                    try {
+                        const srvData = JSON.parse(this.responseText);
+                        OnData(srvData);
+                    } catch (errBadJSON) {
+                        OnData({
+                            err: "Bad JSON!",
+                            body: this.responseText
+                        });
+
+                    }
+
+                } else {
+                    OnData({
+                        err: 'xhr empty data!',
+                        v: VERB,
+                        r: ROUTE,
+                        s: SENDMSG
+                    });
+
+                }
+            }
+
+
+        };
+        xhttp.onerror = function () {
+            if (!OnError) {
+                console.warn('Error XHR:' + VERB + ':' + ROUTE + ' ST:' + xhttp.status);
+                debugger;
+            } else {
+                OnError({
+                    VERB: VERB,
+                    ROUTE: ROUTE,
+                });
+            }
+            console.log("** An error occurred during the transaction");
+        };
+
+        xhttp.open(VERB, ROUTE, true);
+
+        // CORS stuff...       
+        xhttp.setRequestHeader("Content-Type", "application/json");
+        xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+        xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
+
+        try {
+            //Trying to trap the network errors?
+            xhttp.send(JSON.stringify(SENDMSG));
+
+        } catch (e) {
+            debugger;
+            console.log('gesh');
+        }
+    },
     LoadCSSLink(HREF2CSS) {
         const elLink = document.createElement("link");
         elLink.rel = "stylesheet";
@@ -83,20 +137,22 @@ window.JSONTheif = {
         HostElement: null,
         AddResultRow(HTMLElement) {
 
-            console.info('add',HTMLElement);
+            console.info('add', HTMLElement);
             // debugger;
             const ResultSearchBody = JSONTheif.UI.HostElement.querySelector('ResultsSearch tbody');
-            
+
             // ResultSearchBody.innerHTML = "grrr"+RowData;
 
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
             <tr>
                 <td>
-                    <DisplayText>N/A</DisplayText>                                    
+                    <i class="fas fa-plus-circle"></i>
+                    <i class="fas fa-minus-circle"></i>
+                 
                 </td>            
                 <td>
-                    <DisplayText>N/A</DisplayText>                                    
+                    N/A
                 </td>
                 <td>
                     <DisplayText>${HTMLElement.innerText}</DisplayText>                                    
@@ -119,11 +175,11 @@ window.JSONTheif = {
                     </qrybox>
                     <ResultStats>
                         <statgroup>
-                            <stlabel>Total Tags</stlabel>                    
+                            <stlabel><i class="fas fa-code"></i> Total Tags</stlabel>                    
                             <stvalue id="TotalTags">N/A</stvalue>
                         </statgroup>
                         <statgroup>
-                            <stlabel>Total JSON Objects</stlabel>                    
+                            <stlabel><i class="fas fa-cubes"></i> Total JSON Objects</stlabel>                    
                             <stvalue id="TotalJSONOBjects">N/A</stvalue>
                         </statgroup>                        
                     </ResultStats>
@@ -165,6 +221,7 @@ window.JSONTheif = {
                 }
 
                 console.info('Searching document for :' + srchVal);
+                JSONTheif.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
 
                 // Make sure you do a full body search! :-) 
                 const qryTags = document.body.querySelectorAll(srchVal);
@@ -180,8 +237,8 @@ window.JSONTheif = {
 
                 for (let index = 0; index < qryTags.length; index++) {
                     const qryElement = qryTags[index];
-                    JSONTheif.UI.AddResultRow(qryElement);                   
-                    
+                    JSONTheif.UI.AddResultRow(qryElement);
+
                 }
             });
 
@@ -199,35 +256,61 @@ window.JSONTheif = {
         Lets get this part started!
     */
     Init() {
+
+
+        var cssLinks = document.head.querySelectorAll('link');
+        JSONTheif.FontAwesome = false;
+
+        
+        for (let index = 0; index < cssLinks.length; index++) {
+            const docCSS = cssLinks[index];
+            if (docCSS.href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"){
+                JSONTheif.FontAwesome = true;
+                break;
+            }            
+        }
+        
+        if(!JSONTheif.FontAwesome){
+            JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+            JSONTheif.FontAwesome = true;
+        }
+
+
+
+        JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
+        JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
+        JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
+
+
+        if ((document.location.hostname == "127.0.0.1") ||
+            (document.location.hostname == "localhost") ||
+            (document.location.hostname == "0.0.0.0")) {
+            console.info('Loading CSS from local!');
+            JSONTheif.LoadCSSLink("http://localhost:9080/?/css/puppy-toy.css");
+        } else {
+            console.info('Loading CSS from "demo.tektology.com"!');
+            JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/puppy-toy.css");
+        }
+
+
         console.info('Building UI for JSONThief');
         JSONTheif.UI.Build();
 
+        JSONTheif.xhr('PUT', 'https://demo.tektology.com/', {
+            service: 'help',
+            data: {
+                topic: 'SysInfo'
+            }
+        }, function (ServerResponse) {
+            console.info('DEMO SERVER INFO', ServerResponse);
+        });
     }
 };
 
-JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
-JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
-JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
 
-
-if ((document.location.hostname == "127.0.0.1") ||
-    (document.location.hostname == "localhost") ||
-    (document.location.hostname == "0.0.0.0")) {
-    console.info('Loading CSS from local!');
-
-    JSONTheif.LoadCSSLink("http://localhost:9080/?/css/puppy-toy.css");
-} else {
-    console.info('Loading CSS from "demo.tektology.com"!');
-    JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/puppy-toy.css");
-
-
-}
 
 
 (function () {
-
-
-
 
     return;
 
