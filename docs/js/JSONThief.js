@@ -173,18 +173,22 @@ window.JSONTheif = {
 
     }
 };
- 
+
 JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
 JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
 JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
 
+ 
+if ((document.location.hostname == "127.0.0.1") ||
+    (document.location.hostname == "localhost") ||
+    (document.location.hostname == "0.0.0.0")) {
+    console.info('Loading CSS from local!');
 
-
-if ("debug"=="debug"){
-    //  http://demo.tektology.com/?/debug/src/HistoryLogger.css
-    JSONTheif.LoadCSSLink("http://demo.tektology.com/?/css/JSONThief.css");
-}else{
     JSONTheif.LoadCSSLink("http://localhost:9080/?/css/JSONThief.css");
+} else {
+    console.info('Loading CSS from "demo.tektology.com"!');
+    JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/JSONThief.css");
+
 
 }
 
