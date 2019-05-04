@@ -2,7 +2,7 @@
     /*
     */
 
-    const JSONTheif = {
+    window.JSONTheif = {
         DocumentJSON: [],
         xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
 
@@ -71,7 +71,9 @@
             elLink.rel = "stylesheet";
             elLink.type = "text/css";
             elLink.href = HREF2CSS;
-            document.head.appendChild(elLink);
+            // document.head.appendChild(elLink);
+            // debugger;
+            JSONTheif.UI.HostFrame.contentDocument.head.appendChild(elLink);
         },
         SniffElement(ParentSniffElement, JSONData) {
 
@@ -132,6 +134,7 @@
 
         },
         UI: {
+            HostFrame: null,
             //This is our main hosting element...
             HostElement: null,
             HostElementMenu: null,
@@ -165,10 +168,12 @@
             ToggleMenu() {
                 if (JSONTheif.UI.HostElementMenu.style.display == "none") {
                     JSONTheif.UI.HostElementMenu.style.display = "";
-                    JSONTheif.UI.HostElement.style.display = "none";
+                    // JSONTheif.UI.HostElement.style.display = "none";
+                    JSONTheif.UI.HostFrameContainer.style.display = "none";
                 } else {
                     JSONTheif.UI.HostElementMenu.style.display = "none";
-                    JSONTheif.UI.HostElement.style.display = "";
+                    // JSONTheif.UI.HostElement.style.display = "";
+                    JSONTheif.UI.HostFrameContainer.style.display = "";
                 }
             },
             Displays: {
@@ -197,7 +202,7 @@
                             newTab.id = "tab-info";
                             newTab.innerHTML = HTML;
 
-                            JSONTheif.UI.HostElement.querySelector('JSONThiefDisplay').appendChild(newTab);
+                            JSONTheif.UI.HostElement.appendChild(newTab);
                         })();
 
 
@@ -245,10 +250,11 @@
                            
                 `;
                             const newTab = document.createElement('disptab');
+                            newTab.style.display = "none";
                             newTab.id = "tab-search";
                             newTab.innerHTML = HTML;
 
-                            JSONTheif.UI.HostElement.querySelector('JSONThiefDisplay').appendChild(newTab);
+                            JSONTheif.UI.HostElement.appendChild(newTab);
                         })();
 
 
@@ -311,7 +317,7 @@
                             newTab.id = "tab-config";
                             newTab.innerHTML = HTML;
 
-                            JSONTheif.UI.HostElement.querySelector('JSONThiefDisplay').appendChild(newTab);
+                            JSONTheif.UI.HostElement.appendChild(newTab);
                         })();
 
 
@@ -325,11 +331,32 @@
                 //Build the Menu...
                 (function () {
                     var hostElMenu = document.body.appendChild(document.createElement('JSONThieMenu'));
-                    hostElMenu.innerHTML = `
-                  <i class="fas fa-sitemap"></i>
-                `;
-                    hostElMenu.onclick = function (evt, others) {
+                    // <i class="fas fa-sitemap"></i>
+                    hostElMenu.innerHTML = "*";
 
+                    hostElMenu.style.position = "fixed";
+                    hostElMenu.style.display = "block";
+
+                    hostElMenu.style.zIndex = "5000"; 
+                    hostElMenu.style.margin = "0";
+                    hostElMenu.style.padding = "0";
+                    
+                    hostElMenu.style.top = "25px";
+                    hostElMenu.style.right = "25px";
+
+                    hostElMenu.style.width = "40px";
+                    hostElMenu.style.cursor = "hand";
+                    hostElMenu.style.textOverflow = "default";
+                    hostElMenu.style.backgroundColor = "rgb(56, 56, 56)";
+                    hostElMenu.style.borderRadius = "20px";
+                    hostElMenu.style.fontSize = "30px";
+                    hostElMenu.style.textShadow = "1px 1px 1px rgb(253, 253, 253)";
+                    hostElMenu.style.color = "gold";
+                    // debugger;
+
+
+
+                    hostElMenu.onclick = function (evt, others) {
                         JSONTheif.UI.ToggleMenu();
                     };
 
@@ -337,8 +364,19 @@
                 })();
 
 
-                var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
-                hostEl.style.display = "none";
+
+
+
+
+
+
+
+
+
+                // debugger;
+                var hostEl = JSONTheif.UI.HostFrame.contentDocument.body.appendChild(document.createElement('JSONThiefDisplay'));
+                // var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
+                // hostEl.style.display = "none";
                 JSONTheif.UI.HostElement = hostEl;
 
 
@@ -347,7 +385,7 @@
                 (function () {
 
                     const HTML = `                
-                <JSONThiefDisplay>
+               
                     <sidebaropts>                        
                         <icon class="fas fa-info-circle" id="info"></icon> 
                         <icon class="fas fa-search" id="search"></icon> 
@@ -355,8 +393,7 @@
                         <hr/ width="70%" size="1" color="silver">
                         <icon class="fas fa-times-circle" id="close"></icon> 
                     </sidebaropts>
- 
-                </JSONThiefDisplay> 
+  
                 `;
                     JSONTheif.UI.HostElement.innerHTML = HTML;
 
@@ -389,7 +426,32 @@
 
                 //Show your default display...
                 JSONTheif.UI.Displays.ShowDisplay('search');
-                JSONTheif.UI.ToggleMenu();
+                // JSONTheif.UI.ToggleMenu();
+
+            },
+            BuildHostFrame() {
+
+                JSONTheif.UI.HostFrameContainer = document.createElement('div');
+
+                JSONTheif.UI.HostFrameContainer.style.display = "none";
+                JSONTheif.UI.HostFrameContainer.style.zIndex = "5000";
+                JSONTheif.UI.HostFrameContainer.style.position = "absolute"
+                JSONTheif.UI.HostFrameContainer.style.margin = "0";
+                JSONTheif.UI.HostFrameContainer.style.padding = "0";
+                JSONTheif.UI.HostFrameContainer.style.top = "25px";
+                JSONTheif.UI.HostFrameContainer.style.left = "25px";
+                JSONTheif.UI.HostFrameContainer.style.right = "25px";
+                JSONTheif.UI.HostFrameContainer.style.bottom = "25px";
+                JSONTheif.UI.HostFrameContainer.style.backgroundColor = "gray";
+
+
+                JSONTheif.UI.HostFrame = document.createElement('iframe');
+                JSONTheif.UI.HostFrame.style.cssText = "width:100%;height:100%;margin:0;padding:0;border:0";
+
+                JSONTheif.UI.HostFrameContainer.appendChild(JSONTheif.UI.HostFrame);
+                document.body.appendChild(JSONTheif.UI.HostFrameContainer);
+                // debugger;
+                // JSONTheif.UI.HostFrame.contentDocument.body.innerText = "ready";
 
             }
         },
@@ -398,10 +460,12 @@
         */
         Init() {
 
+            //Must build our host frame first!
+            JSONTheif.UI.BuildHostFrame();
 
 
 
-
+            // debugger;
 
             console.info('Building UI for JSONThief');
             JSONTheif.UI.BuildUIDisplay();
@@ -421,47 +485,36 @@
 
 
 
-    (function () {
-
-        return;
-
-        JSONTheif.SniffElement(document.body, JSONTheif.DocumentJSON);
 
 
-        // ****
-
-        for (var sp in JSONTheif.DocumentJSON) {
-            console.log('FIX ME!-->', sp, JSONTheif.DocumentJSON[sp]);
-        }
-        // console.log(JSONTheif.DocumentJSON);
-
-        // document.body.innerHTML = `<textarea rows="10" cols="40" style="height:100%;width;100%">${JSON.stringify(JSONData)}</textarea>`;
+    JSONTheif.Init();
 
 
-    })();
 
 
     /*
         Load your styles you need...
     */
 
-    var cssLinks = document.head.querySelectorAll('link');
-    JSONTheif.FontAwesome = false;
+    // var cssLinks = document.head.querySelectorAll('link');
+    // JSONTheif.FontAwesome = false;
 
 
-    for (let index = 0; index < cssLinks.length; index++) {
-        const docCSS = cssLinks[index];
-        if (docCSS.href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css") {
-            JSONTheif.FontAwesome = true;
-            break;
-        }
-    }
+    // for (let index = 0; index < cssLinks.length; index++) {
+    //     const docCSS = cssLinks[index];
+    //     if (docCSS.href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css") {
+    //         JSONTheif.FontAwesome = true;
+    //         break;
+    //     }
+    // }
 
-    if (!JSONTheif.FontAwesome) {
-        console.info('Loading up the icons...');
-        JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-        JSONTheif.FontAwesome = true;
-    }
+    // if (!JSONTheif.FontAwesome) {
+    //     console.info('Loading up the icons...');
+    //     JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+    //     JSONTheif.FontAwesome = true;
+    // }
+
+    JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
 
 
     JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
@@ -479,8 +532,5 @@
         JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/puppy-toy.css");
     }
 
-
-
-    JSONTheif.Init();
 
 })();

@@ -1,10 +1,8 @@
-JSONThieMenu {
+/* JSONThieMenu {
     z-index: 5000;
     position: fixed;
     display: block;
-    top: 15px;
-    /* bottom: 15px; */
-    /* left: 15px; */
+    top: 15px; 
     right: 35px;
     height: 40px;
     width: 40px;
@@ -15,12 +13,12 @@ JSONThieMenu {
     padding: 2px;
 
     cursor: default;
-    overflow: hand;
+    
     text-align: center;
 
     background-color: rgb(56, 56, 56);
 
-    /* text-shadow: 1px 1px 1px rgb(253, 253, 253); */
+    text-shadow: 1px 1px 1px rgb(253, 253, 253);
 }
 
 JSONThieMenu i {
@@ -29,10 +27,10 @@ JSONThieMenu i {
 }
 
 JSONThieMenu:hover {
-    /* color: gray; */
+    color: gray;
     background-color: rgb(134, 134, 134);
-    /* text-shadow: 1px 1px 1px black; */
-}
+    text-shadow: 1px 1px 1px black;
+} */
 
 
 
@@ -44,10 +42,10 @@ JSONThiefDisplay {
     z-index: 5000;
     position: fixed;
     display: block;
-    top: 15px;
-    bottom: 15px;
-    left: 15px;
-    right: 15px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     color: white;
     background-color: black;
     border: solid 2px silver;
