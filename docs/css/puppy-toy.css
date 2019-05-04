@@ -10,24 +10,28 @@ JSONThieMenu {
     width: 40px;
     border-radius: 20px;
     border: solid 2px black;
-    font-size: 16px;
-    font-family: 'Abel', sans-serif;
+
+    margin: 0;
+    padding: 2px;
+
     cursor: default;
     overflow: hand;
     text-align: center;
-    opacity: 0.5;
-    color: white;
-    background-color: black;
-    text-shadow: 1px 1px 1px rgb(253, 253, 253);
+
+    background-color: rgb(56, 56, 56);
+
+    /* text-shadow: 1px 1px 1px rgb(253, 253, 253); */
 }
 
 JSONThieMenu i {
-    color: white;
+    color: rgb(204, 204, 204);
+    font-size: 30px;
 }
 
-JSONThieMenu i:hover {
-    color: gray;
-    text-shadow: 1px 1px 1px black;
+JSONThieMenu:hover {
+    /* color: gray; */
+    background-color: rgb(134, 134, 134);
+    /* text-shadow: 1px 1px 1px black; */
 }
 
 
@@ -37,7 +41,6 @@ JSONThieMenu i:hover {
 /* The main display */
 
 JSONThiefDisplay {
-
     z-index: 5000;
     position: fixed;
     display: block;
@@ -47,12 +50,12 @@ JSONThiefDisplay {
     right: 15px;
     color: white;
     background-color: black;
-    border: solid 2px black;
+    border: solid 2px silver;
     font-size: 16px;
     font-family: 'Abel', sans-serif;
     cursor: default;
-
     overflow: hidden;
+
 }
 
 
@@ -61,19 +64,25 @@ JSONThiefDisplay sidebaropts {
     display: block;
     /* border: solid 1px gold; */
     white-space: normal;
-    width: 30px;
-    /* height: 100%; */
+    margin: 0;
+    /* padding:0; */
+    width: 35px;
+    height: 100%;
     bottom: 0;
     text-align: center;
     padding: 2px;
+    border: solid 2px rgb(88, 88, 88);
 }
 
 JSONThiefDisplay sidebaropts icon {
     display: block;
     font-size: 20px;
     width: 33px;
-    color: silver;
+    color: rgb(197, 190, 228);
     border: solid 1px transparent;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    /* opacity: .8; */
 }
 
 JSONThiefDisplay sidebaropts icon:hover {
@@ -81,6 +90,25 @@ JSONThiefDisplay sidebaropts icon:hover {
     /* background-color: white; */
     border: solid 1px rgb(119, 119, 119);
 }
+
+JSONThiefDisplay disptab {
+    display: block;
+    /* position: relative;
+    padding-left: 40px;
+    margin: 0;
+    height: 100%;
+    width: 100%; */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 43px;
+    right: 0;
+    color: white;
+    /* background-color: rgb(41, 41, 41); */
+    /* border: solid 2px rgb(88, 88, 88); */
+}
+
+
 
 
 
@@ -93,7 +121,7 @@ JSONThiefDisplay qrybox {
     display: block;
     position: absolute;
     top: 0;
-    left: 38px;
+    left: 0;
     right: 0;
 
     border: solid 2px rgb(158, 158, 158);
@@ -149,7 +177,7 @@ JSONThiefDisplay ResultStats {
     top: 31px;
     height: 20px;
     bottom: 0;
-    left: 38px;
+    left: 0;
     /* width:100%; */
 
     right: 0;

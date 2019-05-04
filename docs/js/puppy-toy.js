@@ -163,47 +163,56 @@ window.JSONTheif = {
             ResultSearchBody.appendChild(newRow);
 
         },
-        Build() {
+        ToggleMenu() {
+            if (JSONTheif.UI.HostElementMenu.style.display == "none") {
+                JSONTheif.UI.HostElementMenu.style.display = "";
+                JSONTheif.UI.HostElement.style.display = "none";
+            } else {
+                JSONTheif.UI.HostElementMenu.style.display = "none";
+                JSONTheif.UI.HostElement.style.display = "";
+            }
+        },
+        Displays: {
+            ActiveDisplay: false,
+            ShowDisplay(ShowDisplayID) {         
+                if (JSONTheif.UI.Displays.ActiveDisplay) {
+                    JSONTheif.UI.Displays.ActiveDisplay.style.display = "none";
+                }
+                JSONTheif.UI.Displays.ActiveDisplay = JSONTheif.UI.HostElement.querySelector('#tab-' + ShowDisplayID);
+                JSONTheif.UI.Displays.ActiveDisplay.style.display = "block";
+            },
+            MainHelp: {
+                Build() {
+
+                    //BUild the first tab!!!
+                    (function () {
+                        const HTML = `
+                        <br><br>
+                        <center>
+                           Simple help
+                        </center> 
+                           
+                        `;
+                        const newTab = document.createElement('disptab');
+                        newTab.style.display = "none";
+                        newTab.id = "tab-info";
+                        newTab.innerHTML = HTML;
+
+                        JSONTheif.UI.HostElement.querySelector('JSONThiefDisplay').appendChild(newTab);
+                    })();
 
 
-            //Build the Menu...
-            (function () {
-                var hostElMenu = document.body.appendChild(document.createElement('JSONThieMenu'));
-                hostElMenu.innerHTML = `
-                  <i class="fas fa-upload fa-2x"></i>
-                `;
-                hostElMenu.onclick = function (evt, others) {
-                    JSONTheif.UI.HostElement.style.display = "block";
-                    this.style.display = "none";
-                };
 
-                JSONTheif.UI.HostElementMenu = hostElMenu;
+                }
+            },
+            Search: {
+                Build() {
 
-                console.warn('hide menu for debug');
-                hostElMenu.style.display = "none";
-            })();
-
-
-            var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
-
-            console.warn('show host elfor debug');
-            // hostEl.style.display = "none";
-
-            JSONTheif.UI.HostElement = hostEl;
-
-
-
-
-            (function () {
-
-
-                const HTML = `                
-                <JSONThiefDisplay>
-                    <sidebaropts>
-                        <icon class="fas fa-info-circle" id="info"></icon> 
-                        <icon class="fas fa-search" id="search"></icon> 
-                        <icon class="fas fa-cogs" id="options"></icon> 
-                    </sidebaropts>
+                    //BUild the first tab!!!
+                    (function () {
+                        const HTML = `
+                  
+                        
                     <qrybox>
                         <span class="label">Search:</span>
                         <span class="spantext"> 
@@ -233,74 +242,155 @@ window.JSONTheif = {
                             <tbody>                         
                             </tbody>
                         </table>
-                    </ResultsSearch>    
+                    </ResultsSearch> 
+                           
+                `;
+                        const newTab = document.createElement('disptab');
+                        newTab.id = "tab-search";
+                        newTab.innerHTML = HTML;
+
+                        JSONTheif.UI.HostElement.querySelector('JSONThiefDisplay').appendChild(newTab);
+                    })();
+
+
+
+
+                    //Do the document query..
+                    const qryTextValue = JSONTheif.UI.HostElement.querySelector('#qryTextValue');
+
+
+                    qryTextValue.addEventListener("change", function (eventinfo) {
+                        // debugger;
+
+                        const srchVal = this.value.trim();
+
+                        if (!srchVal) {
+                            return;
+                        }
+
+                        console.info('Searching document for :' + srchVal);
+                        JSONTheif.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
+
+                        // Make sure you do a full body search! :-) 
+                        const qryTags = document.body.querySelectorAll(srchVal);
+
+                        console.log('Total Tags Found:', qryTags);
+
+                        const TotalTags = JSONTheif.UI.HostElement.querySelector('stvalue#TotalTags');
+                        const TotalJSONOBjects = JSONTheif.UI.HostElement.querySelector('stvalue#TotalJSONOBjects');
+
+
+                        TotalTags.innerHTML = "" + qryTags.length + "";
+                        TotalJSONOBjects.innerHTML = "N/A";
+
+                        for (let index = 0; index < qryTags.length; index++) {
+                            const qryElement = qryTags[index];
+                            JSONTheif.UI.AddResultRow(qryElement);
+
+                        }
+                    });
+                    // setTimeout(() => {
+                    //     qryTextValue.focus();
+                    // }, 50);                    
+
+                }
+            },
+            Config: {
+                Build() {
+
+                    //BUild the first tab!!!
+                    (function () {
+                        const HTML = `
+                            <br><br>
+                            <center>
+                               Basic app options
+                            </center>
+                           
+                        `;
+                        const newTab = document.createElement('disptab');
+                        newTab.style.display = "none";
+                        newTab.id = "tab-config";
+                        newTab.innerHTML = HTML;
+
+                        JSONTheif.UI.HostElement.querySelector('JSONThiefDisplay').appendChild(newTab);
+                    })();
+
+
+
+                }                
+            },
+        },
+        BuildUIDisplay() {
+
+
+            //Build the Menu...
+            (function () {
+                var hostElMenu = document.body.appendChild(document.createElement('JSONThieMenu'));
+                hostElMenu.innerHTML = `
+                  <i class="fas fa-sitemap"></i>
+                `;
+                hostElMenu.onclick = function (evt, others) {
+
+                    JSONTheif.UI.ToggleMenu();
+                };
+
+                JSONTheif.UI.HostElementMenu = hostElMenu; 
+            })();
+
+
+            var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
+            hostEl.style.display = "none";
+            JSONTheif.UI.HostElement = hostEl;
+ 
+
+            
+            //Setup Main display and side opts...
+            (function () {
+
+                const HTML = `                
+                <JSONThiefDisplay>
+                    <sidebaropts>                        
+                        <icon class="fas fa-info-circle" id="info"></icon> 
+                        <icon class="fas fa-search" id="search"></icon> 
+                        <icon class="fas fa-cogs" id="config"></icon>                         
+                        <hr/ width="70%" size="1" color="silver">
+                        <icon class="fas fa-times-circle" id="close"></icon> 
+                    </sidebaropts>
+ 
                 </JSONThiefDisplay> 
                 `;
                 JSONTheif.UI.HostElement.innerHTML = HTML;
 
+
+                //Setup events!
+                var el_close = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#close');
+                el_close.onclick = function () {
+                    JSONTheif.UI.ToggleMenu();
+                };
                 var el_info = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#info');
-                el_info.onclick = function(){
-                    console.log('CLicked:',this.id);
+                el_info.onclick = function () {
+                    JSONTheif.UI.Displays.ShowDisplay(this.id);
                 };
                 var el_search = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#search');
-                el_search.onclick = function(){
-                    console.log('CLicked:',this.id);
+                el_search.onclick = function () {
+                    JSONTheif.UI.Displays.ShowDisplay(this.id);
                 };
-                var el_options = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#options');
-                el_options.onclick = function(){
-                    console.log('CLicked:',this.id);
+                var el_config = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#config');
+                el_config.onclick = function () {
+                    JSONTheif.UI.Displays.ShowDisplay(this.id);
                 };
-              
+
 
             })();
 
 
+            JSONTheif.UI.Displays.MainHelp.Build();
+            JSONTheif.UI.Displays.Search.Build();
+            JSONTheif.UI.Displays.Config.Build();
 
-
-
-
-
-            const qryTextValue = JSONTheif.UI.HostElement.querySelector('#qryTextValue');
-
-
-            qryTextValue.addEventListener("change", function (eventinfo) {
-                // debugger;
-
-                const srchVal = this.value.trim();
-
-                if (!srchVal) {
-                    return;
-                }
-
-                console.info('Searching document for :' + srchVal);
-                JSONTheif.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
-
-                // Make sure you do a full body search! :-) 
-                const qryTags = document.body.querySelectorAll(srchVal);
-
-                console.log('Total Tags Found:', qryTags);
-
-                const TotalTags = JSONTheif.UI.HostElement.querySelector('stvalue#TotalTags');
-                const TotalJSONOBjects = JSONTheif.UI.HostElement.querySelector('stvalue#TotalJSONOBjects');
-
-
-                TotalTags.innerHTML = "" + qryTags.length + "";
-                TotalJSONOBjects.innerHTML = "N/A";
-
-                for (let index = 0; index < qryTags.length; index++) {
-                    const qryElement = qryTags[index];
-                    JSONTheif.UI.AddResultRow(qryElement);
-
-                }
-            });
-
-
-            // setTimeout(() => {
-            //     qryTextValue.focus();
-            // }, 50);
-
-
-
+            //Show your default display...
+            JSONTheif.UI.Displays.ShowDisplay('search');
+            JSONTheif.UI.ToggleMenu();
 
         }
     },
@@ -346,7 +436,7 @@ window.JSONTheif = {
 
 
         console.info('Building UI for JSONThief');
-        JSONTheif.UI.Build();
+        JSONTheif.UI.BuildUIDisplay();
 
         JSONTheif.xhr('PUT', 'https://demo.tektology.com/', {
             service: 'help',
