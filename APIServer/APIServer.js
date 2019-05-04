@@ -688,7 +688,7 @@ const IPC = {
                             ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                                 if (ServiceError) {
                                     SERVER.Statistics.Services.TotalError++;
-                                    SERVER.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
+                                    // SERVER.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
 
                                     response.SendError(response, ServiceError);
 
