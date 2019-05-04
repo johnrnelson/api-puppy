@@ -232,12 +232,16 @@ JSONThiefDisplay ResultsSearch {
 
     /* background-color: rgb(184, 184, 184); */
     color: white;
+    overflow-y: scroll; 
 }
 
 JSONThiefDisplay ResultsSearch table {
     /* border: solid 2px white; */
     width: 100%;
+    /* display: inline-block; */
 }
+
+
 
 JSONThiefDisplay ResultsSearch table thead tr td {
     color: gray;
@@ -247,8 +251,14 @@ JSONThiefDisplay ResultsSearch table thead tr td {
     padding-left: 2px;
     padding-right: 15px;
 }
+/* JSONThiefDisplay ResultsSearch table tbody{
+  
+}
+JSONThiefDisplay ResultsSearch table tbody tr {
+   
+} */
 
-JSONThiefDisplay ResultsSearch td {
+JSONThiefDisplay ResultsSearch table tbody tr td {
     color: gold;
 }
 

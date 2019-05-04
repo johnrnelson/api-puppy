@@ -140,29 +140,28 @@
             HostElement: null,
             HostElementMenu: null,
             AddResultRow(HTMLElement) {
+                if (!HTMLElement.innerText) {
+                    return;
+                }
 
-                console.info('add', HTMLElement);
-                // debugger;
                 const ResultSearchBody = puppytoy.UI.HostElement.querySelector('ResultsSearch tbody');
-
-                // ResultSearchBody.innerHTML = "grrr"+RowData;
 
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-            <tr>
-                <td>
-                    <i class="fas fa-plus-circle"></i>
-                    <i class="fas fa-minus-circle"></i>
-                 
-                </td>            
-                <td>
-                    N/A
-                </td>
-                <td>
-                    <DisplayText>${HTMLElement.innerText}</DisplayText>                                    
-                </td>
-            </tr>            
-            `;
+                    <tr>
+                        <td>
+                            <i class="fas fa-plus-circle"></i>
+                            <i class="fas fa-minus-circle"></i>
+                        
+                        </td>            
+                        <td>
+                            ${HTMLElement.nodeName}
+                        </td>
+                        <td>
+                            ${HTMLElement.innerText}
+                        </td>
+                    </tr>            
+                `;
                 ResultSearchBody.appendChild(newRow);
 
             },
@@ -265,8 +264,7 @@
                         const qryTextValue = puppytoy.UI.HostElement.querySelector('#qryTextValue');
 
 
-                        qryTextValue.addEventListener("change", function (eventinfo) {
-                            // debugger;
+                        qryTextValue.QueryElement = function () {
 
                             const srchVal = this.value.trim();
 
@@ -294,6 +292,11 @@
                                 puppytoy.UI.AddResultRow(qryElement);
 
                             }
+                        };
+
+
+                        qryTextValue.addEventListener("change", function (eventinfo) {
+                            this.QueryElement();
                         });
                         // setTimeout(() => {
                         //     qryTextValue.focus();
@@ -484,10 +487,12 @@
 
 
             //Show your default display...
-            puppytoy.UI.Displays.ShowDisplay('config');
+            puppytoy.UI.Displays.ShowDisplay('search');
             puppytoy.UI.ToggleMenu();
 
             // debugger;
+            console.warn('take me out!')
+            puppytoy.UI.HostElement.querySelector('#qryTextValue').QueryElement();
 
 
 
