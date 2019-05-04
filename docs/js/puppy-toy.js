@@ -1,8 +1,9 @@
 (function () {
     /*
+    window.parent.puppytoy
     */
 
-    window.JSONTheif = {
+    window.puppytoy = {
         DocumentJSON: [],
         xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
 
@@ -73,7 +74,7 @@
             elLink.href = HREF2CSS;
             // document.head.appendChild(elLink);
             // debugger;
-            JSONTheif.UI.HostFrame.contentDocument.head.appendChild(elLink);
+            puppytoy.UI.HostFrame.contentDocument.head.appendChild(elLink);
         },
         SniffElement(ParentSniffElement, JSONData) {
 
@@ -126,7 +127,7 @@
                         debugger;
                     }
                 } else {
-                    // JSONTheif.SniffElement(element, elData);
+                    // puppytoy.SniffElement(element, elData);
                 }
             }
 
@@ -142,7 +143,7 @@
 
                 console.info('add', HTMLElement);
                 // debugger;
-                const ResultSearchBody = JSONTheif.UI.HostElement.querySelector('ResultsSearch tbody');
+                const ResultSearchBody = puppytoy.UI.HostElement.querySelector('ResultsSearch tbody');
 
                 // ResultSearchBody.innerHTML = "grrr"+RowData;
 
@@ -166,24 +167,24 @@
 
             },
             ToggleMenu() {
-                if (JSONTheif.UI.HostElementMenu.style.display == "none") {
-                    JSONTheif.UI.HostElementMenu.style.display = "";
-                    // JSONTheif.UI.HostElement.style.display = "none";
-                    JSONTheif.UI.HostFrameContainer.style.display = "none";
+                if (puppytoy.UI.HostElementMenu.style.display == "none") {
+                    puppytoy.UI.HostElementMenu.style.display = "";
+                    // puppytoy.UI.HostElement.style.display = "none";
+                    puppytoy.UI.HostFrameContainer.style.display = "none";
                 } else {
-                    JSONTheif.UI.HostElementMenu.style.display = "none";
-                    // JSONTheif.UI.HostElement.style.display = "";
-                    JSONTheif.UI.HostFrameContainer.style.display = "";
+                    puppytoy.UI.HostElementMenu.style.display = "none";
+                    // puppytoy.UI.HostElement.style.display = "";
+                    puppytoy.UI.HostFrameContainer.style.display = "";
                 }
             },
             Displays: {
                 ActiveDisplay: false,
                 ShowDisplay(ShowDisplayID) {
-                    if (JSONTheif.UI.Displays.ActiveDisplay) {
-                        JSONTheif.UI.Displays.ActiveDisplay.style.display = "none";
+                    if (puppytoy.UI.Displays.ActiveDisplay) {
+                        puppytoy.UI.Displays.ActiveDisplay.style.display = "none";
                     }
-                    JSONTheif.UI.Displays.ActiveDisplay = JSONTheif.UI.HostElement.querySelector('#tab-' + ShowDisplayID);
-                    JSONTheif.UI.Displays.ActiveDisplay.style.display = "block";
+                    puppytoy.UI.Displays.ActiveDisplay = puppytoy.UI.HostElement.querySelector('#tab-' + ShowDisplayID);
+                    puppytoy.UI.Displays.ActiveDisplay.style.display = "block";
                 },
                 MainHelp: {
                     Build() {
@@ -202,7 +203,7 @@
                             newTab.id = "tab-info";
                             newTab.innerHTML = HTML;
 
-                            JSONTheif.UI.HostElement.appendChild(newTab);
+                            puppytoy.UI.HostElement.appendChild(newTab);
                         })();
 
 
@@ -254,14 +255,14 @@
                             newTab.id = "tab-search";
                             newTab.innerHTML = HTML;
 
-                            JSONTheif.UI.HostElement.appendChild(newTab);
+                            puppytoy.UI.HostElement.appendChild(newTab);
                         })();
 
 
 
 
                         //Do the document query..
-                        const qryTextValue = JSONTheif.UI.HostElement.querySelector('#qryTextValue');
+                        const qryTextValue = puppytoy.UI.HostElement.querySelector('#qryTextValue');
 
 
                         qryTextValue.addEventListener("change", function (eventinfo) {
@@ -274,15 +275,15 @@
                             }
 
                             console.info('Searching document for :' + srchVal);
-                            JSONTheif.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
+                            puppytoy.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
 
                             // Make sure you do a full body search! :-) 
                             const qryTags = document.body.querySelectorAll(srchVal);
 
                             console.log('Total Tags Found:', qryTags);
 
-                            const TotalTags = JSONTheif.UI.HostElement.querySelector('stvalue#TotalTags');
-                            const TotalJSONOBjects = JSONTheif.UI.HostElement.querySelector('stvalue#TotalJSONOBjects');
+                            const TotalTags = puppytoy.UI.HostElement.querySelector('stvalue#TotalTags');
+                            const TotalJSONOBjects = puppytoy.UI.HostElement.querySelector('stvalue#TotalJSONOBjects');
 
 
                             TotalTags.innerHTML = "" + qryTags.length + "";
@@ -290,7 +291,7 @@
 
                             for (let index = 0; index < qryTags.length; index++) {
                                 const qryElement = qryTags[index];
-                                JSONTheif.UI.AddResultRow(qryElement);
+                                puppytoy.UI.AddResultRow(qryElement);
 
                             }
                         });
@@ -301,6 +302,19 @@
                     }
                 },
                 Config: {
+                    CheckServer() {
+                        // puppytoy.UI.Displays.Config.CheckServer();
+
+                        puppytoy.xhr('PUT', 'https://demo.tektology.com/', {
+                            service: 'help',
+                            data: {
+                                topic: 'SysInfo'
+                            }
+                        }, function (ServerResponse) {
+                            console.info('DEMO SERVER INFO', ServerResponse);
+                        });
+
+                    },
                     Build() {
 
                         //BUild the first tab!!!
@@ -310,6 +324,7 @@
                             <center>
                                Basic app options
                             </center>
+                            <button onclick="window.parent.puppytoy.UI.Displays.Config.CheckServer();">test</button>
                            
                         `;
                             const newTab = document.createElement('disptab');
@@ -317,7 +332,7 @@
                             newTab.id = "tab-config";
                             newTab.innerHTML = HTML;
 
-                            JSONTheif.UI.HostElement.appendChild(newTab);
+                            puppytoy.UI.HostElement.appendChild(newTab);
                         })();
 
 
@@ -337,14 +352,15 @@
                     hostElMenu.style.position = "fixed";
                     hostElMenu.style.display = "block";
 
-                    hostElMenu.style.zIndex = "5000"; 
+                    hostElMenu.style.zIndex = "5000";
                     hostElMenu.style.margin = "0";
-                    hostElMenu.style.padding = "0";
-                    
+
+                    hostElMenu.style.padding = "3px";
+
                     hostElMenu.style.top = "25px";
                     hostElMenu.style.right = "25px";
 
-                    hostElMenu.style.width = "40px";
+                    // hostElMenu.style.width = "40px";
                     hostElMenu.style.cursor = "hand";
                     hostElMenu.style.textOverflow = "default";
                     hostElMenu.style.backgroundColor = "rgb(56, 56, 56)";
@@ -352,15 +368,16 @@
                     hostElMenu.style.fontSize = "30px";
                     hostElMenu.style.textShadow = "1px 1px 1px rgb(253, 253, 253)";
                     hostElMenu.style.color = "gold";
+                    hostElMenu.style.textAlign = "center";
                     // debugger;
 
 
 
                     hostElMenu.onclick = function (evt, others) {
-                        JSONTheif.UI.ToggleMenu();
+                        puppytoy.UI.ToggleMenu();
                     };
 
-                    JSONTheif.UI.HostElementMenu = hostElMenu;
+                    puppytoy.UI.HostElementMenu = hostElMenu;
                 })();
 
 
@@ -374,10 +391,10 @@
 
 
                 // debugger;
-                var hostEl = JSONTheif.UI.HostFrame.contentDocument.body.appendChild(document.createElement('JSONThiefDisplay'));
+                var hostEl = puppytoy.UI.HostFrame.contentDocument.body.appendChild(document.createElement('JSONThiefDisplay'));
                 // var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
                 // hostEl.style.display = "none";
-                JSONTheif.UI.HostElement = hostEl;
+                puppytoy.UI.HostElement = hostEl;
 
 
 
@@ -395,63 +412,60 @@
                     </sidebaropts>
   
                 `;
-                    JSONTheif.UI.HostElement.innerHTML = HTML;
+                    puppytoy.UI.HostElement.innerHTML = HTML;
 
 
                     //Setup events!
-                    var el_close = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#close');
+                    var el_close = puppytoy.UI.HostElement.querySelector('sidebaropts icon#close');
                     el_close.onclick = function () {
-                        JSONTheif.UI.ToggleMenu();
+                        puppytoy.UI.ToggleMenu();
                     };
-                    var el_info = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#info');
+                    var el_info = puppytoy.UI.HostElement.querySelector('sidebaropts icon#info');
                     el_info.onclick = function () {
-                        JSONTheif.UI.Displays.ShowDisplay(this.id);
+                        puppytoy.UI.Displays.ShowDisplay(this.id);
                     };
-                    var el_search = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#search');
+                    var el_search = puppytoy.UI.HostElement.querySelector('sidebaropts icon#search');
                     el_search.onclick = function () {
-                        JSONTheif.UI.Displays.ShowDisplay(this.id);
+                        puppytoy.UI.Displays.ShowDisplay(this.id);
                     };
-                    var el_config = JSONTheif.UI.HostElement.querySelector('sidebaropts icon#config');
+                    var el_config = puppytoy.UI.HostElement.querySelector('sidebaropts icon#config');
                     el_config.onclick = function () {
-                        JSONTheif.UI.Displays.ShowDisplay(this.id);
+                        puppytoy.UI.Displays.ShowDisplay(this.id);
                     };
 
 
                 })();
 
 
-                JSONTheif.UI.Displays.MainHelp.Build();
-                JSONTheif.UI.Displays.Search.Build();
-                JSONTheif.UI.Displays.Config.Build();
+                puppytoy.UI.Displays.MainHelp.Build();
+                puppytoy.UI.Displays.Search.Build();
+                puppytoy.UI.Displays.Config.Build();
 
-                //Show your default display...
-                JSONTheif.UI.Displays.ShowDisplay('search');
-                // JSONTheif.UI.ToggleMenu();
 
             },
             BuildHostFrame() {
 
-                JSONTheif.UI.HostFrameContainer = document.createElement('div');
+                puppytoy.UI.HostFrameContainer = document.createElement('div');
 
-                JSONTheif.UI.HostFrameContainer.style.display = "none";
-                JSONTheif.UI.HostFrameContainer.style.zIndex = "5000";
-                JSONTheif.UI.HostFrameContainer.style.position = "absolute"
-                JSONTheif.UI.HostFrameContainer.style.margin = "0";
-                JSONTheif.UI.HostFrameContainer.style.padding = "0";
-                JSONTheif.UI.HostFrameContainer.style.top = "25px";
-                JSONTheif.UI.HostFrameContainer.style.left = "25px";
-                JSONTheif.UI.HostFrameContainer.style.right = "25px";
-                JSONTheif.UI.HostFrameContainer.style.bottom = "25px";
-                JSONTheif.UI.HostFrameContainer.style.backgroundColor = "gray";
+                puppytoy.UI.HostFrameContainer.style.display = "none";
+                puppytoy.UI.HostFrameContainer.style.zIndex = "5000";
+                puppytoy.UI.HostFrameContainer.style.position = "absolute"
+                puppytoy.UI.HostFrameContainer.style.margin = "0";
+                puppytoy.UI.HostFrameContainer.style.padding = "0";
+                puppytoy.UI.HostFrameContainer.style.top = "25px";
+                puppytoy.UI.HostFrameContainer.style.left = "25px";
+                puppytoy.UI.HostFrameContainer.style.right = "25px";
+                puppytoy.UI.HostFrameContainer.style.bottom = "25px";
+                puppytoy.UI.HostFrameContainer.style.backgroundColor = "gray";
 
 
-                JSONTheif.UI.HostFrame = document.createElement('iframe');
-                JSONTheif.UI.HostFrame.style.cssText = "width:100%;height:100%;margin:0;padding:0;border:0";
+                puppytoy.UI.HostFrame = document.createElement('iframe');
+                puppytoy.UI.HostFrame.style.cssText = "width:100%;height:100%;margin:0;padding:0;border:0";
 
-                JSONTheif.UI.HostFrameContainer.appendChild(JSONTheif.UI.HostFrame);
-                document.body.appendChild(JSONTheif.UI.HostFrameContainer);
+                puppytoy.UI.HostFrameContainer.appendChild(puppytoy.UI.HostFrame);
+                document.body.appendChild(puppytoy.UI.HostFrameContainer);
                 // debugger;
-                // JSONTheif.UI.HostFrame.contentDocument.body.innerText = "ready";
+                // puppytoy.UI.HostFrame.contentDocument.body.innerText = "ready";
 
             }
         },
@@ -461,23 +475,22 @@
         Init() {
 
             //Must build our host frame first!
-            JSONTheif.UI.BuildHostFrame();
+            puppytoy.UI.BuildHostFrame();
+
+            console.info('Building UI for JSONThief');
+            puppytoy.UI.BuildUIDisplay();
 
 
+
+
+            //Show your default display...
+            puppytoy.UI.Displays.ShowDisplay('config');
+            puppytoy.UI.ToggleMenu();
 
             // debugger;
 
-            console.info('Building UI for JSONThief');
-            JSONTheif.UI.BuildUIDisplay();
 
-            JSONTheif.xhr('PUT', 'https://demo.tektology.com/', {
-                service: 'help',
-                data: {
-                    topic: 'SysInfo'
-                }
-            }, function (ServerResponse) {
-                console.info('DEMO SERVER INFO', ServerResponse);
-            });
+
         }
     };
 
@@ -487,49 +500,28 @@
 
 
 
-    JSONTheif.Init();
+    puppytoy.Init();
 
 
 
 
     /*
-        Load your styles you need...
+        Load your styles you need. It will go in the iframe not the host document!!!!
     */
-
-    // var cssLinks = document.head.querySelectorAll('link');
-    // JSONTheif.FontAwesome = false;
-
-
-    // for (let index = 0; index < cssLinks.length; index++) {
-    //     const docCSS = cssLinks[index];
-    //     if (docCSS.href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css") {
-    //         JSONTheif.FontAwesome = true;
-    //         break;
-    //     }
-    // }
-
-    // if (!JSONTheif.FontAwesome) {
-    //     console.info('Loading up the icons...');
-    //     JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-    //     JSONTheif.FontAwesome = true;
-    // }
-
-    JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-
-
-    JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
-    JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
-    JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
+    puppytoy.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+    puppytoy.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
+    puppytoy.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
+    puppytoy.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
 
 
     if ((document.location.hostname == "127.0.0.1") ||
         (document.location.hostname == "localhost") ||
         (document.location.hostname == "0.0.0.0")) {
         console.info('Loading CSS from local!');
-        JSONTheif.LoadCSSLink("http://localhost:9080/?/css/puppy-toy.css");
+        puppytoy.LoadCSSLink("http://localhost:9080/?/css/puppy-toy.css");
     } else {
         console.info('Loading CSS from "demo.tektology.com"!');
-        JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/puppy-toy.css");
+        puppytoy.LoadCSSLink("https://demo.tektology.com/?/css/puppy-toy.css");
     }
 
 
