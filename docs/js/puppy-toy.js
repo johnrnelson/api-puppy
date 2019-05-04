@@ -487,12 +487,13 @@
 
 
             //Show your default display...
+            // puppytoy.UI.Displays.ShowDisplay('info');
             puppytoy.UI.Displays.ShowDisplay('search');
             puppytoy.UI.ToggleMenu();
 
             // debugger;
-            console.warn('take me out!')
-            puppytoy.UI.HostElement.querySelector('#qryTextValue').QueryElement();
+            // console.warn('take me out unless debugging!')
+            // puppytoy.UI.HostElement.querySelector('#qryTextValue').QueryElement();
 
 
 
