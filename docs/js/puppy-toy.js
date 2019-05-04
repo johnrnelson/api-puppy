@@ -1,10 +1,8 @@
-/*
-*/
-
-
 (function () {
+    /*
+    */
 
-    window.JSONTheif = {
+    const JSONTheif = {
         DocumentJSON: [],
         xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
 
@@ -434,24 +432,25 @@
             });
         }
     };
-    JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-
-    // var cssLinks = document.head.querySelectorAll('link');
-    // JSONTheif.FontAwesome = false;
 
 
-    // for (let index = 0; index < cssLinks.length; index++) {
-    //     const docCSS = cssLinks[index];
-    //     if (docCSS.href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css") {
-    //         JSONTheif.FontAwesome = true;
-    //         break;
-    //     }
-    // }
+    var cssLinks = document.head.querySelectorAll('link');
+    JSONTheif.FontAwesome = false;
 
-    // if (!JSONTheif.FontAwesome) {
-    //     JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-    //     JSONTheif.FontAwesome = true;
-    // }
+
+    for (let index = 0; index < cssLinks.length; index++) {
+        const docCSS = cssLinks[index];
+        if (docCSS.href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css") {
+            JSONTheif.FontAwesome = true;
+            break;
+        }
+    }
+
+    if (!JSONTheif.FontAwesome) {
+        console.info('Loading up the icons...');
+        JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+        JSONTheif.FontAwesome = true;
+    }
 
 
 
@@ -476,4 +475,6 @@
 
 
     JSONTheif.Init();
+
+    
 })();
