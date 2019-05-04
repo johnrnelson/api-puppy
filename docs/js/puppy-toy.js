@@ -449,7 +449,7 @@
 
                 puppytoy.UI.HostFrameContainer.style.display = "none";
                 puppytoy.UI.HostFrameContainer.style.zIndex = "5000";
-                puppytoy.UI.HostFrameContainer.style.position = "absolute"
+                puppytoy.UI.HostFrameContainer.style.position = "fixed"
                 puppytoy.UI.HostFrameContainer.style.margin = "0";
                 puppytoy.UI.HostFrameContainer.style.padding = "0";
                 puppytoy.UI.HostFrameContainer.style.top = "25px";
