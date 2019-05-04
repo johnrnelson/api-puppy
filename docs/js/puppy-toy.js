@@ -448,17 +448,17 @@
             },
             BuildHostFrame() {
 
-                puppytoy.UI.HostFrameContainer = document.createElement('div');
-
+                puppytoy.UI.HostFrameContainer = document.createElement('MenuItem');
                 puppytoy.UI.HostFrameContainer.style.display = "none";
+                puppytoy.UI.HostFrameContainer.style.position = "fixed";
+
                 puppytoy.UI.HostFrameContainer.style.zIndex = "5000";
-                puppytoy.UI.HostFrameContainer.style.position = "fixed"
                 puppytoy.UI.HostFrameContainer.style.margin = "0";
                 puppytoy.UI.HostFrameContainer.style.padding = "0";
-                puppytoy.UI.HostFrameContainer.style.top = "25px";
-                puppytoy.UI.HostFrameContainer.style.left = "25px";
-                puppytoy.UI.HostFrameContainer.style.right = "25px";
-                puppytoy.UI.HostFrameContainer.style.bottom = "25px";
+                puppytoy.UI.HostFrameContainer.style.top = "0";
+                puppytoy.UI.HostFrameContainer.style.left = "0";
+                puppytoy.UI.HostFrameContainer.style.right = "0";
+                puppytoy.UI.HostFrameContainer.style.bottom = "0";
                 puppytoy.UI.HostFrameContainer.style.backgroundColor = "gray";
 
 
