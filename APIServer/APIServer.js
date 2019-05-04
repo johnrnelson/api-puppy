@@ -446,8 +446,7 @@ const IPC = {
         // console.log(request.QueryPath, ' --- ', request.method.toUpperCase());
 
         //We alwasy use JSON for everything.. 
-        response.writeHead(200, {
-            // 'Content-Type': 'application/json',
+        response.writeHead(200, {            
             //CSP Policy
             // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
 
@@ -455,8 +454,7 @@ const IPC = {
             "Access-Control-Allow-Origin": "*",
             // GET,PUT,POST,DELETE
             "Access-Control-Allow-Methods": "*",
-            "Access-Control-Allow-Headers": "*"
-            // "Access-Control-Allow-Headers": "Content-Type, Authorization"
+            "Access-Control-Allow-Headers": "*"            
         });
 
         if (request.method.toUpperCase() == "OPTIONS") {

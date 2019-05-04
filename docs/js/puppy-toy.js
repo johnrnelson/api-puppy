@@ -403,22 +403,6 @@
 
 
 
-            JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
-            JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
-            JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
-
-
-            if ((document.location.hostname == "127.0.0.1") ||
-                (document.location.hostname == "localhost") ||
-                (document.location.hostname == "0.0.0.0")) {
-                console.info('Loading CSS from local!');
-                JSONTheif.LoadCSSLink("http://localhost:9080/?/css/puppy-toy.css");
-            } else {
-                console.info('Loading CSS from "demo.tektology.com"!');
-                JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/puppy-toy.css");
-            }
-
-
             console.info('Building UI for JSONThief');
             JSONTheif.UI.BuildUIDisplay();
 
@@ -457,10 +441,8 @@
     })();
 
 
-    JSONTheif.Init();
-
     /*
-        Now load your styles...
+        Load your styles you need...
     */
 
     var cssLinks = document.head.querySelectorAll('link');
@@ -480,5 +462,25 @@
         JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
         JSONTheif.FontAwesome = true;
     }
+
+
+    JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
+    JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
+    JSONTheif.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
+
+
+    if ((document.location.hostname == "127.0.0.1") ||
+        (document.location.hostname == "localhost") ||
+        (document.location.hostname == "0.0.0.0")) {
+        console.info('Loading CSS from local!');
+        JSONTheif.LoadCSSLink("http://localhost:9080/?/css/puppy-toy.css");
+    } else {
+        console.info('Loading CSS from "demo.tektology.com"!');
+        JSONTheif.LoadCSSLink("https://demo.tektology.com/?/css/puppy-toy.css");
+    }
+
+
+
+    JSONTheif.Init();
 
 })();
