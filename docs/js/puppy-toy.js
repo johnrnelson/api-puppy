@@ -434,24 +434,24 @@
             });
         }
     };
+    JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+
+    // var cssLinks = document.head.querySelectorAll('link');
+    // JSONTheif.FontAwesome = false;
 
 
-    var cssLinks = document.head.querySelectorAll('link');
-    JSONTheif.FontAwesome = false;
+    // for (let index = 0; index < cssLinks.length; index++) {
+    //     const docCSS = cssLinks[index];
+    //     if (docCSS.href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css") {
+    //         JSONTheif.FontAwesome = true;
+    //         break;
+    //     }
+    // }
 
-
-    for (let index = 0; index < cssLinks.length; index++) {
-        const docCSS = cssLinks[index];
-        if (docCSS.href = "https://use.fontawesome.com/releases/v5.8.1/css/all.css") {
-            JSONTheif.FontAwesome = true;
-            break;
-        }
-    }
-
-    if (!JSONTheif.FontAwesome) {
-        JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-        JSONTheif.FontAwesome = true;
-    }
+    // if (!JSONTheif.FontAwesome) {
+    //     JSONTheif.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+    //     JSONTheif.FontAwesome = true;
+    // }
 
 
 
