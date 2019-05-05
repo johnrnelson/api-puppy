@@ -65,14 +65,9 @@ const pupframe = {
         xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
         xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
 
-        try {
-            //Trying to trap the network errors?
-            xhttp.send(JSON.stringify(SENDMSG));
+        //Trying to trap the network errors?
+        xhttp.send(JSON.stringify(SENDMSG));
 
-        } catch (e) {
-            debugger;
-            console.log('gesh');
-        }
     },
     //=======
     UI: {
@@ -125,11 +120,10 @@ const pupframe = {
 
             MainHelp: {
                 Build(OnBuild) {
+
  
-
-
-
                     var url;
+      
                     if (window.parent.puppytoy.IsLocalDebug()) {
 
                         url = '/docs/puppy-toy/panels/info.html';
@@ -139,17 +133,20 @@ const pupframe = {
 
                     // console.log(url);
 
-                    pupframe.UI.GetHTML(url, function (err, ConfigHTML) {
+                    pupframe.UI.GetHTML(url, function (err, HelpHTML) {
                         if (err) {
+
+                            console.warn('Bad URL-->', url);
                             console.warn(err);
                             return;
                         }
                         const newTab = document.createElement('disptab');
                         newTab.style.display = "none";
                         newTab.id = "tab-info";
-                        newTab.innerHTML = HTML;
+                        newTab.innerHTML = HelpHTML;
+                        // debugger;
 
-                        pupframe.UI.HostElement.appendChild(newTab); 
+                        pupframe.UI.HostElement.appendChild(newTab);
                         OnBuild();
                     });
 
@@ -410,7 +407,7 @@ const pupframe = {
         setTimeout(() => {
             //Show your default display...
             // pupframe.UI.Displays.ShowDisplay('info');
-            pupframe.UI.Displays.ShowDisplay('search');            
+            pupframe.UI.Displays.ShowDisplay('search');
             // pupframe.UI.Displays.ShowDisplay('config');
         }, 500);
 
