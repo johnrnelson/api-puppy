@@ -216,7 +216,7 @@ const pupframe = {
                         // Make sure you do a full body search! :-) 
                         const qryTags = window.parent.document.body.querySelectorAll(srchVal);
 
-                        console.log('Total Tags Found:', qryTags);
+                        // console.log('Total Tags Found:', qryTags);
 
                         const TotalTags = pupframe.UI.HostElement.querySelector('stvalue#TotalTags');
                         const TotalJSONOBjects = pupframe.UI.HostElement.querySelector('stvalue#TotalJSONOBjects');
@@ -349,13 +349,13 @@ const pupframe = {
             var totalDisplay = 3;
 
             pupframe.UI.Displays.MainHelp.Build(function () {
-                console.info('mmmm***');
+                console.info('Fix me!!!! mmmm***');
             });
             pupframe.UI.Displays.Search.Build(function () {
-                console.info('sss***');
+                console.info('Fix me!!!! sss***');
             });
             pupframe.UI.Displays.Config.Build(function () {
-                console.info('bbbb***');
+                console.info('Fix me!!!! bbbb***');
             });
 
 
