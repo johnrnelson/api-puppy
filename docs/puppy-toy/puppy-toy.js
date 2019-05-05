@@ -3,7 +3,7 @@
 */
 (function () {
     /*
-    window.parent.puppytoy
+    
     */
 
     window.puppytoy = {
