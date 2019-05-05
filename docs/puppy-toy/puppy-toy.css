@@ -232,7 +232,7 @@ JSONThiefDisplay ResultsSearch {
 
     /* background-color: rgb(184, 184, 184); */
     color: white;
-    overflow-y: scroll; 
+    overflow-y: auto; 
 }
 
 JSONThiefDisplay ResultsSearch table {
