@@ -125,23 +125,50 @@ const pupframe = {
 
             MainHelp: {
                 Build(OnBuild) {
+ 
 
-                    //BUild the first tab!!!
-                    (function () {
-                        const HTML = `
-                    <br><br>
-                    <center>
-                       Simple help
-                    </center> 
-                       
-                    `;
+
+
+                    var url;
+                    if (window.parent.puppytoy.IsLocalDebug()) {
+
+                        url = '/docs/puppy-toy/panels/info.html';
+                    } else {
+                        url = 'https://demo.tektology.com/?/puppy-toy/panels/info.html';
+                    }
+
+                    // console.log(url);
+
+                    pupframe.UI.GetHTML(url, function (err, ConfigHTML) {
+                        if (err) {
+                            console.warn(err);
+                            return;
+                        }
                         const newTab = document.createElement('disptab');
                         newTab.style.display = "none";
                         newTab.id = "tab-info";
                         newTab.innerHTML = HTML;
 
-                        pupframe.UI.HostElement.appendChild(newTab);
-                    })();
+                        pupframe.UI.HostElement.appendChild(newTab); 
+                        OnBuild();
+                    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     OnBuild();
 
