@@ -7,6 +7,12 @@
     */
 
     window.puppytoy = {
+        DubugMe() {
+            /*
+                This is the host page javascript...
+            */
+            debugger;
+        },
         DocumentJSON: [],
         UI: {},
         HostURL() {
@@ -170,8 +176,8 @@
                 const scriptFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
                 // scriptFile.src = puppytoy.HostURL() + "docs/puppy-toy/puppy-toy-frame.js";
                 scriptFile.src = "http://localhost:9080/?/puppy-toy/puppy-toy-frame.js";
-                
-                console.info('URL--',puppytoy.HostURL() + "/docs/puppy-toy/puppy-toy-frame.js");
+
+                console.info('URL--', puppytoy.HostURL() + "/docs/puppy-toy/puppy-toy-frame.js");
 
                 puppytoy.UI.HostFrame.contentDocument.head.appendChild(scriptFile);
 

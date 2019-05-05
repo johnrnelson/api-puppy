@@ -2,8 +2,6 @@
     This script file gets loaded into the iframe.
 */
 
-console.log("puppy-toy-frame.js");
-
 const pupframe = {
 
     LoadCSSLink(HREF2CSS) {
@@ -121,9 +119,9 @@ const pupframe = {
             MainHelp: {
                 Build(OnBuild) {
 
- 
+
                     var url;
-      
+
                     if (window.parent.puppytoy.IsLocalDebug()) {
 
                         url = '/docs/puppy-toy/panels/info.html';
@@ -169,6 +167,50 @@ const pupframe = {
 
                     OnBuild();
 
+                }
+            },
+
+            Config: {
+                CheckServer() {
+                    var url = 'https://demo.tektology.com/';
+
+                    pupframe.xhr('PUT', url, {
+                        service: 'help',
+                        data: {
+                            topic: 'SysInfo'
+                        }
+                    }, function (err, ServerResponse) {
+                        const srvData = JSON.parse(ServerResponse);
+                        console.info('DEMO SERVER INFO', srvData);
+                    });
+
+                },
+                Build(OnBuild) {
+                    console.info('Fix the rest of the displays!')
+                    // debugger;
+                    var url;
+                    if (window.parent.puppytoy.IsLocalDebug()) {
+
+                        url = '/docs/puppy-toy/panels/config.html';
+                    } else {
+                        url = 'https://demo.tektology.com/?/puppy-toy/panels/config.html';
+                    }
+
+                    // console.log(url);
+
+                    pupframe.UI.GetHTML(url, function (err, ConfigHTML) {
+                        if (err) {
+                            console.warn(err);
+                            return;
+                        }
+                        const newTab = document.createElement('disptab');
+                        newTab.style.display = "none";
+                        newTab.id = "tab-config";
+                        newTab.innerHTML = ConfigHTML;
+
+                        pupframe.UI.HostElement.appendChild(newTab);
+                        OnBuild();
+                    });
                 }
             },
             Search: {
@@ -234,7 +276,7 @@ const pupframe = {
                         }
 
                         // debugger;
-                        console.info('Searching document for :' + srchVal);
+                        // console.info('Searching document for :' + srchVal);
                         pupframe.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
 
                         // Make sure you do a full body search! :-) 
@@ -268,49 +310,6 @@ const pupframe = {
 
                 }
             },
-            Config: {
-                CheckServer() {
-                    var url = 'https://demo.tektology.com/';
-
-                    pupframe.xhr('PUT', url, {
-                        service: 'help',
-                        data: {
-                            topic: 'SysInfo'
-                        }
-                    }, function (err, ServerResponse) {
-                        const srvData = JSON.parse(ServerResponse);
-                        console.info('DEMO SERVER INFO', srvData);
-                    });
-
-                },
-                Build(OnBuild) {
-                    console.info('Fix the rest of the displays!')
-                    // debugger;
-                    var url;
-                    if (window.parent.puppytoy.IsLocalDebug()) {
-
-                        url = '/docs/puppy-toy/panels/config.html';
-                    } else {
-                        url = 'https://demo.tektology.com/?/puppy-toy/panels/config.html';
-                    }
-
-                    // console.log(url);
-
-                    pupframe.UI.GetHTML(url, function (err, ConfigHTML) {
-                        if (err) {
-                            console.warn(err);
-                            return;
-                        }
-                        const newTab = document.createElement('disptab');
-                        newTab.style.display = "none";
-                        newTab.id = "tab-config";
-                        newTab.innerHTML = ConfigHTML;
-
-                        pupframe.UI.HostElement.appendChild(newTab);
-                        OnBuild();
-                    });
-                }
-            },
         },
 
 
@@ -338,11 +337,14 @@ const pupframe = {
                 const HTML = `                
            
                 <sidebaropts>                        
-                    <icon class="fas fa-info-circle" id="info"></icon> 
-                    <icon class="fas fa-search" id="search"></icon> 
-                    <icon class="fas fa-cogs" id="config"></icon>                         
+                    <icon title="Information" class="fas fa-info-circle" id="info"></icon> 
+                    <icon title="Search" class="fas fa-search" id="search"></icon> 
+                    <icon title="Configure" class="fas fa-cogs" id="config"></icon>                         
                     <hr/ width="70%" size="1" color="silver">
-                    <icon class="fas fa-times-circle" id="close"></icon> 
+                    <icon title="Debug Page" class="fas fa-bug" id="debug-host"></icon>                         
+                    <icon title="Debug Frame" class="fas fa-spider" id="debug-frame"></icon>                         
+                    <hr/ width="70%" size="1" color="silver">
+                    <icon title="Close this window" class="fas fa-times-circle" id="close"></icon> 
                 </sidebaropts>
 
             `;
@@ -350,23 +352,28 @@ const pupframe = {
 
 
                 //Setup events!
-                var el_close = pupframe.UI.HostElement.querySelector('sidebaropts icon#close');
-                el_close.onclick = function () {
+                pupframe.UI.HostElement.querySelector('sidebaropts icon#close').onclick = function () {
                     window.parent.puppytoy.ToggleMenu();
                 };
-                var el_info = pupframe.UI.HostElement.querySelector('sidebaropts icon#info');
-                el_info.onclick = function () {
+                pupframe.UI.HostElement.querySelector('sidebaropts icon#info').onclick = function () {
                     pupframe.UI.Displays.ShowDisplay(this.id);
                 };
-                var el_search = pupframe.UI.HostElement.querySelector('sidebaropts icon#search');
-                el_search.onclick = function () {
+                pupframe.UI.HostElement.querySelector('sidebaropts icon#search').onclick = function () {
                     pupframe.UI.Displays.ShowDisplay(this.id);
                 };
-                var el_config = pupframe.UI.HostElement.querySelector('sidebaropts icon#config');
-                el_config.onclick = function () {
+                pupframe.UI.HostElement.querySelector('sidebaropts icon#config').onclick = function () {
                     pupframe.UI.Displays.ShowDisplay(this.id);
                 };
-
+                pupframe.UI.HostElement.querySelector('sidebaropts icon#debug-host').onclick = function () {
+                    window.parent.puppytoy.DubugMe();
+                    
+                };
+                pupframe.UI.HostElement.querySelector('sidebaropts icon#debug-frame').onclick = function () {
+                    /*
+                        This is the frame javascript...
+                    */
+                   debugger;
+                };                
 
             })();
 
