@@ -176,7 +176,7 @@
             } else {
                 console.info('Loading "puppy-toy-frame.js" from "demo.tektology.com"!');
                 const scriptFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
-                scriptFile.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
+                scriptFile.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy-frame.js";
                 puppytoy.UI.HostFrame.contentDocument.head.appendChild(scriptFile);
             }
 
