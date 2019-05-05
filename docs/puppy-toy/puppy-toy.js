@@ -11,7 +11,9 @@
         UI: {},
         HostURL() {
             // puppytoy.HostURL()
-            return "" + parent.location.protocol + "/" + parent.location.host + "";
+            const URL = "" + parent.location.protocol + "/" + parent.location.host + "";
+            // debugger;
+            return URL;
 
         },
         IsLocalDebug() {
@@ -162,12 +164,12 @@
             document.body.appendChild(puppytoy.UI.HostFrameContainer);
 
 
-            if (puppytoy.IsLocalDebug() == "sdfsdf") {
+            if (puppytoy.IsLocalDebug()) {
                 console.info('Loading "puppy-toy-frame.js" from ' + puppytoy.HostURL());
 
                 const scriptFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
-                // scriptFile.src = puppytoy.HostURL() + "/?/puppy-toy/puppy-toy-frame.js";
-                scriptFile.src = puppytoy.HostURL() + "docs/puppy-toy/puppy-toy-frame.js";
+                // scriptFile.src = puppytoy.HostURL() + "docs/puppy-toy/puppy-toy-frame.js";
+                scriptFile.src = "http://localhost:9080/?/puppy-toy/puppy-toy-frame.js";
                 
                 console.info('URL--',puppytoy.HostURL() + "/docs/puppy-toy/puppy-toy-frame.js");
 

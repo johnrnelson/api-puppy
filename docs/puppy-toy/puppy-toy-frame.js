@@ -25,25 +25,12 @@ const pupframe = {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
             if (this.readyState == 4 && this.status == 200) {
                 if (this.responseText.length) {
-                    try {                        
-                        OnData(null,this.responseText);
+                    try {
+                        OnData(null, this.responseText);
                     } catch (errBadJSON) {
-                        OnData(errBadJSON,null);
+                        OnData(errBadJSON, null);
                     }
 
                 } else {
@@ -59,23 +46,22 @@ const pupframe = {
 
 
         };
-        xhttp.onerror = function () {
+        xhttp.onerror = function (ErrorInfo) {
             if (!OnError) {
                 console.warn('Error XHR:' + VERB + ':' + ROUTE + ' ST:' + xhttp.status);
-                debugger;
             } else {
                 OnError({
                     VERB: VERB,
                     ROUTE: ROUTE,
+                    ST: xhttp.status
                 });
             }
-            console.log("** An error occurred during the transaction");
         };
 
         xhttp.open(VERB, ROUTE, true);
 
         // CORS stuff...       
-        xhttp.setRequestHeader("Content-Type", "application/json");
+        // xhttp.setRequestHeader("Content-Type", "application/json");
         xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
         xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
 
@@ -120,10 +106,10 @@ const pupframe = {
             ResultSearchBody.appendChild(newRow);
 
         },
-        GetHTML(URL,OnHTML) {
+        GetHTML(URL, OnHTML) {
 
-            pupframe.xhr('GET', URL, "", function (err,ServerResponse) {                
-                OnHTML(err,ServerResponse);
+            pupframe.xhr('GET', URL, "", function (err, ServerResponse) {
+                OnHTML(err, ServerResponse);
             });
         },
 
@@ -136,8 +122,9 @@ const pupframe = {
                 pupframe.UI.Displays.ActiveDisplay = pupframe.UI.HostElement.querySelector('#tab-' + ShowDisplayID);
                 pupframe.UI.Displays.ActiveDisplay.style.display = "block";
             },
+
             MainHelp: {
-                Build() {
+                Build(OnBuild) {
 
                     //BUild the first tab!!!
                     (function () {
@@ -156,12 +143,12 @@ const pupframe = {
                         pupframe.UI.HostElement.appendChild(newTab);
                     })();
 
-
+                    OnBuild();
 
                 }
             },
             Search: {
-                Build() {
+                Build(OnBuild) {
 
                     //BUild the first tab!!!
                     (function () {
@@ -222,11 +209,12 @@ const pupframe = {
                             return;
                         }
 
+                        // debugger;
                         console.info('Searching document for :' + srchVal);
                         pupframe.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
 
                         // Make sure you do a full body search! :-) 
-                        const qryTags = document.body.querySelectorAll(srchVal);
+                        const qryTags = window.parent.document.body.querySelectorAll(srchVal);
 
                         console.log('Total Tags Found:', qryTags);
 
@@ -250,7 +238,9 @@ const pupframe = {
                     });
                     // setTimeout(() => {
                     //     qryTextValue.focus();
-                    // }, 50);                    
+                    // }, 50);   
+
+                    OnBuild();
 
                 }
             },
@@ -263,55 +253,38 @@ const pupframe = {
                         data: {
                             topic: 'SysInfo'
                         }
-                    }, function (err,ServerResponse) {
+                    }, function (err, ServerResponse) {
                         const srvData = JSON.parse(ServerResponse);
                         console.info('DEMO SERVER INFO', srvData);
                     });
 
                 },
-                Build() {
-
-                    const CONFIG_HTML_PATH = "/?/puppy-toy/panels/config.html";
-            
-                    debugger;
+                Build(OnBuild) {
+                    console.info('Fix the rest of the displays!')
+                    // debugger;
+                    var url;
                     if (window.parent.puppytoy.IsLocalDebug()) {
 
-                        var url = 'http://localhost:9080';
+                        url = '/docs/puppy-toy/panels/config.html';
                     } else {
-                        var url = 'https://demo.tektology.com';
+                        url = 'https://demo.tektology.com/?/puppy-toy/panels/config.html';
                     }
-                    
-                    console.log(url+CONFIG_HTML_PATH);
 
-                    pupframe.UI.GetHTML(url+CONFIG_HTML_PATH, function (err,ConfigHTML) {
-                        console.log(err,ConfigHTML);
-                        
-                    });
+                    // console.log(url);
 
-
-
-
-
-                    //BUild the first tab!!!
-                    (function () {
-                        const HTML = `
-                        <br><br>
-                        <center>
-                           Basic app options
-                        </center>
-                        <button onclick="pupframe.UI.Displays.Config.CheckServer();">test</button>
-                       
-                    `;
+                    pupframe.UI.GetHTML(url, function (err, ConfigHTML) {
+                        if (err) {
+                            console.warn(err);
+                            return;
+                        }
                         const newTab = document.createElement('disptab');
                         newTab.style.display = "none";
                         newTab.id = "tab-config";
-                        newTab.innerHTML = HTML;
+                        newTab.innerHTML = ConfigHTML;
 
                         pupframe.UI.HostElement.appendChild(newTab);
-                    })();
-
-
-
+                        OnBuild();
+                    });
                 }
             },
         },
@@ -373,10 +346,17 @@ const pupframe = {
 
             })();
 
+            var totalDisplay = 3;
 
-            pupframe.UI.Displays.MainHelp.Build();
-            pupframe.UI.Displays.Search.Build();
-            pupframe.UI.Displays.Config.Build();
+            pupframe.UI.Displays.MainHelp.Build(function () {
+                console.info('mmmm***');
+            });
+            pupframe.UI.Displays.Search.Build(function () {
+                console.info('sss***');
+            });
+            pupframe.UI.Displays.Config.Build(function () {
+                console.info('bbbb***');
+            });
 
 
         },
@@ -396,15 +376,17 @@ const pupframe = {
 
 
 
-        //Show your default display...
-        // pupframe.UI.Displays.ShowDisplay('info');
-        // pupframe.UI.Displays.ShowDisplay('search');
-        pupframe.UI.Displays.ShowDisplay('config');
+
         window.parent.puppytoy.ToggleMenu();
 
-        // debugger;
-        // console.warn('take me out unless debugging!')
-        // pupframe.UI.HostElement.querySelector('#qryTextValue').QueryElement();
+        // When debugging use this to quickly get to where you need...
+        setTimeout(() => {
+            //Show your default display...
+            // pupframe.UI.Displays.ShowDisplay('info');
+            pupframe.UI.Displays.ShowDisplay('search');            
+            // pupframe.UI.Displays.ShowDisplay('config');
+        }, 500);
+
 
     }
 };
