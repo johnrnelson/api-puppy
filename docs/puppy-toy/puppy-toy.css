@@ -1,40 +1,3 @@
-/* JSONThieMenu {
-    z-index: 5000;
-    position: fixed;
-    display: block;
-    top: 15px; 
-    right: 35px;
-    height: 40px;
-    width: 40px;
-    border-radius: 20px;
-    border: solid 2px black;
-
-    margin: 0;
-    padding: 2px;
-
-    cursor: default;
-    
-    text-align: center;
-
-    background-color: rgb(56, 56, 56);
-
-    text-shadow: 1px 1px 1px rgb(253, 253, 253);
-}
-
-JSONThieMenu i {
-    color: rgb(204, 204, 204);
-    font-size: 30px;
-}
-
-JSONThieMenu:hover {
-    color: gray;
-    background-color: rgb(134, 134, 134);
-    text-shadow: 1px 1px 1px black;
-} */
-
-
-
-
 
 /* The main display */
 
@@ -84,7 +47,7 @@ JSONThiefDisplay sidebaropts icon {
 }
 
 JSONThiefDisplay sidebaropts icon:hover {
-    color: white;
+    color: rgb(26, 243, 109);
     /* background-color: white; */
     border: solid 1px rgb(119, 119, 119);
 }

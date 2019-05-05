@@ -431,12 +431,12 @@ pupframe.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
 pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
 pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
 pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
+ 
 
-if ((window.parent.location.hostname == "127.0.0.1") ||
-    (window.parent.location.hostname == "localhost") ||
-    (window.parent.location.hostname == "0.0.0.0")) {
-    console.info('Loading CSS from local!');
-    pupframe.LoadCSSLink("http://localhost:9080/?/puppy-toy/puppy-toy.css");
+
+if (window.parent.puppytoy.IsLocalDebug()) {
+    console.info('Loading CSS from local!');    
+    pupframe.LoadCSSLink("/docs/puppy-toy/puppy-toy.css");
 } else {
     console.info('Loading CSS from "demo.tektology.com"!');
     pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/puppy-toy.css");

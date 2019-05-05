@@ -8,6 +8,9 @@
     "data": {
         "notes": "Get data from the MySQL server..."
     },
+    "comics": {
+        "notes": "Sample data to help test the api..."
+    },    
     "help": {        
         "notes": "Help on help to help you....  lol"
     },
