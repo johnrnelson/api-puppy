@@ -8,7 +8,24 @@
 
     window.puppytoy = {
         DocumentJSON: [],
-        UI:{},
+        UI: {},
+        HostURL() {
+            // puppytoy.HostURL()
+            return "" + parent.location.protocol + "/" + parent.location.host + "";
+
+        },
+        IsLocalDebug() {
+            // (document.location.hostname == "dev.johnrnelson.com") ||
+            if ((document.location.hostname == "127.0.0.1") ||
+                (document.location.hostname == "localhost") ||
+                (document.location.hostname == "dev.johnrnelson.com") ||
+                (document.location.hostname == "0.0.0.0")) {
+                return true;
+            } else {
+                return false;
+            }
+
+        },
         SniffElement(ParentSniffElement, JSONData) {
 
             JSONData.items = [];
@@ -67,7 +84,19 @@
 
 
         },
-        BuildMenu(){
+
+        ToggleMenu() {
+            if (puppytoy.UI.HostElementMenu.style.display == "none") {
+                puppytoy.UI.HostElementMenu.style.display = "";
+                // puppytoy.UI.HostElement.style.display = "none";
+                puppytoy.UI.HostFrameContainer.style.display = "none";
+            } else {
+                puppytoy.UI.HostElementMenu.style.display = "none";
+                // puppytoy.UI.HostElement.style.display = "";
+                puppytoy.UI.HostFrameContainer.style.display = "";
+            }
+        },
+        BuildMenu() {
             var hostElMenu = document.body.appendChild(document.createElement('JSONThieMenu'));
             // <i class="fas fa-sitemap"></i>
             hostElMenu.innerHTML = "*";
@@ -100,84 +129,68 @@
                 puppytoy.ToggleMenu();
             };
 
-            puppytoy.UI.HostElementMenu = hostElMenu;            
+            puppytoy.UI.HostElementMenu = hostElMenu;
         },
-        ToggleMenu() {
-            if (puppytoy.UI.HostElementMenu.style.display == "none") {
-                puppytoy.UI.HostElementMenu.style.display = "";
-                // puppytoy.UI.HostElement.style.display = "none";
-                puppytoy.UI.HostFrameContainer.style.display = "none";
+        BuildIFrame() {
+
+
+
+            puppytoy.UI.HostFrameContainer = document.createElement('IFRAMEHOST');
+            puppytoy.UI.HostFrameContainer.style.display = "none";
+            puppytoy.UI.HostFrameContainer.style.position = "fixed";
+
+            puppytoy.UI.HostFrameContainer.style.zIndex = "5000";
+            puppytoy.UI.HostFrameContainer.style.margin = "0";
+            puppytoy.UI.HostFrameContainer.style.padding = "0";
+            puppytoy.UI.HostFrameContainer.style.top = "0";
+            puppytoy.UI.HostFrameContainer.style.left = "0";
+            puppytoy.UI.HostFrameContainer.style.right = "0";
+            puppytoy.UI.HostFrameContainer.style.bottom = "0";
+            puppytoy.UI.HostFrameContainer.style.backgroundColor = "gray";
+
+            puppytoy.UI.HostFrame = document.createElement('iframe');
+
+            // This will make contentDocument unavailable!!!!
+            // puppytoy.UI.HostFrame.src = "http://localhost:9080/?/puppy-toy/puppy-toy.html";
+
+            puppytoy.UI.HostFrame.style.cssText = "width:100%;height:100%;margin:0;padding:0;border:0";
+
+
+
+            puppytoy.UI.HostFrameContainer.appendChild(puppytoy.UI.HostFrame);
+
+            document.body.appendChild(puppytoy.UI.HostFrameContainer);
+
+
+            if (puppytoy.IsLocalDebug() == "sdfsdf") {
+                console.info('Loading "puppy-toy-frame.js" from ' + puppytoy.HostURL());
+
+                const scriptFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
+                // scriptFile.src = puppytoy.HostURL() + "/?/puppy-toy/puppy-toy-frame.js";
+                scriptFile.src = puppytoy.HostURL() + "docs/puppy-toy/puppy-toy-frame.js";
+                
+                console.info('URL--',puppytoy.HostURL() + "/docs/puppy-toy/puppy-toy-frame.js");
+
+                puppytoy.UI.HostFrame.contentDocument.head.appendChild(scriptFile);
+
             } else {
-                puppytoy.UI.HostElementMenu.style.display = "none";
-                // puppytoy.UI.HostElement.style.display = "";
-                puppytoy.UI.HostFrameContainer.style.display = "";
+                console.info('Loading "puppy-toy-frame.js" from "demo.tektology.com"!');
+                const scriptFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
+                scriptFile.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
+                puppytoy.UI.HostFrame.contentDocument.head.appendChild(scriptFile);
             }
-        },
+
+        }
     };
 
 
     window.puppytoy.BuildMenu();
+    window.puppytoy.BuildIFrame();
 
 
 
 
 
-    (function () {
 
-
-
-        puppytoy.UI.HostFrameContainer = document.createElement('IFRAMEHOST');
-        puppytoy.UI.HostFrameContainer.style.display = "none";
-        puppytoy.UI.HostFrameContainer.style.position = "fixed";
-
-        puppytoy.UI.HostFrameContainer.style.zIndex = "5000";
-        puppytoy.UI.HostFrameContainer.style.margin = "0";
-        puppytoy.UI.HostFrameContainer.style.padding = "0";
-        puppytoy.UI.HostFrameContainer.style.top = "0";
-        puppytoy.UI.HostFrameContainer.style.left = "0";
-        puppytoy.UI.HostFrameContainer.style.right = "0";
-        puppytoy.UI.HostFrameContainer.style.bottom = "0";
-        puppytoy.UI.HostFrameContainer.style.backgroundColor = "gray";
-
-        puppytoy.UI.HostFrame = document.createElement('iframe');
-
-        // This will make contentDocument unavailable!!!!
-        // puppytoy.UI.HostFrame.src = "http://localhost:9080/?/puppy-toy/puppy-toy.html";
-
-        puppytoy.UI.HostFrame.style.cssText = "width:100%;height:100%;margin:0;padding:0;border:0";
-
-
-
-        puppytoy.UI.HostFrameContainer.appendChild(puppytoy.UI.HostFrame);
-
-        document.body.appendChild(puppytoy.UI.HostFrameContainer);
-
-
-
-
-
-        if ((document.location.hostname == "127.0.0.1") ||
-            (document.location.hostname == "localhost") ||
-            (document.location.hostname == "0.0.0.0")) {
-            console.info('Loading "puppy-toy-frame.js" from local!');
-            const CSSFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
-            CSSFile.src = "http://localhost:9080/?/puppy-toy/puppy-toy-frame.js";
-            puppytoy.UI.HostFrame.contentDocument.head.appendChild(CSSFile);
-
-        } else {
-            console.info('Loading "puppy-toy-frame.js" from "demo.tektology.com"!');
-            const CSSFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
-            CSSFile.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
-            puppytoy.UI.HostFrame.contentDocument.head.appendChild(CSSFile);
-        }
-
-
-
-    })();
-
-
-
-
-    
 
 })();

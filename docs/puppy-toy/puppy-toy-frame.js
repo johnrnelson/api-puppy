@@ -22,17 +22,28 @@ const pupframe = {
 
         xhttp.onreadystatechange = function () {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             if (this.readyState == 4 && this.status == 200) {
                 if (this.responseText.length) {
-                    try {
-                        const srvData = JSON.parse(this.responseText);
-                        OnData(srvData);
+                    try {                        
+                        OnData(null,this.responseText);
                     } catch (errBadJSON) {
-                        OnData({
-                            err: "Bad JSON!",
-                            body: this.responseText
-                        });
-
+                        OnData(errBadJSON,null);
                     }
 
                 } else {
@@ -108,6 +119,12 @@ const pupframe = {
             `;
             ResultSearchBody.appendChild(newRow);
 
+        },
+        GetHTML(URL,OnHTML) {
+
+            pupframe.xhr('GET', URL, "", function (err,ServerResponse) {                
+                OnHTML(err,ServerResponse);
+            });
         },
 
         Displays: {
@@ -239,19 +256,41 @@ const pupframe = {
             },
             Config: {
                 CheckServer() {
-                    // pupframe.UI.Displays.Config.CheckServer();
+                    var url = 'https://demo.tektology.com/';
 
-                    pupframe.xhr('PUT', 'https://demo.tektology.com/', {
+                    pupframe.xhr('PUT', url, {
                         service: 'help',
                         data: {
                             topic: 'SysInfo'
                         }
-                    }, function (ServerResponse) {
-                        console.info('DEMO SERVER INFO', ServerResponse);
+                    }, function (err,ServerResponse) {
+                        const srvData = JSON.parse(ServerResponse);
+                        console.info('DEMO SERVER INFO', srvData);
                     });
 
                 },
                 Build() {
+
+                    const CONFIG_HTML_PATH = "/?/puppy-toy/panels/config.html";
+            
+                    debugger;
+                    if (window.parent.puppytoy.IsLocalDebug()) {
+
+                        var url = 'http://localhost:9080';
+                    } else {
+                        var url = 'https://demo.tektology.com';
+                    }
+                    
+                    console.log(url+CONFIG_HTML_PATH);
+
+                    pupframe.UI.GetHTML(url+CONFIG_HTML_PATH, function (err,ConfigHTML) {
+                        console.log(err,ConfigHTML);
+                        
+                    });
+
+
+
+
 
                     //BUild the first tab!!!
                     (function () {
@@ -260,7 +299,7 @@ const pupframe = {
                         <center>
                            Basic app options
                         </center>
-                        <button onclick="window.parent.pupframe.UI.Displays.Config.CheckServer();">test</button>
+                        <button onclick="pupframe.UI.Displays.Config.CheckServer();">test</button>
                        
                     `;
                         const newTab = document.createElement('disptab');
@@ -284,19 +323,12 @@ const pupframe = {
 
             //Build the Menu...
             (function () {
-              
+
             })();
 
 
 
-
-
-
-
-
-
-
-            var hostEl =  document.body.appendChild(document.createElement('JSONThiefDisplay'));
+            var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
             // var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
             // hostEl.style.display = "none";
             pupframe.UI.HostElement = hostEl;
@@ -366,7 +398,8 @@ const pupframe = {
 
         //Show your default display...
         // pupframe.UI.Displays.ShowDisplay('info');
-        pupframe.UI.Displays.ShowDisplay('search');
+        // pupframe.UI.Displays.ShowDisplay('search');
+        pupframe.UI.Displays.ShowDisplay('config');
         window.parent.puppytoy.ToggleMenu();
 
         // debugger;
