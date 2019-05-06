@@ -13,13 +13,13 @@ const pupframe = {
         // debugger;
         document.head.appendChild(elLink);
     },
+
     xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
 
         var xhttp = new XMLHttpRequest();
 
 
         xhttp.onreadystatechange = function () {
-
 
 
 
@@ -37,7 +37,7 @@ const pupframe = {
                         v: VERB,
                         r: ROUTE,
                         s: SENDMSG
-                    });
+                    }, null);
 
                 }
             }
@@ -64,8 +64,19 @@ const pupframe = {
         xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
 
         //Trying to trap the network errors?
-        xhttp.send(JSON.stringify(SENDMSG));
 
+        if (SENDMSG) {
+            xhttp.send(JSON.stringify(SENDMSG));
+        } else {
+            xhttp.send(SENDMSG);
+        }
+
+    },
+    GetHTML(URL, OnHTML) {
+
+        pupframe.xhr('GET', URL, "", function (err, ServerResponse) {
+            OnHTML(err, ServerResponse);
+        });
     },
     //=======
     UI: {
@@ -126,24 +137,23 @@ const pupframe = {
                     }
 
                     // console.log(url);
-                    pupframe.xhr('GET', url, "", function (err, HelpHTML) {
+                    // pupframe.xhr('GET', url, "", function (err, HelpHTML) {
+                    pupframe.GetHTML(url, function (err, HelpHTML) {
                         if (err) {
-
                             console.warn('Bad URL-->', url);
                             console.warn(err);
+                            // debugger;
                             return;
                         }
                         const newTab = document.createElement('disptab');
                         newTab.style.display = "none";
                         newTab.id = "tab-info";
                         newTab.innerHTML = HelpHTML;
-                        // debugger;
-
                         pupframe.UI.HostElement.appendChild(newTab);
                         OnBuild();
-                    }); 
+                    });
 
- 
+
 
                 }
             },
@@ -164,7 +174,7 @@ const pupframe = {
 
                 },
                 Build(OnBuild) {
-                    console.info('Fix the rest of the displays!')
+                    // console.info('Fix the rest of the displays!')
                     // debugger;
                     var url;
                     if (window.parent.puppytoy.IsLocalDebug()) {
@@ -197,94 +207,92 @@ const pupframe = {
                     //BUild the first tab!!!
                     (function () {
 
-                        const HTML = `                        
-                            <qrybox>
-                                <span class="label">Search:</span>
-                                <span class="spantext"> 
-                                    <input type="text" id="qryTextValue" value="" placeholder="Enter Query String"/>
-                                </span>
-                            </qrybox>
-                            <ResultStats>
-                                <statgroup>
-                                    <stlabel><i class="fas fa-code"></i> Total Tags</stlabel>                    
-                                    <stvalue id="TotalTags">N/A</stvalue>
-                                </statgroup>
-                                <statgroup>
-                                    <stlabel><i class="fas fa-cubes"></i> Total JSON Objects</stlabel>                    
-                                    <stvalue id="TotalJSONOBjects">N/A</stvalue>
-                                </statgroup>                        
-                            </ResultStats>
 
-                            <ResultsSearch>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <td width="20px">Options</td>                          
-                                            <td width="30px">Tage Name</td>                           
-                                            <td width="100%">Text Value</td>
-                                        <tr>                                                        
-                                    <thead>
-                                    <tbody>                         
-                                    </tbody>
-                                </table>
-                            </ResultsSearch> 
-                       
-                        `;
-                        const newTab = document.createElement('disptab');
-                        newTab.style.display = "none";
-                        newTab.id = "tab-search";
-                        newTab.innerHTML = HTML;
 
-                        pupframe.UI.HostElement.appendChild(newTab);
+
+                        var url;
+                        if (window.parent.puppytoy.IsLocalDebug()) {
+
+                            url = '/docs/puppy-toy/panels/search.html';
+                        } else {
+                            url = 'https://demo.tektology.com/?/puppy-toy/panels/search.html';
+                        }
+
+                        // console.log(url);
+
+                        pupframe.xhr('GET', url, "", function (err, searchHTML) {
+                            if (err) {
+                                console.warn(err);
+                                return;
+                            }
+
+
+                            const newTab = document.createElement('disptab');
+                            newTab.style.display = "none";
+                            newTab.id = "tab-search";
+                            newTab.innerHTML = searchHTML;
+
+                            pupframe.UI.HostElement.appendChild(newTab);
+
+
+
+
+
+
+                            //Do the document query..
+                            const qryTextValue = pupframe.UI.HostElement.querySelector('#qryTextValue');
+
+
+                            qryTextValue.QueryElement = function () {
+
+                                const srchVal = this.value.trim();
+
+                                if (!srchVal) {
+                                    return;
+                                }
+
+                                // debugger;
+                                // console.info('Searching document for :' + srchVal);
+                                pupframe.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
+
+                                // Make sure you do a full body search! :-) 
+                                const qryTags = window.parent.document.body.querySelectorAll(srchVal);
+
+                                // console.log('Total Tags Found:', qryTags);
+
+                                const TotalTags = pupframe.UI.HostElement.querySelector('stvalue#TotalTags');
+                                const TotalJSONOBjects = pupframe.UI.HostElement.querySelector('stvalue#TotalJSONOBjects');
+
+
+                                TotalTags.innerHTML = "" + qryTags.length + "";
+                                TotalJSONOBjects.innerHTML = "N/A";
+
+                                for (let index = 0; index < qryTags.length; index++) {
+                                    const qryElement = qryTags[index];
+                                    pupframe.UI.AddResultRow(qryElement);
+
+                                }
+                            };
+
+
+                            qryTextValue.addEventListener("change", function (eventinfo) {
+                                this.QueryElement();
+                            });
+                            // setTimeout(() => {
+                            //     qryTextValue.focus();
+                            // }, 50);   
+
+
+
+
+
+
+                            OnBuild();
+                        });
                     })();
 
 
 
-
-                    //Do the document query..
-                    const qryTextValue = pupframe.UI.HostElement.querySelector('#qryTextValue');
-
-
-                    qryTextValue.QueryElement = function () {
-
-                        const srchVal = this.value.trim();
-
-                        if (!srchVal) {
-                            return;
-                        }
-
-                        // debugger;
-                        // console.info('Searching document for :' + srchVal);
-                        pupframe.UI.HostElement.querySelector('ResultsSearch tbody').innerHTML = "";
-
-                        // Make sure you do a full body search! :-) 
-                        const qryTags = window.parent.document.body.querySelectorAll(srchVal);
-
-                        // console.log('Total Tags Found:', qryTags);
-
-                        const TotalTags = pupframe.UI.HostElement.querySelector('stvalue#TotalTags');
-                        const TotalJSONOBjects = pupframe.UI.HostElement.querySelector('stvalue#TotalJSONOBjects');
-
-
-                        TotalTags.innerHTML = "" + qryTags.length + "";
-                        TotalJSONOBjects.innerHTML = "N/A";
-
-                        for (let index = 0; index < qryTags.length; index++) {
-                            const qryElement = qryTags[index];
-                            pupframe.UI.AddResultRow(qryElement);
-
-                        }
-                    };
-
-
-                    qryTextValue.addEventListener("change", function (eventinfo) {
-                        this.QueryElement();
-                    });
-                    // setTimeout(() => {
-                    //     qryTextValue.focus();
-                    // }, 50);   
-
-                    OnBuild();
 
                 }
             },
@@ -355,18 +363,6 @@ const pupframe = {
 
             })();
 
-            var totalDisplay = 3;
-
-            pupframe.UI.Displays.MainHelp.Build(function () {
-                console.info('Fix me!!!! mmmm***');
-            });
-            pupframe.UI.Displays.Search.Build(function () {
-                console.info('Fix me!!!! sss***');
-            });
-            pupframe.UI.Displays.Config.Build(function () {
-                console.info('Fix me!!!! bbbb***');
-            });
-
 
         },
         BuildHostFrame() {
@@ -378,24 +374,38 @@ const pupframe = {
     */
     Init() {
 
-        // debugger;
-
         console.info('Building UI for JSONThief');
         pupframe.UI.BuildUIDisplay();
 
 
 
 
+        pupframe.UI.Displays.MainHelp.Build(function () {
+            // pupframe.UI.Displays.ShowDisplay('info');
+        });
+        pupframe.UI.Displays.Search.Build(function () {
+
+            // pupframe.UI.Displays.ShowDisplay('search');
+        });
+        pupframe.UI.Displays.Config.Build(function () {
+            pupframe.UI.Displays.ShowDisplay('config');
+        });
+
+
+
         window.parent.puppytoy.ToggleMenu();
 
-        // When debugging use this to quickly get to where you need...
-        setTimeout(() => {
-            //Show your default display...
-            // pupframe.UI.Displays.ShowDisplay('info');
-            pupframe.UI.Displays.ShowDisplay('search');
-            // pupframe.UI.Displays.ShowDisplay('config');
-        }, 500);
 
+        (function () {
+            // When debugging use this to quickly get to where you need...
+            setTimeout(() => {
+                //Show your default display...
+                // pupframe.UI.Displays.ShowDisplay('info');
+                // pupframe.UI.Displays.ShowDisplay('search');
+                // pupframe.UI.Displays.ShowDisplay('config');
+
+            }, 500);
+        })();
 
     }
 };
@@ -414,10 +424,14 @@ pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:3
 
 if (window.parent.puppytoy.IsLocalDebug()) {
     console.info('Loading CSS from local!');
-    pupframe.LoadCSSLink("/docs/puppy-toy/puppy-toy.css");
+    pupframe.LoadCSSLink("/docs/puppy-toy/css/puppy-toy.css");
+    pupframe.LoadCSSLink("/docs/puppy-toy/css/info.css");
+    pupframe.LoadCSSLink("/docs/puppy-toy/css/config.css");
 } else {
     console.info('Loading CSS from "demo.tektology.com"!');
-    pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/puppy-toy.css");
+    pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/puppy-toy.css");
+    pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/info.css");
+    pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/config.css");
 }
 
 

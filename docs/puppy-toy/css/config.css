@@ -1,0 +1,121 @@
+configpanel {
+    position: relative;
+    display: block;
+    /* border: solid 1px gold; */
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    background-color: black;
+
+}
+
+configpanel a {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+configpanel blocks {
+    overflow: auto;
+    position: relative;
+    /* height: 100%; */
+    width: 100%;
+    /* color: #444; */
+    margin: 0;
+    padding: 0;
+    /* background-color: black; */
+    display: grid;
+    grid-gap: 1em;
+    grid-template-areas:
+        "header"
+        "sidebar"
+        "content"
+        "lastbar"
+        "footer"
+}
+
+
+
+
+
+configpanel blocks block {
+    overflow: hidden;
+    color: rgb(184, 184, 184);
+    border-radius: 5px;
+    padding: 15px;
+    /* border: solid 1px rgb(109, 109, 109); */
+}
+
+
+configpanel blocks block.header {
+    grid-area: header;
+    font-size: 28px;
+    color: gold;
+
+}
+
+
+configpanel blocks block.sidebar {
+    grid-area: sidebar;
+}
+
+configpanel blocks block.lastbar {
+    grid-area: lastbar;
+    background-color: blue;
+}
+
+configpanel blocks block.content {
+    grid-area: content;
+    background-color: green;
+}
+
+
+configpanel blocks block.footer {
+    grid-area: footer;
+}
+
+
+@media only screen and (min-width: 500px) {
+    configpanel blocks {
+
+        grid-template-columns: 30% auto;
+        grid-template-areas:
+            "header   header"
+            "sidebar  content"
+            "lastbar lastbar"
+            "footer   footer";
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    configpanel blocks {
+
+        grid-gap: 20px;
+        grid-template-columns: 200px auto auto;
+        grid-template-areas:
+            "header  header  header"
+            "sidebar content lastbar"
+            "footer  footer  footer";
+        /* max-width: 600px; */
+    }
+}

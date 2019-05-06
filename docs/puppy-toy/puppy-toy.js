@@ -94,13 +94,19 @@
         },
 
         ToggleMenu() {
+
+            //save state of body scroll...
+            if (puppytoy.BodyScroll == undefined) {
+                puppytoy.BodyScroll = document.body.style.overflow;
+            }
+
             if (puppytoy.UI.HostElementMenu.style.display == "none") {
                 puppytoy.UI.HostElementMenu.style.display = "";
-                // puppytoy.UI.HostElement.style.display = "none";
+                document.body.style.overflow = puppytoy.BodyScroll;
                 puppytoy.UI.HostFrameContainer.style.display = "none";
             } else {
                 puppytoy.UI.HostElementMenu.style.display = "none";
-                // puppytoy.UI.HostElement.style.display = "";
+                document.body.style.overflow = "hidden";
                 puppytoy.UI.HostFrameContainer.style.display = "";
             }
         },
@@ -172,22 +178,15 @@
 
             if (puppytoy.IsLocalDebug()) {
                 console.info('Loading "puppy-toy-frame.js" from ' + puppytoy.HostURL());
-
                 const scriptFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
-                // scriptFile.src = puppytoy.HostURL() + "docs/puppy-toy/puppy-toy-frame.js";
                 scriptFile.src = "http://localhost:9080/?/puppy-toy/puppy-toy-frame.js";
-
-                console.info('URL--', puppytoy.HostURL() + "/docs/puppy-toy/puppy-toy-frame.js");
-
                 puppytoy.UI.HostFrame.contentDocument.head.appendChild(scriptFile);
-
             } else {
                 console.info('Loading "puppy-toy-frame.js" from "demo.tektology.com"!');
                 const scriptFile = puppytoy.UI.HostFrame.contentDocument.createElement("script");
                 scriptFile.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy-frame.js";
                 puppytoy.UI.HostFrame.contentDocument.head.appendChild(scriptFile);
             }
-
         }
     };
 
