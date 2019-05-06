@@ -3,7 +3,7 @@
 */
 (function () {
     /*
-    
+        Check the GitHub project for more information.
     */
 
     window.puppytoy = {
@@ -253,7 +253,6 @@
             }
         }
     };
-
 
     window.puppytoy.BuildMenu();
     window.puppytoy.BuildIFrame();

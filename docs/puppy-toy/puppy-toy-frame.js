@@ -412,11 +412,7 @@ const pupframe = {
     /*
         Grab all the resources you need and start building the DOM...
     */
-    Init() {
-        /*
-            Add Ace editor...        
-        */
-
+    Init() {  
 
         /*
             Load your styles you need. It will go in the iframe not the host document!!!!
