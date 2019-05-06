@@ -36,10 +36,7 @@ const DataActions = {
             } else {
                 // SERVER.Statistics.Services.AddSiteMapItem("help","Success");
                 
-                OnComplete(null, {
-                    msg: "Have fun with this code!",
-                    data: JSON.parse(ComicData),
-                });
+                OnComplete(null, JSON.parse(ComicData));
             }
         });//End reading file...
 

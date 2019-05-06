@@ -99,13 +99,9 @@ const pupframe = {
             ResultSearchBody.appendChild(newRow);
 
         },
-        GetHTML(URL, OnHTML) {
-
-            pupframe.xhr('GET', URL, "", function (err, ServerResponse) {
-                OnHTML(err, ServerResponse);
-            });
-        },
-
+        /*
+            Manage the displays...
+        */
         Displays: {
             ActiveDisplay: false,
             ShowDisplay(ShowDisplayID) {
@@ -130,8 +126,7 @@ const pupframe = {
                     }
 
                     // console.log(url);
-
-                    pupframe.UI.GetHTML(url, function (err, HelpHTML) {
+                    pupframe.xhr('GET', url, "", function (err, HelpHTML) {
                         if (err) {
 
                             console.warn('Bad URL-->', url);
@@ -146,26 +141,9 @@ const pupframe = {
 
                         pupframe.UI.HostElement.appendChild(newTab);
                         OnBuild();
-                    });
+                    }); 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    OnBuild();
+ 
 
                 }
             },
@@ -198,7 +176,7 @@ const pupframe = {
 
                     // console.log(url);
 
-                    pupframe.UI.GetHTML(url, function (err, ConfigHTML) {
+                    pupframe.xhr('GET', url, "", function (err, ConfigHTML) {
                         if (err) {
                             console.warn(err);
                             return;
@@ -366,14 +344,14 @@ const pupframe = {
                 };
                 pupframe.UI.HostElement.querySelector('sidebaropts icon#debug-host').onclick = function () {
                     window.parent.puppytoy.DubugMe();
-                    
+
                 };
                 pupframe.UI.HostElement.querySelector('sidebaropts icon#debug-frame').onclick = function () {
                     /*
                         This is the frame javascript...
                     */
-                   debugger;
-                };                
+                    debugger;
+                };
 
             })();
 
@@ -431,11 +409,11 @@ pupframe.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
 pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
 pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
 pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
- 
+
 
 
 if (window.parent.puppytoy.IsLocalDebug()) {
-    console.info('Loading CSS from local!');    
+    console.info('Loading CSS from local!');
     pupframe.LoadCSSLink("/docs/puppy-toy/puppy-toy.css");
 } else {
     console.info('Loading CSS from "demo.tektology.com"!');
