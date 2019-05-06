@@ -4,9 +4,6 @@
 
 
 
-
-
-
 window.UIHelper = {
     // ********************************************************************
     /*
@@ -154,8 +151,7 @@ window.UIHelper = {
             console.warn('ShowTab Error!', '"Tab2Show" must be a string!');
             debugger;
         }
-
-        // debugger;
+ 
         if (!UIHelper.ActiveTab) {
             UIHelper.ActiveTab = TabElement;
             UIHelper.ActiveTabButton = BTNElement;
@@ -173,6 +169,7 @@ window.UIHelper = {
         // Only load the debugger tool if they want to use it. 
         if (Tab2Show == "TabDebugger") {
  
+     
             //Have I alredy loaded this?
             if (!WebApp.DebugUI) {
 
@@ -405,9 +402,7 @@ WebApp.GetHelpFile('SocketAPI.js', function (SocketAPICode) {
 
 
 
-
-
-
+ 
 //Which screen do you want to show first? Are you debugging the debugger? lol
 UIHelper.ShowTab('TabMain');
 // UIHelper.ShowTab('TabDebugger');

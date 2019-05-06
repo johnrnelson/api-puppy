@@ -2,6 +2,14 @@
     This script file gets loaded into the iframe.
 */
 
+
+//Add Ace Editor...
+(function () {
+    var NEWSCRIPT = document.createElement("script");
+    NEWSCRIPT.src = "https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js";
+    document.head.appendChild(NEWSCRIPT);
+})();
+
 const pupframe = {
 
     LoadCSSLink(HREF2CSS) {
@@ -74,7 +82,7 @@ const pupframe = {
                     }
 
                     // console.log(url);
-                    
+
                     window.parent.puppytoy.GetHTML(url, function (err, HelpHTML) {
                         if (err) {
                             console.warn('Bad URL-->', url);
@@ -302,16 +310,154 @@ const pupframe = {
 
 
         },
-        BuildHostFrame() {
 
-        }
+
+
+        Ace: {
+            //Set this in code when you are ready...
+            AceEditor: null,
+            //Set this in code when you are ready...        
+            AceDisplayRsults: null,
+
+            //Make sure we deal with change to the editor...
+            HookEvents(Editor2Hook) {
+                Editor2Hook.getSession().on('change', function (delta) {
+                    const editorJSON = Editor2Hook.getValue();
+                    // console.info('-->',editorJSON);
+                });
+            },
+
+            //Setup some defaults...
+            SetupAceEditorDefaults(ParentHTMLTagID) {
+
+                //Ace Editor is awesome! 
+                var aceEditor = ace.edit(ParentHTMLTagID);
+
+                // Go here for more options... https://github.com/ajaxorg/ace/wiki/Configuring-Ace
+                aceEditor.setOption("mode", "ace/mode/json");
+                aceEditor.setOption("autoScrollEditorIntoView", true);
+                aceEditor.setOption("showPrintMargin", false);
+                aceEditor.setOption("fontSize", 15);
+                aceEditor.$blockScrolling = Infinity;
+
+                return aceEditor;
+            },
+
+            /*
+                Build all the ace editors we need to support the basic editing 
+                needs of our UI.  
+                
+                No need to get crazy with this. Most people use a "real" editor
+                like visual stduio code or sublime so just do the basics....
+            */
+            BuildAceControls(ControlID) {
+
+                if (!ace) {
+                    debugger;
+
+                    setTimeout(() => {
+                        debugger;
+                    }, 3000);
+
+                }
+
+                (function () {
+                    var NEWSCRIPT = document.createElement("script");
+                    NEWSCRIPT.src = "https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ext-language_tools.js";
+                    document.head.appendChild(NEWSCRIPT);
+                })();
+
+                var AceEditor = pupframe.UI.Ace.SetupAceEditorDefaults(ControlID);
+                // var another = pupframe.UI.Ace.SetupAceEditorDefaults('APIDebugResults');
+
+                //Make sure display is read only!
+                // pupframe.UI.Ace.AceEditor.setReadOnly(true);
+
+                AceEditor.setTheme("ace/theme/monokai");
+
+                //Only hook the actual editor!!!!!
+                pupframe.UI.Ace.HookEvents(AceEditor);
+
+
+                const defaultOPTS = {
+                    "UseSniffer": 1,
+                    "UI": {
+                        // Possible values... "TR","TL","BR","BL"
+                        "MenuLoc": "TR" 
+                    },
+                    "NEST":{
+                        "TEST":{
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                            "br":1,
+                        }
+                    }
+                };
+
+                // debugger;
+                AceEditor.setValue(JSON.stringify(defaultOPTS,null,'\t'),-1);
+                setTimeout(() => {
+                    //Add your own stuff to the drop downs...
+                    // pupframe.UI.Ace.SetCompleters(AceEditor);
+
+                    AceEditor.setOptions({
+                        enableBasicAutocompletion: AceEditor.Completer,
+                        enableLiveAutocompletion: true,
+                        enableSnippets: true,
+                    });
+                }, 500);
+
+
+                return AceEditor;
+
+            }
+        },
+
+
+
+
     },
     /*
         Lets get this part started!
     */
     Init() {
+        /*
+            Add Ace editor...        
+        */
 
-        console.info('Building UI for JSONThief');
+
+        /*
+            Load your styles you need. It will go in the iframe not the host document!!!!
+        */
+        pupframe.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
+        pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
+        pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
+        pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
+
+
+
+        if (window.parent.puppytoy.IsLocalDebug()) {
+            console.info('Loading CSS from local!');
+            pupframe.LoadCSSLink("/docs/puppy-toy/css/puppy-toy.css");
+            pupframe.LoadCSSLink("/docs/puppy-toy/css/info.css");
+            pupframe.LoadCSSLink("/docs/puppy-toy/css/config.css");
+        } else {
+            console.info('Loading CSS from "demo.tektology.com"!');
+            pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/puppy-toy.css");
+            pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/info.css");
+            pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/config.css");
+        }
+
+
+        console.info('Building UI for puppy-toy!');
         pupframe.UI.BuildUIDisplay();
 
 
@@ -325,12 +471,19 @@ const pupframe = {
             // pupframe.UI.Displays.ShowDisplay('search');
         });
         pupframe.UI.Displays.Config.Build(function () {
+
+            //Setup all of our ace editors...
+            pupframe.UI.Ace.BuildAceControls('ConfigJSON');
+
             pupframe.UI.Displays.ShowDisplay('config');
         });
 
 
 
         window.parent.puppytoy.ToggleMenu();
+
+
+
 
 
         (function () {
@@ -348,30 +501,8 @@ const pupframe = {
 };
 
 
+setTimeout(() => {
 
-/*
-    Load your styles you need. It will go in the iframe not the host document!!!!
-*/
-pupframe.LoadCSSLink("https://use.fontawesome.com/releases/v5.8.1/css/all.css");
-pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Abel");
-pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400italic");
-pupframe.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
-
-
-
-if (window.parent.puppytoy.IsLocalDebug()) {
-    console.info('Loading CSS from local!');
-    pupframe.LoadCSSLink("/docs/puppy-toy/css/puppy-toy.css");
-    pupframe.LoadCSSLink("/docs/puppy-toy/css/info.css");
-    pupframe.LoadCSSLink("/docs/puppy-toy/css/config.css");
-} else {
-    console.info('Loading CSS from "demo.tektology.com"!');
-    pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/puppy-toy.css");
-    pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/info.css");
-    pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/config.css");
-}
-
-
-
-pupframe.Init();
+    pupframe.Init();
+}, 200);
 

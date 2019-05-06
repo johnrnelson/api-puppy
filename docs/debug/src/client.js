@@ -182,8 +182,7 @@ WebApp.LoadCSSLink("https://fonts.googleapis.com/css?family=PT+Sans:400,400itali
 WebApp.LoadCSSLink("https://fonts.googleapis.com/css?family=Roboto+Condensed:300");
 
 
-
-
+ 
 /*
     After page has loaded, you can be sure that everything you need
     is already loaded and ready to go...

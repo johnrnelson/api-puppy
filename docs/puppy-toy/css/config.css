@@ -88,11 +88,13 @@ configpanel blocks block.lastbar {
 configpanel blocks block.content {
     grid-area: content;
     background-color: rgb(51, 51, 51);
+
 }
 
 
 configpanel blocks block.footer {
     grid-area: footer;
+    min-height: 350px;
 }
 
 
