@@ -175,22 +175,22 @@
             }
         },
         BuildMenu() {
-            var hostElMenu = document.body.appendChild(document.createElement('JSONThieMenu'));
-            // <i class="fas fa-sitemap"></i>
-            hostElMenu.innerHTML = "*";
+            var hostElMenu = document.body.appendChild(document.createElement('pupy-toy-menu'));      
+            hostElMenu.innerHTML = " * ";
 
             hostElMenu.style.position = "fixed";
             hostElMenu.style.display = "block";
 
             hostElMenu.style.zIndex = "5000";
             hostElMenu.style.margin = "0";
-
-            hostElMenu.style.padding = "3px";
+            hostElMenu.style.padding = "0";
 
             hostElMenu.style.top = "25px";
             hostElMenu.style.right = "25px";
 
-            // hostElMenu.style.width = "40px";
+            hostElMenu.style.width = "20px";
+            hostElMenu.style.height = "30px";
+
             hostElMenu.style.cursor = "hand";
             hostElMenu.style.textOverflow = "default";
             hostElMenu.style.backgroundColor = "rgb(56, 56, 56)";

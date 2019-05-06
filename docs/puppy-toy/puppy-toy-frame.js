@@ -474,10 +474,8 @@ const pupframe = {
 
 
 
-        window.parent.puppytoy.ToggleMenu();
-
-
-
+        //Can change this if you prefer..
+        window.parent.puppytoy.ToggleMenu(); 
 
 
         (function () {
