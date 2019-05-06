@@ -306,6 +306,21 @@ WebApp.DebugUI = {
             Define the languages supported and how to help...
         */
         const languages_supported = {
+            'puppy-toy': function () {
+
+                return {
+                    title: 'Remote Debugging Toy',
+                    code: `
+                    (function () {
+
+                        const CSSFile = document.createElement("script");
+                        CSSFile.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
+                        document.head.appendChild(CSSFile);
+                    })();                    
+                    `,
+                    help: 'Please use this tool with caustion!',
+                }
+            },            
             'curl': function () {
 
                 return {
