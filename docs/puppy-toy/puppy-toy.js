@@ -51,7 +51,7 @@
                     Skip certain elements...
                 */
                 if (
-                    (element.nodeName == "JSONThiefDisplay") ||
+                    (element.nodeName == "iframe") ||
                     (element.nodeName == "#comment") ||
                     (element.nodeName == "#text") ||
                     (element.nodeName == "SCRIPT") ||
@@ -193,11 +193,4 @@
 
     window.puppytoy.BuildMenu();
     window.puppytoy.BuildIFrame();
-
-
-
-
-
-
-
 })();

@@ -45,7 +45,7 @@ configpanel blocks {
     padding: 0;
     /* background-color: black; */
     display: grid;
-    grid-gap: 1em;
+    grid-gap: 2px;
     grid-template-areas:
         "header"
         "sidebar"
@@ -77,16 +77,17 @@ configpanel blocks block.header {
 
 configpanel blocks block.sidebar {
     grid-area: sidebar;
+    background-color: rgb(51, 51, 51);
 }
 
 configpanel blocks block.lastbar {
-    grid-area: lastbar;
-    background-color: blue;
+    grid-area: lastbar;    
+    background-color: rgb(51, 51, 51);
 }
 
 configpanel blocks block.content {
     grid-area: content;
-    background-color: green;
+    background-color: rgb(51, 51, 51);
 }
 
 
@@ -110,7 +111,7 @@ configpanel blocks block.footer {
 @media only screen and (min-width: 1200px) {
     configpanel blocks {
 
-        grid-gap: 20px;
+        grid-gap: 2px;
         grid-template-columns: 200px auto auto;
         grid-template-areas:
             "header  header  header"
