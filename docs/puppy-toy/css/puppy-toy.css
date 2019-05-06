@@ -1,7 +1,7 @@
 
 /* The main display */
 
-JSONThiefDisplay {
+puppy-toy-display {
     z-index: 5000;
     position: fixed;
     display: block;
@@ -21,7 +21,7 @@ JSONThiefDisplay {
 
 
 
-JSONThiefDisplay sidebaropts {
+puppy-toy-display sidebaropts {
     display: block;
     /* border: solid 1px gold; */
     white-space: normal;
@@ -35,7 +35,7 @@ JSONThiefDisplay sidebaropts {
     border: solid 2px rgb(88, 88, 88);
 }
 
-JSONThiefDisplay sidebaropts icon {
+puppy-toy-display sidebaropts icon {
     display: block;
     font-size: 20px;
     width: 33px;
@@ -46,13 +46,13 @@ JSONThiefDisplay sidebaropts icon {
     /* opacity: .8; */
 }
 
-JSONThiefDisplay sidebaropts icon:hover {
+puppy-toy-display sidebaropts icon:hover {
     color: rgb(26, 243, 109);
     /* background-color: white; */
     border: solid 1px rgb(119, 119, 119);
 }
 
-JSONThiefDisplay disptab {
+puppy-toy-display disptab {
     display: block;
     /* position: relative;
     padding-left: 40px;
@@ -78,7 +78,7 @@ JSONThiefDisplay disptab {
 The qry box!
 
 */
-JSONThiefDisplay qrybox {
+puppy-toy-display qrybox {
     display: block;
     position: absolute;
     top: 0;
@@ -90,7 +90,7 @@ JSONThiefDisplay qrybox {
     margin: 1px;
 }
 
-JSONThiefDisplay qrybox .label {
+puppy-toy-display qrybox .label {
 
     position: absolute;
     top: 0;
@@ -103,7 +103,7 @@ JSONThiefDisplay qrybox .label {
     cursor: default;
 }
 
-JSONThiefDisplay qrybox .spantext {
+puppy-toy-display qrybox .spantext {
     position: absolute;
     top: 0;
     left: 5px;
@@ -112,7 +112,7 @@ JSONThiefDisplay qrybox .spantext {
 
 }
 
-JSONThiefDisplay qrybox input {
+puppy-toy-display qrybox input {
     position: relative;
     font-size: 20px;
 
@@ -132,7 +132,7 @@ JSONThiefDisplay qrybox input {
 /*
 ResultStats Main Display...
 */
-JSONThiefDisplay ResultStats {
+puppy-toy-display ResultStats {
     display: block;
     position: absolute;
     top: 31px;
@@ -151,7 +151,7 @@ JSONThiefDisplay ResultStats {
 }
 
 
-JSONThiefDisplay ResultStats statgroup {
+puppy-toy-display ResultStats statgroup {
     /* border:solid 1px green; */
     font-size: 18px;
     /* background-color: black; */
@@ -162,17 +162,17 @@ JSONThiefDisplay ResultStats statgroup {
 
 }
 
-JSONThiefDisplay ResultStats statgroup stlabel {
+puppy-toy-display ResultStats statgroup stlabel {
     display: inline;
     color: white;
     font-family: 'PT Sans', sans-serif;
 }
 
-JSONThiefDisplay ResultStats statgroup stlabel i {
+puppy-toy-display ResultStats statgroup stlabel i {
     color: gold;
 }
 
-JSONThiefDisplay ResultStats statgroup stvalue {
+puppy-toy-display ResultStats statgroup stvalue {
     display: inline;
     color: rgb(53, 148, 143);
     font-family: 'Roboto', sans-serif;
@@ -183,7 +183,7 @@ JSONThiefDisplay ResultStats statgroup stvalue {
 /*
 ResultsSearch Main Display...
 */
-JSONThiefDisplay ResultsSearch {
+puppy-toy-display ResultsSearch {
     display: block;
     position: absolute;
     top: 55px;
@@ -198,7 +198,7 @@ JSONThiefDisplay ResultsSearch {
     overflow-y: auto; 
 }
 
-JSONThiefDisplay ResultsSearch table {
+puppy-toy-display ResultsSearch table {
     /* border: solid 2px white; */
     width: 100%;
     /* display: inline-block; */
@@ -206,7 +206,7 @@ JSONThiefDisplay ResultsSearch table {
 
 
 
-JSONThiefDisplay ResultsSearch table thead tr td {
+puppy-toy-display ResultsSearch table thead tr td {
     color: gray;
     font-size: 18px;
 
@@ -214,23 +214,23 @@ JSONThiefDisplay ResultsSearch table thead tr td {
     padding-left: 2px;
     padding-right: 15px;
 }
-/* JSONThiefDisplay ResultsSearch table tbody{
+/* puppy-toy-display ResultsSearch table tbody{
   
 }
-JSONThiefDisplay ResultsSearch table tbody tr {
+puppy-toy-display ResultsSearch table tbody tr {
    
 } */
 
-JSONThiefDisplay ResultsSearch table tbody tr td {
+puppy-toy-display ResultsSearch table tbody tr td {
     color: gold;
 }
 
-JSONThiefDisplay ResultsSearch table tbody tr td i {
+puppy-toy-display ResultsSearch table tbody tr td i {
     color: white;
     text-shadow: 1px 1px 1px #3b3b3b;
 }
 
-JSONThiefDisplay ResultsSearch table tbody tr td i:hover {
+puppy-toy-display ResultsSearch table tbody tr td i:hover {
     color: gold;
     text-shadow: 1px 1px 1px #ececec;
 }

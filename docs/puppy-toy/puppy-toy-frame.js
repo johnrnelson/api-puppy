@@ -255,9 +255,8 @@ const pupframe = {
 
 
 
-            var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
-            // var hostEl = document.body.appendChild(document.createElement('JSONThiefDisplay'));
-            // hostEl.style.display = "none";
+            var hostEl = document.body.appendChild(document.createElement('puppy-toy-display'));
+
             pupframe.UI.HostElement = hostEl;
 
 
