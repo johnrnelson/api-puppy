@@ -97,9 +97,17 @@ const pupframe = {
                         pupframe.UI.HostElement.appendChild(newTab);
 
 
-                        const total = document.getElementById('StatsList-TotalTags');
+                        document.getElementById('StatsList-TotalTags').innerHTML = "" + window.parent.document.body.childElementCount + "";
+                        
+                        
                         // debugger;
-                        total.innerHTML = "" + window.parent.document.body.childElementCount + "";
+                        if (window.parent.jQuery) {                               
+                            document.getElementById('VersionInfo-jQuery').innerHTML = window.parent.jQuery.fn.jquery;
+                        } else {
+                            // jQuery is not loaded
+                            document.getElementById('VersionInfo-jQuery').innerHTML = "Not Installed";
+                            
+                        }
 
                         OnBuild();
                     });
