@@ -391,19 +391,9 @@ const pupframe = {
                         // Possible values... "TR","TL","BR","BL"
                         "MenuLoc": "TR"
                     },
-                    "NEST": {
-                        "TEST": {
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
-                            "br": 1,
+                    "LocalStorage": {
+                        "Cookies": {
+                            "use": 0, 
                         }
                     }
                 };
@@ -411,11 +401,8 @@ const pupframe = {
                 // debugger;
                 AceEditor.setValue(JSON.stringify(defaultOPTS, null, '\t'), -1);
                 setTimeout(() => {
-                    //Add your own stuff to the drop downs...
-                    // pupframe.UI.Ace.SetCompleters(AceEditor);
-
-                    AceEditor.setOptions({
-                        enableBasicAutocompletion: AceEditor.Completer,
+                    
+                    AceEditor.setOptions({ 
                         enableLiveAutocompletion: true,
                         enableSnippets: true,
                     });
