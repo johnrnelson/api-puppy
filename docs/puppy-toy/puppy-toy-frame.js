@@ -255,20 +255,11 @@ const pupframe = {
         BuildUIDisplay() {
 
 
-            //Build the Menu...
-            (function () {
-
-            })();
+            pupframe.UI.HostElement = document.body.appendChild(document.createElement('puppy-toy-display'));
 
 
 
-            var hostEl = document.body.appendChild(document.createElement('puppy-toy-display'));
-
-            pupframe.UI.HostElement = hostEl;
-
-
-
-            //Setup Main display and side opts...
+            //Setup side opts...
             (function () {
 
                 const HTML = `                
@@ -284,7 +275,7 @@ const pupframe = {
                     <icon title="Close this window" class="fas fa-times-circle" id="close"></icon> 
                 </sidebaropts>
 
-            `;
+                `;
                 pupframe.UI.HostElement.innerHTML = HTML;
 
 
@@ -393,7 +384,7 @@ const pupframe = {
                     },
                     "LocalStorage": {
                         "Cookies": {
-                            "use": 0, 
+                            "use": 0,
                         }
                     }
                 };
@@ -401,8 +392,8 @@ const pupframe = {
                 // debugger;
                 AceEditor.setValue(JSON.stringify(defaultOPTS, null, '\t'), -1);
                 setTimeout(() => {
-                    
-                    AceEditor.setOptions({ 
+
+                    AceEditor.setOptions({
                         enableLiveAutocompletion: true,
                         enableSnippets: true,
                     });
@@ -419,7 +410,7 @@ const pupframe = {
 
     },
     /*
-        Lets get this part started!
+        Grab all the resources you need and start building the DOM...
     */
     Init() {
         /*
@@ -455,12 +446,14 @@ const pupframe = {
 
 
 
-
+        /*
+            Edit this to quickly get to where you want to 
+            go for debugging...
+        */
         pupframe.UI.Displays.MainHelp.Build(function () {
             pupframe.UI.Displays.ShowDisplay('info');
         });
         pupframe.UI.Displays.Search.Build(function () {
-
             // pupframe.UI.Displays.ShowDisplay('search');
         });
         pupframe.UI.Displays.Config.Build(function () {
@@ -475,7 +468,7 @@ const pupframe = {
 
 
         //Can change this if you prefer..
-        window.parent.puppytoy.ToggleMenu(); 
+        window.parent.puppytoy.ToggleMenu();
 
 
         (function () {
@@ -494,7 +487,6 @@ const pupframe = {
 
 
 setTimeout(() => {
-
     pupframe.Init();
 }, 200);
 
