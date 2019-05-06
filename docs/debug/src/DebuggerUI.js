@@ -313,9 +313,9 @@ WebApp.DebugUI = {
                     code: `
                     (function () {
 
-                        const CSSFile = document.createElement("script");
-                        CSSFile.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
-                        document.head.appendChild(CSSFile);
+                        const scrTab = document.createElement("script");
+                        scrTab.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
+                        document.head.appendChild(scrTab);
                     })();                    
                     `,
                     help: 'Please use this tool with caustion!',

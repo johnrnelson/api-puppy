@@ -32,7 +32,7 @@ var MySERVER = {
     ProjectInfo: {
         Title: 'api-puppy Demo',
         Version: package_data.version,
-        VersionName: 'Static-Files'
+        VersionName: 'Remote-CORS'
     },
     Network: {
         /* 
