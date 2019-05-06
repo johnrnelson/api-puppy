@@ -168,9 +168,12 @@ const IPC = {
             browser. It's not smart to use GET because of the limitations of 
             query string values.  :-)
         */
-        response.writeHead(200, {
-            "Content-Type": "text/html"
-        });
+        // debugger;
+
+        response.status = 200;
+
+        response.setHeader('Content-Type', 'text/html');
+
 
 
         /*
@@ -202,9 +205,10 @@ const IPC = {
 
 
         if (!reqPath) {
-            response.writeHead(200, {
-                "Content-Type": "text/html"
-            });
+            response.status = 200;
+
+            response.setHeader('Content-Type', 'text/html');
+
             response.end("No path to load.");
             return;
         }
@@ -222,11 +226,12 @@ const IPC = {
             // debugger;
             try {
                 var s = fs.createReadStream(SERVER.ServicesHTMLDocs + reqPath);
-                response.writeHead(200, {
 
-                    "Content-Type": contentType
-                });
-                s.on('error', function () { 
+                response.status = 200;
+
+                response.setHeader('Content-Type', contentType);
+
+                s.on('error', function () {
                     response.statusCode = 404;
                     response.end('Not found');
                 });
@@ -255,17 +260,14 @@ const IPC = {
 
 
             if (err) {
-                response.writeHead(404, {
-                    "Content-Type": contentType
-                });
+
+                response.status = 404;
+                response.setHeader('Content-Type', contentType);
 
                 response.end("ERROR!");
             } else {
-                response.writeHead(200, {
-
-                    "Content-Type": contentType
-                });
-
+                response.status = 200;
+                response.setHeader('Content-Type', contentType);
                 // response.end(debugHTML);
                 response.end(DocFileContents, 'binary');
 
@@ -445,8 +447,8 @@ const IPC = {
 
         // console.log(request.QueryPath, ' --- ', request.method.toUpperCase());
 
-        //We alwasy use JSON for everything.. 
-        response.writeHead(200, {            
+
+        const CORS_HEAD = {
             //CSP Policy
             // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
 
@@ -454,11 +456,17 @@ const IPC = {
             "Access-Control-Allow-Origin": "*",
             // GET,PUT,POST,DELETE
             "Access-Control-Allow-Methods": "*",
-            "Access-Control-Allow-Headers": "*"            
-        });
+            "Access-Control-Allow-Headers": "*"
+        };
 
+        response.setHeader('Access-Control-Allow-Origin', '*');
+        response.setHeader('Access-Control-Allow-Methods', '*');
+        response.setHeader('Access-Control-Allow-Headers', '*');
+
+        // debugger;
         if (request.method.toUpperCase() == "OPTIONS") {
-            // console.log(request.headers); 
+            // console.log(request.headers);           
+            response.status = 200;
             response.end("");
             return;
         }
