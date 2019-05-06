@@ -95,6 +95,12 @@ const pupframe = {
                         newTab.id = "tab-info";
                         newTab.innerHTML = HelpHTML;
                         pupframe.UI.HostElement.appendChild(newTab);
+
+
+                        const total = document.getElementById('StatsList-TotalTags');
+                        // debugger;
+                        total.innerHTML = "" + window.parent.document.body.childElementCount + "";
+
                         OnBuild();
                     });
 
@@ -142,6 +148,7 @@ const pupframe = {
                         newTab.innerHTML = ConfigHTML;
 
                         pupframe.UI.HostElement.appendChild(newTab);
+
                         OnBuild();
                     });
                 }
@@ -382,27 +389,27 @@ const pupframe = {
                     "UseSniffer": 1,
                     "UI": {
                         // Possible values... "TR","TL","BR","BL"
-                        "MenuLoc": "TR" 
+                        "MenuLoc": "TR"
                     },
-                    "NEST":{
-                        "TEST":{
-                            "br":1,
-                            "br":1,
-                            "br":1,
-                            "br":1,
-                            "br":1,
-                            "br":1,
-                            "br":1,
-                            "br":1,
-                            "br":1,
-                            "br":1,
-                            "br":1,
+                    "NEST": {
+                        "TEST": {
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
+                            "br": 1,
                         }
                     }
                 };
 
                 // debugger;
-                AceEditor.setValue(JSON.stringify(defaultOPTS,null,'\t'),-1);
+                AceEditor.setValue(JSON.stringify(defaultOPTS, null, '\t'), -1);
                 setTimeout(() => {
                     //Add your own stuff to the drop downs...
                     // pupframe.UI.Ace.SetCompleters(AceEditor);
@@ -463,7 +470,7 @@ const pupframe = {
 
 
         pupframe.UI.Displays.MainHelp.Build(function () {
-            // pupframe.UI.Displays.ShowDisplay('info');
+            pupframe.UI.Displays.ShowDisplay('info');
         });
         pupframe.UI.Displays.Search.Build(function () {
 
@@ -474,7 +481,8 @@ const pupframe = {
             //Setup all of our ace editors...
             pupframe.UI.Ace.BuildAceControls('ConfigJSON');
 
-            pupframe.UI.Displays.ShowDisplay('config');
+
+            // pupframe.UI.Displays.ShowDisplay('config');
         });
 
 

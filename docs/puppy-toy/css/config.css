@@ -78,10 +78,11 @@ configpanel blocks block.header {
 configpanel blocks block.sidebar {
     grid-area: sidebar;
     background-color: rgb(51, 51, 51);
+    color: white;
 }
 
 configpanel blocks block.lastbar {
-    grid-area: lastbar;    
+    grid-area: lastbar;
     background-color: rgb(51, 51, 51);
 }
 

@@ -8,12 +8,14 @@ infopanel {
     padding: 0;
     overflow: hidden;
 }
-infopanel a{
-    color:white;
+
+infopanel a {
+    color: white;
     text-decoration: none;
 }
+
 infopanel blocks {
- 
+
     position: relative;
     height: 100%;
     width: 100%;
@@ -23,47 +25,67 @@ infopanel blocks {
     grid-template-rows: [row1-start] auto [row2-start] auto [row2-end];
     background-color: #fff;
     /* color: #444; */
-    margin:0;
-    padding:0;
+    margin: 0;
+    padding: 0;
     background-color: black;
+    font-size: 16px;
 }
 
- 
+
 infopanel blocks block {
- 
+
     color: rgb(184, 184, 184);
     border-radius: 5px;
-    padding: 5px; 
+    padding: 5px;
     border: solid 1px rgb(109, 109, 109);
+
 }
 
 
 infopanel blocks block.HeaderPanel {
     grid-column: col1-start / col3-start;
-    grid-row: row1-start;    
-    color:gold;
-    font-size: 20px;   
-    margin:0;
-    
-
-    
+    grid-row: row1-start;
+    color: gold;
+    font-size: 20px;
+    margin: 0;
 }
 
-.b {
+
+infopanel blocks block.HeaderPanel i {
+    color:rgb(185, 185, 185);
+}
+
+
+infopanel blocks block.QuickLog {
+
     grid-column: col3-start;
-    grid-row: row1-start / row2-end;    
+    grid-row: row1-start / row2-end;
     overflow: auto;
-    font-size: 16px;   
+    color: rgb(255, 252, 234);
 }
 
-.c {
+infopanel blocks block.VersionInfo {
     grid-column: col1-start;
-    grid-row: row2-start;    
-    font-size: 20px;   
+    grid-row: row2-start;  
+    color: rgb(151, 155, 100);
 }
 
-.d {
+infopanel blocks block.StatsList {
     grid-column: col2-start;
-    grid-row: row2-start;    
-    font-size: 15px;   
+    grid-row: row2-start;
+    color: rgb(156, 245, 168);
+}
+
+infopanel blocks block infolabel {
+    color: rgb(203, 201, 236);
+}
+infopanel blocks block infovalue {
+    color: rgb(158, 158, 218);
+}
+
+infopanel blocks block verlabel {
+    color: rgb(198, 214, 195);
+}
+infopanel blocks block vervalue {
+    color: rgb(107, 206, 67);
 }
