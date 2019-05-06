@@ -69,6 +69,21 @@ const pupframe = {
             },
 
             MainHelp: {
+                AddLog(LogItem) {
+
+                    const logBlock = document.querySelector(".QuickLog .QuickLogList");
+                    // debugger;
+                    const newLog = document.createElement('QuickLogItem');
+                    const nowDT = new Date();
+
+                    const logHTML = `                
+                        <lgbody>${LogItem.body}</lgbody>                                   
+                        <dt>${nowDT.toLocaleTimeString()}</dt>
+                        <topic>${LogItem.topic}</topic>
+                    `;
+                    newLog.innerHTML = logHTML;
+                    logBlock.appendChild(newLog);
+                },
                 Build(OnBuild) {
 
 
@@ -98,15 +113,14 @@ const pupframe = {
 
 
                         document.getElementById('StatsList-TotalTags').innerHTML = "" + window.parent.document.body.childElementCount + "";
-                        
-                        
+
+
                         // debugger;
-                        if (window.parent.jQuery) {                               
+                        if (window.parent.jQuery) {
                             document.getElementById('VersionInfo-jQuery').innerHTML = window.parent.jQuery.fn.jquery;
                         } else {
                             // jQuery is not loaded
                             document.getElementById('VersionInfo-jQuery').innerHTML = "Not Installed";
-                            
                         }
 
                         OnBuild();
@@ -420,7 +434,7 @@ const pupframe = {
     /*
         Grab all the resources you need and start building the DOM...
     */
-    Init() {  
+    Init() {
 
         /*
             Load your styles you need. It will go in the iframe not the host document!!!!
@@ -456,6 +470,81 @@ const pupframe = {
         */
         pupframe.UI.Displays.MainHelp.Build(function () {
             pupframe.UI.Displays.ShowDisplay('info');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            console.warn('test log...');
+            pupframe.UI.Displays.MainHelp.AddLog({
+                topic: 'woot',
+                body: 'OK just testing...'
+            });
+
+            pupframe.UI.Displays.MainHelp.AddLog({
+                topic: 'big old -testtopicccctopicccctopicccc-vvvvvvv',
+                body: 'GESH MORE STUFF<br>XSDFSDFDSFFD..<br>XSD<br>XSD<br>XSD<br>XSD<br>XSD<br>XSD'
+            });
+
+            pupframe.UI.Displays.MainHelp.AddLog({
+                topic: 'big old -testtopicccctopicccctopicccc-vvvvvvv',
+                body: 'GESH MORE STUXSD<br>XSD'
+            });
+            pupframe.UI.Displays.MainHelp.AddLog({
+                topic: 'big old -testtopicccctopicccctopicccc-vvvvvvv',
+                body: 'GESH MORE STUXSD<br>XSD'
+            });
+            pupframe.UI.Displays.MainHelp.AddLog({
+                topic: 'big old -testtopicccctopicccctopicccc-vvvvvvv',
+                body: 'GESH MORE STUXSD<br>XSD'
+            });
+            pupframe.UI.Displays.MainHelp.AddLog({
+                topic: 'big old topicccctopicccctopicccctopicccctopicccctopicccctopicccctopicccctopicccc-testtopicccctopicccctopicccc-vvvvvvv',
+                body: 'GESH MORE STUXSD<br>XSD'
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         });
         pupframe.UI.Displays.Search.Build(function () {
             // pupframe.UI.Displays.ShowDisplay('search');
