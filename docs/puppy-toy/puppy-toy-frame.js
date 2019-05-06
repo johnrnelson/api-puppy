@@ -14,70 +14,7 @@ const pupframe = {
         document.head.appendChild(elLink);
     },
 
-    xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
 
-        var xhttp = new XMLHttpRequest();
-
-
-        xhttp.onreadystatechange = function () {
-
-
-
-            if (this.readyState == 4 && this.status == 200) {
-                if (this.responseText.length) {
-                    try {
-                        OnData(null, this.responseText);
-                    } catch (errBadJSON) {
-                        OnData(errBadJSON, null);
-                    }
-
-                } else {
-                    OnData({
-                        err: 'xhr empty data!',
-                        v: VERB,
-                        r: ROUTE,
-                        s: SENDMSG
-                    }, null);
-
-                }
-            }
-
-
-        };
-        xhttp.onerror = function (ErrorInfo) {
-            if (!OnError) {
-                console.warn('Error XHR:' + VERB + ':' + ROUTE + ' ST:' + xhttp.status);
-            } else {
-                OnError({
-                    VERB: VERB,
-                    ROUTE: ROUTE,
-                    ST: xhttp.status
-                });
-            }
-        };
-
-        xhttp.open(VERB, ROUTE, true);
-
-        // CORS stuff...       
-        // xhttp.setRequestHeader("Content-Type", "application/json");
-        xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
-        xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
-
-        //Trying to trap the network errors?
-
-        if (SENDMSG) {
-            xhttp.send(JSON.stringify(SENDMSG));
-        } else {
-            xhttp.send(SENDMSG);
-        }
-
-    },
-    GetHTML(URL, OnHTML) {
-
-        pupframe.xhr('GET', URL, "", function (err, ServerResponse) {
-            OnHTML(err, ServerResponse);
-        });
-    },
     //=======
     UI: {
         HostFrame: null,
@@ -137,8 +74,8 @@ const pupframe = {
                     }
 
                     // console.log(url);
-                    // pupframe.xhr('GET', url, "", function (err, HelpHTML) {
-                    pupframe.GetHTML(url, function (err, HelpHTML) {
+                    
+                    window.parent.puppytoy.GetHTML(url, function (err, HelpHTML) {
                         if (err) {
                             console.warn('Bad URL-->', url);
                             console.warn(err);
@@ -162,7 +99,7 @@ const pupframe = {
                 CheckServer() {
                     var url = 'https://demo.tektology.com/';
 
-                    pupframe.xhr('PUT', url, {
+                    window.parent.puppytoy.xhr('PUT', url, {
                         service: 'help',
                         data: {
                             topic: 'SysInfo'
@@ -186,7 +123,7 @@ const pupframe = {
 
                     // console.log(url);
 
-                    pupframe.xhr('GET', url, "", function (err, ConfigHTML) {
+                    window.parent.puppytoy.xhr('GET', url, "", function (err, ConfigHTML) {
                         if (err) {
                             console.warn(err);
                             return;
@@ -220,7 +157,7 @@ const pupframe = {
 
                         // console.log(url);
 
-                        pupframe.xhr('GET', url, "", function (err, searchHTML) {
+                        window.parent.puppytoy.xhr('GET', url, "", function (err, searchHTML) {
                             if (err) {
                                 console.warn(err);
                                 return;

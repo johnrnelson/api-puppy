@@ -7,6 +7,70 @@
     */
 
     window.puppytoy = {
+        xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
+
+            var xhttp = new XMLHttpRequest();
+
+
+            xhttp.onreadystatechange = function () {
+
+
+
+                if (this.readyState == 4 && this.status == 200) {
+                    if (this.responseText.length) {
+                        try {
+                            OnData(null, this.responseText);
+                        } catch (errBadJSON) {
+                            OnData(errBadJSON, null);
+                        }
+
+                    } else {
+                        OnData({
+                            err: 'xhr empty data!',
+                            v: VERB,
+                            r: ROUTE,
+                            s: SENDMSG
+                        }, null);
+
+                    }
+                }
+
+
+            };
+            xhttp.onerror = function (ErrorInfo) {
+                if (!OnError) {
+                    console.warn('Error XHR:' + VERB + ':' + ROUTE + ' ST:' + xhttp.status);
+                } else {
+                    OnError({
+                        VERB: VERB,
+                        ROUTE: ROUTE,
+                        ST: xhttp.status
+                    });
+                }
+            };
+
+            xhttp.open(VERB, ROUTE, true);
+
+            // CORS stuff...       
+            // xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.setRequestHeader("Access-Control-Allow-Origin", "*");
+            xhttp.setRequestHeader("Access-Control-Allow-Headers", "*");
+
+            //Trying to trap the network errors?
+
+            if (SENDMSG) {
+                xhttp.send(JSON.stringify(SENDMSG));
+            } else {
+                xhttp.send(SENDMSG);
+            }
+
+        },
+        GetHTML(URL, OnHTML) {
+
+            puppytoy.xhr('GET', URL, "", function (err, ServerResponse) {
+                OnHTML(err, ServerResponse);
+            });
+        },
         DubugMe() {
             /*
                 This is the host page javascript...
