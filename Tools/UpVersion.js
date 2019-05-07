@@ -42,8 +42,8 @@ function GetVer(OnVer) {
                     debugger;
                     //set the new date!
                     verItems[0] = this_year;
-                    verItems[1] = ver_month;
-                    verItems[2] = ver_day;
+                    verItems[1] = this_month;
+                    verItems[2] = this_day;
                 }
 
 
