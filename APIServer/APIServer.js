@@ -643,9 +643,6 @@ const IPC = {
                         }
 
 
-
-
-
                         //Is this a multi-request????
                         if (request.RequestData.service == "*") {
 
@@ -665,6 +662,10 @@ const IPC = {
                             */
                             for (let index = 0; index < tasks.length; index++) {
                                 const aSingleRequest = tasks[index];
+                                // debugger;
+
+                                //Clean up the service so there is nothing but numbers and letter...
+                                aSingleRequest.request.service = aSingleRequest.request.service.replace(/[^0-9a-z]/gi, '')
 
                                 //By the time you get here.. you want a true web api request...
                                 ServiceManager.ServiceRequestWeb(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
@@ -689,6 +690,9 @@ const IPC = {
                             }
 
                         } else {
+
+                            //Make sure the service is clean. Nothing but numbers and letters...
+                            request.RequestData.service = request.RequestData.service.replace(/[^0-9a-z]/gi, '');
 
                             //By the time you get here.. you want a true web api request...
                             ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {

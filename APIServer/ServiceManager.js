@@ -34,7 +34,9 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
 
         try {
             //Do not allow ".." in the path!!!!
-            servicePath = RequestData.service.replace(/\./g, '');
+            // servicePath = RequestData.service.replace(/\./g, '');
+            servicePath = RequestData.service;
+ 
 
             finalServicePath = path.resolve(path.join(SERVER.ServicesFolder, "services", path.normalize(path.join(servicePath, 'index.js'))));
 
@@ -51,7 +53,7 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
                             source: ServiceError
                         }
                     };
-                    // debugger;
+                    debugger;
                     OnComplete(ServiceError, null);
                 } else {
                     OnComplete(null, ResponseJSON);
