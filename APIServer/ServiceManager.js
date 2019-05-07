@@ -75,11 +75,11 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
 
 
 
-            OnComplete(null, {
+            OnComplete({
                 err: 'Unable to service this request!',
                 service: servicePath
 
-            });
+            }, null);
         }
 
     }

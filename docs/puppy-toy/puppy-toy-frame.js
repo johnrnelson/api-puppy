@@ -16,7 +16,7 @@ const pupframe = {
         const elLink = document.createElement("link");
         elLink.rel = "stylesheet";
         elLink.type = "text/css";
-        elLink.href = HREF2CSS; 
+        elLink.href = HREF2CSS;
         document.head.appendChild(elLink);
     },
 
@@ -67,15 +67,15 @@ const pupframe = {
             },
 
             MainHelp: {
-                ClearLog(){
-                    if(!pupframe.UI.Displays.MainHelp.LogList){
+                ClearLog() {
+                    if (!pupframe.UI.Displays.MainHelp.LogList) {
                         pupframe.UI.Displays.MainHelp.LogList = document.querySelector(".QuickLog .QuickLogList");
                     }
                     pupframe.UI.Displays.MainHelp.LogList.innerHTML = "";
                 },
                 AddLog(LogItem) {
                     // debugger;
-                    if(!pupframe.UI.Displays.MainHelp.LogList){
+                    if (!pupframe.UI.Displays.MainHelp.LogList) {
                         pupframe.UI.Displays.MainHelp.LogList = document.querySelector(".QuickLog .QuickLogList");
                     }
                     // const logBlock = document.querySelector(".QuickLog .QuickLogList");
@@ -119,8 +119,30 @@ const pupframe = {
 
                         document.getElementById('StatsList-TotalTags').innerHTML = "" + window.parent.document.body.childElementCount + "";
 
+                        document.getElementById('StatsList-LocalStorage').innerHTML = "" + localStorage.length + "";
+
+
 
                         // debugger;
+                        const totalCookies = document.cookie.split(';').length;
+                        const sizeCookies = document.cookie.length;
+
+                        // const doh = cookieJSON.reduce((res, c) => {
+                        //   const [key, val] = c.trim().split('=').map(decodeURIComponent)
+                        //   const allNumbers = str => /^\d+$/.test(str);
+                        //   try {
+                        //     return Object.assign(res, { [key]: allNumbers(val) ?  val : JSON.parse(val) })
+                        //   } catch (e) {
+                        //     return Object.assign(res, { [key]: val })
+                        //   }
+                        // }, {});
+
+                        document.getElementById('StatsList-TotalCookies').innerHTML = "" + totalCookies + "";
+                        document.getElementById('StatsList-CookiesLength').innerHTML = "" + sizeCookies + "";
+
+
+
+
                         if (window.parent.jQuery) {
                             document.getElementById('VersionInfo-jQuery').innerHTML = window.parent.jQuery.fn.jquery;
                         } else {
@@ -475,7 +497,7 @@ const pupframe = {
         */
         pupframe.UI.Displays.MainHelp.Build(function () {
 
- 
+
 
             pupframe.UI.Displays.MainHelp.AddLog({
                 topic: 'Main Help has loaded',

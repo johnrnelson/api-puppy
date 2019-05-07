@@ -254,6 +254,12 @@
         }
     };
 
+
+    //test local storage...
+    // localStorage.setItem('woot','verbery');
+    // localStorage.setItem('a','123');
+    // localStorage.setItem('b','456');
+
     window.puppytoy.BuildMenu();
     window.puppytoy.BuildIFrame();
 })();
