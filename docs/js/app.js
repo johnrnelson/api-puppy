@@ -140,7 +140,7 @@ const UIHelper = {
                     const dispServerTime = moment(WebApp.SysInfo.ST);
                    
 
-                    elServerStatus.title = " " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
+                    elDisplayServerDate.title = " " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
                     elDisplayServerDate.innerHTML = dispServerTime.fromNow();
                     elDisplayServerStatus.innerHTML = `
                         <span class="fas fa-thumbs-up"></span> It's UP!
