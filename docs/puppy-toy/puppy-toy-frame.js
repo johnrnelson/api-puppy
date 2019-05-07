@@ -475,8 +475,7 @@ const pupframe = {
         */
         pupframe.UI.Displays.MainHelp.Build(function () {
 
-
-            console.warn('test log...');
+ 
 
             pupframe.UI.Displays.MainHelp.AddLog({
                 topic: 'Main Help has loaded',
