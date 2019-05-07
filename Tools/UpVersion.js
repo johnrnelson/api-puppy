@@ -19,15 +19,41 @@ function GetVer(OnVer) {
         else {
             try {
  
-                // console.log(fileContents);
                 const JSONDATA = JSON.parse(fileContents);
 
-                const verItems = JSONDATA.version.split('.');
+                const today = new Date();
+                const this_year = today.getFullYear();
+                const this_month = today.getMonth() + 1;
+                const this_day = today.getDate();
 
-                verItems[2] = parseInt(verItems[2]) + 1;
+
+
+
+                const verItems = JSONDATA.version.split('.');
+                const ver_year = verItems[0];
+                const ver_month = verItems[1];
+                const ver_day = verItems[2];
+  
+
+                if ((this_year != ver_year) ||
+                    (this_month != ver_month) ||
+                    (this_day != ver_day)
+                ) {
+                    debugger;
+                    //set the new date!
+                    verItems[0] = this_year;
+                    verItems[1] = ver_month;
+                    verItems[2] = ver_day;
+                }
+
+
+                //Increment the rev number...
+                verItems[3] = parseInt(verItems[3]) + 1;
                 JSONDATA.version = verItems.join('.');
                 ThisReleaseVersion = JSONDATA.version;
-  
+
+                 
+
                 //Rewrite the package json file....
                 fs.writeFile(__dirname + '/../package.json', JSON.stringify(JSONDATA), function (err, fileContents) {
                     // throws an error, you could also catch it here
@@ -56,7 +82,7 @@ function CheckInGit(OnCheckIn) {
     var ProdVersionInfo = "Compiled for Production - Version:" + JSON.stringify(ThisReleaseVersion) + "\r\n";
     var cmdCommit = 'git -C "' + path2Project + '" commit -a -m "Updating for new version:' + ThisReleaseVersion + '" ';
 
-     
+
     child_process_exec(cmdCommit, (error, stdout, stderr) => {
         if (stdout) {
             console.log(stdout);
@@ -82,8 +108,8 @@ function CheckInGit(OnCheckIn) {
 
 GetVer(function (Info) {
     console.log('Updated "package.json" file.', Info);
-
-    CheckInGit(function(){
+  
+    CheckInGit(function () {
         console.log('This NPM has been updated!');
     });
 });
