@@ -16,9 +16,7 @@ const pupframe = {
         const elLink = document.createElement("link");
         elLink.rel = "stylesheet";
         elLink.type = "text/css";
-        elLink.href = HREF2CSS;
-        // document.head.appendChild(elLink);
-        // debugger;
+        elLink.href = HREF2CSS; 
         document.head.appendChild(elLink);
     },
 
@@ -69,20 +67,27 @@ const pupframe = {
             },
 
             MainHelp: {
+                ClearLog(){
+                    if(!pupframe.UI.Displays.MainHelp.LogList){
+                        pupframe.UI.Displays.MainHelp.LogList = document.querySelector(".QuickLog .QuickLogList");
+                    }
+                    pupframe.UI.Displays.MainHelp.LogList.innerHTML = "";
+                },
                 AddLog(LogItem) {
-
-                    const logBlock = document.querySelector(".QuickLog .QuickLogList");
+                    // debugger;
+                    if(!pupframe.UI.Displays.MainHelp.LogList){
+                        pupframe.UI.Displays.MainHelp.LogList = document.querySelector(".QuickLog .QuickLogList");
+                    }
+                    // const logBlock = document.querySelector(".QuickLog .QuickLogList");
                     // debugger;
                     const newLog = document.createElement('QuickLogItem');
                     const nowDT = new Date();
 
                     const logHTML = `                
-                        <lgbody>${LogItem.body}</lgbody>                                   
-                        <dt>${nowDT.toLocaleTimeString()}</dt>
-                        <topic>${LogItem.topic}</topic>
-                    `;
+                    <lgdt>${nowDT.toLocaleTimeString()}</lgdt><topic>${LogItem.topic}</topic>
+                    <lgbody>${LogItem.body}</lgbody>`;
                     newLog.innerHTML = logHTML;
-                    logBlock.appendChild(newLog);
+                    pupframe.UI.Displays.MainHelp.LogList.appendChild(newLog);
                 },
                 Build(OnBuild) {
 
@@ -469,94 +474,33 @@ const pupframe = {
             go for debugging...
         */
         pupframe.UI.Displays.MainHelp.Build(function () {
-            pupframe.UI.Displays.ShowDisplay('info');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
             console.warn('test log...');
-            pupframe.UI.Displays.MainHelp.AddLog({
-                topic: 'woot',
-                body: 'OK just testing...'
-            });
 
             pupframe.UI.Displays.MainHelp.AddLog({
-                topic: 'big old -testtopicccctopicccctopicccc-vvvvvvv',
-                body: 'GESH MORE STUFF<br>XSDFSDFDSFFD..<br>XSD<br>XSD<br>XSD<br>XSD<br>XSD<br>XSD'
-            });
-
-            pupframe.UI.Displays.MainHelp.AddLog({
-                topic: 'big old -testtopicccctopicccctopicccc-vvvvvvv',
-                body: 'GESH MORE STUXSD<br>XSD'
-            });
-            pupframe.UI.Displays.MainHelp.AddLog({
-                topic: 'big old -testtopicccctopicccctopicccc-vvvvvvv',
-                body: 'GESH MORE STUXSD<br>XSD'
-            });
-            pupframe.UI.Displays.MainHelp.AddLog({
-                topic: 'big old -testtopicccctopicccctopicccc-vvvvvvv',
-                body: 'GESH MORE STUXSD<br>XSD'
-            });
-            pupframe.UI.Displays.MainHelp.AddLog({
-                topic: 'big old topicccctopicccctopicccctopicccctopicccctopicccctopicccctopicccctopicccc-testtopicccctopicccctopicccc-vvvvvvv',
-                body: 'GESH MORE STUXSD<br>XSD'
+                topic: 'Main Help has loaded',
+                body: 'UI is ready to go!'
             });
 
 
 
+            pupframe.UI.Displays.ShowDisplay('info');
+
+            //Nest this in case they want to use the log!
+            pupframe.UI.Displays.Search.Build(function () {
+                // pupframe.UI.Displays.ShowDisplay('search');
+            });
+            pupframe.UI.Displays.Config.Build(function () {
+
+                //Setup all of our ace editors...
+                pupframe.UI.Ace.BuildAceControls('ConfigJSON');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                // pupframe.UI.Displays.ShowDisplay('config');
+            });
         });
-        pupframe.UI.Displays.Search.Build(function () {
-            // pupframe.UI.Displays.ShowDisplay('search');
-        });
-        pupframe.UI.Displays.Config.Build(function () {
 
-            //Setup all of our ace editors...
-            pupframe.UI.Ace.BuildAceControls('ConfigJSON');
-
-
-            // pupframe.UI.Displays.ShowDisplay('config');
-        });
 
 
 
