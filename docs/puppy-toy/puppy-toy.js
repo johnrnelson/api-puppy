@@ -7,6 +7,7 @@
     */
 
     window.puppytoy = {
+
         xhr(VERB, ROUTE, SENDMSG, OnData, OnError) {
 
             var xhttp = new XMLHttpRequest();
@@ -175,7 +176,7 @@
             }
         },
         BuildMenu() {
-            var hostElMenu = document.body.appendChild(document.createElement('pupy-toy-menu'));      
+            var hostElMenu = document.body.appendChild(document.createElement('pupy-toy-menu'));
             hostElMenu.innerHTML = " * ";
 
             hostElMenu.style.position = "fixed";
@@ -259,6 +260,8 @@
     // localStorage.setItem('woot','verbery');
     // localStorage.setItem('a','123');
     // localStorage.setItem('b','456');
+
+    
 
     window.puppytoy.BuildMenu();
     window.puppytoy.BuildIFrame();
