@@ -352,8 +352,8 @@ const pupframe = {
                 const HTML = `                
            
                 <sidebaropts>                        
-                    <icon title="Information" class="fas fa-info-circle" id="info"></icon> 
-                    <icon title="Search" class="fas fa-search" id="search"></icon> 
+                    <icon title="Main Information Panel" class="fas fa-info-circle" id="info"></icon> 
+                    <icon title="Search Tags" class="fas fa-search" id="search"></icon> 
                     <icon title="Service Editor" class="fas fa-edit" id="ServiceEditor"></icon>                         
                     <icon title="Configure" class="fas fa-cogs" id="config"></icon>                         
                     <hr/ width="70%" size="1" color="silver">
@@ -479,7 +479,10 @@ const pupframe = {
                     },
                     "LocalStorage": {
                         "Cookies": {
-                            "use": 0,
+                            "usea": 0,
+                            "useb": 10,
+                            "usec": 20,
+                            "used": 30,
                         }
                     }
                 };
@@ -563,12 +566,13 @@ const pupframe = {
             pupframe.UI.Displays.Config.Build(function () {
 
                 //Setup all of our ace editors...
-                pupframe.UI.Ace.BuildAceControls('ConfigJSON');
+               
 
 
                 // pupframe.UI.Displays.ShowDisplay('config');
             });
             pupframe.UI.Displays.ServiceEditor.Build(function () {
+                pupframe.UI.Ace.BuildAceControls('ServiceJSON');
                 pupframe.UI.Displays.ShowDisplay('ServiceEditor');
             });
         });

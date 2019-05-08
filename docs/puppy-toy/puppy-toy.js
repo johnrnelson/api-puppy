@@ -178,6 +178,7 @@
         BuildMenu() {
             var hostElMenu = document.body.appendChild(document.createElement('pupy-toy-menu'));
             hostElMenu.innerHTML = " * ";
+            hostElMenu.title = "puppy-toy menu";
 
             hostElMenu.style.position = "fixed";
             hostElMenu.style.display = "block";
