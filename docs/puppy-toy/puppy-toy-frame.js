@@ -297,9 +297,47 @@ const pupframe = {
 
                 }
             },
+            //--------
+
+            ServiceEditor: {
+
+                Build(OnBuild) {
+
+
+                    var url;
+
+                    if (window.parent.puppytoy.IsLocalDebug()) {
+
+                        url = '/docs/puppy-toy/panels/editor.html';
+                    } else {
+                        url = 'https://demo.tektology.com/?/puppy-toy/panels/editor.html';
+                    }
+
+                    console.log('loaded srv edit');
+
+                    window.parent.puppytoy.GetHTML(url, function (err, HelpHTML) {
+                        if (err) {
+                            console.warn('Bad URL-->', url);
+                            console.warn(err);
+                            // debugger;
+                            return;
+                        }
+                        const newTab = document.createElement('disptab');
+                        newTab.style.display = "none";
+                        newTab.id = "tab-ServiceEditor";
+                        newTab.innerHTML = HelpHTML;
+                        pupframe.UI.HostElement.appendChild(newTab);
+
+
+                        OnBuild();
+                    });
+
+
+
+                }
+            },
+            //--------
         },
-
-
 
         BuildUIDisplay() {
 
@@ -316,6 +354,7 @@ const pupframe = {
                 <sidebaropts>                        
                     <icon title="Information" class="fas fa-info-circle" id="info"></icon> 
                     <icon title="Search" class="fas fa-search" id="search"></icon> 
+                    <icon title="Service Editor" class="fas fa-edit" id="ServiceEditor"></icon>                         
                     <icon title="Configure" class="fas fa-cogs" id="config"></icon>                         
                     <hr/ width="70%" size="1" color="silver">
                     <icon title="Debug Page" class="fas fa-bug" id="debug-host"></icon>                         
@@ -332,6 +371,9 @@ const pupframe = {
                 pupframe.UI.HostElement.querySelector('sidebaropts icon#close').onclick = function () {
                     window.parent.puppytoy.ToggleMenu();
                 };
+                pupframe.UI.HostElement.querySelector('sidebaropts icon#ServiceEditor').onclick = function () {
+                    pupframe.UI.Displays.ShowDisplay(this.id);
+                };
                 pupframe.UI.HostElement.querySelector('sidebaropts icon#info').onclick = function () {
                     pupframe.UI.Displays.ShowDisplay(this.id);
                 };
@@ -345,6 +387,10 @@ const pupframe = {
                     window.parent.puppytoy.DubugMe();
 
                 };
+
+
+
+
                 pupframe.UI.HostElement.querySelector('sidebaropts icon#debug-frame').onclick = function () {
                     /*
                         This is the frame javascript...
@@ -477,11 +523,13 @@ const pupframe = {
             console.info('Loading CSS from local!');
             pupframe.LoadCSSLink("/docs/puppy-toy/css/puppy-toy.css");
             pupframe.LoadCSSLink("/docs/puppy-toy/css/info.css");
+            pupframe.LoadCSSLink("/docs/puppy-toy/css/editor.css");
             pupframe.LoadCSSLink("/docs/puppy-toy/css/config.css");
         } else {
             console.info('Loading CSS from "demo.tektology.com"!');
             pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/puppy-toy.css");
             pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/info.css");
+            pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/editor.css");
             pupframe.LoadCSSLink("https://demo.tektology.com/?/puppy-toy/css/config.css");
         }
 
@@ -518,7 +566,10 @@ const pupframe = {
                 pupframe.UI.Ace.BuildAceControls('ConfigJSON');
 
 
-                pupframe.UI.Displays.ShowDisplay('config');
+                // pupframe.UI.Displays.ShowDisplay('config');
+            });
+            pupframe.UI.Displays.ServiceEditor.Build(function () {
+                pupframe.UI.Displays.ShowDisplay('ServiceEditor');
             });
         });
 
