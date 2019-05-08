@@ -18,7 +18,7 @@ function GetVer(OnVer) {
         }
         else {
             try {
- 
+
                 const JSONDATA = JSON.parse(fileContents);
 
                 const today = new Date();
@@ -33,7 +33,7 @@ function GetVer(OnVer) {
                 const ver_year = verItems[0];
                 const ver_month = verItems[1];
                 const ver_day = verItems[2];
-  
+
 
                 if ((this_year != ver_year) ||
                     (this_month != ver_month) ||
@@ -52,7 +52,7 @@ function GetVer(OnVer) {
                 JSONDATA.version = verItems.join('.');
                 ThisReleaseVersion = JSONDATA.version;
 
-                 
+
 
                 //Rewrite the package json file....
                 fs.writeFile(__dirname + '/../package.json', JSON.stringify(JSONDATA), function (err, fileContents) {
@@ -108,7 +108,7 @@ function CheckInGit(OnCheckIn) {
 
 GetVer(function (Info) {
     console.log('Updated "package.json" file.', Info);
-  
+
     CheckInGit(function () {
         console.log('This NPM has been updated!');
     });
