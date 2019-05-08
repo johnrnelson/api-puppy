@@ -506,7 +506,7 @@ const pupframe = {
 
 
 
-            pupframe.UI.Displays.ShowDisplay('info');
+            // pupframe.UI.Displays.ShowDisplay('info');
 
             //Nest this in case they want to use the log!
             pupframe.UI.Displays.Search.Build(function () {
@@ -518,7 +518,7 @@ const pupframe = {
                 pupframe.UI.Ace.BuildAceControls('ConfigJSON');
 
 
-                // pupframe.UI.Displays.ShowDisplay('config');
+                pupframe.UI.Displays.ShowDisplay('config');
             });
         });
 
