@@ -9,6 +9,7 @@ var ThisReleaseVersion;  //Once you get the version this will be set...
 
 
 function GetVer(OnVer) {
+
     const fs = require("fs");
 
     fs.readFile(__dirname + '/../package.json', 'utf8', function (err, fileContents) {
@@ -44,12 +45,16 @@ function GetVer(OnVer) {
                     verItems[0] = this_year;
                     verItems[1] = this_month;
                     verItems[2] = this_day;
+
+                    //If new date then this is a fresh revision.
                     verItems[3] = 1;
                 } else {
                     //Increment the rev number...
                     verItems[3] = parseInt(verItems[3]) + 1;
 
                 }
+
+                //Repair the version and save it...
                 JSONDATA.version = verItems.join('.');
                 ThisReleaseVersion = JSONDATA.version;
 
