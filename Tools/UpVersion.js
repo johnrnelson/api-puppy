@@ -44,11 +44,12 @@ function GetVer(OnVer) {
                     verItems[0] = this_year;
                     verItems[1] = this_month;
                     verItems[2] = this_day;
+                    verItems[3] = 1;
+                } else {
+                    //Increment the rev number...
+                    verItems[3] = parseInt(verItems[3]) + 1;
+
                 }
-
-
-                //Increment the rev number...
-                verItems[3] = parseInt(verItems[3]) + 1;
                 JSONDATA.version = verItems.join('.');
                 ThisReleaseVersion = JSONDATA.version;
 
