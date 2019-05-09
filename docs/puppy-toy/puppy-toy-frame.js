@@ -301,6 +301,48 @@ const pupframe = {
 
             ServiceEditor: {
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                RunService() {
+                    
+                    try {
+                        var url = 'https://demo.tektology.com/';
+                        // debugger;
+                        const JSONText = pupframe.UI.Displays.ServiceEditor.Ace.getValue();
+                        const ServiceInfo = JSON.parse(JSONText);
+
+                        // pupframe.UI.Displays.ServiceEditor.Ace
+                        window.parent.puppytoy.xhr('PUT', url, ServiceInfo,
+                            function (err, ServerResponse) {
+                                const srvData = JSON.parse(ServerResponse);
+                                // console.info('SERVER INFO', srvData);
+                          
+                                parent.puppytoy.DebugMe(srvData);
+                            });
+
+                    } catch (errJSON) {
+                        console.warn('JSON not valid!')
+                    }
+
+
+                },
+
                 Build(OnBuild) {
 
 
@@ -384,7 +426,7 @@ const pupframe = {
                     pupframe.UI.Displays.ShowDisplay(this.id);
                 };
                 pupframe.UI.HostElement.querySelector('sidebaropts icon#debug-host').onclick = function () {
-                    window.parent.puppytoy.DubugMe();
+                    window.parent.puppytoy.DebugMe();
 
                 };
 
@@ -470,20 +512,12 @@ const pupframe = {
                 //Only hook the actual editor!!!!!
                 pupframe.UI.Ace.HookEvents(AceEditor);
 
+ 
 
                 const defaultOPTS = {
-                    "UseSniffer": 1,
-                    "UI": {
-                        // Possible values... "TR","TL","BR","BL"
-                        "MenuLoc": "TR"
-                    },
-                    "LocalStorage": {
-                        "Cookies": {
-                            "usea": 0,
-                            "useb": 10,
-                            "usec": 20,
-                            "used": 30,
-                        }
+                    service: 'help',
+                    data: {
+                        topic: 'SysInfo'
                     }
                 };
 
@@ -566,13 +600,14 @@ const pupframe = {
             pupframe.UI.Displays.Config.Build(function () {
 
                 //Setup all of our ace editors...
-               
+
 
 
                 // pupframe.UI.Displays.ShowDisplay('config');
             });
             pupframe.UI.Displays.ServiceEditor.Build(function () {
-                pupframe.UI.Ace.BuildAceControls('ServiceJSON');
+
+                pupframe.UI.Displays.ServiceEditor.Ace = pupframe.UI.Ace.BuildAceControls('ServiceJSON');
                 pupframe.UI.Displays.ShowDisplay('ServiceEditor');
             });
         });

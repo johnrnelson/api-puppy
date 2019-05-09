@@ -72,10 +72,11 @@
                 OnHTML(err, ServerResponse);
             });
         },
-        DubugMe() {
+        DebugMe(DataToDebug) {            
             /*
                 This is the host page javascript...
             */
+            console.log(DataToDebug);
             debugger;
         },
         DocumentJSON: [],
@@ -262,7 +263,7 @@
     // localStorage.setItem('a','123');
     // localStorage.setItem('b','456');
 
-    
+
 
     window.puppytoy.BuildMenu();
     window.puppytoy.BuildIFrame();
