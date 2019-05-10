@@ -17,7 +17,50 @@ editor a {
 }
 
 editor div#EditorMenu {
-    color:silver;
+    /* position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height:30px; */
+
+    color: silver;
+    padding: 2px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+editor div#EditorMenu button {
+    /* height: 25px; */
+    color: yellow;
+    background-color: rgb(94, 94, 94);
+    border: solid 1px transparent;
+
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+
+editor div#EditorMenu select {
+    /* height: 25px; */
+    color: yellow;
+    background-color: rgb(94, 94, 94);
+    border: solid 1px transparent;
+
+    border-radius: 5px;
+    font-size: 18px;
+    width: 150px;
+
+
+}
+
+
+
+editor div#EditorMenu button:hover {
+    color: white;
+    border: solid 1px rgb(231, 231, 231);
+    background-color: rgb(141, 141, 141);
 }
 
 editor div#ServiceJSON {
@@ -27,8 +70,9 @@ editor div#ServiceJSON {
     color: gold;
     /* height: 300px; */
     /* width: 100%; */
-    top:30px;
+    top: 30px;
     bottom: 0;
     left: 0;
     right: 0;
+
 }

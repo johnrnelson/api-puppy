@@ -297,42 +297,44 @@ const pupframe = {
 
                 }
             },
+
+
+
+
+
+
+
+
+
+
+
+
             //--------
-
             ServiceEditor: {
+                SelectService(ServiceList) {
+                    console.info('Load this service...',ServiceList.value);                    
+                },
 
 
 
+                /*
+                    Still working on this!!!!!
+                */
+
+                RunService(HostElement) {
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                RunService() {
-                    
                     try {
                         var url = 'https://demo.tektology.com/';
                         // debugger;
                         const JSONText = pupframe.UI.Displays.ServiceEditor.Ace.getValue();
                         const ServiceInfo = JSON.parse(JSONText);
 
-                        // pupframe.UI.Displays.ServiceEditor.Ace
                         window.parent.puppytoy.xhr('PUT', url, ServiceInfo,
                             function (err, ServerResponse) {
                                 const srvData = JSON.parse(ServerResponse);
                                 // console.info('SERVER INFO', srvData);
-                          
+
                                 parent.puppytoy.DebugMe(srvData);
                             });
 
@@ -342,6 +344,8 @@ const pupframe = {
 
 
                 },
+
+
 
                 Build(OnBuild) {
 
@@ -512,7 +516,7 @@ const pupframe = {
                 //Only hook the actual editor!!!!!
                 pupframe.UI.Ace.HookEvents(AceEditor);
 
- 
+
 
                 const defaultOPTS = {
                     service: 'help',

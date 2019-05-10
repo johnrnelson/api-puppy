@@ -1,12 +1,19 @@
 <editor>
 
-    
+
     <div id="EditorMenu">
+
+        <select onchange="pupframe.UI.Displays.ServiceEditor.SelectService(this);">
+            <option>Default</option>
+            <option>Service A</option>
+            <option>Service B</option>
+            <option>Service C - TEST LONG WINDED SERVICE NAME!</option>
+        </select>
+        &nbsp;&nbsp;
+
         <button onclick="pupframe.UI.Displays.ServiceEditor.RunService();">Run Service</button>
-        Editor options N/A
-                
     </div>
-    <div  id="ServiceJSON">
+    <div id="ServiceJSON">
 
     </div>
 </editor>
