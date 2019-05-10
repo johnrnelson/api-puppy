@@ -101,6 +101,13 @@ WebApp.DebugUI = {
 
             }
 
+            /*
+                No good way to set a default here... :-(
+            */
+
+            // debugger;
+            // WebApp.DebugUI.SelectServiceOption('time');
+
         } catch (errFillSideBar) {
             console.warn(errFillSideBar);
             debugger;

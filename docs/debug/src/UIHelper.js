@@ -151,7 +151,7 @@ window.UIHelper = {
             console.warn('ShowTab Error!', '"Tab2Show" must be a string!');
             debugger;
         }
- 
+
         if (!UIHelper.ActiveTab) {
             UIHelper.ActiveTab = TabElement;
             UIHelper.ActiveTabButton = BTNElement;
@@ -168,8 +168,8 @@ window.UIHelper = {
 
         // Only load the debugger tool if they want to use it. 
         if (Tab2Show == "TabDebugger") {
- 
-     
+
+
             //Have I alredy loaded this?
             if (!WebApp.DebugUI) {
 
@@ -178,7 +178,7 @@ window.UIHelper = {
                 */
                 WebApp.GetHelpFile('DebuggerUI.js', function (DebuggerUICode) {
 
-                    window.eval(DebuggerUICode);          
+                    window.eval(DebuggerUICode);
 
 
                     WebApp.GetHelpFile('DebuggerUI.css', function (filecontents) {
@@ -402,17 +402,20 @@ WebApp.GetHelpFile('SocketAPI.js', function (SocketAPICode) {
 
 
 
- 
+
 //Which screen do you want to show first? Are you debugging the debugger? lol
 UIHelper.ShowTab('TabMain');
-// UIHelper.ShowTab('TabDebugger');
+
 
 
 
 //If you local host you are most likely debugging.. :-)
 if (document.location.hostname == "localhost") {
     // debugger;
-    // UIHelper.ShowTab('TabDebugger');
+    setTimeout(() => {
+
+        UIHelper.ShowTab('TabDebugger');
+    }, 500);
     // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
     // UIHelper.ShowTab('TabAppPrefs');

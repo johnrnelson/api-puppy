@@ -194,11 +194,6 @@ const IPC = {
 
     // Serve up our static files from the docs...
     ServeStaticFile(request, response) {
-        /*
-            http://localhost:9080/?/../../../../../../../../debug/src/AppCharts.html
-            http://localhost:9080/?/../../../debug/src/HistoryLogger.css
-            http://localhost:9080/?/debug/docs/imgs/beagle-puppy-2.jpeg
-        */
 
 
         var reqPath = request.url.substring(2, request.url.length);
@@ -792,7 +787,57 @@ const IPC = {
 function StartServer() {
 
 
-    IPC.Start();
+    // Async step by step becaues it's easier to debug... They say.. :-)
+    (async () => {
+
+        
+
+        try {
+
+
+            SERVER.SqlData = require('./DataManager');
+
+
+            const ServerConfg = JSON.parse(fs.readFileSync(SERVER.SECRET + '/CONFIG.json', 'utf8'));
+ 
+
+            /*
+                Open our Mysql server...
+            */
+            const PoolReq = await SERVER.SqlData.OpenPoolSync(ServerConfg.mysql);
+
+            if (PoolReq.err) {
+                console.log(PoolReq.err);
+                console.log('\r\n\t ****** Check your connection to the server!');
+
+
+            } else {
+
+
+                //Lets get this party started. :-)
+                IPC.Start();
+
+            }
+
+        } catch (errorNoSQLServer) {
+            console.log('Critical Error!');
+            console.log(errorNoSQLServer);
+            process.exit(2);
+        }
+
+    })();
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 exports.StartServer = StartServer;

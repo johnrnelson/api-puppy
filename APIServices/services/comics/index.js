@@ -3,62 +3,42 @@
     
 */
 const DataActions = {
-  
- 
+
+
     list(RequestData, OnComplete) {
 
-        // const result = {
-        //     msg: 'List all the comics.',
-        //     data: SERVER.IN_MEM_DB.fruit
-        // };
-        // OnComplete(null, result);
+        /*
+        
+                
+        http://feeds.feedburner.com/comiclistfeed - this week
+        http://feeds.feedburner.com/ncrl - this week plain text
+        http://feeds.feedburner.com/comiclistnextweek - next week
+        http://feeds.feedburner.com/comiclistbeyondnextweek - extended forecast
 
-
-
-        const fs = require('fs');
-        const path = require('path');
- 
-        const examplesFilePath = path.join(__dirname, "samples",  "ComicCubeSample.json");
-
-
-        fs.readFile(examplesFilePath, 'utf8', function (err, ComicData) {
-            if (err) {
+        */
+        const SQL = "SELECT * FROM comics.Comics limit 50;";
+        SERVER.SqlData.ExecuteSQL(SQL, function (SQLResult) {
+            if (SQLResult.err) {
                 debugger;
-                console.log(RequestData);
-                console.log(sampleid);
-                console.log(examplesFilePath);
-                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
-
                 OnComplete(null, {
-                    err: 'Unable to get that file!',                 
+                    err: 'Comic service not able to understand you.',
                     debug: RequestData
                 });
             } else {
-                // SERVER.Statistics.Services.AddSiteMapItem("help","Success");
-                
-                OnComplete(null, JSON.parse(ComicData));
+
+                OnComplete(null, SQLResult.rows);
             }
-        });//End reading file...
 
-
-
-
-
-
-
-
-
-
-
-
+        }); 
 
 
 
     },
- 
+
 };
 
 function ServiceRequest(RequestObj, RequestData, OnComplete) {
+
 
 
 
@@ -70,10 +50,10 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                     err: 'Action was not found! ' + RequestData.action,
                 };
                 OnComplete(null, result);
-                SERVER.Statistics.Services.AddSiteMapItem("comics","Errors");
+                SERVER.Statistics.Services.AddSiteMapItem("comics", "Errors");
             } else {
-             
-                SERVER.Statistics.Services.AddSiteMapItem("comics","Success");
+
+                SERVER.Statistics.Services.AddSiteMapItem("comics", "Success");
                 task(RequestData, OnComplete);
             }
         } catch (errOnAction) {
@@ -81,8 +61,8 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
             const result = {
                 err: 'Error in Action! ',
             };
-            SERVER.Statistics.Services.AddSiteMapItem("comics","Errors");
-            OnComplete(null, result);            
+            SERVER.Statistics.Services.AddSiteMapItem("comics", "Errors");
+            OnComplete(null, result);
         }
 
     } else {
@@ -98,7 +78,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
 
         OnComplete(null, result);
-        SERVER.Statistics.Services.AddSiteMapItem("comics","Errors");
+        SERVER.Statistics.Services.AddSiteMapItem("comics", "Errors");
     }
 
 
