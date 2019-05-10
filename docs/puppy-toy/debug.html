@@ -1,0 +1,51 @@
+<html>
+
+<head>
+
+    <!-- 
+        Easy way to debug this stuff...  :-)    
+        http://dev.johnrnelson.com:5500/docs/puppy-toy/debug.html 
+    
+    -->
+
+
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+
+
+    <!-- <link rel="stylesheet" href="http://localhost:9080/?/css/JSONThief.css"> -->
+
+
+</head>
+
+<body>
+
+
+    <p>test
+        <p>NEST TO TEST
+            <p>AAAAA
+                <p>BBBBB</p>
+            </p>
+        </p>
+    </p>
+
+
+
+
+
+
+</body>
+
+</html>
+
+
+<script>
+    setTimeout(function () {
+        // return
+
+        (function () {
+            const CSSFile = document.createElement("script");
+            CSSFile.src = "http://localhost:9080/?/puppy-toy/puppy-toy.js";
+            document.head.appendChild(CSSFile);
+        })();
+    }, 150);
+</script>
