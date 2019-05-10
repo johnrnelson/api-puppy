@@ -309,17 +309,149 @@ const pupframe = {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            /*
+                Still working on this!!!!!
+            */
+
             //--------
             ServiceEditor: {
-                SelectService(ServiceList) {
-                    console.info('Load this service...',ServiceList.value);                    
+                Menu: {
+                    //Fill the side bar with options we can use in our debugger...
+                    FillVerbList() {
+                        try {
+
+                            const DebugVerbList_UL = pupframe.UI.HostElement.querySelector('#DebugVerbList_UL')
+                            DebugVerbList_UL.innerHTML = "";
+
+                            //No default service set...
+                            var defaultService = false;
+
+                            for (var n in pupframe.SysInfo.apidata) {
+
+                                //set default...
+                                if (!defaultService) {
+                                    defaultService = n;
+                                }
+
+                                const namespaceData = pupframe.SysInfo.apidata[n];
+
+                                const optUL = document.createElement('option');
+                                optUL.RecordData = namespaceData;
+                                optUL.value = n;
+                                optUL.innerHTML = n;
+                                DebugVerbList_UL.appendChild(optUL);
+                            }
+
+                            //Use default service....
+                            pupframe.UI.Displays.ServiceEditor.Menu.SelectService(defaultService);
+
+                        } catch (errFillSideBar) {
+                            console.warn(errFillSideBar);
+                            debugger;
+                        }
+                    },
+
+
+
+
+                    SelectService(ServiceName) {
+
+                        const DebugSampleList_UL = pupframe.UI.HostElement.querySelector("#DebugSampleList_UL");
+
+
+                        //Quick clear the old stuff...               
+                        DebugSampleList_UL.innerHTML = "";
+
+                        window.parent.puppytoy.xhr('PUT', 'https://demo.tektology.com/', {
+                            service: 'help',
+                            data: {
+                                topic: 'sample-code-list',
+                                sampleid: ServiceName
+
+                            }
+                        },
+                            function (err, ServerResponse) {
+                                //
+
+                                const sampleData = JSON.parse(ServerResponse);
+                                var defaultSample = false;
+
+
+                                for (let index = 0; index < sampleData.samples.length; index++) {
+                                    const sample = sampleData.samples[index];
+
+                                    //Set Default...
+                                    if (index == 0) {
+                                        defaultSample = sample;
+                                    }
+
+
+                                    const optUL = document.createElement('option');
+                                    optUL.value = sample;
+
+                                    optUL.innerHTML = sample;
+                                    DebugSampleList_UL.appendChild(optUL);
+                                }
+
+                                //Use default service....
+                                pupframe.UI.Displays.ServiceEditor.Menu.SelectSampleCodeOption(defaultSample);
+
+                            });
+
+
+
+
+
+
+                    },
+
+                    SelectSampleCodeOption(SampleCode) {
+
+                        // debugger;
+                        const DebugVerbList_UL = pupframe.UI.HostElement.querySelector('#DebugVerbList_UL')
+
+
+                        window.parent.puppytoy.xhr('PUT', 'https://demo.tektology.com/', {
+                            'service': 'help',
+                            'data': {
+                                'topic': 'sample-code-fetch',
+                                'sampleid': SampleCode,
+                                'target-service': DebugVerbList_UL.value.trim()
+                            }
+                        },
+                            function (err, ServerResponse) {
+                                const srvObj = JSON.parse(ServerResponse);
+                                if (srvObj.err) {
+                                    console.warn('Error Sample Code->', srvObj.err);
+                                } else {
+                                    pupframe.UI.Displays.ServiceEditor.Ace.setValue(JSON.stringify(srvObj.code, null, '\t'), -1);
+
+                                    //Set the cursor so the user can start over again...
+                                    pupframe.UI.Displays.ServiceEditor.Ace.moveCursorTo(0);
+                                    pupframe.UI.Displays.ServiceEditor.Ace.resize();
+                                }
+                            });
+
+
+                    },
+
                 },
 
 
-
-                /*
-                    Still working on this!!!!!
-                */
 
                 RunService(HostElement) {
 
@@ -375,6 +507,11 @@ const pupframe = {
                         pupframe.UI.HostElement.appendChild(newTab);
 
 
+
+                        /*
+                            Setup menu events...
+                        */
+                        pupframe.UI.Displays.ServiceEditor.Menu.FillVerbList();
                         OnBuild();
                     });
 
@@ -516,17 +653,6 @@ const pupframe = {
                 //Only hook the actual editor!!!!!
                 pupframe.UI.Ace.HookEvents(AceEditor);
 
-
-
-                const defaultOPTS = {
-                    service: 'help',
-                    data: {
-                        topic: 'SysInfo'
-                    }
-                };
-
-                // debugger;
-                AceEditor.setValue(JSON.stringify(defaultOPTS, null, '\t'), -1);
                 setTimeout(() => {
 
                     AceEditor.setOptions({
@@ -580,65 +706,91 @@ const pupframe = {
 
 
 
-        /*
-            Edit this to quickly get to where you want to 
-            go for debugging...
-        */
-        pupframe.UI.Displays.MainHelp.Build(function () {
-
-
-
-            pupframe.UI.Displays.MainHelp.AddLog({
-                topic: 'Main Help has loaded',
-                body: 'UI is ready to go!'
-            });
-
-
-
-            // pupframe.UI.Displays.ShowDisplay('info');
-
-            //Nest this in case they want to use the log!
-            pupframe.UI.Displays.Search.Build(function () {
-                // pupframe.UI.Displays.ShowDisplay('search');
-            });
-            pupframe.UI.Displays.Config.Build(function () {
-
-                //Setup all of our ace editors...
-
-
-
-                // pupframe.UI.Displays.ShowDisplay('config');
-            });
-            pupframe.UI.Displays.ServiceEditor.Build(function () {
-
-                pupframe.UI.Displays.ServiceEditor.Ace = pupframe.UI.Ace.BuildAceControls('ServiceJSON');
-                pupframe.UI.Displays.ShowDisplay('ServiceEditor');
-            });
-        });
 
 
 
 
-        //Can change this if you prefer..
-        window.parent.puppytoy.ToggleMenu();
 
 
-        (function () {
-            // When debugging use this to quickly get to where you need...
-            setTimeout(() => {
-                //Show your default display...
-                // pupframe.UI.Displays.ShowDisplay('info');
-                // pupframe.UI.Displays.ShowDisplay('search');
-                // pupframe.UI.Displays.ShowDisplay('config');
 
-            }, 500);
-        })();
+
+
+
+
+
+        try {
+
+            window.parent.puppytoy.xhr('PUT', 'https://demo.tektology.com/', {
+                "service": "help",
+                "data": {
+                    "topic": "SysInfo"
+                }
+            },
+                function (err, ServerResponse) {
+                    pupframe.SysInfo = JSON.parse(ServerResponse);
+
+
+                    /*
+                        Edit this to quickly get to where you want to 
+                        go for debugging...
+                    */
+                    pupframe.UI.Displays.MainHelp.Build(function () {
+
+
+
+                        pupframe.UI.Displays.MainHelp.AddLog({
+                            topic: 'Main Help has loaded',
+                            body: 'UI is ready to go!'
+                        });
+
+
+
+                        // pupframe.UI.Displays.ShowDisplay('info');
+
+                        //Nest this in case they want to use the log!
+                        pupframe.UI.Displays.Search.Build(function () {
+                            // pupframe.UI.Displays.ShowDisplay('search');
+                        });
+                        pupframe.UI.Displays.Config.Build(function () {
+
+                            //Setup all of our ace editors...
+
+
+
+                            // pupframe.UI.Displays.ShowDisplay('config');
+                        });
+                        pupframe.UI.Displays.ServiceEditor.Build(function () {
+
+                            pupframe.UI.Displays.ServiceEditor.Ace = pupframe.UI.Ace.BuildAceControls('ServiceJSON');
+                            pupframe.UI.Displays.ShowDisplay('ServiceEditor');
+                        });
+                    });
+
+
+
+
+                    (function () {
+
+                        if (window.parent.puppytoy.IsLocalDebug()) {
+
+                            //Can change this if you prefer..
+                            window.parent.puppytoy.ToggleMenu();
+                        }
+
+                        //
+                    })();
+
+                });
+        } catch (errJSON) {
+            console.warn('JSON not valid!')
+        }
+
 
     }
 };
 
 
-setTimeout(() => {
-    pupframe.Init();
-}, 200);
+// setTimeout(() => {
+// }, 200);
+pupframe.Init();
 

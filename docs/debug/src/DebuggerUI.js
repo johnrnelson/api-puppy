@@ -311,12 +311,11 @@ WebApp.DebugUI = {
                 return {
                     title: 'Remote Debugging Toy',
                     code: `
-                    (function () {
-
-                        const scrTab = document.createElement("script");
-                        scrTab.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
-                        document.head.appendChild(scrTab);
-                    })();                    
+(function () {
+    const scrTab = document.createElement("script");
+    scrTab.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
+    document.head.appendChild(scrTab);
+})();                    
                     `,
                     help: 'Please use this tool with caustion!',
                 }
@@ -334,27 +333,27 @@ WebApp.DebugUI = {
                 return {
                     title: 'Browser javascript',
                     code: `
-                var url = '${document.URL}'; 
-            
-                fetch(url, {
-                    method: "PUT", // *GET, POST, PUT, DELETE, etc.
-                    mode: "cors", // no-cors, cors, *same-origin
-                    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-                    credentials: "omit", // include, *same-origin, omit
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Access-Control-Allow-Origin": "*",
-                        "Access-Control-Allow-Headers": "*",                        
-                    },
-                    redirect: "follow", // manual, *follow, error
-                    referrer: "no-referrer", // no-referrer, *client
-                    body: JSON.stringify(${JSON.stringify(JSONPayload)}), // body data type must match "Content-Type" header
-                }).then(response => response.json()).then(JSON => {
-                    console.info('This is the result of the request!');
-                    console.log(JSON);
-                    debugger;
-                }); // parses JSON response into native Javascript objects 
-                 
+var url = '${document.URL}'; 
+
+fetch(url, {
+    method: "PUT", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, cors, *same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "omit", // include, *same-origin, omit
+    headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",                        
+    },
+    redirect: "follow", // manual, *follow, error
+    referrer: "no-referrer", // no-referrer, *client
+    body: JSON.stringify(${JSON.stringify(JSONPayload)}), // body data type must match "Content-Type" header
+}).then(response => response.json()).then(JSON => {
+    console.info('This is the result of the request!');
+    console.log(JSON);
+    debugger;
+}); // parses JSON response into native Javascript objects 
+    
                 
                 `,
                     help: 'You can use xhr but I guess fetch is the new thing.',

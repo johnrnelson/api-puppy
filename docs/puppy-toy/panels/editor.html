@@ -3,12 +3,8 @@
 
     <div id="EditorMenu">
 
-        <select onchange="pupframe.UI.Displays.ServiceEditor.SelectService(this);">
-            <option>Default</option>
-            <option>Service A</option>
-            <option>Service B</option>
-            <option>Service C - TEST LONG WINDED SERVICE NAME!</option>
-        </select>
+        <select id ="DebugVerbList_UL" onchange="pupframe.UI.Displays.ServiceEditor.Menu.SelectService(this.value);"></select>
+        <select id ="DebugSampleList_UL" onchange="pupframe.UI.Displays.ServiceEditor.Menu.SelectSampleCodeOption(this.value);"></select>
         &nbsp;&nbsp;
 
         <button onclick="pupframe.UI.Displays.ServiceEditor.RunService();">Run Service</button>
