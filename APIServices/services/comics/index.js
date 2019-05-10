@@ -7,15 +7,6 @@ const DataActions = {
 
     list(RequestData, OnComplete) {
 
-        /*
-        
-                
-        http://feeds.feedburner.com/comiclistfeed - this week
-        http://feeds.feedburner.com/ncrl - this week plain text
-        http://feeds.feedburner.com/comiclistnextweek - next week
-        http://feeds.feedburner.com/comiclistbeyondnextweek - extended forecast
-
-        */
         const SQL = "SELECT * FROM comics.Comics limit 50;";
         SERVER.SqlData.ExecuteSQL(SQL, function (SQLResult) {
             if (SQLResult.err) {
@@ -30,9 +21,6 @@ const DataActions = {
             }
 
         }); 
-
-
-
     },
 
 };
