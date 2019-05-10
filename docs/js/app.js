@@ -187,7 +187,7 @@ window.onload = function () {
 
     UIHelper.ShowServerStatus();
 
-
+    /*
     if ((document.location.hostname == "127.0.0.1") ||
         (document.location.hostname == "localhost") ||
         (document.location.hostname == "dev.johnrnelson.com") ||
@@ -209,7 +209,7 @@ window.onload = function () {
 
 
     }
-
+    */
 
 
 
