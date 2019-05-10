@@ -4,6 +4,8 @@
 
 /*
     Use this simple script after you have tested all your changed to up the version.
+ 
+   
 */
 var ThisReleaseVersion;  //Once you get the version this will be set...
 
@@ -117,5 +119,6 @@ GetVer(function (Info) {
 
     CheckInGit(function () {
         console.log('This NPM has been updated!');
+        console.log('git tag -a v' + Info + ' -m "Test Tag"');
     });
 });
