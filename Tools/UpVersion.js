@@ -120,5 +120,6 @@ GetVer(function (Info) {
     CheckInGit(function () {
         console.log('This NPM has been updated!');
         console.log('git tag -a v' + Info + ' -m "Test Tag"');
+        console.log('git push origin --tags');
     });
 });
