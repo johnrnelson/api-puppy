@@ -119,7 +119,11 @@ GetVer(function (Info) {
 
     CheckInGit(function () {
         console.log('This NPM has been updated!');
+        
+        // see https://git-scm.com/book/en/v2/Git-Basics-Tagging  for more info...  :-)
+
         console.log('git tag -a v' + Info + ' -m "Test Tag"');
         console.log('git push origin --tags');
+        console.log('git push origin --delete v2019.5.10.4');
     });
 });
