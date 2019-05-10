@@ -187,6 +187,7 @@ window.onload = function () {
 
     UIHelper.ShowServerStatus();
 
+    // Add the dropper here if it makes sense...
     /*
     if ((document.location.hostname == "127.0.0.1") ||
         (document.location.hostname == "localhost") ||

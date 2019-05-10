@@ -1,0 +1,4 @@
+{
+	"service": "logger",
+	"action": "list-log-files" 
+}

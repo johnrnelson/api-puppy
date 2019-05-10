@@ -1,5 +1,0 @@
-{
-	"service": "logger",
-	"action": "list-log-files",
-	"logfile": "ok test"
-}
