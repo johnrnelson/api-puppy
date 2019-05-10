@@ -15,7 +15,9 @@ const LoggerActions = {
         SERVER.ServiceLogger.ReadLog(RequestData.logfile, function (ReadError, LogData) {
 
             if (ReadError) {
-                OnComplete(ReadError, null);
+                OnComplete({
+                    message:'Error reading the log file.'
+                }, null);
             } else {
 
                 if (!LogData) {

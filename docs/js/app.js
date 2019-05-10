@@ -138,14 +138,14 @@ const UIHelper = {
                     WebApp.SysInfo.ST = new Date(WebApp.SysInfo.ST);
 
                     const dispServerTime = moment(WebApp.SysInfo.ST);
-                   
+
 
                     elDisplayServerDate.title = " " + dispServerTime.format('dddd, MMMM Do YYYY, h:mm:ss a');
                     elDisplayServerDate.innerHTML = dispServerTime.fromNow();
                     elDisplayServerStatus.innerHTML = `
                         <span class="fas fa-thumbs-up"></span> It's UP!
                     `;
- 
+
                     elDisplayServerVersion.innerHTML = WebApp.SysInfo.ProjectInfo.Version +
                         " " + WebApp.SysInfo.ProjectInfo.VersionName;
 
@@ -187,10 +187,31 @@ window.onload = function () {
 
     UIHelper.ShowServerStatus();
 
-    // debugger;
-    (function () {
+
+    if ((document.location.hostname == "127.0.0.1") ||
+        (document.location.hostname == "localhost") ||
+        (document.location.hostname == "dev.johnrnelson.com") ||
+        (document.location.hostname == "0.0.0.0")) {
+        //Local debug...
+
+        const CSSFile = document.createElement("script");
+        CSSFile.src = "http://localhost:9080/?/puppy-toy/puppy-toy.js";
+        document.head.appendChild(CSSFile);
+
+    } else {
+
+        //Open on the internet...
+
+
         const scrTab = document.createElement("script");
         scrTab.src = "https://demo.tektology.com/?/puppy-toy/puppy-toy.js";
         document.head.appendChild(scrTab);
-    })();      
+
+
+    }
+
+
+
+
+
 }
