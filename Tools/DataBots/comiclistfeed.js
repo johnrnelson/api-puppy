@@ -18,32 +18,58 @@ const fs = require('fs');
 const path = require('path');
 
 const ServerEnv = require('../SERVER');
-// console.log(SERVER);
 
 
+/*
+    Wrap it all up so its easy to use... :-)
+*/
 const FeedAPI = {
 
     /*
         Get the files once so we don't have to kill our network!  :-)
     */
-    GetFiles() {
-        var request = require('request');
+    GetFiles(Refresh) {
         const OutFilePath = SERVER.SECRET + '/RSSComicPriceFeedburner.json';
 
-        request.get({
-            headers: {
-                'content-type': 'application/x-www-form-urlencoded',
-                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36'
-            },
-            url: 'http://feeds.feedburner.com/comiclistfeed?format=xml',
-            // url: 'http://feeds.feedburner.com/comiclistfeed',
-            body: ""
-        }, function (error, response, body) {
-            console.log('New File Written!', OutFilePath);
-            debugger;
-            //Don't put the file in our project or it will be in github....
-            fs.writeFileSync(OutFilePath, body);
-        });
+        debugger;
+        if (Refresh) {
+            var request = require('request');
+
+            request.get({
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.110 Safari/537.36'
+                },
+                url: 'http://feeds.feedburner.com/comiclistfeed?format=xml',
+                // url: 'http://feeds.feedburner.com/comiclistfeed',
+                body: ""
+            }, function (error, response, body) {
+                console.log('New File Written!', OutFilePath);
+                debugger;
+                //Don't put the file in our project or it will be in github....
+                fs.writeFileSync(OutFilePath, body);
+                DigestXML();
+            });
+        } else {
+            DigestXML();
+        }
+
+        function DigestXML() {
+
+            FeedAPI.ReadXML(OutFilePath, function (errReadXML, XMLData) {
+                if (errReadXML) {
+                    console.log(" ************************************************ ");
+                    console.log(errReadXML);
+                    console.log(" ************************************************ ");
+                } else {
+                    console.log("Total Items-->", XMLData.items.length);
+                    FeedAPI.BuildSQL(XMLData);
+                }
+                // debugger;
+
+            });
+
+        }
     },
     //========================================================================
 
@@ -59,8 +85,8 @@ const FeedAPI = {
                 debugger;
 
             } else {
-
-                console.log(SQLResult.rows);
+                debugger;
+                console.log(SQL2Update.length, SQLResult.rows);
             }
 
         });
@@ -82,7 +108,7 @@ const FeedAPI = {
         var parseString = require('xml2js').parseString;
 
         const XMLData = {
-            items:[]
+            items: []
         };
 
         try {
@@ -117,7 +143,9 @@ const FeedAPI = {
 
                     // debugger;
                     var allParas = dom.window.document.querySelectorAll('p');
- 
+
+
+
 
                     for (let index = 0; index < allParas.length; index++) {
                         const element = allParas[index];
@@ -126,9 +154,16 @@ const FeedAPI = {
                         if (index < Magic_Numbers["ComicDataStartsOnRow" + chanItemNDX]) {
                             continue;
                         }
-                        var rowData = {
 
-                        };
+                        var PublisherTitleTag = element.querySelector('u');
+                        if (!PublisherTitleTag) {
+                            // debugger;
+                            continue;
+                        }
+                        var PublisherTitle = element.querySelector('u').textContent;
+                        // var ComicTitle = element.querySelector('a').textContent;
+
+
                         var rowArray = element.textContent.trim().split('\n');
                         // console.log(rowArray);
 
@@ -149,6 +184,7 @@ const FeedAPI = {
                         var rowPriceText = rawLine.substr(rawLineComma + 1, rawLine.length).replace('$', '').trim();
 
                         var rowObject = {
+                            Publisher: PublisherTitle,
                             Title: rowTitle,
                             Price: -1
                         };
@@ -158,7 +194,7 @@ const FeedAPI = {
                         if (!isPrice) {
                             // debugger;
                             rowPriceValue = parseFloat(rowPriceText);
-                            console.log(index,'Price--', rowPriceValue);
+                            console.log(index, 'Price--', rowPriceValue);
                         };
 
 
@@ -196,11 +232,7 @@ const FeedAPI = {
             sqlItems.push('TRUNCATE `comics`.`ComicPrices`;')
             for (let index = 0; index < XMLData.items.length; index++) {
                 const element = XMLData.items[index];
-                // debugger;
-                // if (element.Price > 0) {
-                //     debugger;
-                // }
-                // console.log(element);
+
                 var sql = `INSERT INTO comics.ComicPrices(CTitle,Cost)VALUES(${SERVER.SqlData.StripQuotesForString(element.Title)},${element.Price});`;
 
                 sqlItems.push(sql);
@@ -217,20 +249,18 @@ const FeedAPI = {
 };
 // debugger;
 
-// FeedAPI.GetFiles();
 
 
-FeedAPI.ReadXML(SERVER.SECRET + '/RSSComicPriceFeedburner.json', function (errReadXML, XMLData) {
-    if (errReadXML) {
-        console.log(" ************************************************ ");
-        console.log(errReadXML);
-        console.log(" ************************************************ ");
-    } else {
-        console.log("Total Items-->", XMLData.items.length);
-        FeedAPI.BuildSQL(XMLData);
-    }
-    // debugger;
 
-});
+
+/*
+    Use this to get the files and write to the database. 
+
+    Parameter: True/False 
+    True will get the new listing from the feedburner. False will use 
+    the existing data file found on disk. Helpful when debugging. :-) 
+*/
+FeedAPI.GetFiles(false);
+
 
 
