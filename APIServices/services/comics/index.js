@@ -7,7 +7,7 @@ const DataActions = {
 
     list(RequestData, OnComplete) {
 
-        const SQL = "SELECT * FROM comics.Comics limit 50;";
+        const SQL = "SELECT * FROM comics.ComicPrices order by Publisher, CTitle, Cost DESC limit 250;";
         SERVER.SqlData.ExecuteSQL(SQL, function (SQLResult) {
             if (SQLResult.err) {
                 debugger;
