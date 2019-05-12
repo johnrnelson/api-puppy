@@ -30,8 +30,7 @@ const FeedAPI = {
     */
     GetFiles(Refresh) {
         const OutFilePath = SERVER.SECRET + '/RSSComicPriceFeedburner.json';
-
-        debugger;
+ 
         if (Refresh) {
             var request = require('request');
 
@@ -142,10 +141,34 @@ const FeedAPI = {
                     const doc = dom.window.document;
 
                     // debugger;
+
+
+                    // var textDebug = dom.window.document.textContent;
+
+                    // dom.window.document.body.childNodes.length
+
+                    // const chld = dom.window.document.body.childNodes;
+
+                    // for (let cNdx = 0; cNdx < chld.length; cNdx++) {
+                    //     const elementNode = chld[cNdx];
+                    //     console.log(cNdx, elementNode);
+                    //     console.log(elementNode.textContent);
+                    //     debugger;
+
+                    // }
+
+
+
+
+
+
+
+
+
+
+
+
                     var allParas = dom.window.document.querySelectorAll('p');
-
-
-
 
                     for (let index = 0; index < allParas.length; index++) {
                         const element = allParas[index];
@@ -183,6 +206,9 @@ const FeedAPI = {
                         var rowTitle = rawLine.substr(0, rawLineComma);
                         var rowPriceText = rawLine.substr(rawLineComma + 1, rawLine.length).replace('$', '').trim();
 
+                        if(!PublisherTitle){
+                            debugger;
+                        }
                         var rowObject = {
                             Publisher: PublisherTitle,
                             Title: rowTitle,
@@ -204,6 +230,19 @@ const FeedAPI = {
 
 
                     }//End for all of the paragraphs in HTML...
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     // debug using this...  :-)
                     // console.log(dom.window.document.querySelector("p").textContent); 
@@ -232,11 +271,15 @@ const FeedAPI = {
             sqlItems.push('TRUNCATE `comics`.`ComicPrices`;')
             for (let index = 0; index < XMLData.items.length; index++) {
                 const element = XMLData.items[index];
+                // debugger;
+                // Publisher
 
-                var sql = `INSERT INTO comics.ComicPrices(CTitle,Cost)VALUES(${SERVER.SqlData.StripQuotesForString(element.Title)},${element.Price});`;
+                var sql = `INSERT INTO comics.ComicPrices(Publisher,CTitle,Cost)VALUES(
+                    ${SERVER.SqlData.StripQuotesForString(element.Publisher)},
+                    ${SERVER.SqlData.StripQuotesForString(element.Title)},
+                    ${element.Price});`;
 
                 sqlItems.push(sql);
-                // debugger;
             }
             var finalSQL = sqlItems.join('\r\n');
             console.log(finalSQL);
