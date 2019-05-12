@@ -106,7 +106,7 @@ WebApp.DebugUI = {
             */
 
             // debugger;
-            // WebApp.DebugUI.SelectServiceOption('time');
+            // WebApp.DebugUI.SelectServiceOption('comics');
 
         } catch (errFillSideBar) {
             console.warn(errFillSideBar);

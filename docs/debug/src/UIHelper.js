@@ -197,7 +197,8 @@ window.UIHelper = {
                     WebApp.DebugUI.FillVerbList();
 
                     //Use the default and set the edtor....            
-                    WebApp.DebugUI.SelectServiceOption('time');
+                    console.info('Setting default service......');
+                    WebApp.DebugUI.SelectServiceOption('comics');
 
 
                     UIHelper.ActiveTab.style.display = "block";

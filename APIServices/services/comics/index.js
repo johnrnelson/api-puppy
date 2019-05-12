@@ -20,7 +20,66 @@ const DataActions = {
                 OnComplete(null, SQLResult.rows);
             }
 
-        }); 
+        });
+    },
+
+    search(RequestData, OnComplete) {
+
+
+        function stripit(StripString) {
+            return StripString.replace(/[^0-9a-z]/gi, '');
+        }
+        if (!RequestData.qry) {
+            OnComplete({
+                err: 'Search service was not able to understand the "qry" object in your request.',
+                debug: RequestData
+            }, null);
+            return;
+        }
+        var sql = "SELECT * FROM comics.ComicPrices where ";
+        var sqlParts = [];
+        // debugger;
+        for (let index = 0; index < RequestData.qry.length; index++) {
+            const qryObj = RequestData.qry[index];
+
+            if ((qryObj.op == ">") ||
+                (qryObj.op == "<") ||
+                (qryObj.op == "*") ||
+                (qryObj.op == "=")) {
+
+                // fix the like for sql type dbs... :-)        
+                if (qryObj.op == "*") {
+                    qryObj.op = " like ";
+                    sqlParts.push(stripit(qryObj.field) + qryObj.op + "'%" + stripit(qryObj.value) + "%'");;
+                }else{
+                    sqlParts.push(stripit(qryObj.field) + qryObj.op + "'" + stripit(qryObj.value) + "'");;
+                }
+
+            } else {
+                debugger;
+                OnComplete({
+                    err: 'Bad qry request!.',
+                }, null);
+                return
+            }
+        }
+
+        const whereClause = sqlParts.join(' and ');
+        // debugger;
+        sql += whereClause;
+        SERVER.SqlData.ExecuteSQL(sql, function (SQLResult) {
+            if (SQLResult.err) {
+                debugger;
+                OnComplete({
+                    err: 'Comic service was not able to understand you.',
+                    debug: RequestData
+                }, null);
+            } else {
+
+                OnComplete(null, SQLResult.rows);
+            }
+
+        });
     },
 
 };

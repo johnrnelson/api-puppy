@@ -1,0 +1,16 @@
+{
+	"service": "comics",
+	"action": "search",
+	"qry": [
+		{
+			"field": "Cost",
+			"op": "<",
+			"value": "10"
+		},
+		{
+			"field": "Publisher",
+			"op": "*",
+			"value": "BOOM"
+		}
+	]
+}
