@@ -332,9 +332,13 @@ WebApp.HistoryLogger = {
 
 
 
-            var ServerLogDisplayDate = document.getElementById('ServerLogDisplayDate');
-            ServerLogDisplayDate.innerHTML = LogDate.toLocaleDateString();;
 
+
+            var ServerLogDisplayType = document.getElementById('ServerLogDisplayType');            
+            ServerLogDisplayType.innerHTML = RemoteLogType;
+
+            var ServerLogDisplayDate = document.getElementById('ServerLogDisplayDate');
+            ServerLogDisplayDate.innerHTML = LogDate.toLocaleDateString();
 
             var tbl = document.getElementById('LGType-serverlogs-history');
             tbl.innerHTML = "";
@@ -378,13 +382,12 @@ WebApp.HistoryLogger = {
                         tbl.innerHTML = "";
                     } else {
                         tbl.innerHTML = "";
- 
+
                         if (!data.logs.length) {
                             console.info('Req Type-->', RemoteLogType);
                             return;
                         }
  
-
                         for (let index = 0; index < data.logs.length; index++) {
                             const logItem = data.logs[index];
                             const tableRow = document.createElement('tr');
