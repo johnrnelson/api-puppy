@@ -162,3 +162,60 @@ exports.StripQuotesForString = function (StringValue) {
     var stripSTRING = mysql.escape(StringValue);
     return stripSTRING;
 };
+
+
+
+
+
+
+
+
+
+
+exports.ExecuteSQLPaging = function (Opts, OnExecute) {
+
+    if (Opts.limit > 50) {
+        OnExecute({
+            err: 'Max rows per page is 50.',
+        }, null);
+        return;
+    }
+
+    if (Opts.page < 1) {
+        OnExecute({
+            err: 'Current page must be greater than 0.',
+        }, null);
+        return;
+    }
+    if (Opts.where) {
+        Opts.where = " where " + Opts.where;
+    } else {
+        Opts.where = "";
+    }
+
+    const sql = "SELECT count(*) t FROM " + Opts.from +
+        Opts.where + ";\r\n" +
+        "SELECT " + Opts.select + " FROM " + Opts.from +
+        Opts.where + " order by " + Opts.sort +
+        " limit " + Opts.limit + ";";
+
+    ExecuteSQL(sql, function (SQLResult) {
+        if (SQLResult.err) {
+            console.log(sql);
+            debugger;
+            OnExecute({
+                err: 'Comic service was not able to understand you.',
+                debug: RequestData
+            }, null);
+        } else {
+            const data = {
+                page: 1,
+                total: SQLResult.rows[0][0].t,
+                rows: SQLResult.rows[1]
+            };
+            // debugger;
+            OnExecute(null, data);
+        }
+
+    });
+}

@@ -1,6 +1,10 @@
 {
 	"service": "comics",
 	"action": "search",
+	"page": {
+		"limit": 10,
+		"index": 1
+	},
 	"qry": [
 		{
 			"field": "Cost",

@@ -1,4 +1,8 @@
 {
-	"service": "comics",	
-	"action": "list"
+	"service": "comics",
+	"action": "list",
+	"page": {
+		"limit": 10,
+		"index": 1
+	}
 }

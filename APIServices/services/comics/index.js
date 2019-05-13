@@ -6,21 +6,43 @@ const DataActions = {
 
 
     list(RequestData, OnComplete) {
+ 
+        try {
+            // debugger;
 
-        const SQL = "SELECT * FROM comics.ComicPrices order by Publisher, CTitle, Cost DESC limit 250;";
-        SERVER.SqlData.ExecuteSQL(SQL, function (SQLResult) {
-            if (SQLResult.err) {
+            var opts = {
+                select: "*",
+                from: "comics.ComicPrices",
+                sort: "Publisher, CTitle, Cost",
+                // limit: 10,
+                // page: 1
+            };
+
+            // debugger;
+            opts.limit = parseInt(RequestData.page.limit);
+            opts.page = parseInt(RequestData.page.index);
+
+        } catch (errPaging) {
+            debugger;
+            OnComplete({
+                err: 'Page information not valid!.',
+            }, null);
+            return
+        }
+
+
+        SERVER.SqlData.ExecuteSQLPaging(opts, function (sqlError, sqlDta) {
+            if (sqlError) {
                 debugger;
-                OnComplete(null, {
-                    err: 'Comic service not able to understand you.',
-                    debug: RequestData
-                });
+                OnComplete(sqlError, null);
             } else {
-
-                OnComplete(null, SQLResult.rows);
+                // debugger;
+                OnComplete(null, sqlDta);
             }
-
         });
+        // ==========
+
+ 
     },
 
     search(RequestData, OnComplete) {
@@ -36,50 +58,68 @@ const DataActions = {
             }, null);
             return;
         }
-        var sql = "SELECT * FROM comics.ComicPrices where ";
-        var sqlParts = [];
-        // debugger;
-        for (let index = 0; index < RequestData.qry.length; index++) {
-            const qryObj = RequestData.qry[index];
 
-            if ((qryObj.op == ">") ||
-                (qryObj.op == "<") ||
-                (qryObj.op == "*") ||
-                (qryObj.op == "=")) {
 
-                // fix the like for sql type dbs... :-)        
-                if (qryObj.op == "*") {
-                    qryObj.op = " like ";
-                    sqlParts.push(stripit(qryObj.field) + qryObj.op + "'%" + stripit(qryObj.value) + "%'");;
+        try {
+            var sqlParts = [];
+
+            for (let index = 0; index < RequestData.qry.length; index++) {
+                const qryObj = RequestData.qry[index];
+
+                if ((qryObj.op == ">") ||
+                    (qryObj.op == "<") ||
+                    (qryObj.op == "*") ||
+                    (qryObj.op == "=")) {
+
+                    // fix the like for sql type dbs... :-)        
+                    if (qryObj.op == "*") {
+                        qryObj.op = " like ";
+                        sqlParts.push(stripit(qryObj.field) + qryObj.op + "'%" + stripit(qryObj.value) + "%'");;
+                    } else {
+                        sqlParts.push(stripit(qryObj.field) + qryObj.op + "'" + parseFloat(qryObj.value) + "'");;
+                    }
+
                 } else {
-                    sqlParts.push(stripit(qryObj.field) + qryObj.op + "'" + parseFloat(qryObj.value) + "'");;
+                    debugger;
+                    OnComplete({
+                        err: 'Bad qry request!.',
+                    }, null);
+                    return
                 }
-
-            } else {
-                debugger;
-                OnComplete({
-                    err: 'Bad qry request!.',
-                }, null);
-                return
             }
+            const whereClause = sqlParts.join(' and ');
+            var opts = {
+                select: "*",
+                from: "comics.ComicPrices",
+                where: whereClause,
+                sort: "Publisher",
+                // limit: 10,
+                // page: 1
+            };
+
+            // debugger;
+            opts.limit = parseInt(RequestData.page.limit);
+            opts.page = parseInt(RequestData.page.index);
+
+        } catch (errPaging) {
+            debugger;
+            OnComplete({
+                err: 'Page information not valid!.',
+            }, null);
+            return
         }
 
-        const whereClause = sqlParts.join(' and ');
-        // debugger;
-        sql += whereClause;
-        SERVER.SqlData.ExecuteSQL(sql, function (SQLResult) {
-            if (SQLResult.err) {
+
+        SERVER.SqlData.ExecuteSQLPaging(opts, function (sqlError, sqlDta) {
+            if (sqlError) {
                 debugger;
-                OnComplete({
-                    err: 'Comic service was not able to understand you.',
-                    debug: RequestData
-                }, null);
+                OnComplete(sqlError, null);
             } else {
-
-                OnComplete(null, SQLResult.rows);
+                // debugger;
+                OnComplete(null, sqlDta);
             }
-
         });
+
     },
 
 };
@@ -105,11 +145,8 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
             }
         } catch (errOnAction) {
             debugger;
-            const result = {
-                err: 'Error in Action! ',
-            };
             SERVER.Statistics.Services.AddSiteMapItem("comics", "Errors");
-            OnComplete(null, result);
+            OnComplete(errOnAction);
         }
 
     } else {
