@@ -195,7 +195,25 @@ exports.SanitizeString = function (StringValue) {
 };
 
 
+function StripAZ09(StripString) {
+    return StripString.replace(/[^0-9a-z]/gi, ' ');
+}
+exports.StripAZ09 = StripAZ09;
 
+function MySQLDate(JavaScriptDate) {
+    try {
+
+
+        return JavaScriptDate.getFullYear() + "-" + (JavaScriptDate.getMonth() + 1) + "-" + JavaScriptDate.getDate();
+
+    } catch (errBadDate) {
+        debugger;
+        return "";
+    }
+
+
+}
+exports.MySQLDate = MySQLDate;
 
 
 exports.ExecuteSQLPaging = function (Opts, OnExecute) {

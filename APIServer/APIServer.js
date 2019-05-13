@@ -322,7 +322,7 @@ const IPC = {
 
             SERVER.ServiceLogger.WriteLog('Socket', {
                 IP4Address: ipAddress,
-                Title: 'Connect',
+                Topic: 'Connect',
                 Body: 'User connected to socket'
             });
 
@@ -334,7 +334,7 @@ const IPC = {
                     */
                     SERVER.ServiceLogger.WriteLog('Socket', {
                         IP4Address: ipAddress,
-                        Title: 'Socket Warning',
+                        Topic: 'Socket Warning',
                         Body: 'Message was too long! Length:[' + message.length + ']'
                     });
                     return;
@@ -345,7 +345,7 @@ const IPC = {
 
                     SERVER.ServiceLogger.WriteLog('Socket', {
                         IP4Address: ipAddress,
-                        Title: 'Socket Message',
+                        Topic: 'Socket Message',
                         Body: msgDATA
                     });
 

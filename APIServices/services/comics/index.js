@@ -47,7 +47,8 @@ const DataActions = {
 
     search(RequestData, OnComplete) {
 
-
+        debugger;
+        
         function stripit(StripString) {
             return StripString.replace(/[^0-9a-z]/gi, '');
         }

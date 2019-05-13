@@ -304,9 +304,7 @@ WebApp.HistoryLogger = {
 
 
         },
-        FetchRemoteByType(RemoteLogFile) {
-
-            debugger;
+        FetchRemoteByType(RemoteLogType) {
 
             WebApp.HistoryLogger.Logger.SetListType('serverlogs');
 
@@ -359,27 +357,34 @@ WebApp.HistoryLogger = {
 
             setTimeout(() => {
 
-                debugger;
+                // debugger;
 
                 WebApp.Fetch({
                     "service": "logger",
                     "action": "ReadLogs",
                     "date": fileLogDate,
-                    "type": RemoteLogFile
-                    // "logfile": finalLogFileName + ".log"
+                    "type": RemoteLogType,
+                    "page": {
+                        "limit": 10,
+                        "index": 1
+                    }
+
+
 
                 }).then(data => {
-                    // debugger;
                     if (data.err) {
+                        debugger;
                         console.warn(data.err);
                         tbl.innerHTML = "";
                     } else {
                         tbl.innerHTML = "";
-
+ 
                         if (!data.logs.length) {
-                            console.info('Req File-->', finalLogFileName);
+                            console.info('Req Type-->', RemoteLogType);
                             return;
                         }
+ 
+
                         for (let index = 0; index < data.logs.length; index++) {
                             const logItem = data.logs[index];
                             const tableRow = document.createElement('tr');

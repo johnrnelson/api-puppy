@@ -8,18 +8,45 @@ const LoggerActions = {
 
     //get the actual sample file...
     'ReadLogs': function (RequestObj, RequestData, OnComplete) {
- 
-        debugger;
 
-        var opts = {
-            select: "*",
-            from: "WebLog.EventLog",
+
+        if (!RequestData.type) {
+            OnComplete({
+                message: 'You must supply a valid type for the logs.'
+            }, null);
+            return;
+        }
+
+
+        if (!RequestData.page) {
+            OnComplete({
+                message: 'You must supply the paging data.'
+            }, null);
+            return;
+        }
+
+        if (!RequestData.date) {
+            OnComplete({
+                message: 'You must supply the paging data.'
+            }, null);
+            return;
+        }
+
+
+        // debugger;
+        // console.log('ad date!');
+
+        var ReadOpts = {
+            type: RequestData.type,
+            date: new Date(RequestData.date),
+            //Standard paging...
             sort: "Created",
-            // limit: 10,
-            // page: 1
+            limit: parseInt(RequestData.page.limit),
+            page: parseInt(RequestData.page.index),
+
         };
 
-        SERVER.ServiceLogger.ReadLog(RequestData.type, function (ReadError, LogData) {
+        SERVER.ServiceLogger.ReadLog(ReadOpts, function (ReadError, LogData) {
 
             if (ReadError) {
                 OnComplete({
@@ -33,12 +60,12 @@ const LoggerActions = {
                         msg: 'Unable to get the contents of that log file.'
                     }, null);
                 } else {
-                    // debugger;
+
 
                     var LogDataFilter = [];
 
-                    for (let index = 0; index < LogData.length; index++) {
-                        const aLine = LogData[index];
+                    for (let index = 0; index < LogData.rows.length; index++) {
+                        const aLine = LogData.rows[index];
                         if (RequestObj.User.SecurityLevel < 1) {
 
                             if (aLine.IP4Address == RequestObj.User.RemoteIP) {
@@ -53,11 +80,20 @@ const LoggerActions = {
 
                     OnComplete(null, {
                         // file: RequestData.logfile,
-                        logs: LogDataFilter
+                        logs: LogDataFilter,
+                        type: RequestData.type,
+                        total: LogData.total,
                     });
                 }
             }
         });
+
+
+
+
+
+
+
 
     },
     'list-log-files': function (RequestObj, RequestData, OnComplete) {
