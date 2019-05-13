@@ -11,7 +11,7 @@
 const fs = require('fs');
 const path = require('path');
 
- 
+
 
 //Set the options you want by json..
 function SetOptions(LoggerOpts) {
@@ -28,51 +28,22 @@ exports.SetOptions = SetOptions;
     Write to the log based on our log types...     
 */
 function WriteLog(LogType, LogEntry) {
-    const LogDate = new Date();
-    const fileLogDate = LogDate.getFullYear() + "-" + (LogDate.getMonth() + 1) + "-" + LogDate.getDate()
+    // debugger;
+    const SQL = `INSERT INTO WebLog.EventLog(Type,IP4Address,Topic,Body)VALUES(        
+        202,
+        '${LogEntry.IP4Address}',
+        '${LogEntry.Title}',
+        '${LogEntry.Body}' );`;
 
-    var targetLogFileName = "";
+    console.log(SQL);
 
-    if (!LogEntry.IP4Address) {
-        console.log('Log Entry has no IP4 Address!');
-        debugger;
-    } else {
-        for (let index = 0; index < SERVER.LoggerConfig.ignore.IP4.length; index++) {
-            const IP4Address = SERVER.LoggerConfig.ignore.IP4[index];
-            if (IP4Address == LogEntry.IP4Address) {
-                return;
-            }
+    SERVER.SqlData.ExecuteSQL(SQL, function (SQLResult) {
+        if (SQLResult.err) {
+            console.log(SQL);
+            debugger;
         }
-    }
-
-
-
-
-    if (LogType) {
-        targetLogFileName = SERVER.LoggerConfig.Folder + '/LT-' + LogType + '-' + fileLogDate + '.log'
-
-    } else {
-        targetLogFileName = SERVER.LoggerConfig.Folder + '/DefaultLog-' + fileLogDate + '.log';
-
-    }
-    var ip4Addy = LogEntry.IP4Address;
-
-    delete LogEntry["IP4Address"];
-
-    var LogDataItem = {
-        dt: LogDate.toISOString(),
-        Topic: LogType,
-        IP4Address: ip4Addy,
-        data: LogEntry
-    };
-
-
-    const logEntryText = JSON.stringify(LogDataItem);
-
-    //Add to our logger file whats up...
-    fs.appendFile(targetLogFileName, logEntryText + '\r\n', function (err) {
-        if (err) throw err;
     });
+
 }
 exports.WriteLog = WriteLog;
 
@@ -82,28 +53,38 @@ exports.WriteLog = WriteLog;
 */
 function ReadLog(LogType, OnComplete) {
 
-    /* 
-        Make sure there is not funky monkey going on with their request!!! 
 
-        This means all files must go in the "SERVER.LoggerConfig.Folder" folder!!!!
-    */
+    const SQL = `select * from  WebLog.EventLog order by ID DESC  limit 25`;
 
-    const filepath = path.basename(LogType);
-    const examplesFilePath = path.join(SERVER.LoggerConfig.Folder, filepath);
+    console.log(SQL);
 
-
-
-    fs.readFile(examplesFilePath, 'utf8', function (err, data) {
-        if (err) {
-            // debugger;
+    var opts = {
+        select: "*",
+        from: "WebLog.EventLog",
+        sort: "Created",
+        // limit: 10,
+        // page: 1
+    };
+    SERVER.SqlData.ExecuteSQL(SQL, function (SQLResult) {
+        if (SQLResult.err) {
+            console.log(SQL);
+            debugger;
             OnComplete({
-                logfile: filepath,
-                msg: "Error reading log file."
+                err: 'Comic service was not able to understand you.',
+                debug: RequestData
             }, null);
         } else {
-            OnComplete(null, data);
+            // const data = {
+            //     page: 1,
+            //     total: SQLResult.rows[0][0].t,
+            //     rows: SQLResult.rows[1]
+            // };
+            // debugger;
+            OnComplete(null, SQLResult.rows);
         }
-    });//End reading file...
+    });
+
+
 }
 exports.ReadLog = ReadLog;
 /*
@@ -120,3 +101,5 @@ function ListLogs(OnList) {
     });
 }
 exports.ListLogs = ListLogs;
+
+ 

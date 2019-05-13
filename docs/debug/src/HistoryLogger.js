@@ -223,6 +223,7 @@ WebApp.HistoryLogger = {
 
             try {
 
+            
                 const tblBody = document.getElementById('LGType-' + LogMSG.Type + '-history');
                 if (!tblBody) {
                     debugger;
@@ -297,6 +298,7 @@ WebApp.HistoryLogger = {
 
             var LogDate = new Date(calendar.getSelected()[0]);
 
+            debugger;
 
             // const LogDate = new Date();
             const fileLogDate = "-" + LogDate.getFullYear() + "-" + (LogDate.getMonth() + 1) + "-" + LogDate.getDate()
@@ -366,7 +368,7 @@ WebApp.HistoryLogger = {
                             <td title="${displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a")}">${displayDT.format("h:mm:ss a")}</td>
                             <td>${logItem.Topic}</td>
                             <td><a href="${ShowIPLoc}" target="_blank">${logItem.IP4Address}</a></td>
-                            <td>${JSON.stringify(logItem.data)}</td>
+                            <td>${JSON.stringify(logItem.Body)}</td>
                         `;
 
                             tbl.appendChild(tableRow);

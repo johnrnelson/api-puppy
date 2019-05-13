@@ -413,11 +413,12 @@ UIHelper.ShowTab('TabMain');
 //If you local host you are most likely debugging.. :-)
 if (document.location.hostname == "localhost") {
     // debugger;
+    console.info('Set the debugging default panel to work with... ');
     setTimeout(() => {
 
-        UIHelper.ShowTab('TabDebugger');
+        // UIHelper.ShowTab('TabDebugger');
     }, 500);
-    // UIHelper.ShowTab('HistoryLogger');
+    UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
     // UIHelper.ShowTab('TabAppPrefs');
     // UIHelper.ShowTab('AppCharts');
