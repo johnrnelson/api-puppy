@@ -51,8 +51,8 @@ const DataActions = {
                 if (qryObj.op == "*") {
                     qryObj.op = " like ";
                     sqlParts.push(stripit(qryObj.field) + qryObj.op + "'%" + stripit(qryObj.value) + "%'");;
-                }else{
-                    sqlParts.push(stripit(qryObj.field) + qryObj.op + "'" + stripit(qryObj.value) + "'");;
+                } else {
+                    sqlParts.push(stripit(qryObj.field) + qryObj.op + "'" + parseFloat(qryObj.value) + "'");;
                 }
 
             } else {
