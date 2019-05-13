@@ -13,12 +13,19 @@ WebApp.HistoryLogger = {
             console.warn('Calendar is broke for now!');
             const el = document.getElementById('LoggerCalendarPanel');
 
+            const todayDate = new Date();
+
+
+            const todayDateFMT = (todayDate.getMonth() + 1) + "-" +
+                todayDate.getDate() + "-" +
+                todayDate.getFullYear();
+
             const calendarHTML = `
 
             <div id="LoggerCalendar"   
                 xxxdata-on-day-click="WebApp.HistoryLogger.Calendar.ChangeLoggerDay"
                 data-role="calendar" class="compact" 
-                data-buttons="today"></div>
+                data-buttons="today" data-preset="${todayDateFMT}"></div>
             <br>
 
             `;
@@ -334,7 +341,7 @@ WebApp.HistoryLogger = {
 
 
 
-            var ServerLogDisplayType = document.getElementById('ServerLogDisplayType');            
+            var ServerLogDisplayType = document.getElementById('ServerLogDisplayType');
             ServerLogDisplayType.innerHTML = RemoteLogType;
 
             var ServerLogDisplayDate = document.getElementById('ServerLogDisplayDate');
@@ -387,7 +394,7 @@ WebApp.HistoryLogger = {
                             console.info('Req Type-->', RemoteLogType);
                             return;
                         }
- 
+
                         for (let index = 0; index < data.logs.length; index++) {
                             const logItem = data.logs[index];
                             const tableRow = document.createElement('tr');
