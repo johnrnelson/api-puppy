@@ -68,7 +68,7 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
                 send a quick message to our logger before 
                 we update the user....
             */
-            SERVER.ServiceLogger.WriteLog("WebErrors", {
+            SERVER.ServiceLogger.WriteWebLog("WebErrors", {
                 IP4Address: RequestObj.User.RemoteIP,
                 Topic: RequestObj.method,
                 Body: RequestData

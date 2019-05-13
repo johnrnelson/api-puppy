@@ -320,7 +320,7 @@ const IPC = {
                 Type: "Socket"
             }
 
-            SERVER.ServiceLogger.WriteLog('Socket', {
+            SERVER.ServiceLogger.WriteWebLog('Socket', {
                 IP4Address: ipAddress,
                 Topic: 'Connect',
                 Body: 'User connected to socket'
@@ -332,7 +332,7 @@ const IPC = {
                     /*
                           Quick log to see the history of our traffic...
                     */
-                    SERVER.ServiceLogger.WriteLog('Socket', {
+                    SERVER.ServiceLogger.WriteWebLog('Socket', {
                         IP4Address: ipAddress,
                         Topic: 'Socket Warning',
                         Body: 'Message was too long! Length:[' + message.length + ']'
@@ -343,7 +343,7 @@ const IPC = {
 
                     const msgDATA = JSON.parse(message);
 
-                    SERVER.ServiceLogger.WriteLog('Socket', {
+                    SERVER.ServiceLogger.WriteWebLog('Socket', {
                         IP4Address: ipAddress,
                         Topic: 'Socket Message',
                         Body: msgDATA
@@ -607,7 +607,7 @@ const IPC = {
 
                     } catch (QStoJSON) {
 
-                        SERVER.ServiceLogger.WriteLog("WebErrors", {
+                        SERVER.ServiceLogger.WriteWebLog("WebErrors", {
                             IP4Address: request.connection.remoteAddress,
                             Topic: request.method,
                             Body: {
@@ -725,7 +725,7 @@ const IPC = {
                         // debugger;
 
 
-                        SERVER.ServiceLogger.WriteLog("WebErrors", {
+                        SERVER.ServiceLogger.WriteWebLog("WebErrors", {
                             IP4Address: request.connection.remoteAddress,
                             Topic: request.method,
                             Body: DebugInformation
@@ -758,7 +758,7 @@ const IPC = {
                 /*
                       Quick log to see the history of our traffic...
                 */
-                SERVER.ServiceLogger.WriteLog("WebErrors", {
+                SERVER.ServiceLogger.WriteWebLog("WebErrors", {
                     IP4Address: request.connection.remoteAddress, 
                     topic: request.method,
                     Body: request.url + JSON.stringify(body)

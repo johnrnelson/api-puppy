@@ -1,13 +1,12 @@
 /*
-    Manage our logging needs...
+    Manage our logging in MySQL. 
 
-    Log Types: 
-        0   Normal
-        500 Error!
+    Woot relational databases!  :-)
 
-    ** At some point you should put in a better storage than local files!        
-
+   
 */
+
+// Map our log names to numbers...
 const LogTypeMap = {
     "Information": 411,
     "Socket": 202,
@@ -15,9 +14,9 @@ const LogTypeMap = {
     "WebErrors": 400,
 };
 
+// Map our log numbers to a name...
 function LogTypeString2Value(LogTypeNumber) {
-    // Ex : SERVER.ServiceLogger.LogType2String('511');
-
+ 
     for (var m in LogTypeMap) {
         if (m == LogTypeNumber) {
             return LogTypeMap[m];
@@ -41,7 +40,7 @@ exports.SetOptions = SetOptions;
 /*
     Write to the log based on our log types...     
 */
-function WriteLog(LogType, LogEntry) {
+function WriteWebLog(LogType, LogEntry) {
     // debugger;
 
     const lgTypeLK = LogTypeMap[LogType];
@@ -69,13 +68,13 @@ function WriteLog(LogType, LogEntry) {
     });
 
 }
-exports.WriteLog = WriteLog;
+exports.WriteWebLog = WriteWebLog;
 
 
 /*
     Uh oh! We really gonna do this? :smiley:
 */
-function ReadLog(ReadOpts, OnComplete) {
+function ReadWebLog(ReadOpts, OnComplete) {
 
     ReadOpts.type = SERVER.SqlData.StripAZ09(ReadOpts.type);
 
@@ -126,7 +125,7 @@ function ReadLog(ReadOpts, OnComplete) {
 
 
 }
-exports.ReadLog = ReadLog;
+exports.ReadWebLog = ReadWebLog;
 /*
     What are all the log files we have right now?
 */

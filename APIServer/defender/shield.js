@@ -99,7 +99,7 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
 
 
 
-        SERVER.ServiceLogger.WriteLog('php', {
+        SERVER.ServiceLogger.WriteWebLog('php', {
             IP4Address: RequsetObject.connection.remoteAddress,
             Topic: 'PHP REQUEST!',
             Body: RequsetObject.method + ' ' +  RequsetObject.url
