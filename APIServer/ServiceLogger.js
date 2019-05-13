@@ -32,10 +32,10 @@ function WriteLog(LogType, LogEntry) {
     const SQL = `INSERT INTO WebLog.EventLog(Type,IP4Address,Topic,Body)VALUES(        
         202,
         '${LogEntry.IP4Address}',
-        '${LogEntry.Title}',
-        '${LogEntry.Body}' );`;
+        '${SERVER.SqlData.SanitizeString(LogEntry.Title)}',
+        '${SERVER.SqlData.SanitizeString(LogEntry.Body)}' );`;
 
-    console.log(SQL);
+
 
     SERVER.SqlData.ExecuteSQL(SQL, function (SQLResult) {
         if (SQLResult.err) {
@@ -55,8 +55,6 @@ function ReadLog(LogType, OnComplete) {
 
 
     const SQL = `select * from  WebLog.EventLog order by ID DESC  limit 25`;
-
-    console.log(SQL);
 
     var opts = {
         select: "*",
@@ -102,4 +100,3 @@ function ListLogs(OnList) {
 }
 exports.ListLogs = ListLogs;
 
- 

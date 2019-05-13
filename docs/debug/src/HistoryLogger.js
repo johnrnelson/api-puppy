@@ -297,8 +297,7 @@ WebApp.HistoryLogger = {
             var calendar = $('#LoggerCalendar').data('calendar');
 
             var LogDate = new Date(calendar.getSelected()[0]);
-
-            debugger;
+ 
 
             // const LogDate = new Date();
             const fileLogDate = "-" + LogDate.getFullYear() + "-" + (LogDate.getMonth() + 1) + "-" + LogDate.getDate()
