@@ -7,12 +7,19 @@
 const LoggerActions = {
 
     //get the actual sample file...
-    'log-file-fetch': function (RequestObj, RequestData, OnComplete) {
+    'ReadLogs': function (RequestObj, RequestData, OnComplete) {
+ 
+        debugger;
 
-        // const fs = require('fs');
+        var opts = {
+            select: "*",
+            from: "WebLog.EventLog",
+            sort: "Created",
+            // limit: 10,
+            // page: 1
+        };
 
-
-        SERVER.ServiceLogger.ReadLog(RequestData.logfile, function (ReadError, LogData) {
+        SERVER.ServiceLogger.ReadLog(RequestData.type, function (ReadError, LogData) {
 
             if (ReadError) {
                 OnComplete({

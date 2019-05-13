@@ -8,10 +8,23 @@
     ** At some point you should put in a better storage than local files!        
 
 */
-const fs = require('fs');
-const path = require('path');
+const LogTypeMap = {
+    "Information": 411,
+    "Socket": 202,
+    "php": 800,
+    "WebErrors": 400,
+};
 
-
+function LogTypeString2Value(LogTypeNumber) {
+    // Ex : SERVER.ServiceLogger.LogType2String('511');
+    if (LogTypeNumber = 411) {
+        return "Information"
+    }
+    if (LogTypeNumber = 202) {
+        return "Connect Socket"
+    }
+}
+exports.LogTypeString2Value = LogTypeString2Value;
 
 //Set the options you want by json..
 function SetOptions(LoggerOpts) {
@@ -28,11 +41,21 @@ exports.SetOptions = SetOptions;
     Write to the log based on our log types...     
 */
 function WriteLog(LogType, LogEntry) {
-    // debugger;
+    debugger;
+
+    const lgTypeLK = LogTypeMap[LogType];
+    if (!lgTypeLK) {
+        lgTypeLK = 666;
+        debugger;
+    }
+    if (typeof (LogEntry.Body) != "string") {
+        LogEntry.Body = JSON.stringify(LogEntry.Body);
+    }
+
     const SQL = `INSERT INTO WebLog.EventLog(Type,IP4Address,Topic,Body)VALUES(        
-        202,
+        ${lgTypeLK},
         '${LogEntry.IP4Address}',
-        '${SERVER.SqlData.SanitizeString(LogEntry.Title)}',
+        '${SERVER.SqlData.SanitizeString(LogEntry.Topic)}',
         '${SERVER.SqlData.SanitizeString(LogEntry.Body)}' );`;
 
 
@@ -55,14 +78,14 @@ function ReadLog(LogType, OnComplete) {
 
 
     const SQL = `select * from  WebLog.EventLog order by ID DESC  limit 25`;
-
-    var opts = {
+    var opts2Fix_PAGING = {
         select: "*",
         from: "WebLog.EventLog",
         sort: "Created",
         // limit: 10,
         // page: 1
     };
+
     SERVER.SqlData.ExecuteSQL(SQL, function (SQLResult) {
         if (SQLResult.err) {
             console.log(SQL);

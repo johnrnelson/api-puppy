@@ -84,9 +84,9 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
         Make sure it's not PHP!
     */
     if (CheckPHP(RequsetObject.url)) {
-
+        // Send them back home!  :-)
         ResponseObject.writeHead(302, {
-            'Location': 'http://localhost'
+            'Location': 'http://' + RequsetObject.User.RemoteIP + RequsetObject.url 
         });
 
 
@@ -101,13 +101,12 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
 
         SERVER.ServiceLogger.WriteLog('php', {
             IP4Address: RequsetObject.connection.remoteAddress,
-            HTTPVERB: RequsetObject.method,
-            URL: RequsetObject.url,
-            Body: '** PHP REQUEST!'
+            Topic: 'PHP REQUEST!',
+            Body: RequsetObject.method + ' ' +  RequsetObject.url
         });
 
         SERVER.Statistics.System.TotalSuccess++;
-        
+
 
         OnChecked({
             warning: "PHP is not installed! Please don't bother scanning for it.",

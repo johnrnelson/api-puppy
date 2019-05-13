@@ -10,8 +10,22 @@ WebApp.HistoryLogger = {
             seem to work...   :-(
         */
         AddControl() {
-
+            console.warn('Calendar is broke for now!');
             const el = document.getElementById('LoggerCalendarPanel');
+
+            const calendarHTML = `
+
+            <div id="LoggerCalendar"   
+                xxxdata-on-day-click="WebApp.HistoryLogger.Calendar.ChangeLoggerDay"
+                data-role="calendar" class="compact" 
+                data-buttons="today"></div>
+            <br>
+
+            `;
+            el.innerHTML = calendarHTML;
+
+            return;
+
 
 
 
@@ -223,7 +237,7 @@ WebApp.HistoryLogger = {
 
             try {
 
-            
+
                 const tblBody = document.getElementById('LGType-' + LogMSG.Type + '-history');
                 if (!tblBody) {
                     debugger;
@@ -291,28 +305,37 @@ WebApp.HistoryLogger = {
 
         },
         FetchRemoteByType(RemoteLogFile) {
+
+            debugger;
+
             WebApp.HistoryLogger.Logger.SetListType('serverlogs');
 
 
             var calendar = $('#LoggerCalendar').data('calendar');
 
             var LogDate = new Date(calendar.getSelected()[0]);
- 
+            var fileLogDate;
 
-            // const LogDate = new Date();
-            const fileLogDate = "-" + LogDate.getFullYear() + "-" + (LogDate.getMonth() + 1) + "-" + LogDate.getDate()
+            try {
+                if (LogDate.getFullYear()) {
+                    // const LogDate = new Date();
+                    fileLogDate = LogDate.getFullYear() + "/" + (LogDate.getMonth() + 1) + "/" + LogDate.getDate()
+                } else {
+                    console.warn('Using todays date for the logger request!');
+                    var LogDate = new Date();
+                    fileLogDate = LogDate.getFullYear() + "/" + (LogDate.getMonth() + 1) + "/" + LogDate.getDate()
+                }
 
-            var finalLogFileName = "";
+            } catch (errCalDate) {
+                console.warn('Using todays date for the logger request!');
+                var LogDate = new Date();
+                fileLogDate = LogDate.getFullYear() + "/" + (LogDate.getMonth() + 1) + "/" + LogDate.getDate()
+            }
+
 
 
             var ServerLogDisplayDate = document.getElementById('ServerLogDisplayDate');
             ServerLogDisplayDate.innerHTML = LogDate.toLocaleDateString();;
-
-            if (RemoteLogFile == "DefaultLog") {
-                finalLogFileName = RemoteLogFile + fileLogDate;
-            } else {
-                finalLogFileName = "LT-" + RemoteLogFile + fileLogDate;
-            }
 
 
             var tbl = document.getElementById('LGType-serverlogs-history');
@@ -336,12 +359,15 @@ WebApp.HistoryLogger = {
 
             setTimeout(() => {
 
-
+                debugger;
 
                 WebApp.Fetch({
                     "service": "logger",
-                    "action": "log-file-fetch",
-                    "logfile": finalLogFileName + ".log"
+                    "action": "ReadLogs",
+                    "date": fileLogDate,
+                    "type": RemoteLogFile
+                    // "logfile": finalLogFileName + ".log"
+
                 }).then(data => {
                     // debugger;
                     if (data.err) {

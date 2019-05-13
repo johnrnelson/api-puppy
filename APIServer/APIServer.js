@@ -759,11 +759,9 @@ const IPC = {
                       Quick log to see the history of our traffic...
                 */
                 SERVER.ServiceLogger.WriteLog("WebErrors", {
-                    IP4Address: request.connection.remoteAddress,
-
-                    HTTPVERB: request.method,
-                    URL: request.url,
-                    Body: body
+                    IP4Address: request.connection.remoteAddress, 
+                    topic: request.method,
+                    Body: request.url + JSON.stringify(body)
                 });
 
                 //Some bad juju happend so we just pass it off to our generic error handler...

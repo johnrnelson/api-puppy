@@ -166,7 +166,10 @@ exports.StripQuotesForString = function (StringValue) {
 
 
 
-exports.SanitizeString = function(StringValue){
+exports.SanitizeString = function (StringValue) {
+    if (!StringValue) {
+        return "";
+    }
     return StringValue.replace(/[\0\x08\x09\x1a\n\r"'\\\%]/g, function (char) {
         switch (char) {
             case "\0":
@@ -185,8 +188,8 @@ exports.SanitizeString = function(StringValue){
             case "'":
             case "\\":
             case "%":
-                return "\\"+char; // prepends a backslash to backslash, percent,
-                                  // and double/single quotes
+                return "\\" + char; // prepends a backslash to backslash, percent,
+            // and double/single quotes
         }
     });
 };
