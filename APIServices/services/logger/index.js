@@ -46,7 +46,7 @@ const LoggerActions = {
 
         };
 
-        SERVER.ServiceLogger.ReadLog(ReadOpts, function (ReadError, LogData) {
+        SERVER.ServiceLogger.ReadWebLog(ReadOpts, function (ReadError, LogData) {
 
             if (ReadError) {
                 OnComplete({
