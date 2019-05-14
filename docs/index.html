@@ -27,160 +27,142 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
 
-    
-
     <!-- Latest compiled JavaScript -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <script src="js/app.js"></script>
     <script src="debug/src/SocketAPI.js"></script>
 
+
     <link rel="stylesheet" href="debug/src/DebuggerUI.css">
     <link rel="stylesheet" href="css/docindex.css">
 
- 
+
 </head>
 
-<body style="padding:20px;overflow:auto;">
+<body>
 
 
 
+    <div class="row">
+        <div class="col-sm-4">
 
-    <nav>
-        <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+            <div id="ServerStatus" class="alert alert-success" role="alert">
+                <a href="https://demo.tektology.com">
+                    <h5>DEMO Server</h5>
+                </a>
+                <div class="">
+                    <b style="color:black;">Server Status</b><br>
 
-            <a class="nav-item nav-link active" id="nav-prjinfo-tab" data-toggle="tab" href="#nav-prjinfo" role="tab"
-                aria-controls="nav-prjinfo" aria-selected="true">Project Info</a>
-            <a class="nav-item nav-link" id="nav-faq-tab" data-toggle="tab" href="#nav-faq" role="tab"
-                aria-controls="nav-faq" aria-selected="false">FAQ</a>
-            <a class="nav-item nav-link" id="nav-codehelp-tab" data-toggle="tab" href="#nav-codehelp" role="tab"
-                aria-controls="nav-codehelp" aria-selected="false">Code Help</a>
-
-        </div>
-    </nav>
-    <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
-
-        <div class="tab-pane fade show active" id="nav-prjinfo" role="tabpanel" aria-labelledby="nav-prjinfo-tab">
-            <div class="row">
-                <div class="col-sm-4">
-
-                    <div id="ServerStatus" class="alert alert-success" role="alert">
-                        <a href="https://demo.tektology.com">
-                            <h5>DEMO Server</h5>
-                        </a>
-                        <div class="">
-                            <b style="color:black;">Server Status</b><br>
-
-                            <span id="DisplayServerStatus">??</span>
-                        </div>
-
-                        <div class="">
-                            <b style="color:black;">Server Time</b><br>
-                            <span id="DisplayServerDate">??</span>
-                        </div>
-
-                        <div class="">
-                            <b style="color:black;">Server Version</b><br>
-                            <span id="DisplayServerVersion">??</span>
-                        </div>
-
-                    </div>
-
-
-                    <div id="SocketStatus" class="alert alert-info" role="alert">
-                        <h5>Socket Status</h5>
-                        <div>Total Users:<span id="SckTotalUsers">?</span></div>
-                        <div>Last User:<span id="SckLastUser">?</span></div>
-                    </div>
-
-
-                    <div id="SocketStatus" class="alert alert-info" role="alert">
-                        <h5>GitHub Links</h5>
-                        <div><a href="https://github.com/johnrnelson/api-puppy">Project</a></div>
-                        <div><a href="https://github.com/johnrnelson/api-puppy/issues">Issues</a></div>
-
-                    </div>
-
+                    <span id="DisplayServerStatus">??</span>
                 </div>
 
-
-
-                <div class="col-sm-8">
-                    <h1>api-puppy</h1>
-                    <div>
-                        This is not another framework or library or even a template, it's just a demo!
-                        <br>
-                        A fun project to play with different ways to use Web APIs                  
-                        <br><br>
-                        <b>Don't even try to use this on a mobile device!&nbsp;:)</b>                        
-                    </div>
-                    <br>
-
-                    <h3 id="ndxProjectDocumentation">Project Documentation</h3>
-                    <div class="HelpText">
-                        <p>
-                            You are going to find bugs because this is just a DEMO! Lots of work
-                            needs to be done and things may or may not get worked on. Use Google
-                            Chrome and you will get less errors in the DEBUG UI. 
-
-                        </p>
-
-
-                        <p>
-                            Have fun with this code. <a href="https://github.com/johnrnelson/api-puppy"
-                                target="_blank">Clone the project</a> and host it yourself. It's easy to learn
-                            by breaking things and this is the project to do it in.
-                        </p>
-                        <p> A working server(<a href="https://demo.tektology.com/"
-                                target="_blank">https://demo.tektology.com/</a>) is up and running most of
-                            the time, but it's my server that I have to pay for so it may or may not be up at any given
-                            time.
-                        </p>
-
-
-
-
-                    </div>
-
-                    <h3>Project Links</h3>
-                    <div class="HelpText">
-                        <p>
-                            Use the links below to get to the source code of the stuff needed to use this project.
-                        </p>
-                        <div>
-                            <a href="https://github.com/ajaxorg/ace" target="_blank">Ace Editor</a>
-                            <br>
-                            The HTML editor used for UI. It's good stuff, you should check it out.
-                        </div>
-                        <div>
-                            <a href="https://github.com/olton/Metro-UI-CSS" target="_blank">Metro-UI-CSS</a>
-                            <br>
-                            A step up from bootstrap. Nice and easy HTML and CSS to display what we need.
-                        </div>
-                        <div>
-                            <a href="https://github.com/moment/moment" target="_blank">Moment.js</a>
-                            <br>
-                            Parse, validate, manipulate, and display dates and times in JavaScript.
-                        </div>
-
-                        <div>
-                            <a title="Wikipedia article about jQuery" target="_blank"
-                                href="https://en.wikipedia.org/wiki/JQuery">jQuery</a>
-                            <br>
-                            jQuery is used in the web browser for the UI.
-                        </div>
-
-
-                    </div>
-
-
-
+                <div class="">
+                    <b style="color:black;">Server Time</b><br>
+                    <span id="DisplayServerDate">??</span>
                 </div>
+
+                <div class="">
+                    <b style="color:black;">Server Version</b><br>
+                    <span id="DisplayServerVersion">??</span>
+                </div>
+
             </div>
+
+
+            <div id="SocketStatus" class="alert alert-info" role="alert">
+                <h5>Socket Status</h5>
+                <div>Total Users:<span id="SckTotalUsers">?</span></div>
+                <div>Last User:<span id="SckLastUser">?</span></div>
+            </div>
+
+
+            <div id="SocketStatus" class="alert alert-info" role="alert">
+                <h5>GitHub Links</h5>
+                <div><a href="https://github.com/johnrnelson/api-puppy">Project</a></div>
+                <div><a href="https://github.com/johnrnelson/api-puppy/issues">Issues</a></div>
+
+            </div>
+
         </div>
 
 
-        <div class="tab-pane fade" id="nav-faq" role="tabpanel" aria-labelledby="nav-faq-tab">
+
+        <div class="col-sm-8">
+            <h1>api-puppy</h1>
+            <div>
+                This is not another framework or library or even a template, it's just a demo!
+                <br>
+                A fun project to play with different ways to use Web APIs
+                <br><br>
+                <b>Don't even try to use this on a mobile device!&nbsp;:)</b>
+            </div>
+            <br>
+
+            <h3 id="ndxProjectDocumentation">Project Documentation</h3>
+            <div class="HelpText">
+                <p>
+                    You are going to find bugs because this is just a DEMO! Lots of work
+                    needs to be done and things may or may not get worked on. Use Google
+                    Chrome and you will get less errors in the DEBUG UI.
+
+                </p>
+
+
+                <p>
+                    Have fun with this code. <a href="https://github.com/johnrnelson/api-puppy" target="_blank">Clone
+                        the project</a> and host it yourself. It's easy to learn
+                    by breaking things and this is the project to do it in.
+                </p>
+                <p> A working server(<a href="https://demo.tektology.com/"
+                        target="_blank">https://demo.tektology.com/</a>) is up and running most of
+                    the time, but it's my server that I have to pay for so it may or may not be up at any given
+                    time.
+                </p>
+
+
+
+
+            </div>
+
+            <h3>Project Links</h3>
+            <div class="HelpText">
+                <p>
+                    Use the links below to get to the source code of the stuff needed to use this project.
+                </p>
+                <div>
+                    <a href="https://github.com/ajaxorg/ace" target="_blank">Ace Editor</a>
+                    <br>
+                    The HTML editor used for UI. It's good stuff, you should check it out.
+                </div>
+                <div>
+                    <a href="https://github.com/olton/Metro-UI-CSS" target="_blank">Metro-UI-CSS</a>
+                    <br>
+                    A step up from bootstrap. Nice and easy HTML and CSS to display what we need.
+                </div>
+                <div>
+                    <a href="https://github.com/moment/moment" target="_blank">Moment.js</a>
+                    <br>
+                    Parse, validate, manipulate, and display dates and times in JavaScript.
+                </div>
+
+                <div>
+                    <a title="Wikipedia article about jQuery" target="_blank"
+                        href="https://en.wikipedia.org/wiki/JQuery">jQuery</a>
+                    <br>
+                    jQuery is used in the web browser for the UI.
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+            <br><br>
             <div id="FAQ" class="HelpText">
                 <h3>FAQ</h3>
                 <div>Frequently Asked Questions</div>
@@ -305,130 +287,136 @@
                 </div>
 
             </div>
-        </div>
-        <div class="tab-pane fade" id="nav-codehelp" role="tabpanel" aria-labelledby="nav-codehelp-tab">
+
+            <br><br>
 
 
 
-
-            <div id="APIServerHelp" class="HelpText">
-                <h3>APIServer.js</h3>
-                <p>
-                    The <a href="https://github.com/johnrnelson/api-puppy/blob/master/APIServer/APIServer.js"
-                        target="_blank">APIServer.js</a> file
-                    is the master script to run on your local machine to play with the code.
-                </p>
-                <p>
-                    Change the port number and host name (if you plan on using https) then open your browser
-                    to the address listed in the console. By default, it's
-                    <a href="http://0.0.0.0:9080" target="_blank">http://0.0.0.0:9080</a>
-                </p>
-            </div>
-            <div id="APIServicesHelp" class="HelpText">
-                <h3>API Services</h3>
-                <p>
-                    It's easy to add a new service.
-                </p>
-                <p>
-                    The services folder is where you put your new folder that is, in fact, your service. An
-                    easy
-                    way
-                    to get started is to just copy the default folder and start from there.
-                </p>
-            </div>
-
-
-
-            <hr>
-
-            <h3>Folder Structure</h3>
-            <p>
-                This is a quick breakdown of the top level folders. Run the
-                "SETUP.js" file in the root of the project to ensure you
-                have the required folders needed for a basic install.
-            </p>
             <div>
-                <div>
-                    <div class="folderheader">SECRET</div>
-                    <p class="folderdesc">
-                        You must create a folder called SECRET in the root of the project!
-                        <br><br>
-                        This folder is used put logs in and various configuration stuff that nobody wants to
-                        see in the project source.
-                    </p>
 
-                </div>
-                <div>
-                    <div class="folderheader">CERTS</div>
-                    <p class="folderdesc">
-                        Your SSL CERTS go in this folder. You must make
-                        sure you create your own CERTS folder and put
-                        your own CERTS in them.
+
+
+                <div id="APIServerHelp" class="HelpText">
+                    <h3>APIServer.js</h3>
+                    <p>
+                        The <a href="https://github.com/johnrnelson/api-puppy/blob/master/APIServer/APIServer.js"
+                            target="_blank">APIServer.js</a> file
+                        is the master script to run on your local machine to play with the code.
                     </p>
                     <p>
-                        ** UPDATE **
-                        <br>
-                        CERTS is now in the SECRET folder! :-)
+                        Change the port number and host name (if you plan on using https) then open your browser
+                        to the address listed in the console. By default, it's
+                        <a href="http://0.0.0.0:9080" target="_blank">http://0.0.0.0:9080</a>
                     </p>
-
                 </div>
+                <div id="APIServicesHelp" class="HelpText">
+                    <h3>API Services</h3>
+                    <p>
+                        It's easy to add a new service.
+                    </p>
+                    <p>
+                        The services folder is where you put your new folder that is, in fact, your service. An
+                        easy
+                        way
+                        to get started is to just copy the default folder and start from there.
+                    </p>
+                </div>
+
+
+
+                <hr>
+
+                <h3>Folder Structure</h3>
+                <p>
+                    This is a quick breakdown of the top level folders. Run the
+                    "SETUP.js" file in the root of the project to ensure you
+                    have the required folders needed for a basic install.
+                </p>
                 <div>
-                    <div class="folderheader">
-                        <a target="_blank"
-                            href="https://github.com/johnrnelson/api-puppy/tree/master/APIServer">APIServer</a>
+                    <div>
+                        <div class="folderheader">SECRET</div>
+                        <p class="folderdesc">
+                            You must create a folder called SECRET in the root of the project!
+                            <br><br>
+                            This folder is used put logs in and various configuration stuff that nobody wants to
+                            see in the project source.
+                        </p>
+
                     </div>
-                    <p class="folderdesc">
-                        This folder has all the server side script files you need to provide the web API
-                        over a web server.
-                    </p>
-                </div>
-                <div>
-                    <div class="folderheader">
-                        <a target="_blank"
-                            href="https://github.com/johnrnelson/api-puppy/tree/master/APIServices">APIServices</a>
+                    <div>
+                        <div class="folderheader">CERTS</div>
+                        <p class="folderdesc">
+                            Your SSL CERTS go in this folder. You must make
+                            sure you create your own CERTS folder and put
+                            your own CERTS in them.
+                        </p>
+                        <p>
+                            ** UPDATE **
+                            <br>
+                            CERTS is now in the SECRET folder! :-)
+                        </p>
+
                     </div>
-                    <p class="folderdesc">
-                        Put your own services in this folder. See the README.md file for more information.
-                    </p>
-                </div>
-
-                <div>
-                    <div class="folderheader">
-                        <a target="_blank" href="https://github.com/johnrnelson/api-puppy/tree/master/docs">Docs</a>
+                    <div>
+                        <div class="folderheader">
+                            <a target="_blank"
+                                href="https://github.com/johnrnelson/api-puppy/tree/master/APIServer">APIServer</a>
+                        </div>
+                        <p class="folderdesc">
+                            This folder has all the server side script files you need to provide the web API
+                            over a web server.
+                        </p>
                     </div>
-                    <p class=" folderdesc">
-                        GitHub sites uses this folder to provide a free website for documentation.
-                    </p>
-
-                </div>
-                <div>
-                    <div class="folderheader">
-                        <a target="_blank" href="https://github.com/johnrnelson/api-puppy/tree/master/Notes">Notes</a>
+                    <div>
+                        <div class="folderheader">
+                            <a target="_blank"
+                                href="https://github.com/johnrnelson/api-puppy/tree/master/APIServices">APIServices</a>
+                        </div>
+                        <p class="folderdesc">
+                            Put your own services in this folder. See the README.md file for more information.
+                        </p>
                     </div>
-                    <p class=" folderdesc">
-                        Find helpful information about running this project and things probably
-                        forgotten
-                        over time that should be written down.
 
-                    </p>
+                    <div>
+                        <div class="folderheader">
+                            <a target="_blank" href="https://github.com/johnrnelson/api-puppy/tree/master/docs">Docs</a>
+                        </div>
+                        <p class=" folderdesc">
+                            GitHub sites uses this folder to provide a free website for documentation.
+                        </p>
 
-                </div>
-                <div>
-                    <div class="folderheader">
-                        <a target="_blank" href="https://github.com/johnrnelson/api-puppy/tree/master/Tools">Tools</a>
                     </div>
-                    <p class=" folderdesc">
-                        Operating the server is easier if you script common tasks out. Both BASH
-                        and
-                        JS
-                        files can be used.
-                    </p>
+                    <div>
+                        <div class="folderheader">
+                            <a target="_blank"
+                                href="https://github.com/johnrnelson/api-puppy/tree/master/Notes">Notes</a>
+                        </div>
+                        <p class=" folderdesc">
+                            Find helpful information about running this project and things probably
+                            forgotten
+                            over time that should be written down.
+
+                        </p>
+
+                    </div>
+                    <div>
+                        <div class="folderheader">
+                            <a target="_blank"
+                                href="https://github.com/johnrnelson/api-puppy/tree/master/Tools">Tools</a>
+                        </div>
+                        <p class=" folderdesc">
+                            Operating the server is easier if you script common tasks out. Both BASH
+                            and
+                            JS
+                            files can be used.
+                        </p>
+
+                    </div>
 
                 </div>
 
+                <hr>
             </div>
-
-            <hr>
 
 
 
