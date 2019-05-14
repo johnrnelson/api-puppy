@@ -354,14 +354,17 @@ const IPC = {
                             msgDATA.service = "Not Available";
                         }
                         if (err) {
-                            SERVER.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketError");
+
+                            
+
+                            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketError");
                             ws.send(JSON.stringify({
                                 err: 'Socket request to servce was invalid!',
                                 msg: msgDATA
                             }));
                         } else {
 
-                            SERVER.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketSuccess");
+                            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketSuccess");
                             //Add back the TID...
                             data.TID = msgDATA.TID;
                             ws.send(JSON.stringify(data));
@@ -692,8 +695,8 @@ const IPC = {
                             //By the time you get here.. you want a true web api request...
                             ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                                 if (ServiceError) {
-                                    SERVER.Statistics.Services.TotalError++;
-                                    // SERVER.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
+                                    SERVER.ServiceLogger.Statistics.TotalError++;
+                                    // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
 
                                     response.SendError(response, ServiceError);
 
@@ -701,8 +704,8 @@ const IPC = {
                                     // response.SendError(response, ServiceErrorInformation);
 
                                 } else {
-                                    SERVER.Statistics.Services.TotalSuccess++;
-                                    SERVER.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTSuccess");
+                                    SERVER.ServiceLogger.Statistics.TotalSuccess++;
+                                    SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTSuccess");
                                     response.end(JSON.stringify(ResponseJSON));
                                 }
                             });

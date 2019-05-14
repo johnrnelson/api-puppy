@@ -141,3 +141,49 @@ function ListLogs(OnList) {
 }
 exports.ListLogs = ListLogs;
 
+/*
+    Putting stats here for now...  :-)
+*/
+
+const Statistics = {
+    Services: {
+        TotalSuccess: 0,
+        TotalError: 0,
+        StatMap: {
+            //This gets added to by each service...
+
+            //REMOVE AFTER TESTING!!!!!!
+            "help": {
+                Success: 0,
+                Errors: 0
+            },
+            "data": {
+                Success: 0,
+                Errors: 0
+            },
+            "logger": {
+                Success: 0,
+                Errors: 0
+            }
+        },
+        AddSiteMapItem(MapName, ItemName) {
+            if (!Statistics.Services.StatMap[MapName]) {
+                Statistics.Services.StatMap[MapName] = {};
+            }
+            const mapItem = Statistics.Services.StatMap[MapName];
+
+            if (!mapItem[ItemName]) {
+                mapItem[ItemName] = 1;
+            } else {
+                mapItem[ItemName]++;
+            }
+
+
+        }
+    },
+    System: {
+        TotalSuccess: 0,
+        TotalError: 0,
+    }
+};
+exports.Statistics=Statistics;

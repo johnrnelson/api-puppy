@@ -63,7 +63,7 @@ var MySERVER = {
     },
 
     //Basic counters for our api services...
-    Statistics: {
+    Statistics___XXXX: {
         Services: {
             TotalSuccess: 0,
             TotalError: 0,

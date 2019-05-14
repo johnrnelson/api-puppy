@@ -68,7 +68,7 @@ const topics = {
                 console.log(RequestData);
                 console.log(sampleid);
                 console.log(examplesFilePath);
-                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
+                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Errors");
 
                 OnComplete(null, {
                     err: 'Unable to get that file!',
@@ -76,7 +76,7 @@ const topics = {
                     debug: RequestData
                 });
             } else {
-                // SERVER.Statistics.Services.AddSiteMapItem("help","Success");
+                // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, {
                     msg: "Have fun with this code!",
                     code: JSON.parse(data),
@@ -109,13 +109,13 @@ const topics = {
             const isvalid = SERVER.Defender.CheckAPIKey(valKey);
 
             if (!isvalid) {
-                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
+                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Errors");
                 OnComplete({
                     msg: 'No key found!',
                 }, null);
 
             } else {
-                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
+                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, {
                     msg: 'Key is valid!!',
                 });
@@ -152,7 +152,7 @@ const topics = {
 
         fs.readFile(SERVER.ServicesFolder + "/API_HELP.json", "utf8", function (err, API_HELP) {
             if (err) {
-                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
+                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Errors");
                 OnComplete({
                     msg: 'No API_HELP.json file found!',
                 }, null);
@@ -161,7 +161,7 @@ const topics = {
             } else {
                 SysInfoData.apidata = JSON.parse(API_HELP);
                 
-                SERVER.Statistics.Services.AddSiteMapItem("help","Success");
+                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Success");
                 OnComplete(null, SysInfoData);
             }
         });
@@ -189,7 +189,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
         if (!RequestData.topic) {
             OnComplete('Please supply a topic!', null);
-            SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
+            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Errors");
         } else {
             const activeTopic = topics[RequestData.topic];
 
@@ -197,7 +197,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                 OnComplete(null, {
                     msg: 'The topic was not found! [' + RequestData.topic + ']'
                 });
-                SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
+                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Errors");
 
             } else {
                 try {
@@ -209,14 +209,14 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
                 } catch (topicError) {
                     OnComplete('Error in topic!', null);                    
-                    SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
+                    SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Errors");
                 }
             }
         }
     }
     catch (errorService) {
         OnComplete(errorService.message, null);
-        SERVER.Statistics.Services.AddSiteMapItem("help","Errors");
+        SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Errors");
     }
 }
 exports.ServiceRequest = ServiceRequest;
