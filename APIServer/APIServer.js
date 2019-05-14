@@ -1,17 +1,4 @@
-#!/usr/bin/env node
-
-"use strict";
-
-
-
 /*
-    Main entry point for the "API" service provider.
-
-    Keep it as simple as possible. Think before
-    you "npm install" anything! Please! lol  :-)  
-
-    The only NPM at this time is "ws" @ https://github.com/websockets/ws 
-
     This file is large and is targeted to be broken up into modules, 
     so after node 12 it will be at the top of the list.
 */
@@ -41,7 +28,10 @@ const IPC = {
     Start: function () {
         const http = require('http');
         const https = require("https");
-        const WebSocket = require('ws');
+       
+
+
+        const SocketManager = require("./SocketManager");
 
 
 
@@ -53,13 +43,11 @@ const IPC = {
             IPC.ServiceWeb(requset, response);
         });
 
+   
 
+        SERVER.WebSocketHTTP = SocketManager.ServiceSocket(httpServer);
 
-
-        SERVER.WebSocketHTTP = IPC.ServiceSocket(httpServer);
-
-
-
+ 
 
         //Lets start our server..
         httpServer.listen(SERVER.Network.PORT_HTTP, SERVER.Network.IPADDRESS, function () {
@@ -89,64 +77,20 @@ const IPC = {
             const httpsServer = https.createServer(credentials, function (requset, response) {
                 IPC.ServiceWeb(requset, response);
             });
-
-
-            SERVER.WebSocketHTTPS = IPC.ServiceSocket(httpsServer);
-
+  
+            SERVER.WebSocketHTTPS = SocketManager.ServiceSocket(httpsServer);
+ 
 
             //Lets start our server..
             httpsServer.listen(SERVER.Network.PORT_HTTPS, SERVER.Network.IPADDRESS, function () {
                 console.log("SSL Web Server Ready : https://" + SERVER.Network.IPADDRESS + ":" + SERVER.Network.PORT_HTTPS);
                 IPC.StartDate = new Date();
-            });
-
-
-
-
+            }); 
 
         } catch (errCerts) {
             console.log('Error reading cert files.\r\n');
             console.log(errCerts.message);
-        }
-
-
-
-
-        /*
-            This is the master broadcast function. It uses 
-            both web server sockets (HTTP/s) unless 
-            exluded..
-        */
-        SERVER.SocketBroadcast = function (MSG, Options) {
-            if (Options) {
-
-                if (Option.Exclude) {
-                    //Not using yet?
-                }
-            }
-            if (typeof (MSG) != "string") {
-                MSG = JSON.stringify(MSG);
-            }
-
-
-            if (SERVER.WebSocketHTTP) {
-                SERVER.WebSocketHTTP.clients.forEach(function each(client) {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);
-                        SERVER.WebSocketHTTP.TotalConnectionAttempts++;
-                    }
-                });
-            }
-            if (SERVER.WebSocketHTTPS) {
-                SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);
-                        SERVER.WebSocketHTTPS.TotalConnectionAttempts++;
-                    }
-                });
-            }
-
-        };
+        } 
 
 
     },
@@ -192,85 +136,6 @@ const IPC = {
         });//end debug html....
     },
 
-    // Serve up our static files from the docs...
-    ServeStaticFile(request, response) {
-
-
-        var reqPath = request.url.substring(2, request.url.length);
-
-
-        if (!reqPath) {
-            response.status = 200;
-
-            response.setHeader('Content-Type', 'text/html');
-
-            response.end("No path to load.");
-            return;
-        }
-
-        reqPath = path.normalize(reqPath);
-        reqPath = path.resolve(reqPath);
-
-
-        const fileExtension = path.extname(reqPath);
-
-        var contentType = "text/html";
-
-        if (fileExtension == ".jpeg") {
-            contentType = "image/jpeg";
-            // debugger;
-            try {
-                var s = fs.createReadStream(SERVER.ServicesHTMLDocs + reqPath);
-
-                response.status = 200;
-
-                response.setHeader('Content-Type', contentType);
-
-                s.on('error', function () {
-                    response.statusCode = 404;
-                    response.end('Not found');
-                });
-                s.on('open', function () {
-
-                    s.pipe(response);
-                });
-            } catch (errStreamFile) {
-                console.log(errStreamFile);
-                debugger;
-
-            }
-
-            return;
-        }
-
-
-        if (fileExtension == ".js") {
-            contentType = "text/javascript";
-        }
-
-        if (fileExtension == ".css") {
-            contentType = "text/css";
-        }
-        fs.readFile(SERVER.ServicesHTMLDocs + reqPath, function (err, DocFileContents) {
-
-
-            if (err) {
-
-                response.status = 404;
-                response.setHeader('Content-Type', contentType);
-
-                response.end("ERROR!");
-            } else {
-                response.status = 200;
-                response.setHeader('Content-Type', contentType);
-                // response.end(debugHTML);
-                response.end(DocFileContents, 'binary');
-
-
-            }
-        });//end debug html....        
-
-    },
 
     /*
         Generic error information that any service can call to for dumping
@@ -289,115 +154,7 @@ const IPC = {
             ResponseObject.end(JSON.stringify(errObj));
         }
     },
-
-    /*
-        Take care of our web socket via the web server...
-    */
-    ServiceSocket(WebServer) {
-        const WebSocket = require('ws');
-
-        const WebSocketServer = new WebSocket.Server({ server: WebServer });
-
-        //Default to zero.. DOH!!!
-        WebSocketServer.TotalConnectionAttempts = 0;
-
-        WebSocketServer.on('connection', function connection(ws, req) {
-
-            const ipAddress = req.connection.remoteAddress;
-
-            WebSocketServer.TotalConnectionAttempts = 0;
-
-            //Do not give away the users complete IP address over the internet!  :-)
-            const displayAddress = ipAddress.split('.').slice(0, 2).join('.') + "**";
-
-
-            ws.User = {
-                //Using an API key or what???
-                RemoteIP: ipAddress,
-                ClientAgent: "WebSocket",
-                SecurityLevel: 0,
-                ProfileID: 0,
-                Type: "Socket"
-            }
-
-            SERVER.ServiceLogger.WriteWebLog('Socket', {
-                IP4Address: ipAddress,
-                Topic: 'Connect',
-                Body: 'User connected to socket'
-            });
-
-            ws.on('message', function (message) {
-                if (message.length > 1000) {
-                    //ignore for now...   
-                    /*
-                          Quick log to see the history of our traffic...
-                    */
-                    SERVER.ServiceLogger.WriteWebLog('Socket', {
-                        IP4Address: ipAddress,
-                        Topic: 'Socket Warning',
-                        Body: 'Message was too long! Length:[' + message.length + ']'
-                    });
-                    return;
-                }
-                try {
-
-                    const msgDATA = JSON.parse(message);
-
-                    SERVER.ServiceLogger.WriteWebLog('Socket', {
-                        IP4Address: ipAddress,
-                        Topic: 'Socket Message',
-                        Body: msgDATA
-                    });
-
-                    ServiceManager.ServiceRequestWeb(ws, msgDATA, function (err, data) {
-                        if (!msgDATA.service) {
-                            msgDATA.service = "Not Available";
-                        }
-                        if (err) {
-
-                            
-
-                            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketError");
-                            ws.send(JSON.stringify({
-                                err: 'Socket request to servce was invalid!',
-                                msg: msgDATA
-                            }));
-                        } else {
-
-                            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketSuccess");
-                            //Add back the TID...
-                            data.TID = msgDATA.TID;
-                            ws.send(JSON.stringify(data));
-                        }
-                    });
-                } catch (errJSON) {
-                    ws.send(JSON.stringify({
-                        err: 'Bad JSON!'
-                    }));
-                }
-
-            });
-
-            ws.send(JSON.stringify({
-                TID: 0,
-                service: 'APIServer',
-                msg: 'You have connected to the web socket!'
-            }));
-
-            //Let everyone know whats up! :-)
-            SERVER.SocketBroadcast({
-                TID: 0, //System message   
-                service: 'APIServer',
-                msg: "Welcome new tester from :" + displayAddress + ". Total Connections [" +
-                    WebSocketServer.TotalConnectionAttempts + "]"
-            });
-
-
-        });
-
-        return WebSocketServer;
-
-    },
+ 
 
     /*
         This is the actual method called when a request comes from the server. 
@@ -482,7 +239,7 @@ const IPC = {
         //only send debug UI on emtpy request...
         if ((request.url.substring(0, 2) == "/?" && (request.method.toUpperCase() == "GET"))) {
             try {
-                IPC.ServeStaticFile(request, response);
+                require('./StaticFileServer').ServeStaticFile(request, response);
             } catch (errStaticFile) {
                 console.log(errStaticFile);
                 debugger;
@@ -734,7 +491,7 @@ const IPC = {
                             Body: DebugInformation
                         });
 
-                        
+
                         SERVER.ServiceLogger.Statistics.System.TotalSuccess++;
 
                         //Give the client some idea of what went wrong...
@@ -744,9 +501,6 @@ const IPC = {
                         };
 
                         response.end(JSON.stringify(resp));
-
-
-
 
 
 
@@ -763,7 +517,7 @@ const IPC = {
                       Quick log to see the history of our traffic...
                 */
                 SERVER.ServiceLogger.WriteWebLog("WebErrors", {
-                    IP4Address: request.connection.remoteAddress, 
+                    IP4Address: request.connection.remoteAddress,
                     topic: request.method,
                     Body: request.url + JSON.stringify(body)
                 });
@@ -792,7 +546,7 @@ function StartServer() {
     // Async step by step becaues it's easier to debug... They say.. :-)
     (async () => {
 
-        
+
 
         try {
 
@@ -801,7 +555,7 @@ function StartServer() {
 
 
             const ServerConfg = JSON.parse(fs.readFileSync(SERVER.SECRET + '/CONFIG.json', 'utf8'));
- 
+
 
             /*
                 Open our Mysql server...
@@ -828,17 +582,6 @@ function StartServer() {
         }
 
     })();
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

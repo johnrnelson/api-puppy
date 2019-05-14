@@ -17,21 +17,17 @@ const api_puppy = require('./index');
 
 
 
-const package_data = JSON.parse(fs.readFileSync("./package.json", 'utf8'));
-
 
 /*
     Yes.. it's a global!!! 
 
     Change the info you need below for your own server. 
 */
-
-
 var MySERVER = {
 
     ProjectInfo: {
         Title: 'api-puppy Demo',
-        Version: package_data.version,
+        Version: JSON.parse(fs.readFileSync("./package.json", 'utf8')).version,
         VersionName: 'Slim-Down'
     },
     Network: {
@@ -118,9 +114,9 @@ var MySERVER = {
     /*
         Where are your services located?
     */
-    ServicesFolder: path.join(__dirname, "APIServices"),    
-    ServicesHTMLDocs: path.join(__dirname, "docs"),    
-    
+    ServicesFolder: path.join(__dirname, "APIServices"),
+    ServicesHTMLDocs: path.join(__dirname, "docs"),
+
     /* 
         This is used in our services to act as a database.
         Of course it gets blown away every time the service
