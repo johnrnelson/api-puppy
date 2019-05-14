@@ -28,16 +28,10 @@ const IPC = {
     Start: function () {
         const http = require('http');
         const https = require("https");
-       
-
-
         const SocketManager = require("./SocketManager");
 
-
-
-        console.log('\r\nStart Web Servers using version:' + global.SERVER.Version + ' on ' + SERVER.Started.toLocaleString());
-
-
+        
+        console.log('\r\nStart Web Servers using version:' + global.SERVER.ProjectInfo.Version + ' on ' + SERVER.Started.toLocaleString());
 
         var httpServer = http.createServer(function (requset, response) {
             IPC.ServiceWeb(requset, response);
@@ -55,8 +49,6 @@ const IPC = {
             IPC.StartDate = new Date();
 
         });
-
-
 
 
 
