@@ -85,10 +85,10 @@ var MySERVER = {
                 }
             },
             AddSiteMapItem(MapName, ItemName) {
-                if (!SERVER.Statistics.Services.StatMap[MapName]) {
-                    SERVER.Statistics.Services.StatMap[MapName] = {};
+                if (!SERVER.ServiceLogger.Statistics.Services.StatMap[MapName]) {
+                    SERVER.ServiceLogger.Statistics.Services.StatMap[MapName] = {};
                 }
-                const mapItem = SERVER.Statistics.Services.StatMap[MapName];
+                const mapItem = SERVER.ServiceLogger.Statistics.Services.StatMap[MapName];
 
                 if (!mapItem[ItemName]) {
                     mapItem[ItemName] = 1;
