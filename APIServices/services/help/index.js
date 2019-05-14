@@ -142,7 +142,7 @@ const topics = {
             ServerVersion: SERVER.Version,
             ST: new Date(SERVER.Started.toLocaleString()),
             shame: SERVER.Defender.ShameList,
-            SERVERStatistics: SERVER.Statistics,
+            SERVERStatistics: SERVER.ServiceLogger.Statistics,
             Sockets: {
                 msg: 'working on this!',
                 Total: TotalSocks
