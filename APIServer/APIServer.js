@@ -30,18 +30,55 @@ const IPC = {
         const https = require("https");
         const SocketManager = require("./SocketManager");
 
-        
+
         console.log('\r\nStart Web Servers using version:' + global.SERVER.ProjectInfo.Version + ' on ' + SERVER.Started.toLocaleString());
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         var httpServer = http.createServer(function (requset, response) {
-            IPC.ServiceWeb(requset, response);
+            ServiceWeb(requset, response);
         });
 
-   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         SERVER.WebSocketHTTP = SocketManager.ServiceSocket(httpServer);
 
- 
+
 
         //Lets start our server..
         httpServer.listen(SERVER.Network.PORT_HTTP, SERVER.Network.IPADDRESS, function () {
@@ -67,22 +104,22 @@ const IPC = {
                 ca: fs.readFileSync(certsFolder + '/chain.pem', 'utf8')
             };
             const httpsServer = https.createServer(credentials, function (requset, response) {
-                IPC.ServiceWeb(requset, response);
+                ServiceWeb(requset, response);
             });
-  
+
             SERVER.WebSocketHTTPS = SocketManager.ServiceSocket(httpsServer);
- 
+
 
             //Lets start our server..
             httpsServer.listen(SERVER.Network.PORT_HTTPS, SERVER.Network.IPADDRESS, function () {
                 console.log("SSL Web Server Ready : https://" + SERVER.Network.IPADDRESS + ":" + SERVER.Network.PORT_HTTPS);
                 IPC.StartDate = new Date();
-            }); 
+            });
 
         } catch (errCerts) {
             console.log('Error reading cert files.\r\n');
             console.log(errCerts.message);
-        } 
+        }
 
 
     },
@@ -146,387 +183,403 @@ const IPC = {
             ResponseObject.end(JSON.stringify(errObj));
         }
     },
- 
+
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+    This is the actual method called when a request comes from the server. 
+    
+    Use this chance to build state and enforce rules that you expect all 
+    of your clients to follow. 
+*/
+function ServiceWeb(request, response) {
+
+    //ignore this request. We are not a real web server!
+    if (request.url == "/favicon.ico") {
+        response.end();
+        return;
+    }
+
+    //ignore this request. We are not a real web server!
+    if (request.url == "/robots.txt") {
+        response.end("User-agent: * \r\n" + "Disallow: /");
+        return;
+    }
+
+
+    //ignore this request. We are not a real web server!
+    if (request.url == "/sitemap.xml") {
+        response.end();
+        return;
+    }
+
+
+
+    const querystring = require('querystring');
+    const url = require('url');
+
+
+    const RequestURLData = url.parse(request.url);
+
+
+
+
+
+    //Any Querystring they submit gets attached to the request object as an object not a string..
+    request.QueryData = querystring.parse(RequestURLData.query);
+    request.QueryPath = RequestURLData.pathname;
+
+
+    // console.log(request.QueryPath, ' --- ', request.method.toUpperCase());
+
+
+    const CORS_HEAD = {
+        //CSP Policy
+        // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
+
+        //CORB...
+        "Access-Control-Allow-Origin": "*",
+        // GET,PUT,POST,DELETE
+        "Access-Control-Allow-Methods": "*",
+        "Access-Control-Allow-Headers": "*"
+    };
+
+    response.setHeader('Access-Control-Allow-Origin', '*');
+    response.setHeader('Access-Control-Allow-Methods', '*');
+    response.setHeader('Access-Control-Allow-Headers', '*');
+
+    // debugger;
+    if (request.method.toUpperCase() == "OPTIONS") {            
+        response.status = 200;
+        response.end("");
+        return;
+    }
+
+
+
+    //only send debug UI on emtpy request...
+    if ((request.url == "/") && (request.method.toUpperCase() == "GET")) {
+        IPC.ServeDebugAPP(request, response);
+        return;
+    }
+
+
+
+    //only send debug UI on emtpy request...
+    if ((request.url.substring(0, 2) == "/?" && (request.method.toUpperCase() == "GET"))) {
+        try {
+            require('./StaticFileServer').ServeStaticFile(request, response);
+        } catch (errStaticFile) {
+            console.log(errStaticFile);
+            debugger;
+        }
+
+        return;
+    }
+
+    //Give the response and easy way out for errors...
+    response.SendError = IPC.SendError;
+
+    //This should always be local host since it's proxy from NGINX...
+    request.HostOrigin = request.headers["origin"];
+    request.Host = request.headers["host"];
+
+
+    //Default to a basic profile. Upgrade later if you get more infor about the connection...
+    request.User = {
+        //Using an API key or what???
+        isAuthenticated: false,
+
+        //The proxy (nginx) will supply this as a header not the client!!!
+        IPAddress: request.headers["x-real-ip"],
+
+        RemoteIP: request.connection.remoteAddress,
+
+        ClientAgent: request.headers["user-agent"],
+        URL: request.url,
+        SecurityLevel: 0,
+        ProfileID: 0,
+        Type: "HTTP"
+    };
+
+
+    // Use this only when you need to!!!
+    // console.log('Serving User:',request.User);
 
     /*
-        This is the actual method called when a request comes from the server. 
-        
-        Use this chance to build state and enforce rules that you expect all 
-        of your clients to follow. 
+        Use our little defender module to check the request
+        and make sure we can do the work they want us to do.
     */
-    ServiceWeb(request, response) {
+    SERVER.Defender.CheckRequest(request, response, function (CheckRequestError) {
 
-        //ignore this request. We are not a real web server!
-        if (request.url == "/favicon.ico") {
-            response.end();
-            return;
-        }
+        if (CheckRequestError) {
 
-        //ignore this request. We are not a real web server!
-        if (request.url == "/robots.txt") {
-            response.end("User-agent: * \r\n" + "Disallow: /");
+            response.SendError(response, CheckRequestError);
+            // debugger;
             return;
         }
 
 
-        //ignore this request. We are not a real web server!
-        if (request.url == "/sitemap.xml") {
-            response.end();
-            return;
-        }
+        try {
+
+            var body = '';
+            request.on('data', function (data) {
+                body += data;
+                /* 
+                    Too much POST data, kill the connection! 
+                    Don't even bother letting them know anything.
+                */
+                if (body.length > 8500) response.connection.destroy();
+
+                // Use this if you are more generous..  :-)
+                // if (body.length > 1e6) response.connection.destroy();
+            });
 
 
-
-        const querystring = require('querystring');
-        const url = require('url');
+            request.on('end', function () {
 
 
-        const RequestURLData = url.parse(request.url);
+                /*
+                    Now work with the body of the request. 
+                */
+                if (body == '') {
+                    request.RequestData = {};
+                }
+                else {
+                    try {
+                        request.RequestData = JSON.parse(body);
 
-
-
-
-
-        //Any Querystring they submit gets attached to the request object as an object not a string..
-        request.QueryData = querystring.parse(RequestURLData.query);
-        request.QueryPath = RequestURLData.pathname;
-
-
-        // console.log(request.QueryPath, ' --- ', request.method.toUpperCase());
-
-
-        const CORS_HEAD = {
-            //CSP Policy
-            // "Content-Security-Policy": "default-src http:; script-src https: 'unsafe-inline'; style-src https: 'unsafe-inline'",
-
-            //CORB...
-            "Access-Control-Allow-Origin": "*",
-            // GET,PUT,POST,DELETE
-            "Access-Control-Allow-Methods": "*",
-            "Access-Control-Allow-Headers": "*"
-        };
-
-        response.setHeader('Access-Control-Allow-Origin', '*');
-        response.setHeader('Access-Control-Allow-Methods', '*');
-        response.setHeader('Access-Control-Allow-Headers', '*');
-
-        // debugger;
-        if (request.method.toUpperCase() == "OPTIONS") {
-            // console.log(request.headers);           
-            response.status = 200;
-            response.end("");
-            return;
-        }
-
-
-
-        //only send debug UI on emtpy request...
-        if ((request.url == "/") && (request.method.toUpperCase() == "GET")) {
-            IPC.ServeDebugAPP(request, response);
-            return;
-        }
-
-
-
-        //only send debug UI on emtpy request...
-        if ((request.url.substring(0, 2) == "/?" && (request.method.toUpperCase() == "GET"))) {
-            try {
-                require('./StaticFileServer').ServeStaticFile(request, response);
-            } catch (errStaticFile) {
-                console.log(errStaticFile);
-                debugger;
-            }
-
-            return;
-        }
-
-        //Give the response and easy way out for errors...
-        response.SendError = IPC.SendError;
-
-        //This should always be local host since it's proxy from NGINX...
-        request.HostOrigin = request.headers["origin"];
-        request.Host = request.headers["host"];
-
-
-        //Default to a basic profile. Upgrade later if you get more infor about the connection...
-        request.User = {
-            //Using an API key or what???
-            isAuthenticated: false,
-
-            //The proxy (nginx) will supply this as a header not the client!!!
-            IPAddress: request.headers["x-real-ip"],
-
-            RemoteIP: request.connection.remoteAddress,
-
-            ClientAgent: request.headers["user-agent"],
-            URL: request.url,
-            SecurityLevel: 0,
-            ProfileID: 0,
-            Type: "HTTP"
-        };
-
-
-        // Use this only when you need to!!!
-        // console.log('Serving User:',request.User);
+                    } catch (badJSON) {
+                        //Special error if the JSON is not formed well...
+                        response.SendError(response, {
+                            err: badJSON
+                        });
+                        return;
+                    }
+                }
 
 
 
 
-        /*
-            Use our little defender module to check the request
-            and make sure we can do the work they want us to do.
-        */
-        SERVER.Defender.CheckRequest(request, response, function (CheckRequestError) {
+                /*
+                    Add to the `RequestData` whatever they put in the
+                    querystring. Object dot notation is best but of 
+                    course you don't have to use it...
+                */
+                try {
+                    for (var p in request.QueryData) {
 
-            if (CheckRequestError) {
+                        var currentObject = request.RequestData;
 
-                response.SendError(response, CheckRequestError);
-                // debugger;
-                return;
-            }
+                        const objValue = request.QueryData[p];
+                        const parts = p.split('.');
+
+                        for (let index = 0; index < parts.length; index++) {
+                            const objName = parts[index];
+
+                            if (!currentObject[objName]) {
+                                currentObject[objName] = {}
+                            }
+
+                            if (index == parts.length - 1) {
+                                currentObject[objName] = objValue;
+                            } else {
+                                //Step to next object...
+                                currentObject = currentObject[objName];
+                            }
+                        }
+
+                    }
+
+                } catch (QStoJSON) {
+
+                    SERVER.ServiceLogger.WriteWebLog("WebErrors", {
+                        IP4Address: request.connection.remoteAddress,
+                        Topic: request.method,
+                        Body: {
+                            qryData: request.QueryData,
+                            err: QStoJSON.message
+                        }
+                    });
+                    // console.log(QStoJSON);
+                    debugger;
+                }
 
 
-            try {
-
-                var body = '';
-                request.on('data', function (data) {
-                    body += data;
-                    /* 
-                        Too much POST data, kill the connection! 
-                        Don't even bother letting them know anything.
-                    */
-                    if (body.length > 8500) response.connection.destroy();
-
-                    // Use this if you are more generous..  :-)
-                    // if (body.length > 1e6) response.connection.destroy();
-                });
 
 
-                request.on('end', function () {
 
+
+                try {
 
                     /*
-                        Now work with the body of the request. 
+                        Use the path to figure out what the user wants if they didn't
+                        use the body to post JSON to...
                     */
-                    if (body == '') {
-                        request.RequestData = {};
-                    }
-                    else {
-                        try {
-                            request.RequestData = JSON.parse(body);
+                    request.PathParts = request.QueryPath.split('/').filter(Boolean);
+                    if (request.PathParts.length) {
+                        //Set this for the basic routing of the module...
+                        request.RequestData.service = request.PathParts[0];
 
-                        } catch (badJSON) {
-                            //Special error if the JSON is not formed well...
+                    }
+
+
+                    //Is this a multi-request????
+                    if (request.RequestData.service == "*") {
+
+                        const tasks = request.RequestData.tasks;
+                        const resultObj = {};
+                        var totalFinished = 0;
+
+                        if (!tasks.length) {
                             response.SendError(response, {
-                                err: badJSON
+                                err: "No taskes defined!"
                             });
                             return;
                         }
-                    }
-
-
-
-
-                    /*
-                        Add to the `RequestData` whatever they put in the
-                        querystring. Object dot notation is best but of 
-                        course you don't have to use it...
-                    */
-                    try {
-                        for (var p in request.QueryData) {
-
-                            var currentObject = request.RequestData;
-
-                            const objValue = request.QueryData[p];
-                            const parts = p.split('.');
-
-                            for (let index = 0; index < parts.length; index++) {
-                                const objName = parts[index];
-
-                                if (!currentObject[objName]) {
-                                    currentObject[objName] = {}
-                                }
-
-                                if (index == parts.length - 1) {
-                                    currentObject[objName] = objValue;
-                                } else {
-                                    //Step to next object...
-                                    currentObject = currentObject[objName];
-                                }
-                            }
-
-                        }
-
-                    } catch (QStoJSON) {
-
-                        SERVER.ServiceLogger.WriteWebLog("WebErrors", {
-                            IP4Address: request.connection.remoteAddress,
-                            Topic: request.method,
-                            Body: {
-                                qryData: request.QueryData,
-                                err: QStoJSON.message
-                            }
-                        });
-                        // console.log(QStoJSON);
-                        debugger;
-                    }
-
-
-
-
-
-
-                    try {
 
                         /*
-                            Use the path to figure out what the user wants if they didn't
-                            use the body to post JSON to...
+                            Go through all the tasks and execute them....
                         */
-                        request.PathParts = request.QueryPath.split('/').filter(Boolean);
-                        if (request.PathParts.length) {
-                            //Set this for the basic routing of the module...
-                            request.RequestData.service = request.PathParts[0];
+                        for (let index = 0; index < tasks.length; index++) {
+                            const aSingleRequest = tasks[index];
+                            // debugger;
 
-                        }
-
-
-                        //Is this a multi-request????
-                        if (request.RequestData.service == "*") {
-
-                            const tasks = request.RequestData.tasks;
-                            const resultObj = {};
-                            var totalFinished = 0;
-
-                            if (!tasks.length) {
-                                response.SendError(response, {
-                                    err: "No taskes defined!"
-                                });
-                                return;
-                            }
-
-                            /*
-                                Go through all the tasks and execute them....
-                            */
-                            for (let index = 0; index < tasks.length; index++) {
-                                const aSingleRequest = tasks[index];
-                                // debugger;
-
-                                //Clean up the service so there is nothing but numbers and letter...
-                                aSingleRequest.request.service = aSingleRequest.request.service.replace(/[^0-9a-z]/gi, '')
-
-                                //By the time you get here.. you want a true web api request...
-                                ServiceManager.ServiceRequestWeb(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
-                                    totalFinished++;
-
-
-                                    resultObj[aSingleRequest.reqID] = ResponseJSON;
-
-                                    if (ServiceError) {
-                                        resultObj[aSingleRequest.reqID] = ServiceError;
-
-                                    } else {
-                                        resultObj[aSingleRequest.reqID] = ResponseJSON;
-                                    }
-                                    if (totalFinished == tasks.length) {
-                                        resultObj["TotalTasks"] = totalFinished;
-                                        response.end(JSON.stringify(resultObj));
-                                    }
-
-                                });
-
-                            }
-
-                        } else {
-
-                            //Make sure the service is clean. Nothing but numbers and letters...
-                            request.RequestData.service = request.RequestData.service.replace(/[^0-9a-z]/gi, '');
+                            //Clean up the service so there is nothing but numbers and letter...
+                            aSingleRequest.request.service = aSingleRequest.request.service.replace(/[^0-9a-z]/gi, '')
 
                             //By the time you get here.. you want a true web api request...
-                            ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
+                            ServiceManager.ServiceRequestWeb(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
+                                totalFinished++;
+
+
+                                resultObj[aSingleRequest.reqID] = ResponseJSON;
+
                                 if (ServiceError) {
-                                    SERVER.ServiceLogger.Statistics.Services.TotalError++;
-                                    // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
-
-                                    response.SendError(response, ServiceError);
-
-                                    //Send the ServiceErrorInformation instead of the bubbled up error!!!
-                                    // response.SendError(response, ServiceErrorInformation);
+                                    resultObj[aSingleRequest.reqID] = ServiceError;
 
                                 } else {
-                                    SERVER.ServiceLogger.Statistics.Services.TotalSuccess++;
-                                    SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTSuccess");
-                                    response.end(JSON.stringify(ResponseJSON));
+                                    resultObj[aSingleRequest.reqID] = ResponseJSON;
                                 }
+                                if (totalFinished == tasks.length) {
+                                    resultObj["TotalTasks"] = totalFinished;
+                                    response.end(JSON.stringify(resultObj));
+                                }
+
                             });
+
                         }
 
+                    } else {
 
+                        //Make sure the service is clean. Nothing but numbers and letters...
+                        request.RequestData.service = request.RequestData.service.replace(/[^0-9a-z]/gi, '');
 
-                    }
-                    catch (errEndReq) {
-                        /* 
-                            Use this if you are debugging from the server. It's helpful 
-                            to put things in context...
-                        */
-                        const DebugInformation = {
-                            URL: request.url,
-                            err: errEndReq.message,
-                            body: body
-                        };
-                        // console.log(DebugInformation);
-                        // debugger;
+                        //By the time you get here.. you want a true web api request...
+                        ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
+                            if (ServiceError) {
+                                SERVER.ServiceLogger.Statistics.Services.TotalError++;
+                                // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
 
+                                response.SendError(response, ServiceError);
 
-                        SERVER.ServiceLogger.WriteWebLog("WebErrors", {
-                            IP4Address: request.connection.remoteAddress,
-                            Topic: request.method,
-                            Body: DebugInformation
+                                //Send the ServiceErrorInformation instead of the bubbled up error!!!
+                                // response.SendError(response, ServiceErrorInformation);
+
+                            } else {
+                                SERVER.ServiceLogger.Statistics.Services.TotalSuccess++;
+                                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTSuccess");
+                                response.end(JSON.stringify(ResponseJSON));
+                            }
                         });
-
-
-                        SERVER.ServiceLogger.Statistics.System.TotalSuccess++;
-
-                        //Give the client some idea of what went wrong...
-                        var resp = {
-                            msg: 'Error in request!',
-                            err: 'Please send us a message about what went wrong.'
-                        };
-
-                        response.end(JSON.stringify(resp));
+                    }
 
 
 
-                    }//End catching an error...
+                }
+                catch (errEndReq) {
+                    /* 
+                        Use this if you are debugging from the server. It's helpful 
+                        to put things in context...
+                    */
+                    const DebugInformation = {
+                        URL: request.url,
+                        err: errEndReq.message,
+                        body: body
+                    };
+                    // console.log(DebugInformation);
+                    // debugger;
+
+
+                    SERVER.ServiceLogger.WriteWebLog("WebErrors", {
+                        IP4Address: request.connection.remoteAddress,
+                        Topic: request.method,
+                        Body: DebugInformation
+                    });
+
+
+                    SERVER.ServiceLogger.Statistics.System.TotalSuccess++;
+
+                    //Give the client some idea of what went wrong...
+                    var resp = {
+                        msg: 'Error in request!',
+                        err: 'Please send us a message about what went wrong.'
+                    };
+
+                    response.end(JSON.stringify(resp));
 
 
 
-                });
-            }
-            catch (errPUT) {
-
-                debugger;
-                /*
-                      Quick log to see the history of our traffic...
-                */
-                SERVER.ServiceLogger.WriteWebLog("WebErrors", {
-                    IP4Address: request.connection.remoteAddress,
-                    topic: request.method,
-                    Body: request.url + JSON.stringify(body)
-                });
-
-                //Some bad juju happend so we just pass it off to our generic error handler...
-                response.SendError(response, {
-                    err: errPUT.message
-                });
-            }//End Reading Request... 
+                }//End catching an error...
 
 
 
+            });
+        }
+        catch (errPUT) {
 
-        });//end check request... 
+            debugger;
+            /*
+                  Quick log to see the history of our traffic...
+            */
+            SERVER.ServiceLogger.WriteWebLog("WebErrors", {
+                IP4Address: request.connection.remoteAddress,
+                topic: request.method,
+                Body: request.url + JSON.stringify(body)
+            });
 
-    }//End Service Web Request...
-};
+            //Some bad juju happend so we just pass it off to our generic error handler...
+            response.SendError(response, {
+                err: errPUT.message
+            });
+        }//End Reading Request... 
+
+
+
+
+    });//end check request... 
+
+}//End Service Web Request...
+
+ 
+
 
 /*
     Simple stub while this file is being broken down

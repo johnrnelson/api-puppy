@@ -149,15 +149,12 @@ const topics = {
             }
         };
 
-
         fs.readFile(SERVER.ServicesFolder + "/API_HELP.json", "utf8", function (err, API_HELP) {
             if (err) {
                 SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("help","Errors");
                 OnComplete({
                     msg: 'No API_HELP.json file found!',
-                }, null);
-
-                
+                }, null);                
             } else {
                 SysInfoData.apidata = JSON.parse(API_HELP);
                 
@@ -167,7 +164,7 @@ const topics = {
         });
 
 
-    },
+    },//End SysInfo...
 };
 
 
@@ -175,12 +172,8 @@ const topics = {
 function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
 
-    var RequestData = RequestData.data;
-
- 
-
-
-
+    var RequestData = RequestData.data; 
+    
     try {
 
         if (!RequestData) {
