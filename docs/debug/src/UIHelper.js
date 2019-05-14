@@ -418,7 +418,7 @@ if (document.location.hostname == "localhost") {
 
         // UIHelper.ShowTab('TabDebugger');
     }, 500);
-    UIHelper.ShowTab('HistoryLogger');
+    // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
     // UIHelper.ShowTab('TabAppPrefs');
     // UIHelper.ShowTab('AppCharts');

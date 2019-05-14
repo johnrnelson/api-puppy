@@ -266,7 +266,7 @@ function ServiceWeb(request, response) {
     response.setHeader('Access-Control-Allow-Headers', '*');
 
     // debugger;
-    if (request.method.toUpperCase() == "OPTIONS") {            
+    if (request.method.toUpperCase() == "OPTIONS") {
         response.status = 200;
         response.end("");
         return;
@@ -578,7 +578,7 @@ function ServiceWeb(request, response) {
 
 }//End Service Web Request...
 
- 
+
 
 
 /*

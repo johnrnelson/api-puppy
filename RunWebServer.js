@@ -16,8 +16,6 @@ const path = require('path');
 const api_puppy = require('./index');
 
 
-
-
 /*
     Yes.. it's a global!!! 
 
@@ -57,53 +55,7 @@ var MySERVER = {
             ]
         }
     },
-
-    //Basic counters for our api services...
-    Statistics___XXXX: {
-        Services: {
-            TotalSuccess: 0,
-            TotalError: 0,
-            StatMap: {
-                //This gets added to by each service...
-
-                //REMOVE AFTER TESTING!!!!!!
-                "help": {
-                    Success: 0,
-                    Errors: 0
-                },
-                "data": {
-                    Success: 0,
-                    Errors: 0
-                },
-                "logger": {
-                    Success: 0,
-                    Errors: 0
-                }
-            },
-            AddSiteMapItem(MapName, ItemName) {
-                if (!SERVER.ServiceLogger.Statistics.Services.StatMap[MapName]) {
-                    SERVER.ServiceLogger.Statistics.Services.StatMap[MapName] = {};
-                }
-                const mapItem = SERVER.ServiceLogger.Statistics.Services.StatMap[MapName];
-
-                if (!mapItem[ItemName]) {
-                    mapItem[ItemName] = 1;
-                } else {
-                    mapItem[ItemName]++;
-                }
-
-
-            }
-        },
-        System: {
-            TotalSuccess: 0,
-            TotalError: 0,
-        },
-    },
-
-
-
-
+ 
     /*
         Kind of confusing, but the root folder is actually the 
         "APIServer" folder. Thats the "root" of where the 
@@ -132,5 +84,3 @@ var MySERVER = {
     Call the puppy with your server configs...
 */
 api_puppy(MySERVER);
-
-
