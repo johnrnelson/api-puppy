@@ -14,7 +14,7 @@ Clone the project to a new folder.
     git clone git@github.com:johnrnelson/api-puppy.git
     cd api-puppy
 
-Install the NPM(s). There is only one. Check the `package.json` file. :smiley:
+Install the NPM(s). Check the `package.json` file. :smiley:
 
     npm update
 
