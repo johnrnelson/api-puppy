@@ -1,17 +1,1 @@
-{
-    "name": "api-puppy",
-    "version": "2019.5.14.5",
-    "description": "The api-puppy project",
-    "repository": "git@github.com:johnrnelson/api-puppy.git",
-    "keywords": [
-        "node",
-        "http",
-        "api"
-    ],
-    "main": "index.js",
-    "author": "John Nelson <me@johnrnelson.com> (www.johnrnelson.com)",
-    "dependencies": {
-        "mysql": "^2.17.1",
-        "ws": "^6.2.1"
-    }
-}
+{"name":"api-puppy","version":"2019.5.16.1","description":"The api-puppy project","repository":"git@github.com:johnrnelson/api-puppy.git","keywords":["node","http","api"],"main":"index.js","author":"John Nelson <me@johnrnelson.com> (www.johnrnelson.com)","dependencies":{"mysql":"^2.17.1","ws":"^6.2.1"}}
