@@ -347,7 +347,7 @@ function ServiceWeb(request, response) {
                     Don't even bother letting them know anything.
                 */
                 if (body.length > 8500) response.connection.destroy();
-                
+
 
                 // Use this if you are more generous..  :-)
                 // if (body.length > 1e6) response.connection.destroy();
@@ -444,7 +444,7 @@ function ServiceWeb(request, response) {
 
                     //No service then nothing to do!
                     if (!request.RequestData.service) {
-                        SERVER.ServiceLogger.Statistics.Services.TotalError++;                    
+                        SERVER.ServiceLogger.Statistics.Services.TotalError++;
                         response.SendError(response, ServiceError);
                         return;
                     }
@@ -504,6 +504,7 @@ function ServiceWeb(request, response) {
                         ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                             if (ServiceError) {
                                 SERVER.ServiceLogger.Statistics.Services.TotalError++;
+                                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "Errors");
                                 // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
 
                                 response.SendError(response, ServiceError);
@@ -512,8 +513,15 @@ function ServiceWeb(request, response) {
                                 // response.SendError(response, ServiceErrorInformation);
 
                             } else {
-                                SERVER.ServiceLogger.Statistics.Services.TotalSuccess++;
-                                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTSuccess");
+
+                                //ignore the help service...
+                                if (request.RequestData.service != "help") {
+
+                                    SERVER.ServiceLogger.Statistics.Services.TotalSuccess++;
+                                    SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTSuccess");
+                                    SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "Success");
+                                }
+
                                 response.end(JSON.stringify(ResponseJSON));
                             }
                         });

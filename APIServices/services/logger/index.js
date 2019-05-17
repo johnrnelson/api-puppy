@@ -121,30 +121,30 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
         if (!RequestData.action) {
             OnComplete('Please supply a action!', null);
-            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("logger", "Errors");
+
         } else {
             const requestedAction = LoggerActions[RequestData.action];
 
             if (!requestedAction) {
-                OnComplete(null, {
+                OnComplete({
                     msg: 'The action was not found! [' + RequestData.action + ']'
-                });
+                }, null);
 
             } else {
                 try {
                     requestedAction(RequestObj, RequestData, OnComplete);
-                    SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("logger", "Success");
+
 
                 } catch (topicError) {
                     OnComplete('Error in Logger Service!', null);
-                    SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("logger", "Errors");
+
                 }
             }
         }
     }
     catch (errorService) {
         OnComplete(errorService.message, null);
-        SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("logger", "Errors");
+
     }
 
 }

@@ -6,7 +6,7 @@ const DataActions = {
 
 
     list(RequestData, OnComplete) {
- 
+
         try {
             // debugger;
 
@@ -42,13 +42,13 @@ const DataActions = {
         });
         // ==========
 
- 
+
     },
 
     search(RequestData, OnComplete) {
 
         debugger;
-        
+
         function stripit(StripString) {
             return StripString.replace(/[^0-9a-z]/gi, '');
         }
@@ -137,17 +137,16 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                 const result = {
                     err: 'Action was not found! ' + RequestData.action,
                 };
-                OnComplete(null, result);
-                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("comics", "Errors");
-                
+                OnComplete(result, null);
+
             } else {
 
-                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("comics", "Success");
+
                 task(RequestData, OnComplete);
             }
         } catch (errOnAction) {
             debugger;
-            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("comics", "Errors");
+
             OnComplete(errOnAction);
         }
 
@@ -164,7 +163,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
 
         OnComplete(null, result);
-        SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("comics", "Errors");
+        
     }
 
 

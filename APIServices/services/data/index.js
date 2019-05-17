@@ -75,18 +75,18 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                 const result = {
                     err: 'Action was not found! ' + RequestData.action,
                 };
-                OnComplete(null, result);
-                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("data","Errors");
+                OnComplete(result, null);
+
             } else {
                 if (!RequestData.fruit) {
-                    OnComplete(null, {
+                    OnComplete({
                         err: 'no fruit specified'
-                    });
+                    }, null);
                     return;
                 }
 
                 var fruit = RequestData.fruit.replace(/[\W_]+/g, "");
-                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("data","Success");
+
                 task(fruit, OnComplete);
             }
         } catch (errOnAction) {
@@ -94,8 +94,8 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
             const result = {
                 err: 'Error in Action! ',
             };
-            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("data","Errors");
-            OnComplete(null, result);            
+
+            OnComplete(null, result);
         }
 
     } else {
@@ -110,8 +110,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
         };
 
 
-        OnComplete(null, result);
-        SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("data","Errors");
+        OnComplete(null, result);        
     }
 
 
