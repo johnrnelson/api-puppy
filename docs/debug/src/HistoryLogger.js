@@ -23,8 +23,9 @@ WebApp.HistoryLogger = {
             const calendarHTML = `
 
             <div id="LoggerCalendar"   
-                xxxdata-on-day-click="WebApp.HistoryLogger.Calendar.ChangeLoggerDay"
                 data-role="calendar" class="compact" 
+                data-on-day-click="WebApp.HistoryLogger.Calendar.ChangeLoggerDay()"
+                xxxdata-on-change="WebApp.HistoryLogger.Calendar.ChangeLoggerDay"
                 data-buttons="today" data-preset="${todayDateFMT}"></div>
             <br>
 
@@ -34,12 +35,13 @@ WebApp.HistoryLogger = {
 
         },
         ChangeLoggerDay(sel, day, el) {
+            // debugger;
             // console.log(arguments);
-            // var calendar = $('#LoggerCalendar').data('calendar');
+            var calendar = $('#LoggerCalendar').data('calendar');
 
-            // // var curDate = calendar.getSelected();
-            // var curDate = new Date(sel[0]);
-            // console.log('change to', curDate);
+            var LogDate = new Date(calendar.getSelected()[0]);
+
+            console.log('change to', LogDate);
 
 
         },
