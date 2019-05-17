@@ -441,6 +441,15 @@ function ServiceWeb(request, response) {
                     }
 
 
+                    //No service then nothing to do!
+                    if (!request.RequestData.service) {
+                        SERVER.ServiceLogger.Statistics.Services.TotalError++;
+                        // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
+
+                        response.SendError(response, ServiceError);
+                        return;
+                    }
+
                     //Is this a multi-request????
                     if (request.RequestData.service == "*") {
 
