@@ -1,0 +1,8 @@
+{
+	"service": "cpt10",
+	"action": "list",
+	"page": {
+		"limit": 10,
+		"index": 1
+	}
+}

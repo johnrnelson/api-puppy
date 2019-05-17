@@ -1,0 +1,20 @@
+{
+	"service": "cpt10",
+	"action": "search",
+	"page": {
+		"limit": 10,
+		"index": 1
+	},
+	"qry": [
+		{
+			"field": "CODE",
+			"op": "*",
+			"value": "A0"
+		},
+		{
+			"field": "CDesc",
+			"op": "*",
+			"value": "fev"
+		}
+	]
+}

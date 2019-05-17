@@ -347,6 +347,7 @@ function ServiceWeb(request, response) {
                     Don't even bother letting them know anything.
                 */
                 if (body.length > 8500) response.connection.destroy();
+                
 
                 // Use this if you are more generous..  :-)
                 // if (body.length > 1e6) response.connection.destroy();
@@ -443,9 +444,7 @@ function ServiceWeb(request, response) {
 
                     //No service then nothing to do!
                     if (!request.RequestData.service) {
-                        SERVER.ServiceLogger.Statistics.Services.TotalError++;
-                        // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
-
+                        SERVER.ServiceLogger.Statistics.Services.TotalError++;                    
                         response.SendError(response, ServiceError);
                         return;
                     }
