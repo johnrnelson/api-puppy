@@ -139,16 +139,16 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
                     err: 'Action was not found! ' + RequestData.action,
                 };
                 OnComplete(null, result);
-                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("comics", "Errors");
+                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("cpt10", "Errors");
                 
             } else {
 
-                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("comics", "Success");
+                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("cpt10", "Success");
                 task(RequestData, OnComplete);
             }
         } catch (errOnAction) {
             debugger;
-            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("comics", "Errors");
+            SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("cpt10", "Errors");
             OnComplete(errOnAction);
         }
 
@@ -165,7 +165,7 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
 
         OnComplete(null, result);
-        SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("comics", "Errors");
+        SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem("cpt10", "Errors");
     }
 
 
