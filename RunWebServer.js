@@ -26,7 +26,7 @@ var MySERVER = {
     ProjectInfo: {
         Title: 'api-puppy Demo',
         Version: JSON.parse(fs.readFileSync("./package.json", 'utf8')).version,
-        VersionName: 'Slim-Down'
+        VersionName: 'Data-Pump'
     },
     Network: {
         /* 
