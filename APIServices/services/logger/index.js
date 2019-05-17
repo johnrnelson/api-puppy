@@ -98,13 +98,10 @@ const LoggerActions = {
     },
     'list-log-files': function (RequestObj, RequestData, OnComplete) {
         // debugger;
-
-        SERVER.ServiceLogger.ListLogs(function (LogList) {
-            OnComplete(null, {
-                logs: LogList
-            });
-
+        OnComplete(null, {
+            msg: 'N/A'
         });
+       
     }
 };
 

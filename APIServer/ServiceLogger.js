@@ -126,20 +126,14 @@ function ReadWebLog(ReadOpts, OnComplete) {
 
 }
 exports.ReadWebLog = ReadWebLog;
-/*
-    What are all the log files we have right now?
-*/
-function ListLogs(OnList) {
-    fs.readdir(SERVER.LoggerConfig.Folder, function (err, items) {
-        if (err) {
-            debugger;
-            OnList();
-        } else {
-            OnList(items);
-        }
-    });
-}
-exports.ListLogs = ListLogs;
+ 
+
+
+
+
+
+
+
 
 /*
     Putting stats here for now...  :-)

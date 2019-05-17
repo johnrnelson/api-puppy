@@ -1,4 +1,10 @@
-{
+{ 
 	"service": "logger",
-	"action": "list-log-files" 
+	"action": "ReadLogs",
+	"date": "2019-5-17",
+	"type": "WebErrors",
+	"page": {
+		"limit": 10,
+		"index": 1
+	}	
 }
