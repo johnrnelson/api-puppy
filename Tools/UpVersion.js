@@ -124,6 +124,6 @@ GetVer(function (Info) {
 
         console.log('git tag -a v' + Info + ' -m "Test Tag"');
         console.log('git push origin --tags');
-        console.log('git push origin --delete v2019.5.10.4');
+        console.log('git push origin --delete v'+ThisReleaseVersion);
     });
 });
