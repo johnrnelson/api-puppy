@@ -11,8 +11,8 @@
     "comics": {
         "notes": "Sample data to help test the api..."
     },    
-    "icd10": {
-        "notes": "ICD-10 Codes from the CDC..."
+    "healthcare": {
+        "notes": "ICD-10 and CPT Codes from the CDC and medicare..."
     },    
     "help": {        
         "notes": "Help on help to help you....  lol"

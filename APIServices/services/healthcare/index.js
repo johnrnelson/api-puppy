@@ -9,7 +9,7 @@ const DataActions = {
     list(RequestData, OnComplete) {
 
         try {
-            // debugger;
+            debugger;
 
             var opts = {
                 select: "*",
@@ -48,7 +48,7 @@ const DataActions = {
 
     search(RequestData, OnComplete) {
 
-        // debugger;
+        debugger;
 
         function stripit(StripString) {
             return StripString.replace(/[^0-9a-z]/gi, '');
