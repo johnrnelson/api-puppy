@@ -1,6 +1,7 @@
 {
 	"service": "healthcare",
 	"action": "list",
+	"target": "icd10",	
 	"page": {
 		"limit": 10,
 		"index": 1

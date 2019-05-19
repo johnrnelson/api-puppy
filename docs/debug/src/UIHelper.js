@@ -198,7 +198,7 @@ window.UIHelper = {
 
                     //Use the default and set the edtor....            
                     console.info('Setting default service......');
-                    WebApp.DebugUI.SelectServiceOption('icd10');
+                    WebApp.DebugUI.SelectServiceOption('healthcare');
 
 
                     UIHelper.ActiveTab.style.display = "block";
