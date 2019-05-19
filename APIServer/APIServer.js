@@ -504,8 +504,8 @@ function ServiceWeb(request, response) {
                         ServiceManager.ServiceRequestWeb(request, request.RequestData, function (ServiceError, ResponseJSON) {
                             if (ServiceError) {
                                 SERVER.ServiceLogger.Statistics.Services.TotalError++;
-                                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "Errors");
-                                // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
+                                // SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "Errors");
+                                SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(request.RequestData.service, "RESTError");
 
                                 response.SendError(response, ServiceError);
 

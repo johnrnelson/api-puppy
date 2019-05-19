@@ -198,7 +198,7 @@ window.UIHelper = {
 
                     //Use the default and set the edtor....            
                     console.info('Setting default service......');
-                    WebApp.DebugUI.SelectServiceOption('time');
+                    WebApp.DebugUI.SelectServiceOption('icd10');
 
 
                     UIHelper.ActiveTab.style.display = "block";

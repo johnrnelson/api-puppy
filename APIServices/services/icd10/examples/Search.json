@@ -1,5 +1,5 @@
 {
-	"service": "cpt10",
+	"service": "icd10",
 	"action": "search",
 	"page": {
 		"limit": 10,
