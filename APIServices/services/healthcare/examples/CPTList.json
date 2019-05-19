@@ -1,0 +1,9 @@
+{
+	"service": "healthcare",
+	"action": "list",
+	"target": "cpt",	
+	"page": {
+		"limit": 10,
+		"index": 1
+	}
+}

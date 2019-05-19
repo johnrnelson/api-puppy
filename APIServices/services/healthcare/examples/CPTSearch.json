@@ -1,0 +1,21 @@
+{
+	"service": "healthcare",
+	"action": "search",
+	"target": "cpt",
+	"page": {
+		"limit": 10,
+		"index": 1
+	},
+	"qry": [
+		{
+			"field": "CODE",
+			"op": "*",
+			"value": "0"
+		},
+		{
+			"field": "CDesc",
+			"op": "*",
+			"value": "fe"
+		}
+	]
+}

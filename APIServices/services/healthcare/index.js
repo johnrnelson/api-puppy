@@ -183,9 +183,7 @@ const DataActions = {
 
 };
 
-function ServiceRequest(RequestObj, RequestData, OnComplete) {
-
-
+function ServiceRequest(RequestObj, RequestData, OnComplete) { 
 
 
     if (RequestData.action) {
