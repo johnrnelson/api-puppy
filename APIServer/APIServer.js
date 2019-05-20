@@ -188,20 +188,7 @@ const IPC = {
 
 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 /*
     This is the actual method called when a request comes from the server. 
