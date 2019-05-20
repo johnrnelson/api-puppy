@@ -70,8 +70,8 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
             */
             SERVER.ServiceLogger.WriteWebLog("WebErrors", {
                 IP4Address: RequestObj.User.RemoteIP,
-                Topic: RequestObj.method + " " + RequestObj.url,
-                Body: RequestData
+                Topic: RequestObj.method ,
+                Body: RequestObj.url
             });
 
 
