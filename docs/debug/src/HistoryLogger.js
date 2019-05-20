@@ -272,7 +272,7 @@ WebApp.HistoryLogger = {
                     "date": fileLogDate,
                     "type": RemoteLogType,
                     "page": {
-                        "limit": 10,
+                        "limit": 50,
                         "index": 1
                     }
 

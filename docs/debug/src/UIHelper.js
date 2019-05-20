@@ -416,10 +416,10 @@ if (document.location.hostname == "localhost") {
     console.info('Set the debugging default panel to work with... ');
     setTimeout(() => {
 
-        UIHelper.ShowTab('TabDebugger');
+        // UIHelper.ShowTab('TabDebugger');
     }, 500);
     // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
     // UIHelper.ShowTab('TabAppPrefs');
-    // UIHelper.ShowTab('AppCharts');
+    UIHelper.ShowTab('AppCharts');
 }
