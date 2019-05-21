@@ -4,20 +4,60 @@
 WebApp.AppPrefsManager = {
 
     ShowPrefs() {
+        const appPrefsHTML = document.getElementById("TabAppPrefs");
+        const UserOptions = WebApp.AppPrefs.UserOptions;
+
+        //Ensure we have our defaults...
+
+        if (!UserOptions.UI) {
+            UserOptions.UI = {
+                UseToast: true,
+                x: 5
+            };
+        }
+        if (!UserOptions.Socket) {
+            UserOptions.Socket = {
+                Ignore: false,
+                topics: 'general,dev,errors'
+            }
+
+        }
 
 
 
         WebApp.GetHelpFile('AppPrefs.html', function (AppPrefsHTML) {
 
-            document.getElementById("TabAppPrefs").innerHTML = AppPrefsHTML;
+            console.info('TODO -->', 'Display AppRefs-->', UserOptions);
 
-            console.info('TODO -->', 'Display AppRefs-->', WebApp.AppPrefs.UserOptions);
-            
 
-            const inputCtrl = document.getElementById("APIKeyInput");
+            appPrefsHTML.innerHTML = AppPrefsHTML;
 
-            inputCtrl.value = WebApp.AppPrefs.UserOptions.APIKEY;
 
+
+
+            appPrefsHTML.querySelector("#APIKeyInput").value = UserOptions.APIKEY;
+
+            if (UserOptions.Socket.topics == undefined) {
+                UserOptions.Socket.topics = 'general,dev';
+            }
+
+            appPrefsHTML.querySelector("#SocketTopics").value = UserOptions.Socket.topics; //"general,dev,errors,reports";
+
+            const IgnoreAllSocketBroadcasts = appPrefsHTML.querySelector("#IgnoreAllSocketBroadcasts");
+            const IgnoreAllToasts = appPrefsHTML.querySelector("#IgnoreAllToasts");
+
+
+
+            if (UserOptions.Socket.Ignore == undefined) {
+                UserOptions.Socket.Ignore = false;
+            }
+            IgnoreAllSocketBroadcasts.checked = UserOptions.Socket.Ignore;
+
+
+            if (UserOptions.UI.UseToast == undefined) {
+                UserOptions.UI.UseToast = false;
+            }
+            IgnoreAllToasts.checked = UserOptions.UI.UseToast;
 
 
         });
@@ -114,7 +154,7 @@ WebApp.AppPrefsManager = {
                                 cls: "js-dialog-close alert",
                                 onclick: function () {
 
-                                    console.log(APIKEY);
+                                    // console.log(APIKEY);
                                     WebApp.AppPrefs.UserOptions.APIKEY = APIKEY;
 
                                     localStorage.setItem('UserOptions', JSON.stringify(WebApp.AppPrefs.UserOptions));
@@ -149,9 +189,51 @@ WebApp.AppPrefsManager = {
         }
 
 
+    },
+    Alerts: {
+        SetIgnore(HostElement) {
+            const appPrefsHTML = document.getElementById("TabAppPrefs");
+            const UserOptions = WebApp.AppPrefs.UserOptions;
+
+            // console.info("Set Alert value-->", HostElement.id, " -- ", HostElement.checked);
+            // debugger;
+
+            if (HostElement.id == "IgnoreAllToasts") {
+                const IgnoreAllToasts = appPrefsHTML.querySelector("#IgnoreAllToasts");
+                UserOptions.UI.UseToast = IgnoreAllToasts.checked;
+           
+                localStorage.setItem('UserOptions', JSON.stringify(UserOptions));
+
+            }
+            if (HostElement.id == "IgnoreAllSocketBroadcasts") {
+                const IgnoreAllSocketBroadcasts = appPrefsHTML.querySelector("#IgnoreAllSocketBroadcasts");
+                UserOptions.Socket.Ignore = IgnoreAllSocketBroadcasts.checked
+ 
+                localStorage.setItem('UserOptions', JSON.stringify(UserOptions));
+
+
+            }
+
+        }
+    },
+    Socket: {
+        SetSocketChannel(tag, val, values) {
+            const UserOptions = WebApp.AppPrefs.UserOptions;
+
+            const appPrefsHTML = document.getElementById("TabAppPrefs");
+
+            const IgnoreAllSocketBroadcasts = appPrefsHTML.querySelector("#IgnoreAllSocketBroadcasts");
+            const inputSocketTopics = appPrefsHTML.querySelector("#SocketTopics");
+      
+            UserOptions.Socket = {
+                Ignore: IgnoreAllSocketBroadcasts.checked,
+                topics: inputSocketTopics.value
+            }
+            // console.info(UserOptions);
+            // debugger;
+            localStorage.setItem('UserOptions', JSON.stringify(UserOptions));
+
+
+        }
     }
-
-
-
-
 };

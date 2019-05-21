@@ -54,20 +54,43 @@
     <br>
 
 
-    <!-- 
     <div class="row">
         <div class="cell-md-6">
-            
-            Still working on this...
+
+            User interface alerts can be annoying. Use these settings
+            to customize how you want to be notified about updates from the server or browser.
 
         </div>
         <div class="cell-md-6">
-                <input type="checkbox" data-role="switch" data-caption="Ignore Socket Broadcasts" checked>
-                <br>
-                <input type="checkbox" data-role="switch" data-caption="Ignore Toasts" checked>
+            <input id="IgnoreAllSocketBroadcasts" type="checkbox" onchange="WebApp.AppPrefsManager.Alerts.SetIgnore(this)"
+                data-role="switch" data-caption="Ignore ALL Socket Broadcasts">
+            <br>
+            <input id="IgnoreAllToasts" type="checkbox" onchange="WebApp.AppPrefsManager.Alerts.SetIgnore(this)"
+                data-role="switch" data-caption="Ignore Toasts">
         </div>
 
     </div>
-  -->
+    <hr />
+    <br>
+
+    <div class="row">
+        <div class="cell-md-6">
+
+            Add the channels you want to listen to for the web socket. Each channel
+            will have it's own stream so be sure you don't subscribe to a lot of
+            channels.
+        </div>
+        <div class="cell-md-6">
+            <input id="SocketTopics" type="text" data-role="taginput" data-max-tags="6">
+            <br>
+            <button class="button" onclick="WebApp.AppPrefsManager.Socket.SetSocketChannel()">Set Channels</button>
+
+        </div>
+
+    </div>
+    <hr />
+    <br>
+
+
 
 </div>

@@ -147,14 +147,7 @@ const WebApp = {
                 opts: {
                     favor: 'put'
                 }
-            },
-            UI: {
-                UseToast: true,
-            },
-            Socket: {
-                Ignore: false
             }
-
         },
     }
 };
