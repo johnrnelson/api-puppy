@@ -118,13 +118,15 @@ GetVer(function (Info) {
     console.log('Updated "package.json" file.', Info);
 
     CheckInGit(function () {
-        console.log('This NPM has been updated!');
+        console.log('\r\n******************\r\nThis NPM has been updated!');
+        
         
         // see https://git-scm.com/book/en/v2/Git-Basics-Tagging  for more info...  :-)
 
         console.log('git tag -a v' + Info + ' -m "Test Tag"');
         console.log('git push origin --tags');
         console.log('git push origin --delete v'+Info);
+        
         console.log('\r\n******************\r\n\t**Upated to version: '+Info + ' **');
     });
 });
