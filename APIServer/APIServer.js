@@ -188,7 +188,7 @@ const IPC = {
 
 
 };
- 
+
 
 /*
     This is the actual method called when a request comes from the server. 
@@ -219,7 +219,7 @@ function ServiceWeb(request, response) {
 
 
     //ignore this request. We are not a real web server!
-    if (request.url .substring(0,17) == "/apple-touch-icon") {
+    if (request.url.substring(0, 17) == "/apple-touch-icon") {
         response.end();
         return;
     }

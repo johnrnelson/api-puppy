@@ -36,7 +36,7 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
             //Do not allow ".." in the path!!!!
             // servicePath = RequestData.service.replace(/\./g, '');
             servicePath = RequestData.service;
- 
+
 
             finalServicePath = path.resolve(path.join(SERVER.ServicesFolder, "services", path.normalize(path.join(servicePath, 'index.js'))));
 
@@ -70,7 +70,7 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
             */
             SERVER.ServiceLogger.WriteWebLog("WebErrors", {
                 IP4Address: RequestObj.User.RemoteIP,
-                Topic: RequestObj.method ,
+                Topic: RequestObj.method,
                 Body: RequestObj.url
             });
 
