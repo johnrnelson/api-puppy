@@ -105,7 +105,7 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
             Body: RequsetObject.method + ' ' +  RequsetObject.url
         });
 
-        SERVER.Statistics.System.TotalSuccess++;
+        SERVER.ServiceLogger.Statistics.System.TotalSuccess++;
 
 
         OnChecked({
