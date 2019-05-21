@@ -218,6 +218,12 @@ function ServiceWeb(request, response) {
     }
 
 
+    //ignore this request. We are not a real web server!
+    if (request.url .substring(0,17) == "/apple-touch-icon") {
+        response.end();
+        return;
+    }
+
 
     const querystring = require('querystring');
     const url = require('url');
