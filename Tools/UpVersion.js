@@ -124,6 +124,7 @@ GetVer(function (Info) {
 
         console.log('git tag -a v' + Info + ' -m "Test Tag"');
         console.log('git push origin --tags');
-        console.log('git push origin --delete v'+ThisReleaseVersion);
+        console.log('git push origin --delete v'+Info);
+        console.log('\r\n******************\r\n\t**Upated to version: '+Info + ' **');
     });
 });
