@@ -10,3 +10,4 @@ WebApp.GetHelpFile('HelpDisplay.html', function (filecontents) {
 WebApp.HelpDisplay = {
  
 };
+ 

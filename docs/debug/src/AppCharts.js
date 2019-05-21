@@ -50,10 +50,10 @@ WebApp.AppCharts = {
                 legend: {
                     position: 'top',
                 },
-                title: {
-                    display: true,
-                    text: 'API Success/Error Rates'
-                }
+                // title: {
+                //     display: true,
+                //     text: 'API Success/Error Rates'
+                // }
             }
         });
 
@@ -114,10 +114,10 @@ WebApp.AppCharts = {
                 legend: {
                     position: 'top',
                 },
-                title: {
-                    display: true,
-                    text: 'API Services Rates'
-                }
+                // title: {
+                //     display: true,
+                //     text: 'API Services Rates'
+                // }
             }
         });
     }    
