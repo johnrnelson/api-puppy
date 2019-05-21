@@ -571,7 +571,7 @@ function ServiceWeb(request, response) {
             SERVER.ServiceLogger.WriteWebLog("WebErrors", {
                 IP4Address: request.connection.remoteAddress,
                 topic: request.method,
-                Body: request.url + JSON.stringify(body)
+                Body: request.url + " BODY:" + JSON.stringify(body)
             });
 
             //Some bad juju happend so we just pass it off to our generic error handler...
