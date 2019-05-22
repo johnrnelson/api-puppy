@@ -165,44 +165,39 @@ SERVER.SocketBroadcast = function (BroadcastTopic, MSG, Options) {
         MSG = JSON.stringify(MSG);
     }
 
+    //Send the msg no matter HTTP(s)....
+    function SendBroadcast(client) {
+        
+        //No topics means nothing to listen to...
+        if (!client.User.Topics) {
+            return;
+        }
+
+        for (let index = 0; index < client.User.Topics.length; index++) {
+
+            const element = client.User.Topics[index];
+
+            if (element == BroadcastTopic) {
+                //ok send it...
+                if (client.readyState === WebSocket.OPEN) {
+                    client.send(MSG);
+                    SERVER.WebSocketHTTP.TotalConnectionAttempts++;
+                }
+                break;
+                debugger;
+            }
+
+        }
+    }
 
     if (SERVER.WebSocketHTTP) {
         SERVER.WebSocketHTTP.clients.forEach(function each(client) {
-            //No topics means nothing to listen to...
-            if (!client.User.Topics) {
-                return;
-            }
-
-            for (let index = 0; index < client.User.Topics.length; index++) {
-                
-                const element = client.User.Topics[index];
-
-                if (element == BroadcastTopic) {
-                    //ok send it...
-                    if (client.readyState === WebSocket.OPEN) {
-                        client.send(MSG);
-                        SERVER.WebSocketHTTP.TotalConnectionAttempts++;
-                    }
-                    break;
-                    debugger;
-                }
-
-            }
-
-
-
+            SendBroadcast(client);
         });
     }
     if (SERVER.WebSocketHTTPS) {
         SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
-
-
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(MSG);
-                SERVER.WebSocketHTTPS.TotalConnectionAttempts++;
-            }
-
-
+            SendBroadcast(client);
         });
     }
 
