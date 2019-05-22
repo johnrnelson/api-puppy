@@ -63,6 +63,8 @@
             Body: "The web socket is connected and ready to go!",
         });
  
+        return;
+        
         //Join channels...
         console.log('Join channels!');
 
