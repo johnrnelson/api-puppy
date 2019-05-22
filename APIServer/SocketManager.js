@@ -167,7 +167,7 @@ SERVER.SocketBroadcast = function (BroadcastTopic, MSG, Options) {
 
     //Send the msg no matter HTTP(s)....
     function SendBroadcast(client) {
-        
+
         //No topics means nothing to listen to...
         if (!client.User.Topics) {
             return;
@@ -183,8 +183,7 @@ SERVER.SocketBroadcast = function (BroadcastTopic, MSG, Options) {
                     client.send(MSG);
                     SERVER.WebSocketHTTP.TotalConnectionAttempts++;
                 }
-                break;
-                debugger;
+                return;
             }
 
         }
