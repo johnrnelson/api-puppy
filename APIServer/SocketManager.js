@@ -3,6 +3,7 @@
 */
 const WebSocket = require('ws');
 
+
 const ServiceManager = require('./ServiceManager');
 
 
@@ -58,12 +59,28 @@ function ServiceSocket(WebServer) {
 
                 msgDATA = JSON.parse(message);
 
-                if (!msgDATA.service) {
+                /*
+                    If they have an "event" field then treat this as an event item
+                    and not a standard API call...
+                */
+                if (msgDATA.event != undefined) {
                     // debugger;
-                    ws.send(JSON.stringify({
-                        TID: msgDATA.TID,
-                        err: 'Events not working.. YET!'
-                    }));
+                    var eventName;
+                    try {
+                        const path = require('path');
+                        eventName = msgDATA.event.replace(/[^0-9a-z]/gi, '');
+
+
+                        const SocketEvent = require('./SocketEvents/' + eventName);
+
+                        SocketEvent.HandleEvent(ws, msgDATA);
+                    } catch (errHandleEvent) {
+                        ws.send(JSON.stringify({
+                            TID: msgDATA.TID,
+                            err: 'Error in event : ' + eventName
+                        }));
+                    }
+
                     return
                 }
 
@@ -115,7 +132,7 @@ function ServiceSocket(WebServer) {
         }));
 
         //Let everyone know whats up! :-)
-        SERVER.SocketBroadcast({
+        SERVER.SocketBroadcast('general', {
             TID: 0, //System message   
             service: 'APIServer',
             msg: "Welcome new tester from :" + displayAddress + ". Total Connections [" +
@@ -137,7 +154,7 @@ exports.ServiceSocket = ServiceSocket;
     both web server sockets (HTTP/s) unless 
     exluded..
 */
-SERVER.SocketBroadcast = function (MSG, Options) {
+SERVER.SocketBroadcast = function (BroadcastTopic, MSG, Options) {
     if (Options) {
 
         if (Option.Exclude) {
@@ -151,18 +168,41 @@ SERVER.SocketBroadcast = function (MSG, Options) {
 
     if (SERVER.WebSocketHTTP) {
         SERVER.WebSocketHTTP.clients.forEach(function each(client) {
-            if (client.readyState === WebSocket.OPEN) {
-                client.send(MSG);
-                SERVER.WebSocketHTTP.TotalConnectionAttempts++;
+            //No topics means nothing to listen to...
+            if (!client.User.Topics) {
+                return;
             }
+
+            for (let index = 0; index < client.User.Topics.length; index++) {
+                
+                const element = client.User.Topics[index];
+
+                if (element == BroadcastTopic) {
+                    //ok send it...
+                    if (client.readyState === WebSocket.OPEN) {
+                        client.send(MSG);
+                        SERVER.WebSocketHTTP.TotalConnectionAttempts++;
+                    }
+                    break;
+                    debugger;
+                }
+
+            }
+
+
+
         });
     }
     if (SERVER.WebSocketHTTPS) {
         SERVER.WebSocketHTTPS.clients.forEach(function each(client) {
+
+
             if (client.readyState === WebSocket.OPEN) {
                 client.send(MSG);
                 SERVER.WebSocketHTTPS.TotalConnectionAttempts++;
             }
+
+
         });
     }
 

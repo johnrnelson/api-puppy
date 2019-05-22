@@ -16,7 +16,7 @@ const DataActions = {
             data: SERVER.IN_MEM_DB
         };
         OnComplete(null, result);
-        SERVER.SocketBroadcast({
+        SERVER.SocketBroadcast('dev',{
             TID: 0,
             service: 'data',
             msg: 'The fruit [' + fruit + '] was added!'
@@ -37,7 +37,7 @@ const DataActions = {
 
         OnComplete(null, result);
 
-        SERVER.SocketBroadcast({
+        SERVER.SocketBroadcast('dev',{
             TID: 0,
             service: 'data',
             msg: 'Fruit [' + fruit + '] was deleted!'

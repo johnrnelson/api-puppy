@@ -8,7 +8,7 @@ WebApp.AppPrefsManager = {
         const UserOptions = WebApp.AppPrefs.UserOptions;
 
         //Ensure we have our defaults...
- 
+
         if (!UserOptions.UI) {
             UserOptions.UI = {
                 IgnoreToast: false
@@ -35,9 +35,11 @@ WebApp.AppPrefsManager = {
 
 
             appPrefsHTML.querySelector("#APIKeyInput").value = UserOptions.APIKEY;
- 
-            if(UserOptions.Socket.topics){
-                appPrefsHTML.querySelector("#SocketTopics").value = UserOptions.Socket.topics; //"general,dev,errors,reports";
+
+            // debugger;
+            if (UserOptions.Socket.Topics) {
+                //"general,dev,errors,reports";
+                appPrefsHTML.querySelector("#SocketTopics").value = UserOptions.Socket.Topics;
             }
 
             const IgnoreAllSocketBroadcasts = appPrefsHTML.querySelector("#IgnoreAllSocketBroadcasts");
@@ -198,14 +200,14 @@ WebApp.AppPrefsManager = {
             if (HostElement.id == "IgnoreAllToasts") {
                 const IgnoreAllToasts = appPrefsHTML.querySelector("#IgnoreAllToasts");
                 UserOptions.UI.IgnoreToast = IgnoreAllToasts.checked;
-           
+
                 localStorage.setItem('UserOptions', JSON.stringify(UserOptions));
 
             }
             if (HostElement.id == "IgnoreAllSocketBroadcasts") {
                 const IgnoreAllSocketBroadcasts = appPrefsHTML.querySelector("#IgnoreAllSocketBroadcasts");
                 UserOptions.Socket.Ignore = IgnoreAllSocketBroadcasts.checked
- 
+
                 localStorage.setItem('UserOptions', JSON.stringify(UserOptions));
 
 
@@ -221,7 +223,7 @@ WebApp.AppPrefsManager = {
 
             const IgnoreAllSocketBroadcasts = appPrefsHTML.querySelector("#IgnoreAllSocketBroadcasts");
             const inputSocketTopics = appPrefsHTML.querySelector("#SocketTopics");
-      
+
             UserOptions.Socket = {
                 Ignore: IgnoreAllSocketBroadcasts.checked,
                 Topics: inputSocketTopics.value

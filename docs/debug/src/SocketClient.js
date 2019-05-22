@@ -62,11 +62,13 @@
             Source: "Browser",
             Body: "The web socket is connected and ready to go!",
         });
- 
-        return;
-        
+
+
+
         //Join channels...
-        console.log('Join channels!');
+        console.warn('Fix join channels!!!!!!');
+ 
+ 
 
         const SocketOptions = WebApp.AppPrefs.UserOptions.Socket;
 
@@ -76,13 +78,14 @@
         }
 
         const JSONPayload = {
-            "servicexxx": "time"
+            "event": "join",
+            "topics": SocketOptions.Topics
         };
-        debugger;
+
         WebApp.SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
-            debugger;
+
             //Remove the TID before showing it to the user...            
-            
+
             console.log(JSON.stringify(SckData, null, "\t"));
         });
 

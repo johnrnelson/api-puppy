@@ -464,7 +464,7 @@ function ServiceWeb(request, response) {
                             // debugger;
 
                             //Clean up the service so there is nothing but numbers and letter...
-                            aSingleRequest.request.service = aSingleRequest.request.service.replace(/[^0-9a-z]/gi, '')
+                            aSingleRequest.request.service = aSingleRequest.request.service.replace(/[^0-9a-z]/gi, '');
 
                             //By the time you get here.. you want a true web api request...
                             ServiceManager.ServiceRequestWeb(request, aSingleRequest.request, function (ServiceError, ResponseJSON) {
