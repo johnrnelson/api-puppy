@@ -265,6 +265,13 @@ function ServiceWeb(request, response) {
         return;
     }
 
+    // Why does anyone does this?  LOL!  
+    if (request.method.toUpperCase() == "HEAD") {
+        response.status = 200;
+        response.end("");
+        return;
+    }
+
 
 
     //only send debug UI on emtpy request...
