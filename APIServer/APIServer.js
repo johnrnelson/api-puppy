@@ -269,10 +269,15 @@ function ServiceWeb(request, response) {
     if (request.method.toUpperCase() == "HEAD") {
         response.status = 200;
         response.end("");
+
+        SERVER.ServiceLogger.WriteWebLog("WebErrors", {
+            IP4Address: request.connection.remoteAddress,
+            Topic: 'Head Request',
+            Body: request.url
+        });
         return;
     }
-
-
+ 
 
     //only send debug UI on emtpy request...
     if ((request.url == "/") && (request.method.toUpperCase() == "GET")) {
