@@ -87,11 +87,19 @@ WebApp.SocketAPI = {
                 */
                 const jsonData = JSON.parse(e.data);
                 if (jsonData.TID) {
+
+                    //Remember the TID...
+                    const TID = jsonData.TID;
+
+                    //Delete our Transaction ID so they don't have to deal with it...
+                    delete jsonData["TID"];
+
                     //Make the call back...
-                    WebApp.SocketAPI.MasterSocket.MsgQue.__AllMsgs[jsonData.TID](jsonData);
+                    WebApp.SocketAPI.MasterSocket.MsgQue.__AllMsgs[TID](jsonData);
 
                     //Delete it from the que since we are done with it...
-                    delete WebApp.SocketAPI.MasterSocket.MsgQue.__AllMsgs[jsonData.TID];
+                    delete WebApp.SocketAPI.MasterSocket.MsgQue.__AllMsgs[TID];
+
                 } else {
                     //No TID then it's not a call back so just process the message...
                     WebApp.SocketAPI.MasterSocket.Events.onmessage(jsonData);

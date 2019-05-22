@@ -2,8 +2,13 @@
     Put yo socket code in here!  :-) 
 */
 const WebSocket = require('ws');
+
+const ServiceManager = require('./ServiceManager');
+
+
+
 function ServiceSocket(WebServer) {
- 
+
 
     const WebSocketServer = new WebSocket.Server({ server: WebServer });
 
@@ -48,9 +53,19 @@ function ServiceSocket(WebServer) {
                 });
                 return;
             }
+            var msgDATA;
             try {
 
-                const msgDATA = JSON.parse(message);
+                msgDATA = JSON.parse(message);
+
+                if (!msgDATA.service) {
+                    // debugger;
+                    ws.send(JSON.stringify({
+                        TID: msgDATA.TID,
+                        err: 'Events not working.. YET!'
+                    }));
+                    return
+                }
 
                 SERVER.ServiceLogger.WriteWebLog('Socket', {
                     IP4Address: ipAddress,
@@ -68,6 +83,7 @@ function ServiceSocket(WebServer) {
 
                         SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketError");
                         ws.send(JSON.stringify({
+                            TID: msgDATA.TID,
                             err: 'Socket request to servce was invalid!',
                             msg: msgDATA
                         }));
@@ -80,9 +96,14 @@ function ServiceSocket(WebServer) {
                     }
                 });
             } catch (errJSON) {
-                ws.send(JSON.stringify({
-                    err: 'Bad JSON!'
-                }));
+                var errResult = {
+                    err: errJSON.message
+                    // err: 'Bad JSON!'
+                };
+                if (msgDATA.TID) {
+                    errResult.TID = msgDATA.TID;
+                }
+                ws.send(JSON.stringify(errResult));
             }
 
         });

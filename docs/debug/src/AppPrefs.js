@@ -8,17 +8,16 @@ WebApp.AppPrefsManager = {
         const UserOptions = WebApp.AppPrefs.UserOptions;
 
         //Ensure we have our defaults...
-
+ 
         if (!UserOptions.UI) {
             UserOptions.UI = {
-                UseToast: true,
-                x: 5
+                IgnoreToast: false
             };
         }
         if (!UserOptions.Socket) {
             UserOptions.Socket = {
                 Ignore: false,
-                topics: 'general,dev,errors'
+                Topics: 'general,dev,errors'
             }
 
         }
@@ -36,12 +35,10 @@ WebApp.AppPrefsManager = {
 
 
             appPrefsHTML.querySelector("#APIKeyInput").value = UserOptions.APIKEY;
-
-            if (UserOptions.Socket.topics == undefined) {
-                UserOptions.Socket.topics = 'general,dev';
+ 
+            if(UserOptions.Socket.topics){
+                appPrefsHTML.querySelector("#SocketTopics").value = UserOptions.Socket.topics; //"general,dev,errors,reports";
             }
-
-            appPrefsHTML.querySelector("#SocketTopics").value = UserOptions.Socket.topics; //"general,dev,errors,reports";
 
             const IgnoreAllSocketBroadcasts = appPrefsHTML.querySelector("#IgnoreAllSocketBroadcasts");
             const IgnoreAllToasts = appPrefsHTML.querySelector("#IgnoreAllToasts");
@@ -54,10 +51,10 @@ WebApp.AppPrefsManager = {
             IgnoreAllSocketBroadcasts.checked = UserOptions.Socket.Ignore;
 
 
-            if (UserOptions.UI.UseToast == undefined) {
-                UserOptions.UI.UseToast = false;
+            if (UserOptions.UI.IgnoreToast == undefined) {
+                UserOptions.UI.IgnoreToast = false;
             }
-            IgnoreAllToasts.checked = UserOptions.UI.UseToast;
+            IgnoreAllToasts.checked = UserOptions.UI.IgnoreToast;
 
 
         });
@@ -200,7 +197,7 @@ WebApp.AppPrefsManager = {
 
             if (HostElement.id == "IgnoreAllToasts") {
                 const IgnoreAllToasts = appPrefsHTML.querySelector("#IgnoreAllToasts");
-                UserOptions.UI.UseToast = IgnoreAllToasts.checked;
+                UserOptions.UI.IgnoreToast = IgnoreAllToasts.checked;
            
                 localStorage.setItem('UserOptions', JSON.stringify(UserOptions));
 
@@ -227,7 +224,7 @@ WebApp.AppPrefsManager = {
       
             UserOptions.Socket = {
                 Ignore: IgnoreAllSocketBroadcasts.checked,
-                topics: inputSocketTopics.value
+                Topics: inputSocketTopics.value
             }
             // console.info(UserOptions);
             // debugger;

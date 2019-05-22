@@ -62,6 +62,29 @@
             Source: "Browser",
             Body: "The web socket is connected and ready to go!",
         });
+ 
+        //Join channels...
+        console.log('Join channels!');
+
+        const SocketOptions = WebApp.AppPrefs.UserOptions.Socket;
+
+        if (SocketOptions.Ignore == true) {
+            //They don't want to join any channels!
+            return;
+        }
+
+        const JSONPayload = {
+            "servicexxx": "time"
+        };
+        debugger;
+        WebApp.SocketAPI.MasterSocket.WebSocketConnection.SendData(JSONPayload, function (SckData) {
+            debugger;
+            //Remove the TID before showing it to the user...            
+            
+            console.log(JSON.stringify(SckData, null, "\t"));
+        });
+
+
     };
 
     //When disconected...

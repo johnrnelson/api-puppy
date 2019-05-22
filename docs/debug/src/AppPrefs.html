@@ -62,8 +62,9 @@
 
         </div>
         <div class="cell-md-6">
-            <input id="IgnoreAllSocketBroadcasts" type="checkbox" onchange="WebApp.AppPrefsManager.Alerts.SetIgnore(this)"
-                data-role="switch" data-caption="Ignore ALL Socket Broadcasts">
+            <input id="IgnoreAllSocketBroadcasts" type="checkbox"
+                onchange="WebApp.AppPrefsManager.Alerts.SetIgnore(this)" data-role="switch"
+                data-caption="Ignore ALL Socket Broadcasts">
             <br>
             <input id="IgnoreAllToasts" type="checkbox" onchange="WebApp.AppPrefsManager.Alerts.SetIgnore(this)"
                 data-role="switch" data-caption="Ignore Toasts">
@@ -75,10 +76,14 @@
 
     <div class="row">
         <div class="cell-md-6">
-
-            Add the channels you want to listen to for the web socket. Each channel
-            will have it's own stream so be sure you don't subscribe to a lot of
-            channels.
+            <p>
+                Add the channels you want to listen to for the web socket. Each channel
+                will have it's own stream so be sure you don't subscribe to a lot of
+                channels.
+            </p>
+            <p>
+                Example channels : <span>general</span>, <span>dev</span>, and <span>errors</span>
+            </p>
         </div>
         <div class="cell-md-6">
             <input id="SocketTopics" type="text" data-role="taginput" data-max-tags="6">
