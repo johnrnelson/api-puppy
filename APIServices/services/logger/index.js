@@ -40,7 +40,7 @@ const LoggerActions = {
             type: RequestData.type,
             date: new Date(RequestData.date),
             //Standard paging...
-            sort: "Created",
+            sort: "ID DESC",
             limit: parseInt(RequestData.page.limit),
             page: parseInt(RequestData.page.index),
 

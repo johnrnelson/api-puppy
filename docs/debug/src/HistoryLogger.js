@@ -271,6 +271,7 @@ WebApp.HistoryLogger = {
                     "action": "ReadLogs",
                     "date": fileLogDate,
                     "type": RemoteLogType,
+                    "sort" : "ID DESC",
                     "page": {
                         "limit": 50,
                         "index": 1
