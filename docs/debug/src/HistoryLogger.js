@@ -231,7 +231,9 @@ WebApp.HistoryLogger = {
             var calendar = $('#LoggerCalendar').data('calendar');
             var IsKeyEnabled = $('#IsKeyEnabled')[0];
             if (WebApp.AppPrefs.UserOptions.APIKEY) {
-                IsKeyEnabled.innerHTML = " *API KEY Enabled* ";
+                IsKeyEnabled.innerHTML = " * All IPs * ";
+            }else{
+                IsKeyEnabled.innerHTML = " * Your IP * ";
             }
 
 
