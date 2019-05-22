@@ -212,7 +212,44 @@ WebApp.HistoryLogger = {
             WebApp.HistoryLogger.Logger.SetListType('serverlogs');
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // debugger;
             var calendar = $('#LoggerCalendar').data('calendar');
+            var IsKeyEnabled = $('#IsKeyEnabled')[0];
+            if (WebApp.AppPrefs.UserOptions.APIKEY) {
+                IsKeyEnabled.innerHTML = " *API KEY Enabled* ";
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             var LogDate = new Date(calendar.getSelected()[0]);
             var fileLogDate;
@@ -271,7 +308,7 @@ WebApp.HistoryLogger = {
                     "action": "ReadLogs",
                     "date": fileLogDate,
                     "type": RemoteLogType,
-                    "sort" : "ID DESC",
+                    "sort": "ID DESC",
                     "page": {
                         "limit": 50,
                         "index": 1
