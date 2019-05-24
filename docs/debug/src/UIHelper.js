@@ -25,9 +25,16 @@ window.UIHelper = {
         });
     },
     // ********************************************************************
+    /*
+        Ues the toaster to get some toast!  :-)
+    */
+    QuickAlert(ToastText, ToastType) {
+        // UIHelper.QuickAlert();
+        Metro.toast.create(ToastText, null, null, ToastType);
 
+    },
 
-
+    // ********************************************************************
 
     Ace: {
         //Set this in code when you are ready...
@@ -139,6 +146,8 @@ window.UIHelper = {
         }
     },
 
+    // ********************************************************************
+
     //Simple show tab...
     ShowTab(Tab2Show) {
         var TabElement;
@@ -232,15 +241,6 @@ window.UIHelper = {
             console.error('Fallback: Oops, unable to copy', err);
         }
     },
-
-
-
-
-
-
-
-
-
 
 
     //Show the server info via HTML in a componet fashion....
@@ -418,8 +418,8 @@ if (document.location.hostname == "localhost") {
 
         // UIHelper.ShowTab('TabDebugger');
     }, 500);
-    UIHelper.ShowTab('HistoryLogger');
+    // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('GitHubLinks');
-    // UIHelper.ShowTab('TabAppPrefs');
+    UIHelper.ShowTab('TabAppPrefs');
     // UIHelper.ShowTab('AppCharts');
 }

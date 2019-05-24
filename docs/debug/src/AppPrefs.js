@@ -76,7 +76,8 @@ WebApp.AppPrefsManager = {
                     onclick: function () {
                         try {
                             localStorage.clear();
-                            Metro.toast.create("The local storage has been cleared!", null, null, "info");
+                            UIHelper.QuickAlert("The local storage has been cleared!", "info");
+
                             WebApp.HistoryLogger.Logger.Add({
                                 TID: 0,
                                 Type: 707,
@@ -86,7 +87,7 @@ WebApp.AppPrefsManager = {
                                 Body: "The local storage has been cleared!",
                             });
                         } catch (errLocalStorage) {
-                            Metro.toast.create("Error clearing the local storage!", null, null, "info");
+                            UIHelper.QuickAlert("Error clearing the local storage!", "info");
 
                         }
 

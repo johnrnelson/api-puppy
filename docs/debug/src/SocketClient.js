@@ -8,10 +8,10 @@
     */
     WebApp.SocketAPI.MasterSocket.ServiceEvents = {
         "data": function (SocketData) {
-            Metro.toast.create(SocketData.msg, null, null, "info");
+            UIHelper.QuickAlert(SocketData.msg, "info");
         },
         "APIServer": function (SocketData) {
-            Metro.toast.create(SocketData.msg, null, null, "info");
+            UIHelper.QuickAlert(SocketData.msg, "info");
         },
     };
 
@@ -67,8 +67,8 @@
 
         //Join channels...
         console.warn('Fix join channels!!!!!!');
- 
- 
+
+
 
         const SocketOptions = WebApp.AppPrefs.UserOptions.Socket;
 
@@ -128,7 +128,7 @@
 
 
 
-        Metro.toast.create('Socket has disconnected', null, null, "alert");
+        UIHelper.QuickAlert('Socket has disconnected', "alert");
 
         WebApp.HistoryLogger.Logger.Add({
             Type: 411,

@@ -114,7 +114,7 @@ WebApp.DebugUI = {
         }
     },
 
-     
+
     SelectServiceOption(ServiceName) {
 
 
@@ -238,7 +238,7 @@ WebApp.DebugUI = {
 
                     const resultJSONText = JSON.stringify(data, null, "\t");
 
-                    // Metro.toast.create('Web request finished', null, null, "info");
+                    
 
                     WebApp.DebugUI.ShowJSONResult('REST', resultJSONText);
 
@@ -253,7 +253,8 @@ WebApp.DebugUI = {
 
                 }) // JSON-string from `response.json()` call
                 .catch(error => {
-                    Metro.toast.create('Error in running the debug!', null, null, "alert");
+
+                    UIHelper.QuickAlert('Error in running the debug!', "alert");
                     console.error(error);
                     // debugger;
                 });
@@ -326,7 +327,7 @@ WebApp.DebugUI = {
                     `,
                     help: 'Please use this tool with caustion!',
                 }
-            },            
+            },
             'curl': function () {
 
                 return {

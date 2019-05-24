@@ -93,7 +93,7 @@ WebApp.HistoryLogger = {
                                 Source: "Browser",
                                 Body: "History was deleted per user request",
                             });
-                            Metro.toast.create("History was deleted per user request", null, null, "info");
+                            UIHelper.QuickAlert("History was deleted per user request", "info");
 
                         }
                     },
@@ -232,7 +232,7 @@ WebApp.HistoryLogger = {
             var IsKeyEnabled = $('#IsKeyEnabled')[0];
             if (WebApp.AppPrefs.UserOptions.APIKEY) {
                 IsKeyEnabled.innerHTML = " * All IPs * ";
-            }else{
+            } else {
                 IsKeyEnabled.innerHTML = " * Your IP * ";
             }
 
