@@ -26,7 +26,7 @@ WebApp.AppPrefsManager = {
 
         WebApp.GetHelpFile('AppPrefs.html', function (AppPrefsHTML) {
 
-            console.info('TODO -->', 'Display AppRefs-->', UserOptions);
+            // console.info('TODO -->', 'Display AppRefs-->', UserOptions);
 
 
             appPrefsHTML.innerHTML = AppPrefsHTML;

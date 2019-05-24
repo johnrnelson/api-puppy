@@ -29,8 +29,15 @@ window.UIHelper = {
         Ues the toaster to get some toast!  :-)
     */
     QuickAlert(ToastText, ToastType) {
-        // UIHelper.QuickAlert();
-        Metro.toast.create(ToastText, null, null, ToastType);
+        // UIHelper.QuickAlert("test","info");
+        // debugger;
+        const UserOptions = WebApp.AppPrefs.UserOptions;
+
+        if (UserOptions.UI.IgnoreToast == true) {
+            console.log('---- >ignoring toasts:', ToastText);
+        } else {
+            Metro.toast.create(ToastText, null, null, ToastType);
+        }
 
     },
 
