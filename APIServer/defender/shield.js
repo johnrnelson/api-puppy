@@ -31,22 +31,10 @@ const BadActorsIP = {
         if (fndRec) {
             fndRec.data.requests.push(MetaData);
             //Just keep the last 3 requets and flag the IP as bad!  
-            if (fndRec.data.requests.length > 3) {
+            if (fndRec.data.requests.length > 2) {
                 fndRec.data.requests.shift();
-
-                const sql = `INSERT INTO WebLog.BadIP(Type,IP4Address,Reason) VALUES (66,'${IP4Address2Add}','Too many php requests'); `;
-                // debugger;
-                SERVER.SqlData.ExecuteSQL(sql, function (sqlError, sqlData) {
-                    if (sqlError.err) {
-                        console.log(sql);
-                        console.log(sqlError);
-                        debugger;
-                    }
-                });
-
+                SetBanIP4(IP4Address2Add, 'Too many PHP requests');
             }
-
-
 
         } else {
             BadActorsIP.__AllAddys.push({
@@ -69,6 +57,21 @@ const BadActorsIP = {
 //Export just the IP address for the API services...
 exports.ShameList = BadActorsIP.__AllAddys;
 
+/*
+    Ban this IP for bad behavior!
+*/
+function SetBanIP4(IP4Address, Reason) {
+    const sql = `INSERT INTO WebLog.BadIP(Type,IP4Address,Reason) VALUES (66,'${IP4Address}','${SERVER.SqlData.SanitizeString(Reason)}');`;
+    // debugger;
+    SERVER.SqlData.ExecuteSQL(sql, function (sqlError, sqlData) {
+        if (sqlError.err) {
+            console.log(sql);
+            console.log(sqlError);
+            debugger;
+        }
+    });
+}
+exports.SetBanIP4 = SetBanIP4;
 
 function IsIPBanned(IP4Address, OnCheck) {
     const sql = "SELECT count(*) CNT FROM WebLog.BadIP where IP4Address='" + IP4Address + "';";

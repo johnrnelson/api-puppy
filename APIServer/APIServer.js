@@ -266,18 +266,18 @@ function ServiceWeb(request, response) {
         return;
     }
 
-    // Why does anyone does this?  LOL!  
-    if (request.method.toUpperCase() == "HEAD") {
-        response.status = 200;
-        response.end("");
+    // // Why does anyone does this?  LOL!  
+    // if (request.method.toUpperCase() == "HEAD") {
+    //     response.status = 200;
+    //     response.end("");
 
-        SERVER.ServiceLogger.WriteWebLog("WebErrors", {
-            IP4Address: request.connection.remoteAddress,
-            Topic: 'Head Request',
-            Body: request.url
-        });
-        return;
-    }
+    //     SERVER.ServiceLogger.WriteWebLog("WebErrors", {
+    //         IP4Address: request.connection.remoteAddress,
+    //         Topic: 'Head Request',
+    //         Body: request.url
+    //     });
+    //     return;
+    // }
 
 
     //only send debug UI on emtpy request...

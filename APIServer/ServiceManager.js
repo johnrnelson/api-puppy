@@ -74,8 +74,8 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
                 Body: RequestObj.url
             });
 
-
-
+            //Adding all bad service calls to our ban IP list.. very aggressive!!!! 
+            SERVER.Defender.SetBanIP4(RequestObj.User.RemoteIP, 'Invalid Service Request');
 
             OnComplete({
                 err: 'Unable to service this request!',
