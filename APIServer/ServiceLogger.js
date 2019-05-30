@@ -90,9 +90,10 @@ function ReadWebLog(ReadOpts, OnComplete) {
  
 
 
-    var yesterday = new Date(ReadOpts.date)
+    var yesterday = new Date(ReadOpts.date);
     yesterday.setTime(ReadOpts.date.getTime() - ((24 * 60 * 60 * 1000) * 1));  // 24*60*60*1000) * 5 is one day!
-    var tomorrow = new Date(ReadOpts.date)
+    
+    var tomorrow = new Date(ReadOpts.date);
     tomorrow.setTime(ReadOpts.date.getTime() + ((24 * 60 * 60 * 1000) * 1));  // 24*60*60*1000) * 5 is one day!
  
     var sqlOPTS = {

@@ -30,10 +30,23 @@ const BadActorsIP = {
 
         if (fndRec) {
             fndRec.data.requests.push(MetaData);
-            //Just keep the last 25 requets...
-            if (fndRec.data.requests.length > 25) {
+            //Just keep the last 3 requets and flag the IP as bad!  
+            if (fndRec.data.requests.length > 3) {
                 fndRec.data.requests.shift();
+
+                const sql = `INSERT INTO WebLog.BadIP(Type,IP4Address,Reason) VALUES (66,'${IP4Address2Add}','Too many php requests'); `;
+                // debugger;
+                SERVER.SqlData.ExecuteSQL(sql, function (sqlError, sqlData) {
+                    if (sqlError.err) {
+                        console.log(sql);
+                        console.log(sqlError);
+                        debugger;
+                    }
+                });
+
             }
+
+
 
         } else {
             BadActorsIP.__AllAddys.push({
@@ -57,8 +70,25 @@ const BadActorsIP = {
 exports.ShameList = BadActorsIP.__AllAddys;
 
 
+function IsIPBanned(IP4Address, OnCheck) {
+    const sql = "SELECT count(*) CNT FROM WebLog.BadIP where IP4Address='" + IP4Address + "';";
+    SERVER.SqlData.ExecuteSQL(sql, function (SQLResult) {
+        if (SQLResult.err) {
+            console.log(sql);
+            console.log(sqlError);
+            OnCheck(true);
+        } else {
+            const CNT = SQLResult.rows[0].CNT;
+            if (CNT > 0) {
+                OnCheck(true);
+            } else {
+                OnCheck(false);
+            }
+        }
+    });
 
-
+}
+exports.IsIPBanned = IsIPBanned;
 
 
 //Just pick off any request that even looks like php!
@@ -80,13 +110,15 @@ function CheckPHP(URL) {
 */
 function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
 
+
+
     /*
-        Make sure it's not PHP!
-    */
+         Make sure it's not PHP!
+     */
     if (CheckPHP(RequsetObject.url)) {
         // Send them back home!  :-)
         ResponseObject.writeHead(302, {
-            'Location': 'http://' + RequsetObject.User.RemoteIP + RequsetObject.url 
+            'Location': 'http://' + RequsetObject.User.RemoteIP + RequsetObject.url
         });
 
 
@@ -102,7 +134,7 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
         SERVER.ServiceLogger.WriteWebLog('php', {
             IP4Address: RequsetObject.connection.remoteAddress,
             Topic: 'PHP REQUEST!',
-            Body: RequsetObject.method + ' ' +  RequsetObject.url
+            Body: RequsetObject.method + ' ' + RequsetObject.url
         });
 
         SERVER.ServiceLogger.Statistics.System.TotalSuccess++;
@@ -123,6 +155,7 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
         OnChecked(null);
 
     }
+
 }
 
 exports.CheckRequest = CheckRequest;

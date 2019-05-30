@@ -33,44 +33,29 @@ const IPC = {
 
         console.log('\r\nStart Web Servers using version:' + global.SERVER.ProjectInfo.Version + ' on ' + SERVER.Started.toLocaleString());
 
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 
 
 
 
         var httpServer = http.createServer(function (requset, response) {
-            ServiceWeb(requset, response);
+
+            SERVER.Defender.IsIPBanned(requset.connection.remoteAddress, function (BanFlag) {
+                if (BanFlag) {
+                    /*
+                        The flag says this IP is banned.. What should we do?
+
+                        Lets just leave the request open for now. If nothing else
+                        it will slow them down. :-)
+                    */
+
+                    // response.connection.end();
+                } else {
+                    ServiceWeb(requset, response);
+                }
+            });
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -104,7 +89,20 @@ const IPC = {
                 ca: fs.readFileSync(certsFolder + '/chain.pem', 'utf8')
             };
             const httpsServer = https.createServer(credentials, function (requset, response) {
-                ServiceWeb(requset, response);
+                SERVER.Defender.IsIPBanned(requset.connection.remoteAddress, function (BanFlag) {
+                    if (BanFlag) {
+                        /*
+                            The flag says this IP is banned.. What should we do?
+    
+                            Lets just leave the request open for now. If nothing else
+                            it will slow them down. :-)
+                        */
+    
+                        // response.connection.end();
+                    } else {
+                        ServiceWeb(requset, response);
+                    }
+                });
             });
 
             SERVER.WebSocketHTTPS = SocketManager.ServiceSocket(httpsServer);
@@ -198,6 +196,9 @@ const IPC = {
 */
 function ServiceWeb(request, response) {
 
+
+
+
     //ignore this request. We are not a real web server!
     if (request.url == "/favicon.ico") {
         response.end();
@@ -277,7 +278,7 @@ function ServiceWeb(request, response) {
         });
         return;
     }
- 
+
 
     //only send debug UI on emtpy request...
     if ((request.url == "/") && (request.method.toUpperCase() == "GET")) {
@@ -325,6 +326,8 @@ function ServiceWeb(request, response) {
     };
 
 
+
+
     // Use this only when you need to!!!
     // console.log('Serving User:',request.User);
 
@@ -336,7 +339,8 @@ function ServiceWeb(request, response) {
 
         if (CheckRequestError) {
 
-            response.SendError(response, CheckRequestError);
+            //Should we bother sending an error?
+            // response.SendError(response, CheckRequestError);
             // debugger;
             return;
         }
@@ -598,6 +602,30 @@ function ServiceWeb(request, response) {
     });//end check request... 
 
 }//End Service Web Request...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
