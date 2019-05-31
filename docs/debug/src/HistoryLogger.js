@@ -313,7 +313,7 @@ WebApp.HistoryLogger = {
                         tbl.innerHTML = "";
                         // debugger;
 
-                        ServerLogDisplayType.innerHTML = "<b>" + RemoteLogType + "</b> Total (" + data.logs.length + ")";
+                        ServerLogDisplayType.innerHTML = "<b>" + RemoteLogType + "</b> Total (" + data.total + ")";
  
 
                         for (let index = 0; index < data.logs.length; index++) {
