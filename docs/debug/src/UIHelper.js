@@ -126,7 +126,7 @@ window.UIHelper = {
             needs of our UI.  
             
             No need to get crazy with this. Most people use a "real" editor
-            like visual stduio code or sublime so just do the basics....
+            like visual studio code or sublime so just do the basics....
         */
         BuildAceControls() {
 

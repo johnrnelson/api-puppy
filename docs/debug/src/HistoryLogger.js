@@ -250,16 +250,15 @@ WebApp.HistoryLogger = {
                 fileLogDate = LogDate.getFullYear() + "/" + (LogDate.getMonth() + 1) + "/" + LogDate.getDate()
             }
 
-
-
+ 
 
 
             const ServerLogDisplayType = document.getElementById('ServerLogDisplayType');
             ServerLogDisplayType.innerHTML = "";
             
             
-            const ServerPageing = document.getElementById('ServerPageing');
-            ServerPageing.innerHTML = "";
+            const ServerPaging = document.getElementById('ServerPaging');
+            ServerPaging.innerHTML = "";
 
 
 
@@ -336,13 +335,7 @@ WebApp.HistoryLogger = {
                         }
 
 
-                        //Pagininage
-
-                        // const pageElement = document.createElement('tr');
-                        // pageElement.colspan = "4";
-
-                        // const pageElementCell = document.createElement('td');
-
+                        //Pagination 
 
                         const pageNumber = document.createElement('span');
                         pageNumber.style.padding = "8px";
@@ -368,13 +361,13 @@ WebApp.HistoryLogger = {
                             WebApp.HistoryLogger.Logger.FetchRemoteByType(RemoteLogType, CurrentPageNumber);
                         }
                          
-                        ServerPageing.appendChild(pageLeft);
-                        ServerPageing.appendChild(pageNumber);
-                        ServerPageing.appendChild(pageRight);
+                        ServerPaging.appendChild(pageLeft);
+                        ServerPaging.appendChild(pageNumber);
+                        ServerPaging.appendChild(pageRight);
 
                         // pageElement.appendChild(pageElementCell);
                         // tbl.appendChild(pageElement);
-                        tbl.appendChild(ServerPageing);
+                        tbl.appendChild(ServerPaging);
 
 
 
