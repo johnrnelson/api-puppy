@@ -112,6 +112,7 @@ WebApp.HistoryLogger = {
         //Just swap between tables...
         SetListType(ListElement) {
 
+
             const TargetElement = document.getElementById('LGType-' + ListElement);
 
 
@@ -207,21 +208,12 @@ WebApp.HistoryLogger = {
 
 
         },
-        FetchRemoteByType(RemoteLogType) {
+        FetchRemoteByType(RemoteLogType, CurrentPageNumber) {
 
+            if (!CurrentPageNumber) {
+                CurrentPageNumber = 1;
+            }
             WebApp.HistoryLogger.Logger.SetListType('serverlogs');
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -235,20 +227,6 @@ WebApp.HistoryLogger = {
             } else {
                 IsKeyEnabled.innerHTML = " * Your IP * ";
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -276,13 +254,20 @@ WebApp.HistoryLogger = {
 
 
 
-            var ServerLogDisplayType = document.getElementById('ServerLogDisplayType');
-            ServerLogDisplayType.innerHTML = RemoteLogType;
+            const ServerLogDisplayType = document.getElementById('ServerLogDisplayType');
+            ServerLogDisplayType.innerHTML = "";
+            
+            
+            const ServerPageing = document.getElementById('ServerPageing');
+            ServerPageing.innerHTML = "";
 
-            var ServerLogDisplayDate = document.getElementById('ServerLogDisplayDate');
+
+
+
+            const ServerLogDisplayDate = document.getElementById('ServerLogDisplayDate');
             ServerLogDisplayDate.innerHTML = LogDate.toLocaleDateString();
 
-            var tbl = document.getElementById('LGType-serverlogs-history');
+            const tbl = document.getElementById('LGType-serverlogs-history');
             tbl.innerHTML = "";
 
             tbl.innerHTML = `
@@ -305,6 +290,7 @@ WebApp.HistoryLogger = {
 
                 // debugger;
 
+
                 WebApp.Fetch({
                     "service": "logger",
                     "action": "ReadLogs",
@@ -312,8 +298,8 @@ WebApp.HistoryLogger = {
                     "type": RemoteLogType,
                     "sort": "ID DESC",
                     "page": {
-                        "limit": 50,
-                        "index": 1
+                        "limit": 20,
+                        "index": CurrentPageNumber
                     }
 
 
@@ -325,11 +311,10 @@ WebApp.HistoryLogger = {
                         tbl.innerHTML = "";
                     } else {
                         tbl.innerHTML = "";
+                        // debugger;
 
-                        if (!data.logs.length) {
-                            console.info('Req Type-->', RemoteLogType);
-                            return;
-                        }
+                        ServerLogDisplayType.innerHTML = "<b>" + RemoteLogType + "</b> Total (" + data.logs.length + ")";
+ 
 
                         for (let index = 0; index < data.logs.length; index++) {
                             const logItem = data.logs[index];
@@ -349,6 +334,51 @@ WebApp.HistoryLogger = {
 
                             tbl.appendChild(tableRow);
                         }
+
+
+                        //Pagininage
+
+                        // const pageElement = document.createElement('tr');
+                        // pageElement.colspan = "4";
+
+                        // const pageElementCell = document.createElement('td');
+
+
+                        const pageNumber = document.createElement('span');
+                        pageNumber.style.padding = "8px";
+                        pageNumber.innerText = CurrentPageNumber;
+
+                        const pageLeft = document.createElement('span');
+                        pageLeft.style.padding = "8px";
+                        pageLeft.innerText = "<";
+                        pageLeft.onclick = function (evt) {
+                            CurrentPageNumber--;
+                            if (CurrentPageNumber < 0) {
+                                CurrentPageNumber = 1;
+                                return;
+                            }
+                            WebApp.HistoryLogger.Logger.FetchRemoteByType(RemoteLogType, CurrentPageNumber);
+                        }
+
+                        const pageRight = document.createElement('span');
+                        pageRight.style.padding = "8px";
+                        pageRight.innerText = ">";
+                        pageRight.onclick = function (evt) {
+                            CurrentPageNumber++;
+                            WebApp.HistoryLogger.Logger.FetchRemoteByType(RemoteLogType, CurrentPageNumber);
+                        }
+                         
+                        ServerPageing.appendChild(pageLeft);
+                        ServerPageing.appendChild(pageNumber);
+                        ServerPageing.appendChild(pageRight);
+
+                        // pageElement.appendChild(pageElementCell);
+                        // tbl.appendChild(pageElement);
+                        tbl.appendChild(ServerPageing);
+
+
+
+
 
                     }
                 }).catch(error => {

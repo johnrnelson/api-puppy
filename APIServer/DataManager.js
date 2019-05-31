@@ -237,11 +237,18 @@ exports.ExecuteSQLPaging = function (Opts, OnExecute) {
         Opts.where = "";
     }
 
+    var OFFSET_PAGE;
+    if (Opts.page == 1) {
+        OFFSET_PAGE = 0;
+    } else {
+        OFFSET_PAGE = (Opts.page * Opts.limit) + 1;
+    }
+
     const sql = "SELECT count(*) t FROM " + Opts.from +
         Opts.where + ";\r\n" +
         "SELECT " + Opts.select + " FROM " + Opts.from +
         Opts.where + " order by " + Opts.sort +
-        " limit " + Opts.limit + ";";
+        " LIMIT " + Opts.limit + " OFFSET " + OFFSET_PAGE + ";";
 
     ExecuteSQL(sql, function (SQLResult) {
         if (SQLResult.err) {

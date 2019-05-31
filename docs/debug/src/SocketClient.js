@@ -97,8 +97,8 @@
 
 
         Metro.dialog.create({
-            title: "The websocket has closed!",
-            content: "<div>If the socket died it's best to just refresh, reconnect the browser, or ignore to just use REST.</div>",
+            title: "The websocket has disconnected!",
+            content: "<div>It's best to just refresh, reconnect the browser, or ignore to just use REST.</div>",
             actions: [
                 {
                     caption: "Reconnect Socket",
