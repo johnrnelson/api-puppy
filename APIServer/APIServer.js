@@ -51,6 +51,7 @@ const IPC = {
                     */
 
                     // response.connection.end();
+                    delete response;
                 } else {
                     ServiceWeb(requset, response);
                 }
@@ -99,6 +100,7 @@ const IPC = {
                         */
     
                         // response.connection.end();
+                        delete response;
                     } else {
                         ServiceWeb(requset, response);
                     }
