@@ -30,7 +30,7 @@ const BadActorsIP = {
 
         if (fndRec) {
             fndRec.data.requests.push(MetaData);
-            //Just keep the last 3 requets and flag the IP as bad!  
+            //Just keep the last 3 requests and flag the IP as bad!  
             if (fndRec.data.requests.length > 2) {
                 fndRec.data.requests.shift();
                 SetBanIP4(IP4Address2Add, 'Too many PHP requests');
@@ -50,7 +50,7 @@ const BadActorsIP = {
 
 
     },
-    //our running list of addressess...
+    //our running list of addresses...
     __AllAddys: []
 };
 
@@ -111,23 +111,23 @@ function CheckPHP(URL) {
     
     Lets see how this goes. lol :-)
 */
-function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
+function CheckRequest(RequestObject, ResponseObject, OnChecked) {
 
 
 
     /*
          Make sure it's not PHP!
      */
-    if (CheckPHP(RequsetObject.url)) {
+    if (CheckPHP(RequestObject.url)) {
         // Send them back home!  :-)
         ResponseObject.writeHead(302, {
-            'Location': 'http://' + RequsetObject.User.RemoteIP + RequsetObject.url
+            'Location': 'http://' + RequestObject.User.RemoteIP + RequestObject.url
         });
 
 
-        BadActorsIP.Add(RequsetObject.connection.remoteAddress, {
-            HTTPVERB: RequsetObject.method,
-            URL: RequsetObject.url,
+        BadActorsIP.Add(RequestObject.connection.remoteAddress, {
+            HTTPVERB: RequestObject.method,
+            URL: RequestObject.url,
         });
 
 
@@ -135,9 +135,9 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
 
 
         SERVER.ServiceLogger.WriteWebLog('php', {
-            IP4Address: RequsetObject.connection.remoteAddress,
+            IP4Address: RequestObject.connection.remoteAddress,
             Topic: 'PHP REQUEST!',
-            Body: RequsetObject.method + ' ' + RequsetObject.url
+            Body: RequestObject.method + ' ' + RequestObject.url
         });
 
         SERVER.ServiceLogger.Statistics.System.TotalSuccess++;
@@ -146,9 +146,9 @@ function CheckRequest(RequsetObject, ResponseObject, OnChecked) {
         OnChecked({
             warning: "PHP is not installed! Please don't bother scanning for it.",
             user: {
-                IP: RequsetObject.User.RemoteIP,
-                SecLvl: RequsetObject.User.SecurityLevel,
-                ProfileID: RequsetObject.User.ProfileID
+                IP: RequestObject.User.RemoteIP,
+                SecLvl: RequestObject.User.SecurityLevel,
+                ProfileID: RequestObject.User.ProfileID
             }
         });
 
