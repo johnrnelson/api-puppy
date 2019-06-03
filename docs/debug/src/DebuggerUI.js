@@ -205,11 +205,11 @@ WebApp.DebugUI = {
                 UIHelper.Ace.AceEditor.resize();
 
 
-                UIHelper.Ace.AceDisplayRsults.setValue("{}");
+                UIHelper.Ace.AceDisplayResults.setValue("{}");
 
                 //Set the cursor so the user can start over again...
-                UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
-                UIHelper.Ace.AceDisplayRsults.resize();
+                UIHelper.Ace.AceDisplayResults.moveCursorTo(0);
+                UIHelper.Ace.AceDisplayResults.resize();
             }
 
 
@@ -325,7 +325,7 @@ WebApp.DebugUI = {
     document.head.appendChild(scrTab);
 })();                    
                     `,
-                    help: 'Please use this tool with caustion!',
+                    help: 'Please use this tool with caution!',
                 }
             },
             'curl': function () {
@@ -454,12 +454,12 @@ print(response_data)
         const displayDateMod = document.getElementById('Date_Downloaded');
         displayDateMod.innerHTML = ' using [' + JSONSource + '] &nbsp;@' + new Date().toLocaleTimeString();
 
-        UIHelper.Ace.AceDisplayRsults.setValue(JSONText);
+        UIHelper.Ace.AceDisplayResults.setValue(JSONText);
 
         //Set the cursor so the user can start over again...
-        UIHelper.Ace.AceDisplayRsults.moveCursorTo(0);
+        UIHelper.Ace.AceDisplayResults.moveCursorTo(0);
 
-        UIHelper.Ace.AceDisplayRsults.resize();
+        UIHelper.Ace.AceDisplayResults.resize();
 
         WebApp.HistoryLogger.Logger.Add({
             TID: 0,

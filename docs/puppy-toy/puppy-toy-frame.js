@@ -592,7 +592,7 @@ const pupframe = {
             //Set this in code when you are ready...
             AceEditor: null,
             //Set this in code when you are ready...        
-            AceDisplayRsults: null,
+            AceDisplayResults: null,
 
             //Make sure we deal with change to the editor...
             HookEvents(Editor2Hook) {
@@ -623,7 +623,7 @@ const pupframe = {
                 needs of our UI.  
                 
                 No need to get crazy with this. Most people use a "real" editor
-                like visual stduio code or sublime so just do the basics....
+                like visual studio code or sublime so just do the basics....
             */
             BuildAceControls(ControlID) {
 

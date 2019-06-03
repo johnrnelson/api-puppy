@@ -47,7 +47,7 @@ window.UIHelper = {
         //Set this in code when you are ready...
         AceEditor: null,
         //Set this in code when you are ready...        
-        AceDisplayRsults: null,
+        AceDisplayResults: null,
 
         /*
             This lets you add new items to the drop down on 
@@ -131,12 +131,12 @@ window.UIHelper = {
         BuildAceControls() {
 
             UIHelper.Ace.AceEditor = UIHelper.Ace.SetupAceEditorDefaults('PayloadEditor');
-            UIHelper.Ace.AceDisplayRsults = UIHelper.Ace.SetupAceEditorDefaults('APIDebugResults');
+            UIHelper.Ace.AceDisplayResults = UIHelper.Ace.SetupAceEditorDefaults('APIDebugResults');
 
             //Make sure display is read only!
-            UIHelper.Ace.AceDisplayRsults.setReadOnly(true);
+            UIHelper.Ace.AceDisplayResults.setReadOnly(true);
 
-            UIHelper.Ace.AceDisplayRsults.setTheme("ace/theme/monokai");
+            UIHelper.Ace.AceDisplayResults.setTheme("ace/theme/monokai");
 
             //Only hook the actual editor!!!!!
             UIHelper.Ace.HookEvents(UIHelper.Ace.AceEditor);
@@ -186,7 +186,7 @@ window.UIHelper = {
         if (Tab2Show == "TabDebugger") {
 
 
-            //Have I alredy loaded this?
+            //Have I already loaded this?
             if (!WebApp.DebugUI) {
 
                 /*
@@ -212,7 +212,7 @@ window.UIHelper = {
                     //Setup our UI parts...
                     WebApp.DebugUI.FillVerbList();
 
-                    //Use the default and set the edtor....            
+                    //Use the default and set the editor....            
                     console.info('Setting default service......');
                     WebApp.DebugUI.SelectServiceOption('healthcare');
 
@@ -250,7 +250,7 @@ window.UIHelper = {
     },
 
 
-    //Show the server info via HTML in a componet fashion....
+    //Show the server info via HTML in a component fashion....
     SetSysInfo() {
 
 
@@ -280,7 +280,7 @@ window.UIHelper = {
         }
 
 
-        AddInfoElement('Access Point', 'The protocal, port, hostname, path, and query string for the current request using for the API',
+        AddInfoElement('Access Point', 'The protocol, port, hostname, path, and query string for the current request using for the API',
             '<b>' + window.location.protocol + '</b>//' + window.location.hostname +
             '<b>' + window.location.pathname + '</b>');
 
@@ -398,7 +398,7 @@ WebApp.HistoryLogger.Logger.Add({
 /*
     Use the help service to get the Socket API code. 
     It's just another way to use the API and shows
-    how you can do this own a seperate domain and 
+    how you can do this own a separate domain and 
     still get the updates...
 */
 WebApp.GetHelpFile('SocketAPI.js', function (SocketAPICode) {
@@ -421,12 +421,11 @@ UIHelper.ShowTab('TabMain');
 if (document.location.hostname == "localhost") {
     // debugger;
     console.info('Set the debugging default panel to work with... ');
-    setTimeout(() => {
-
-        // UIHelper.ShowTab('TabDebugger');
-    }, 500);
-    UIHelper.ShowTab('HistoryLogger');
-    // UIHelper.ShowTab('GitHubLinks');
+    // UIHelper.ShowTab('HistoryLogger'); 
     // UIHelper.ShowTab('TabAppPrefs');
     // UIHelper.ShowTab('AppCharts');
+    setTimeout(() => {
+        UIHelper.ShowTab('TabDebugger');
+    }, 500);
+
 }

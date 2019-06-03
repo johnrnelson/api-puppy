@@ -60,7 +60,7 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
                 }
 
             });
-        } catch (errinService) {
+        } catch (ServiceErrorInfo) {
 
 
             /*

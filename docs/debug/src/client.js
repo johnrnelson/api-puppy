@@ -11,8 +11,10 @@ const WebApp = {
     Fetch(data = {}) {
         const url = document.URL + '';
 
-        //Allways add the APIKEY to outbound requests to the server...
-        data.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
+        //Always add the APIKEY to outbound requests to the server...
+        if(!data.APIKEY){
+            data.APIKEY = WebApp.AppPrefs.UserOptions.APIKEY;
+        }
 
 
         return fetch(url, {
@@ -189,7 +191,7 @@ window.onload = function () {
 
  
 
-        //Make sure you load the logger first so we can report errors quicky! 
+        //Make sure you load the logger first so we can report errors quickly! 
         WebApp.GetHelpFile('HistoryLogger.html', function (HistoryLoggerHTML) {
 
             document.getElementById("HistoryLogger").innerHTML = HistoryLoggerHTML;

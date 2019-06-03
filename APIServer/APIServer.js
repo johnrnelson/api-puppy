@@ -39,9 +39,9 @@ const IPC = {
 
 
 
-        var httpServer = http.createServer(function (requset, response) {
+        var httpServer = http.createServer(function (request, response) {
 
-            SERVER.Defender.IsIPBanned(requset.connection.remoteAddress, function (BanFlag) {
+            SERVER.Defender.IsIPBanned(request.connection.remoteAddress, function (BanFlag) {
                 if (BanFlag) {
                     /*
                         The flag says this IP is banned.. What should we do?
@@ -53,7 +53,7 @@ const IPC = {
                     // response.connection.end();
                     delete response;
                 } else {
-                    ServiceWeb(requset, response);
+                    ServiceWeb(request, response);
                 }
             });
         });
@@ -89,8 +89,8 @@ const IPC = {
                 cert: fs.readFileSync(certsFolder + '/cert.pem', 'utf8'),
                 ca: fs.readFileSync(certsFolder + '/chain.pem', 'utf8')
             };
-            const httpsServer = https.createServer(credentials, function (requset, response) {
-                SERVER.Defender.IsIPBanned(requset.connection.remoteAddress, function (BanFlag) {
+            const httpsServer = https.createServer(credentials, function (request, response) {
+                SERVER.Defender.IsIPBanned(request.connection.remoteAddress, function (BanFlag) {
                     if (BanFlag) {
                         /*
                             The flag says this IP is banned.. What should we do?
@@ -102,7 +102,7 @@ const IPC = {
                         // response.connection.end();
                         delete response;
                     } else {
-                        ServiceWeb(requset, response);
+                        ServiceWeb(request, response);
                     }
                 });
             });
@@ -168,7 +168,7 @@ const IPC = {
 
     /*
         Generic error information that any service can call to for dumping
-        the data back to the cient as json...
+        the data back to the client as json...
     */
     SendError(ResponseObject, ErrorInformation) {
         //be forgiving by accepting a string or an actual error object!
@@ -282,7 +282,7 @@ function ServiceWeb(request, response) {
     // }
 
 
-    //only send debug UI on emtpy request...
+    //only send debug UI on empty request...
     if ((request.url == "/") && (request.method.toUpperCase() == "GET")) {
         IPC.ServeDebugAPP(request, response);
         return;
@@ -290,7 +290,7 @@ function ServiceWeb(request, response) {
 
 
 
-    //only send debug UI on emtpy request...
+    //only send debug UI on empty request...
     if ((request.url.substring(0, 2) == "/?" && (request.method.toUpperCase() == "GET"))) {
         try {
             require('./StaticFileServer').ServeStaticFile(request, response);
@@ -310,7 +310,7 @@ function ServiceWeb(request, response) {
     request.Host = request.headers["host"];
 
 
-    //Default to a basic profile. Upgrade later if you get more infor about the connection...
+    //Default to a basic profile. Upgrade later if you get more info about the connection...
     request.User = {
         //Using an API key or what???
         isAuthenticated: false,
@@ -469,7 +469,7 @@ function ServiceWeb(request, response) {
 
                         if (!tasks.length) {
                             response.SendError(response, {
-                                err: "No taskes defined!"
+                                err: "No tasks defined!"
                             });
                             return;
                         }
@@ -592,7 +592,7 @@ function ServiceWeb(request, response) {
                 Body: request.url + " BODY:" + JSON.stringify(body)
             });
 
-            //Some bad juju happend so we just pass it off to our generic error handler...
+            //Some bad juju happened so we just pass it off to our generic error handler...
             response.SendError(response, {
                 err: errPUT.message
             });
@@ -639,7 +639,7 @@ function ServiceWeb(request, response) {
 function StartServer() {
 
 
-    // Async step by step becaues it's easier to debug... They say.. :-)
+    // Async step by step because it's easier to debug... They say.. :-)
     (async () => {
 
 
@@ -650,13 +650,13 @@ function StartServer() {
             SERVER.SqlData = require('./DataManager');
 
 
-            const ServerConfg = JSON.parse(fs.readFileSync(SERVER.SECRET + '/CONFIG.json', 'utf8'));
+            const ServerConfig = JSON.parse(fs.readFileSync(SERVER.SECRET + '/CONFIG.json', 'utf8'));
 
 
             /*
                 Open our Mysql server...
             */
-            const PoolReq = await SERVER.SqlData.OpenPoolSync(ServerConfg.mysql);
+            const PoolReq = await SERVER.SqlData.OpenPoolSync(ServerConfig.mysql);
 
             if (PoolReq.err) {
                 console.log(PoolReq.err);
