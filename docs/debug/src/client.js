@@ -54,16 +54,7 @@ const WebApp = {
                     }, null);
 
                 }
-            }
-
-
-            // if (this.readyState == 4 && this.status == 200) {
-            //     try {
-            //         OnData(this.responseText);
-            //     } catch (badJSON) {
-            //         OnData(this.responseText);
-            //     }
-            // }
+            } 
         };
         xhttp.onerror = function () {
             if (!OnError) {
@@ -95,8 +86,7 @@ const WebApp = {
         }
     },
     GetHelpFile(FilePath, OnFetch) {
-        // WebApp.GetHelpFile('',function(){});
-  
+        
 
         WebApp.xhr('get', '/?/debug/src/' + FilePath, '', function (err, data) {
          
@@ -110,25 +100,7 @@ const WebApp = {
             console.warn('Error Get Help File', errorObj);
             debugger;
         });
-     
-        // WebApp.Fetch({
-        //     service: 'help',
-        //     data: {
-        //         topic: 'debug-code-fetch',
-        //         filepath: FilePath
-        //     }
-        // }).then(data => {
-        //     if (data.err) {
-        //         console.warn(data.err);
-        //     } else {
-           
-        //         OnFetch(data.body);
-        //     }
-        // }).catch(error => {
-        //     console.warn('Error!');
-        //     console.error(error);
-        //     // debugger;
-        // });
+      
 
     },
     LoadCSSLink(HREF2CSS) {
