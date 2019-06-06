@@ -5,7 +5,7 @@ History Logger
 WebApp.HistoryLogger = {
     Calendar: {
         /*
-            The only way to dynamicly set the props of the calendar is 
+            The only way to dynamically set the props of the calendar is 
             by adding the HTML on our own. The JS functions don't
             seem to work...   :-(
         */
@@ -166,7 +166,7 @@ WebApp.HistoryLogger = {
                 TargetElementCount.TotalCount++;
                 TargetElementCount.innerHTML = "[" + TargetElementCount.TotalCount + "]";
 
-                function CellBuider(HostRow, ID, Title, ClassName, HTMLValue) {
+                function CellBuilder(HostRow, ID, Title, ClassName, HTMLValue) {
                     const newCell = document.createElement('td');
                     newCell.title = Title;
                     newCell.className = ClassName;
@@ -191,12 +191,12 @@ WebApp.HistoryLogger = {
 
                 // debugger;
 
-                // CellBuider(tr, "", "TID Help", "", LogMSG.TID);
-                // CellBuider(tr, "", "Type Of Log Item [" + LogMSG.Type + "]", "", dispLogType);
-                CellBuider(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
-                CellBuider(tr, "", "", "", LogMSG.Topic);
-                CellBuider(tr, "", "", "", LogMSG.Source);
-                CellBuider(tr, "", "", "", LogMSG.Body);
+                // CellBuilder(tr, "", "TID Help", "", LogMSG.TID);
+          
+                CellBuilder(tr, "", displayDT.format("dddd, MMMM Do YYYY, h:mm:ss a"), "", displayDT.format("h:mm:ss a"));
+                CellBuilder(tr, "", "", "", LogMSG.Topic);
+                CellBuilder(tr, "", "", "", LogMSG.Source);
+                CellBuilder(tr, "", "", "", LogMSG.Body);
 
                 tblBody.appendChild(tr);
             } catch (errAddLogItem) {
