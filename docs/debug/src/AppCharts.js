@@ -100,8 +100,8 @@ WebApp.AppCharts = {
             SuccessSets.data.push(mItem.Success);
         }
 
-        srvChartData.datasets.push(SuccessSets);
         srvChartData.datasets.push(ErrorSets);
+        srvChartData.datasets.push(SuccessSets);
 
 
         var ctx = document.getElementById('Chartjs-Services-Stats').getContext('2d');
@@ -139,17 +139,17 @@ WebApp.AppCharts = {
                 if (lblIndex < 0) {                  
                     lblIndex = WebApp.AppCharts.APIServiceRateChart.data.labels.push(SocketData.srv);
                     const dataArray = new Array(lblIndex).fill(0);
-                    WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data.push(1);                   
+                    WebApp.AppCharts.APIServiceRateChart.data.datasets[1].data.push(1);                   
                 } else {
-                    WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data[lblIndex]++;
+                    WebApp.AppCharts.APIServiceRateChart.data.datasets[1].data[lblIndex]++;
                 }
  
                 WebApp.AppCharts.APIServiceRateChart.update();
                 /*
-                WebApp.AppCharts.APIServiceRateChart.data.datasets[0]
-                WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data[0][0]++;
+                WebApp.AppCharts.APIServiceRateChart.data.datasets[1]
+                WebApp.AppCharts.APIServiceRateChart.data.datasets[1].data[0][0]++;
                 
-                WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data[1] = 5
+                WebApp.AppCharts.APIServiceRateChart.data.datasets[1].data[1] = 5
                 */
 
             } catch (errChartUpdate) {
