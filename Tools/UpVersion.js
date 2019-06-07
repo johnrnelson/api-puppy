@@ -88,7 +88,7 @@ function CheckInGit(OnCheckIn) {
     var path2Project = path.normalize(__dirname);
 
     var ProdVersionInfo = "Compiled for Production - Version:" + JSON.stringify(ThisReleaseVersion) + "\r\n";
-    var cmdCommit = 'git -C "' + path2Project + '" commit -a -m "Updating for new version:' + ThisReleaseVersion + '" ';
+    var cmdCommit = 'git -C "' + path2Project + '" commit -a -m ":heavy_check_mark: Updating for new version:' + ThisReleaseVersion + '" ';
 
 
     child_process_exec(cmdCommit, (error, stdout, stderr) => {
