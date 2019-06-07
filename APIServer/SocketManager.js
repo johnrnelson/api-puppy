@@ -101,7 +101,7 @@ function ServiceSocket(WebServer) {
                         SERVER.ServiceLogger.Statistics.Services.AddSiteMapItem(msgDATA.service, "SocketError");
                         ws.send(JSON.stringify({
                             TID: msgDATA.TID,
-                            err: 'Socket request to servce was invalid!',
+                            err: 'Socket request to service was invalid!',
                             msg: msgDATA
                         }));
                     } else {
@@ -152,7 +152,7 @@ exports.ServiceSocket = ServiceSocket;
 /*
     This is the master broadcast function. It uses 
     both web server sockets (HTTP/s) unless 
-    exluded..
+    excluded..
 */
 SERVER.SocketBroadcast = function (BroadcastTopic, MSG, Options) {
     if (Options) {

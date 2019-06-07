@@ -14,8 +14,8 @@ WebApp.AppCharts = {
         grey: 'rgb(201, 203, 207)'
     },
     AddErrorsChart() {
-        var color = Chart.helpers.color;
-  
+        const color = Chart.helpers.color;
+
         var barChartData = {
             labels: ['HTTP/S', 'System'],
             datasets: [{
@@ -41,8 +41,8 @@ WebApp.AppCharts = {
 
         };
 
-        var ctx = document.getElementById('Chartjs-API-Rates').getContext('2d');
-        window.myBar = new Chart(ctx, {
+        const ctx = document.getElementById('Chartjs-API-Rates').getContext('2d');
+        var myErrorBar = new Chart(ctx, {
             type: 'bar',
             data: barChartData,
             options: {
@@ -62,7 +62,7 @@ WebApp.AppCharts = {
 
     },
     AddServicesStatChart() {
- 
+
         var color = Chart.helpers.color;
 
         const SuccessSets = {
@@ -105,7 +105,7 @@ WebApp.AppCharts = {
 
 
         var ctx = document.getElementById('Chartjs-Services-Stats').getContext('2d');
-        window.myBar = new Chart(ctx, {
+        WebApp.AppCharts.APIServiceRateChart = new Chart(ctx, {
             type: 'bar',
 
             data: srvChartData,
@@ -120,5 +120,44 @@ WebApp.AppCharts = {
                 // }
             }
         });
-    }    
+        WebApp.AppCharts.APIServiceRateChart.SocketUpdate = function (SocketData) {
+            console.info('Socket Update APIServiceRateChart', SocketData);
+
+            try {
+
+
+                // console.log(SocketData.service);
+                const labels = WebApp.AppCharts.APIServiceRateChart.data.labels;
+                var lblIndex = -1;
+                for (let index = 0; index < labels.length; index++) {
+                    const lbl = labels[index];
+                    if (lbl == SocketData.srv) {
+                        lblIndex = index;
+                        break;
+                    }
+                }
+                if (lblIndex < 0) {                  
+                    lblIndex = WebApp.AppCharts.APIServiceRateChart.data.labels.push(SocketData.srv);
+                    const dataArray = new Array(lblIndex).fill(0);
+                    WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data.push(1);                   
+                } else {
+                    WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data[lblIndex]++;
+                }
+
+                console.log('lblIndex:' + lblIndex);
+                WebApp.AppCharts.APIServiceRateChart.update();
+                /*
+                WebApp.AppCharts.APIServiceRateChart.data.datasets[0]
+                WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data[0][0]++;
+                
+                WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data[1] = 5
+                */
+
+            } catch (errChartUpdate) {
+                debugger;
+                UIHelper.QuickAlert(errChartUpdate.message, "error");
+            }
+
+        }
+    }
 };

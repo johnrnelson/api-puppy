@@ -14,7 +14,7 @@ WebApp.SocketAPI = {
                 console.info('Msg from Client');
             },
             onopen() {
-                console.info('Socket was opened but not handeled by the client...');
+                console.info('Socket was opened but not handled by the client...');
             },
             onerror(error) {
                 console.info('WebSocket error:', error);
@@ -32,7 +32,7 @@ WebApp.SocketAPI = {
         /**
          * Connects the websocket to the server.
          */
-        Connnect() {
+        Connect() {
             //
 
             if (!WebApp.SocketAPI.MasterSocket.URL) {

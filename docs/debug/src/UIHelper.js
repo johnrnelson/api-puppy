@@ -31,13 +31,22 @@ window.UIHelper = {
     QuickAlert(ToastText, ToastType) {
         // UIHelper.QuickAlert("test","info");
         // debugger;
-        const UserOptions = WebApp.AppPrefs.UserOptions;
+        try {
+            const UserOptions = WebApp.AppPrefs.UserOptions;
+            if (UserOptions.UI.IgnoreToast) {
+                UserOptions.UI.IgnoreToast = false;
+            }
 
-        if (UserOptions.UI.IgnoreToast == true) {
-            console.log('---- >ignoring toasts:', ToastText);
-        } else {
-            Metro.toast.create(ToastText, null, null, ToastType);
+            if (UserOptions.UI.IgnoreToast == true) {
+                console.log('---- >ignoring toasts:', ToastText);
+            } else {
+                Metro.toast.create(ToastText, null, null, ToastType);
+            }
+        } catch (errAlert) {
+            // debugger;
+            console.warn(errAlert);
         }
+
 
     },
 
@@ -421,11 +430,11 @@ UIHelper.ShowTab('TabMain');
 if (document.location.hostname == "localhost") {
     // debugger;
     console.info('Set the debugging default panel to work with... ');
-    // UIHelper.ShowTab('HistoryLogger'); 
+    // UIHelper.ShowTab('HistoryLogger');
     // UIHelper.ShowTab('TabAppPrefs');
-    // UIHelper.ShowTab('AppCharts');
+    UIHelper.ShowTab('AppCharts');
     setTimeout(() => {
-        UIHelper.ShowTab('TabDebugger');
+        // UIHelper.ShowTab('TabDebugger');
     }, 500);
 
 }

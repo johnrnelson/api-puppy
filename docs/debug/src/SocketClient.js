@@ -13,6 +13,9 @@
         "APIServer": function (SocketData) {
             UIHelper.QuickAlert(SocketData.msg, "info");
         },
+        "Charts": function (SocketData) {
+            WebApp.AppCharts.APIServiceRateChart.SocketUpdate(SocketData);
+        },
     };
 
     /*
@@ -24,7 +27,13 @@
 
         const srvEvt = WebApp.SocketAPI.MasterSocket.ServiceEvents[jsonData.service];
         if (srvEvt) {
-            srvEvt(jsonData);
+            try {
+                srvEvt(jsonData);
+                
+            } catch (serviceError) {         
+                debugger;
+                UIHelper.QuickAlert(serviceError.message, "error");                              
+            }
         }
 
         var displaymsg;
@@ -46,7 +55,7 @@
             DT: new Date(),
             Topic: "Socket Traffic",
             Source: "Socket",
-            Body: displaymsg
+            Body: JSON.stringify(displaymsg)
         });
 
     };
@@ -92,7 +101,7 @@
 
     };
 
-    //When disconected...
+    //When disconnected...
     WebApp.SocketAPI.MasterSocket.Events.onclose = function () {
 
 
@@ -105,7 +114,7 @@
                     cls: "js-dialog-close info",
                     onclick: function () {
 
-                        WebApp.SocketAPI.MasterSocket.Connnect();
+                        WebApp.SocketAPI.MasterSocket.Connect();
                     }
                 },
                 {
@@ -143,7 +152,7 @@
     };
 
     //After events are rewired, connect the socket...
-    WebApp.SocketAPI.MasterSocket.Connnect();
+    WebApp.SocketAPI.MasterSocket.Connect();
 
 
 

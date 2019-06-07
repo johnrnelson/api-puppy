@@ -106,7 +106,7 @@ const WebApp = {
         };
 
         //After events are rewired, connect the socket...
-        WebApp.SocketAPI.MasterSocket.Connnect();
+        WebApp.SocketAPI.MasterSocket.Connect();
     }
 };
 const UIHelper = {

@@ -49,14 +49,23 @@ function ServiceRequestWeb(RequestObj, RequestData, OnComplete) {
                     const debuginfo = {
                         err: {
                             fnl: finalServicePath,
-                            path: servicePath,
+                            srv: servicePath,
                             source: ServiceError
                         }
                     };
                     // debugger;
                     OnComplete(ServiceError, null);
+
+
+
                 } else {
                     OnComplete(null, ResponseJSON);
+
+                    SERVER.SocketBroadcast('general', {
+                        TID: 0, //System message   
+                        service: 'Charts',
+                        srv: servicePath
+                    });
                 }
 
             });
