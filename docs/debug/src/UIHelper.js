@@ -40,7 +40,7 @@ window.UIHelper = {
             if (UserOptions.UI.IgnoreToast == true) {
                 console.log('---- >ignoring toasts:', ToastText);
             } else {
-                Metro.toast.create(ToastText, null, null, ToastType);
+                Metro.toast.create(ToastText, null, 4000, ToastType);
             }
         } catch (errAlert) {
             // debugger;

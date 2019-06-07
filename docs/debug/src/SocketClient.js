@@ -7,7 +7,7 @@
         a service. Use this a means to handle those events...                
     */
     WebApp.SocketAPI.MasterSocket.ServiceEvents = {
-        "data": function (SocketData) {
+        "data": function (SocketData) { 
             UIHelper.QuickAlert(SocketData.msg, "info");
         },
         "APIServer": function (SocketData) {

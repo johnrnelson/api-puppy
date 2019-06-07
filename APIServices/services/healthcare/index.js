@@ -139,7 +139,6 @@ const DataActions = {
                 };
             }
 
-
             if (!opts) {
                 OnComplete({
                     err: 'Unable to set the options. Please check your target.',
@@ -169,6 +168,19 @@ const DataActions = {
         }
 
 
+
+
+
+        //Send socket broadcast...
+        SERVER.SocketBroadcast('healthpro', {
+            TID: 0, //System message   
+            service: 'data',
+            msg: "Action:" + RequestData.action + " Target:" +RequestData.target+ " Where:" + opts.where
+        });
+
+
+
+
         SERVER.SqlData.ExecuteSQLPaging(opts, function (sqlError, sqlDta) {
             if (sqlError) {
                 debugger;
@@ -183,7 +195,7 @@ const DataActions = {
 
 };
 
-function ServiceRequest(RequestObj, RequestData, OnComplete) { 
+function ServiceRequest(RequestObj, RequestData, OnComplete) {
 
 
     if (RequestData.action) {
@@ -198,6 +210,9 @@ function ServiceRequest(RequestObj, RequestData, OnComplete) {
             } else {
 
                 task(RequestData, OnComplete);
+
+
+
             }
         } catch (errOnAction) {
             debugger;
