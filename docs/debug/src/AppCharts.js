@@ -121,7 +121,7 @@ WebApp.AppCharts = {
             }
         });
         WebApp.AppCharts.APIServiceRateChart.SocketUpdate = function (SocketData) {
-            console.info('Socket Update APIServiceRateChart', SocketData);
+            // console.info('Socket Update APIServiceRateChart', SocketData);
 
             try {
 
@@ -143,8 +143,7 @@ WebApp.AppCharts = {
                 } else {
                     WebApp.AppCharts.APIServiceRateChart.data.datasets[0].data[lblIndex]++;
                 }
-
-                console.log('lblIndex:' + lblIndex);
+ 
                 WebApp.AppCharts.APIServiceRateChart.update();
                 /*
                 WebApp.AppCharts.APIServiceRateChart.data.datasets[0]
