@@ -2,10 +2,7 @@
 
 This is most likely **NOT** what you think it is. :thinking:
 
-Check out the [working server](https://demo.tektology.com/) to see the code in action or
-[read more](https://api-puppy.johnrnelson.com/) about what this is what why you are looking at it.
-
- 
+The live server has been shut off. :-(
 
 
 ## Quick Install Instructions
@@ -33,11 +30,8 @@ The console will give you the port number or the default is
 
 
 
-## Working Links
-- [x] [SSL/HTTPS demo.tektology.com](https://demo.tektology.com/)  
-- [x] [HTTP demo.tektology.com](http://demo.tektology.com/)
-- [x] [Local Host](http://0.0.0.0:9080) 
-- [x] [GitHub Hosted Domain](https://api-puppy.johnrnelson.com/)
+## Working Links 
+- [x] [Local Host](http://0.0.0.0:9080)  
 
   
 
